@@ -1,4 +1,7 @@
 <link rel="stylesheet" href="/static/vendor/datatables/datatables.min.css">
+<style>
+    .imgTabla{width: 100px;};
+</style>
 <%- include('../partials/header.admin.ejs'); %>
     <!-- Begin Page Content -->
     <div class="container-fluid">
@@ -19,16 +22,11 @@
                     <table class="table table-bordered" id="tablePrograma" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th></th>
-                                <th></th>
+                                <th>Nombre</th>
+                                <th>Portada</th>
+                                <th>Opciones</th>
                             </tr>
                         </thead>
-                        <tfoot>
-                            <tr>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                        </tfoot>
                     </table>
                 </div>
             </div>

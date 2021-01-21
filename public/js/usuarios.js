@@ -1,11 +1,7 @@
-// Call the dataTables jQuery plugin
-$(document).ready(function () {
-  //Plantilla DataTable
-  $('#dataTable').DataTable();
-
-  //DataTable Programas
-  $('#tablePrograma').DataTable({
-    "ajax": "/admin/programa/table",
+table = ()=>{
+ //DataTable Usuarios
+ $('#tableUsuario').DataTable({
+    "ajax": "/admin/usuarios/table",
     "columns": [
       {
         "render": function (data, type, JsonResultRow, meta) {
@@ -21,6 +17,13 @@ $(document).ready(function () {
       },
     ]
   });
-});
+}
 
 
+
+
+$(document).ready(function () {
+ 
+    table();
+
+ });

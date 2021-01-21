@@ -2,14 +2,16 @@
 // Cargamos el módulo de express para poder crear rutas
 var express = require('express');
 // Cargamos el controlador
-var admin = require('../controllers/admin.controller');
+var usuarios = require('../controllers/usuarios.controller');
 // Llamamos al router
 var router = express.Router();
 // Creamos una ruta para los métodos que tenemos en nuestros controladores
 
 
-router.get("/programa", admin.renderPrograma);
-router.get("/usuarios", admin.rendeUsuarios);
+
+
+router.post("/add", usuarios.addUsuario);
+router.get("/table", usuarios.loadTable);
 
 
 

@@ -1,14 +1,16 @@
 // Utilizar funcionalidades del Ecmascript 6
 'use strict'
-// Cargamos los módulos de express y body-parser, morgan
+// Cargamos los módulos de express y body-parser, morgan, cors
 const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
-
+const  cors = require('cors')
 // Llamamos a express para poder crear el servidor
 const app = express();
 //Llamamos morgan en dev
 app.use(morgan('dev'));
+//Llamamos cors
+app.use(cors())
 //Seteamos ejs como motor de vistas
 app.set('view engine', 'ejs');
 //Seteamos carpeta de archivos estaticos
@@ -19,6 +21,11 @@ app.use(bodyParser.json());
 
 
 app.use('/admin', require('./routes/admin.router'))
+
+app.use('/admin/programa', require('./routes/programa.router'))
+app.use('/admin/usuarios', require('./routes/usuarios.router'))
+
+
 
 
 

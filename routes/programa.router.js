@@ -1,15 +1,18 @@
 'use strict'
 // Cargamos el módulo de express para poder crear rutas
 var express = require('express');
+const fileUpload = require('express-fileupload');
 // Cargamos el controlador
-var admin = require('../controllers/admin.controller');
+var programa = require('../controllers/programa.controller');
 // Llamamos al router
 var router = express.Router();
 // Creamos una ruta para los métodos que tenemos en nuestros controladores
 
 
-router.get("/programa", admin.renderPrograma);
-router.get("/usuarios", admin.rendeUsuarios);
+
+
+router.post("/add", fileUpload(), programa.addPrograma);
+router.get("/table", programa.loadTable);
 
 
 
