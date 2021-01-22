@@ -9,7 +9,7 @@ var router = express.Router();
 
 
 
-
+router.post("/edit", usuarios.editUsuario);
 router.post("/add", usuarios.addUsuario);
 router.get("/table", usuarios.loadTable);
 
