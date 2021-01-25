@@ -13,6 +13,11 @@ var router = express.Router();
 
 router.post("/add", fileUpload(), programa.addPrograma);
 router.get("/table", programa.loadTable);
+router.get("/id+:id", programa.renderTablaUnion);
+router.post("/EncargadoAdd",programa.addEncargado);
+router.delete("/deleteinstructor",programa.deleteinstructor);
+
+
 
 
 

@@ -6,11 +6,10 @@
     <!-- Begin Page Content -->
     <div class="container-fluid">
         <!-- Page Heading -->
-        <h1 class="h3 mb-2 d-inline text-gray-800">Programas</h1>
+        <h1 class="h3 mb-2 d-inline text-gray-800">Encargados del programa:  <%= data.name %></h1>
         <button type="button" class="btn btn-primary float-right d-inline" data-toggle="modal"
             data-target="#exampleModal">+ Agregar programa</button>
-        <p class="mb-4 ">Información de ayuda</a>.</p>
-
+        <p class="mb-4 ">Usuarios que tienen permitido el control administrativo del programa.</p>
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
@@ -19,14 +18,23 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered" id="tablePrograma" width="100%" cellspacing="0">
+                    <table class="table table-bordered" id="tableProgramaEncargado" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>Nombre</th>
-                                <th>Portada</th>
+                                <th>Usuario Encargado</th>
                                 <th>Opciones</th>
                             </tr>
                         </thead>
+                        <tbody>
+                            <% for(var i=0; i<e.length; i++) {%>
+                                <tr>
+                                  <td>
+                                    <%= e[i].Nombre %>
+                                  </td>
+                                  <td><button class="btn btn-danger" onclick="EliminarInstructorDePrograma('<%= e[i].id_usuario %>','<%= id %>')"><i class="fas fa-trash-alt"></i></button></td>
+                                </tr>
+                             <% } %>
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -39,22 +47,22 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Asignar encargado a programa "<%= data.name %>"</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="/admin/programa/add" method="POST" enctype="multipart/form-data">
+                    <form action="/admin/programa/EncargadoAdd" method="POST" >
                         <div class="form-group">
-                            <label for="recipient-name" class="col-form-label">Nombre del programa</label>
-                            <input type="text" class="form-control" name="nombre">
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleFormControlFile1">Portada</label>
-                            <input type="file" class="form-control-file" name="file">
-                        </div>
-                    
+                            <input type="hidden" name="id" value="<%= id %>">
+                            <label for="name">Seleccionar encargado</label>
+                            <select class="custom-select" name="name" aria-label="Default select example">
+                                <% for(var i=0; i<t.length; i++) {%>
+                                    <option value="<%=t[i].id_usuario %>"> <%= t[i].Nombre %></option>
+                                <% } %>
+                              </select>
+                        </div>                   
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -75,7 +83,7 @@
     <%- include('../partials/footer'); %>
         <!-- Page level plugins -->
         <script src="/static/vendor/datatables/dataTables.min.js"></script>
-
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
         <!-- Page level custom scripts -->
         <script src="/static/js/programa.js"></script>
