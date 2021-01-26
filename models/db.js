@@ -1,5 +1,5 @@
 //Requerimos mysql, dotenv, promisify
-const mysql = require('mysql');
+const mysql = require('mysql2');
 require('dotenv').config();
 const { promisify } = require('util');
 

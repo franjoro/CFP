@@ -22,8 +22,9 @@
                     <table class="table table-bordered" id="tablePrograma" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>Nombre</th>
                                 <th>Portada</th>
+                                <th>Nombre</th>
+                                <th>Estado</th>
                                 <th>Opciones</th>
                             </tr>
                         </thead>
@@ -66,7 +67,40 @@
     </div>
 
 
-
+    <!-- Modal -->
+    <div class="modal " id="modalUpdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Actualizar información del programa</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formEdit">
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">Nombre del programa</label>
+                            <input type="text" class="form-control" id="nombreUpdate" name="nombreUpdate">
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Estado</label>
+                            <select class="custom-select" required name="estadoUpdate" id="estadoUpdate" >
+                                <option value="0">Desactivado</option>
+                                <option value="1">Activo</option>
+                            </select>
+                            <input type="hidden" name="idUpdate"  id="idUpdate">
+                        </div>              
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary">
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
 
 
 
@@ -75,7 +109,6 @@
     <%- include('../partials/footer'); %>
         <!-- Page level plugins -->
         <script src="/static/vendor/datatables/dataTables.min.js"></script>
-
-
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
         <!-- Page level custom scripts -->
         <script src="/static/js/programa.js"></script>

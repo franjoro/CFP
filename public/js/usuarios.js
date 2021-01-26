@@ -4,7 +4,7 @@ loader = () => {
     html: "Cargando Data",
     allowOutsideClick: !1,
     showConfirmButton: false,
-    onBeforeOpen: () => {
+    willOpen: () => {
       Swal.showLoading();
     },
   });

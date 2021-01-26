@@ -3,15 +3,16 @@
 var express = require('express');
 // Cargamos el controlador
 var usuarios = require('../controllers/usuarios.controller');
+const { authcheck } = require('../middlewares/auth');
 // Llamamos al router
 var router = express.Router();
 // Creamos una ruta para los métodos que tenemos en nuestros controladores
 
 
 
-router.post("/edit", usuarios.editUsuario);
-router.post("/add", usuarios.addUsuario);
-router.get("/table", usuarios.loadTable);
+router.post("/edit",   authcheck, usuarios.editUsuario);
+router.post("/add", authcheck, usuarios.addUsuario);
+router.get("/table", authcheck, usuarios.loadTable);
 
 
 

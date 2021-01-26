@@ -4,6 +4,7 @@ var express = require('express');
 const fileUpload = require('express-fileupload');
 // Cargamos el controlador
 var programa = require('../controllers/programa.controller');
+const { authcheck } = require('../middlewares/auth');
 // Llamamos al router
 var router = express.Router();
 // Creamos una ruta para los métodos que tenemos en nuestros controladores
@@ -11,11 +12,12 @@ var router = express.Router();
 
 
 
-router.post("/add", fileUpload(), programa.addPrograma);
-router.get("/table", programa.loadTable);
-router.get("/id+:id", programa.renderTablaUnion);
-router.post("/EncargadoAdd",programa.addEncargado);
-router.delete("/deleteinstructor",programa.deleteinstructor);
+router.get("/id+:id", authcheck , programa.renderTablaUnion);
+router.get("/table", authcheck, programa.loadTable);
+router.post("/add", authcheck, fileUpload(),  programa.addPrograma);
+router.post("/EncargadoAdd",authcheck,programa.addEncargado);
+router.delete("/deleteinstructor", authcheck ,programa.deleteinstructor);
+router.put("/updateprograma", authcheck,programa.updatePrograma)
 
 
 

@@ -5,10 +5,13 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const  cors = require('cors')
+const helmet = require("helmet");
 // Llamamos a express para poder crear el servidor
 const app = express();
+//Llamamos helmet
+//app.use(helmet());
 //Llamamos morgan en dev
-app.use(morgan('dev'));
+//app.use(morgan('dev'));
 //Llamamos cors
 app.use(cors())
 //Seteamos ejs como motor de vistas
@@ -19,13 +22,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 // Cargamos las rutas
 
-
+//Router principal de admin y sus controladores
 app.use('/admin', require('./routes/admin.router'))
-
 app.use('/admin/programa', require('./routes/programa.router'))
 app.use('/admin/usuarios', require('./routes/usuarios.router'))
 
-
+//Router de login
+app.use('/',require('./routes/login.router'));
 
 
 
