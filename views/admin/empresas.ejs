@@ -1,0 +1,148 @@
+<link rel="stylesheet" href="/static/vendor/datatables/datatables.min.css">
+<style>
+    .imgTabla{width: 100px;};
+</style>
+<%- include('../partials/header.admin.ejs'); %>
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 d-inline text-gray-800">Empresas registradas</h1>
+        <button type="button" class="btn btn-primary float-right d-inline" data-toggle="modal"
+            data-target="#exampleModal">+ Agregar nueva empresa</button>
+
+            <p class="mb-4 ">Directorio principal de empresas</a></p>
+            
+        <select class="custom-select mb-3" id="selector">
+                    <option value="1">Empresas activas</option>
+                    <option value="0">Empresas inactivas</option>
+        </select>        
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Tabla de empresas</h6>
+
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="tableEmpresas" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Dirección</th>
+                                <th>Telefóno</th>
+                                <th>Nota</th>
+                                <th>Estado</th>
+                                <th></th>
+                                <th></th>
+                                <th>Opciones</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal " id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Agregar nueva empresa</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formEmpresas">
+                        <div class="form-row">
+                            <div class="col">
+                                <label for="name">Nombre *requerido*</label>
+                                <input type="text" id="name" name="name" required class="form-control"
+                                    placeholder="Nombre de empresa">
+                            </div>
+                            <div class="col">
+                                <label for="tel">Teléfono</label>
+                                <input type="text" id="tel" name="tel"  class="form-control">
+                            </div>
+                        </div>  
+                        <div class="form-group">
+                            <label for="actividad">Actvidad Económica</label>
+                            <input type="text" id="actividad" name="actividad" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="direccion">Dirección</label>
+                            <textarea class="form-control" id="direccion" name="direccion" rows="2"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="nota">Nota:</label>
+                            <textarea class="form-control" id="nota" name="nota" rows="2"></textarea>
+                        </div>                  
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary">
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+
+ <!-- Modal -->
+ <div class="modal " id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+ aria-hidden="true">
+ <div class="modal-dialog modal-lg" role="document">
+     <div class="modal-content">
+         <div class="modal-header">
+             <h5 class="modal-title" id="exampleModalLabel">EDITAR empresa</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+             </button>
+         </div>
+         <div class="modal-body">
+             <form id="formEmpresasEditar">
+                 <div class="form-row">
+                     <div class="col">
+                         <label for="name">Nombre *requerido*</label>
+                         <input type="text" id="name_edit" name="name_edit" required class="form-control"
+                             placeholder="Nombre de empresa">
+                     </div>
+                     <div class="col">
+                         <label for="tel">Teléfono</label>
+                         <input type="text" id="tel_edit" name="tel_edit"  class="form-control">
+                     </div>
+                 </div>  
+                 <div class="form-group">
+                     <label for="actividad">Actvidad Económica</label>
+                     <input type="text" id="actividad_edit" name="actividad_edit" class="form-control">
+                 </div>
+                 <div class="form-group">
+                     <label for="direccion">Dirección</label>
+                     <textarea class="form-control" id="direccion_edit" name="direccion_edit" rows="2"></textarea>
+                 </div>
+                 <div class="form-group">
+                     <label for="nota">Nota:</label>
+                     <textarea class="form-control" id="nota_edit" name="nota_edit" rows="2"></textarea>
+                 </div>                  
+                 <input type="hidden" name="id_empresa" id="id_empresa">
+         </div>
+         <div class="modal-footer">
+             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+             <input type="submit" class="btn btn-primary">
+         </div>
+     </form>
+     </div>
+ </div>
+</div>
+
+
+
+
+    <!-- /.container-fluid -->
+    <%- include('../partials/footer'); %>
+        <!-- Page level plugins -->
+        <script src="/static/vendor/datatables/dataTables.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+        <!-- Page level custom scripts -->
+        <script src="/static/js/empresas.js"></script>

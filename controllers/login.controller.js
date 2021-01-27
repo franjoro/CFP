@@ -1,12 +1,20 @@
 //declarar variable a exportar
 const login = {};
-const { firmar, verificar } = require("../middlewares/auth");
+const { firmar, getUserDataByToken } = require("../middlewares/auth");
 const pool = require("../models/db");
 const { desincriptar } = require("../utils/decrypt");
 
 
 //Render vista de login y reiniciamos el jwt
 login.renderIndex = (req, res) => {
+  //verificamos si existe sesion
+  let token = req.header.auth;
+  if(token){ 
+    let userData = getUserDataByToken(token).data;
+    //PENDIENTE DE CAMBIAR =====================================================
+    if(userData.Role == 1) return res.redirect('/admin/programa')
+    if(userData.Role == 0) return res.redirect('/admin/programa')
+  }
   req.header.auth = "";
   res.render("login");
 };
@@ -35,5 +43,12 @@ login.signin = async (req, res) => {
     res.status(400).json({error,status:false});
   }
 };
+
+
+login.signout = async (req, res) => {
+  req.header.auth = "";
+  res.redirect("/");
+}
+
 
 module.exports = login;

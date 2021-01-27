@@ -44,7 +44,7 @@ programa.loadTable = async (req, res) => {
   res.json({ data });
 };
 
-//Tabal de un encargado con un programa
+//Tabla de un encargado con un programa
 programa.renderTablaUnion = async (req, res) => {
   try {
     //Requerir id de parametro
@@ -112,6 +112,8 @@ programa.deleteinstructor = async (req, res) => {
     res.status(400).send(error);
   }
 };
+
+
 //Actualizar info del programa
 programa.updatePrograma = async (req, res) => {
   data = [

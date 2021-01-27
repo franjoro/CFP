@@ -19,4 +19,12 @@ auth.authcheck = (req, res, next) =>{
     }
 }
 
+auth.getUserDataByToken =  (token) =>{
+    try {
+        return jwt.verify(token, process.env.JWTPASS);
+    } catch (error) {
+            return error;
+    }
+}
+
 module.exports = auth;

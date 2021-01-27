@@ -4,7 +4,7 @@ const admin = {};
 //Requerimos pool de base de datos si es necesario
 //const pool = require('../models/db')
 
-const mailer = require ('../utils/mailer');
+//const mailer = require ('../utils/mailer');
 
 //Render programa
 admin.renderPrograma = (req, res, next) => {
@@ -13,6 +13,10 @@ admin.renderPrograma = (req, res, next) => {
 //Render Usuarios
 admin.rendeUsuarios = (req,res) =>{
     res.render('./admin/usuarios');
+}
+
+admin.renderEmpresas = (req,res) =>{
+    res.render('./admin/empresas');
 }
 
 

@@ -11,7 +11,7 @@ const app = express();
 //Llamamos helmet
 //app.use(helmet());
 //Llamamos morgan en dev
-//app.use(morgan('dev'));
+app.use(morgan('dev'));
 //Llamamos cors
 app.use(cors())
 //Seteamos ejs como motor de vistas
@@ -26,6 +26,8 @@ app.use(bodyParser.json());
 app.use('/admin', require('./routes/admin.router'))
 app.use('/admin/programa', require('./routes/programa.router'))
 app.use('/admin/usuarios', require('./routes/usuarios.router'))
+app.use('/admin/empresas', require('./routes/empresas.router'))
+
 
 //Router de login
 app.use('/',require('./routes/login.router'));

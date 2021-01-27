@@ -12,7 +12,7 @@ var router = express.Router();
 
 router.get("/", login.renderIndex);
 router.post("/signin", login.signin);
-
+router.get("/signout", login.signout);
 
 
 

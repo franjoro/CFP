@@ -1,0 +1,178 @@
+<link rel="stylesheet" href="/static/vendor/datatables/datatables.min.css">
+<style>
+    .imgTabla{width: 100px;};
+</style>
+<%- include('../partials/header.admin.ejs'); %>
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 d-inline text-gray-800">Encargados del programa: <%= empresa.Nombre %></h1>
+        <button type="button" class="btn btn-primary float-right d-inline" data-toggle="modal"
+            data-target="#exampleModal">+ Agregar nuevo contacto</button>
+        <p class="mb-4 ">Contactos de la empresa</p>
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Tabla de contactos</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="tablaContacto" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Telefóno</th>
+                                <th>Celular</th>
+                                <th>Puesto</th>
+                                <th>Email</th>
+                                <th>Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% for(var i=0; i<contactos.length; i++) {%>
+                                <tr>
+                                  <td>
+                                    <%= contactos[i].Nombre %>
+                                  </td>
+                                  <td>
+                                    <%= contactos[i].Telefono %>
+                                  </td>
+                                  <td>
+                                    <%= contactos[i].Celular %>
+                                  </td>
+                                  <td>
+                                    <%= contactos[i].Puesto %>
+                                  </td>
+                                  <td>
+                                    <%= contactos[i].Email %>
+                                  </td>
+                                  <td>
+                                      <button class="btn btn-danger" onclick="EliminarContactoDeEmpresa('<%= contactos[i].id_contacto %>','<%= empresa.id %>')"><i class="fas fa-trash-alt"></i>
+                                      </button>
+                                      <button class="btn btn-info" data-toggle="modal"
+                                      data-target="#modalEditar"  data-id_contacto="<%= contactos[i].id_contacto %>" id="editar" ><i class="fas fa-user-edit"></i>
+                                      </button>
+                                  </td>
+                                </tr>
+                             <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal " id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Crear contacto </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/admin/empresas/ContactoAdd" method="POST" >
+                        <div class="form-row">
+                            <div class="col">
+                                <label for="name">Nombre *requerido*</label>
+                                <input type="text" id="name" name="name" required class="form-control"
+                                    placeholder="Nombre de empresa">
+                            </div>
+                            <div class="col">
+                                <label for="tel">Teléfono</label>
+                                <input type="text" id="tel" name="tel"  class="form-control">
+                            </div>
+                            <div class="col">
+                                <label for="cel">Celular</label>
+                                <input type="text" id="cel" name="cel"  class="form-control">
+                            </div>
+                        </div>  
+                        <div class="form-row">
+                            <div class="col">
+                                <label for="email">Email</label>
+                                <input type="text" id="email" name="email" required class="form-control"
+                                    placeholder="Nombre de empresa">
+                            </div>
+                            <div class="col">
+                                <label for="puesto">Puesto</label>
+                                <input type="text" id="puesto" name="puesto"  class="form-control">
+                            </div>
+                            <input type="hidden" name="id_empresa" value="<%= empresa.id %>" >
+                        </div>  
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary">
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal " id="modalEditar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">EDITAR contacto</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/admin/empresas/ContactoEditar" method="POST" >
+                        <div class="form-row">
+                            <div class="col">
+                                <label for="name_editar">Nombre *requerido*</label>
+                                <input type="text" id="name_editar" name="name_editar" required class="form-control"
+                                    placeholder="Nombre de empresa">
+                            </div>
+                            <div class="col">
+                                <label for="tel_editar">Teléfono</label>
+                                <input type="text" id="tel_editar" name="tel_editar"  class="form-control">
+                            </div>
+                            <div class="col">
+                                <label for="cel_editar">Celular</label>
+                                <input type="text" id="cel_editar" name="cel_editar"  class="form-control">
+                            </div>
+                        </div>  
+                        <div class="form-row">
+                            <div class="col">
+                                <label for="email_editar">Email</label>
+                                <input type="text" id="email_editar" name="email_editar" required class="form-control"
+                                    placeholder="Nombre de empresa">
+                            </div>
+                            <div class="col">
+                                <label for="puesto_editar">Puesto</label>
+                                <input type="text" id="puesto_editar" name="puesto_editar"  class="form-control">
+                            </div>
+                            <input type="hidden" name="id_contacto" id="id_contacto" >
+                            <input type="hidden" name="id_empresa" id="id_empresa" value="<%= empresa.id %>" >
+                        </div>  
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary">
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <!-- /.container-fluid -->
+    <%- include('../partials/footer'); %>
+        <!-- Page level plugins -->
+        <script src="/static/vendor/datatables/dataTables.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+        <!-- Page level custom scripts -->
+        <script src="/static/js/empresas.js"></script>
