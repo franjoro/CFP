@@ -27,6 +27,9 @@ app.use('/admin', require('./routes/admin.router'))
 app.use('/admin/programa', require('./routes/programa.router'))
 app.use('/admin/usuarios', require('./routes/usuarios.router'))
 app.use('/admin/empresas', require('./routes/empresas.router'))
+app.use('/admin/instructor', require('./routes/instructor.router'))
+app.use('/admin/participantes', require('./routes/participantes.router'))
+
 
 
 //Router de login

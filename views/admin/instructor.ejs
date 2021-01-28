@@ -1,0 +1,139 @@
+<link rel="stylesheet" href="/static/vendor/datatables/datatables.min.css">
+<style>
+    .imgTabla{width: 100px;};
+</style>
+<%- include('../partials/header.admin.ejs'); %>
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 d-inline text-gray-800">Registro de instructores</h1>
+        <button type="button" class="btn btn-primary float-right d-inline" data-toggle="modal"
+            data-target="#exampleModal">+ Agregar nuevo instructor</button>
+
+            <p class="mb-4 ">Directorio de instructores</a></p>
+            
+        <select class="custom-select mb-3" id="selector">
+                    <option value="1">Instructor activo</option>
+                    <option value="0">Instructor inactivo</option>
+        </select>        
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Tabla de instructores</h6>
+
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="tablaInstructor" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>DUI</th>
+                                <th>Nombre</th>
+                                <th>Email</th>
+                                <th>Telefóno</th>
+                                <th>Estado</th>
+                                <th>Opciones</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal " id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Agregar nueva empresa</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formInstructor">
+                        <div class="form-row">
+                            <div class="col">
+                                <label for="DUI">DUI *requerido*</label>
+                                <input type="text" id="DUI" name="DUI" required class="form-control"
+                                    placeholder="0000000-0">
+                            </div>
+                            <div class="col">
+                                <label for="name">Nombre *requerido*</label>
+                                <input type="text" id="name" name="name" required class="form-control"
+                                    placeholder="Nombre del instructor">
+                            </div>
+                        </div>  
+                        <div class="form-row">
+                            <div class="col">
+                                <label for="tel">Teléfono</label>
+                                <input type="text" id="tel" name="tel"  class="form-control">
+                            </div>
+                            <div class="col">
+                                <label for="email">Email</label>
+                                <input type="text" id="email" name="email"  class="form-control">
+                            </div>
+                        </div>                
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary">
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+
+ <!-- Modal -->
+ <div class="modal " id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+ aria-hidden="true">
+ <div class="modal-dialog modal-lg" role="document">
+     <div class="modal-content">
+         <div class="modal-header">
+             <h5 class="modal-title" id="exampleModalLabel">EDITAR empresa</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+             </button>
+         </div>
+         <div class="modal-body">
+            <form id="formInstructor_editar">
+                <div class="form-row">
+                        <input type="hidden" id="DUI_editar" name="DUI_editar" required >
+                    <div class="col">
+                        <label for="name_editar">Nombre</label>
+                        <input type="text" id="name_editar" name="name_editar" required class="form-control"
+                            placeholder="Nombre del instructor">
+                    </div>
+                </div>  
+                <div class="form-row">
+                    <div class="col">
+                        <label for="tel_editar">Teléfono</label>
+                        <input type="text" id="tel_editar" name="tel_editar"  class="form-control">
+                    </div>
+                    <div class="col">
+                        <label for="email_editar">Email</label>
+                        <input type="text" id="email_editar" name="email_editar"  class="form-control">
+                    </div>
+                </div>                
+        </div>
+         <div class="modal-footer">
+             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+             <input type="submit" class="btn btn-primary">
+         </div>
+     </form>
+     </div>
+ </div>
+</div>
+
+
+
+
+    <!-- /.container-fluid -->
+    <%- include('../partials/footer'); %>
+        <!-- Page level plugins -->
+        <script src="/static/vendor/datatables/dataTables.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+        <!-- Page level custom scripts -->
+        <script src="/static/js/instructor.js"></script>

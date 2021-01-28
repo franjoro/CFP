@@ -6,6 +6,11 @@ const admin = {};
 
 //const mailer = require ('../utils/mailer');
 
+
+admin.main = (req,res) =>{
+    res.render('./admin/main');
+}
+
 //Render programa
 admin.renderPrograma = (req, res, next) => {
     res.render('./admin/programa');
@@ -19,6 +24,9 @@ admin.renderEmpresas = (req,res) =>{
     res.render('./admin/empresas');
 }
 
+admin.renderInstructor = (req,res) =>{
+    res.render('./admin/instructor');
+}
 
 
 module.exports = admin;
