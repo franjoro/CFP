@@ -29,6 +29,8 @@ app.use('/admin/usuarios', require('./routes/usuarios.router'))
 app.use('/admin/empresas', require('./routes/empresas.router'))
 app.use('/admin/instructor', require('./routes/instructor.router'))
 app.use('/admin/participantes', require('./routes/participantes.router'))
+app.use('/admin/cursos', require('./routes/cursos.router'))
+
 
 
 
