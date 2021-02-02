@@ -14,22 +14,24 @@
         <div class="card-body">
           <div class="card shadow mb-3">
             <div class="card-body">
-              <h4>MICROSOFT EXCEL PARA FINANCIEROS</h4>
+              <h4><%= curso.Nombre %></h4>
               <div class="row">
                 <div class="col-6">
                   <p>
-                    <b>Fecha inicio:</b> 10/10/2020 <br />
-                    <b>Fecha final:</b> 10/10/2020 <br />
-                    <b>Orden de inicio:</b> 950132835 <br />
-                    <b>Agrupación:</b> 26733-5926-0112/2021 <br />
+                    <b>Fecha inicio:</b> <%=
+                    curso.Date_inicio.toLocaleDateString() %> <br />
+                    <b>Fecha final:</b> <%= curso.Date_fin.toLocaleDateString()
+                    %> <br />
+                    <b>Orden de inicio:</b> <%= curso.Orden %> <br />
+                    <b>Agrupación:</b> <%= curso.Agrupacion %><br />
                   </p>
                 </div>
                 <div class="col-6">
                   <p>
-                    <b>Horario:</b> Sab. 10:00 AM - 12:00 md <br />
-                    <b>Costo Por alumno:</b> $42.47 <br />
-                    <b>Factura:</b> 15246-4 <br />
-                    <b>Profesor:</b> Karen Yasmin Flores <br />
+                    <b>Horario:</b> <%= curso.Horario %> <br />
+                    <b>Costo Por alumno:</b> $<%= curso.CostoAlumno %> <br />
+                    <b>Factura:</b> <%= curso.Factura %> <br />
+                    <b>Profesor:</b> <%= curso.instructor %> <br />
                   </p>
                 </div>
               </div>
@@ -44,68 +46,18 @@
     <div class="col-lg-12">
       <div class="card shadow mb-4">
         <div class="card-header py-3">
-          <h6 class="m-0 font-weight-bold text-primary">Empresas</h6>
+          <h6 class="m-0 font-weight-bold text-primary d-inline">Empresas</h6>
+          <button class="btn btn-sm btn-success d-inline float-right">
+            Agregar Empresa
+          </button>
         </div>
         <div class="card-body row">
-
-
-
-
-
-
+          <% data.forEach( (element) => { %>
 
           <div class="col-md-3">
             <div class="card shadow mb-3">
               <div class="card-body">
-                <h5>Aeromantenimiento, S.A.	</h5>
-                <button class="btn btn-sm btn-info">Documentos</button>
-
-              </div>
-            </div>
-          </div>
-          <div class="col-md-9">
-            <div class="card shadow mb-3">
-              <div class="card-body">
-                <h5 class="text-dark d-inline">Participantes</h5>
-                  <button class="btn btn-sm btn-success d-inline float-right">Agregar participante</button>
-                  <hr>
-                  <table class="table table-bordered"  width="100%" cellspacing="0">
-                    <thead>
-                      <tr>
-                        <th>DUI</th>
-                        <th>Participante</th>
-                        <th>Teléfono</th>
-                        <th>Email</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>05756113-8</td>
-                        <td>Franklin Alejandro López Ramírez</td>
-                        <td>78363690</td>
-                        <td>fral_98@outlook.com</td>
-                      </tr>
-                      <tr>
-                        <td>05756113-8</td>
-                        <td>Franklin Alejandro López Ramírez</td>
-                        <td>78363690</td>
-                        <td>fral_98@outlook.com</td>
-                      </tr>
-                      <tr>
-                        <td>05756113-8</td>
-                        <td>Franklin Alejandro López Ramírez</td>
-                        <td>78363690</td>
-                        <td>fral_98@outlook.com</td>
-                      </tr>
-                    </tbody>
-                  </table>
-              </div>
-            </div>
-          </div>    
-          <div class="col-md-3">
-            <div class="card shadow mb-3">
-              <div class="card-body">
-                <h5>Agroquímicas Industriales, S.A. de C.V.		</h5>
+                <h5><%= element.Empresa %></h5>
                 <button class="btn btn-sm btn-info">Documentos</button>
               </div>
             </div>
@@ -114,91 +66,38 @@
             <div class="card shadow mb-3">
               <div class="card-body">
                 <h5 class="text-dark d-inline">Participantes</h5>
-                  <button class="btn btn-sm btn-success d-inline float-right">Agregar participante</button>
-                  <hr>
-                  <table class="table table-bordered"  width="100%" cellspacing="0">
-                    <thead>
-                      <tr>
-                        <th>DUI</th>
-                        <th>Participante</th>
-                        <th>Teléfono</th>
-                        <th>Email</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>05756113-8</td>
-                        <td>Franklin Alejandro López Ramírez</td>
-                        <td>78363690</td>
-                        <td>fral_98@outlook.com</td>
-                      </tr>
-                      <tr>
-                        <td>05756113-8</td>
-                        <td>Franklin Alejandro López Ramírez</td>
-                        <td>78363690</td>
-                        <td>fral_98@outlook.com</td>
-                      </tr>
-                      <tr>
-                        <td>05756113-8</td>
-                        <td>Franklin Alejandro López Ramírez</td>
-                        <td>78363690</td>
-                        <td>fral_98@outlook.com</td>
-                      </tr>
-                    </tbody>
-                  </table>
-              </div>
-            </div>
-          </div>    
-          <div class="col-md-3">
-            <div class="card shadow mb-3">
-              <div class="card-body">
-                <h5>Asociación Salvadoreña de Extencionistas		</h5>
-                <button class="btn btn-sm btn-info">Documentos</button>
+                <button class="btn btn-sm btn-success d-inline float-right">
+                  Agregar participante
+                </button>
+                <hr />
+                <table
+                  class="table table-bordered"
+                  width="100%"
+                  cellspacing="0"
+                >
+                  <thead>
+                    <tr>
+                      <th>DUI</th>
+                      <th>Participante</th>
+                      <th>Teléfono</th>
+                      <th>Email</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% element.Alumnos.forEach( (alumno) => { %>
+                    <tr>
+                      <td><%= alumno.DUI %></td>
+                      <td><%= alumno.Nombre %></td>
+                      <td><%= alumno.Telefono %></td>
+                      <td><%= alumno.Email %></td>
+                    </tr>
+                    <% }); %>
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
-          <div class="col-md-9">
-            <div class="card shadow mb-3">
-              <div class="card-body">
-                <h5 class="text-dark d-inline">Participantes</h5>
-                  <button class="btn btn-sm btn-success d-inline float-right">Agregar participante</button>
-                  <hr>
-                  <table class="table table-bordered"  width="100%" cellspacing="0">
-                    <thead>
-                      <tr>
-                        <th>DUI</th>
-                        <th>Participante</th>
-                        <th>Teléfono</th>
-                        <th>Email</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>05756113-8</td>
-                        <td>Franklin Alejandro López Ramírez</td>
-                        <td>78363690</td>
-                        <td>fral_98@outlook.com</td>
-                      </tr>
-                      <tr>
-                        <td>05756113-8</td>
-                        <td>Franklin Alejandro López Ramírez</td>
-                        <td>78363690</td>
-                        <td>fral_98@outlook.com</td>
-                      </tr>
-                      <tr>
-                        <td>05756113-8</td>
-                        <td>Franklin Alejandro López Ramírez</td>
-                        <td>78363690</td>
-                        <td>fral_98@outlook.com</td>
-                      </tr>
-                    </tbody>
-                  </table>
-              </div>
-            </div>
-          </div>    
-
-
-
+          <% }); %>
         </div>
       </div>
     </div>

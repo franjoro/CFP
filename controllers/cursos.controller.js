@@ -60,32 +60,40 @@ cursos.cursosFinalizados = async (req, res) => {
 };
 
 cursos.curso_detalle = async (req, res) => {
+  //VALIDAR si la peticion trae un codigo de curso
   let curso = req.params.id;
   if (!curso) return res.status(400).json({ error: "ID_NOT_EXIST" });
+
   try {
+    //validar si este codigo existe
     let query = await pool.query(
       "SELECT COUNT(*) AS c FROM tb_cursos WHERE Codigo_curso = ?",
       [curso]
     );
     if (!query[0].c) return res.status(400).json({ error: "CURSO_NOT_EXIST" });
 
+    //Traer de bd Las empresas que estan matriculadas al curso y los alumnos asociados
     let empresas = await pool.query(
-      `SELECT tb_empresa.Nombre,tb_empresa.id_empresa FROM tb_empresa INNER JOIN union_curso_empresa ON tb_empresa.id_empresa = union_curso_empresa.id_empresa WHERE union_curso_empresa.id_curso = ? ;
-    SELECT tb_participante.DUI, tb_participante.Nombre, tb_participante.Telefono, tb_participante.Email, union_matricula.id_empresa FROM tb_participante  INNER JOIN union_matricula ON union_matricula.id_participante = tb_participante.DUI WHERE union_matricula.id_curso = ?
+      `SELECT tb_empresa.Nombre,tb_empresa.id_empresa AS codigo_empresa FROM tb_empresa INNER JOIN union_curso_empresa ON tb_empresa.id_empresa = union_curso_empresa.id_empresa WHERE union_curso_empresa.id_curso = ? ;
+    SELECT tb_participante.DUI, tb_participante.Nombre, tb_participante.Telefono, tb_participante.Email, union_matricula.id_empresa FROM tb_participante  INNER JOIN union_matricula ON union_matricula.id_participante = tb_participante.DUI WHERE union_matricula.id_curso = ? ;
+    SELECT  tb_cursos . Codigo_curso ,  tb_cursos . Nombre ,  tb_cursos . Date_inicio ,  tb_cursos . Date_fin ,  tb_cursos . Orden ,  tb_cursos . Agrupacion ,  tb_cursos . Horario ,  tb_cursos . CostoAlumno ,  tb_cursos . Factura ,  tb_instructor . Nombre AS instructor FROM  tb_instructor  INNER JOIN  tb_cursos  ON  tb_cursos . id_instructor  =  tb_instructor . DUI  WHERE tb_cursos . Codigo_curso  = ?  GROUP BY tb_cursos.Codigo_curso  
     `,
-      [curso, curso]
+     [curso,curso,curso]
     );
-
+    //Formatear la informacion para que existan los alumnos adentro de un objeto de empresas
     data = [];
-    empresas[0].forEach((element) => {
-      empresa = element.id_empresa;
-      empresas[1].forEach((element) => {
-          if(element.id_empresa === empresa) return console.log("La empresa es :"+empresa + "El nombre es : "+element.Nombre);
+    empresas[0].forEach((element, i) => {
+      let alumnos_array = [];
+      empresas[1].forEach((alumno) => {
+        if (alumno.id_empresa == element.codigo_empresa) {
+          alumnos_array.push(alumno);
+        }
       });
+      data[i] = { Empresa: element.Nombre, Alumnos: alumnos_array };
+      i++;
     });
-
-    res.json(data);
-    //res.render("./admin/curso_detalle");
+    //Responder
+    res.render("./admin/curso_detalle",{data ,curso: empresas[2][0]});
   } catch (error) {
     res.status(400).json(error);
   }

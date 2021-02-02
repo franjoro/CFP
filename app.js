@@ -38,6 +38,9 @@ app.use('/admin/cursos', require('./routes/cursos.router'))
 app.use('/',require('./routes/login.router'));
 
 
+//Router public
+app.use('/public',require('./routes/public.router'));
+
 
 // exportamos este módulo para poder usar la constiable app fuera de este archivo
 module.exports = app;

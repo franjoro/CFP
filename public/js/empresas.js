@@ -159,6 +159,9 @@ $(document).ready(function () {
     $("#id_contacto").val(id);
   } );
 
+
+
+
   $('#tableEmpresas tbody').on( 'click', '#btn_editar', function () {
     var data = $("#tableEmpresas").DataTable().row( $(this).parents('tr') ).data();
     $("#name_edit").val(data.Nombre);
