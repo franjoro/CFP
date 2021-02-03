@@ -42,5 +42,13 @@ app.use('/',require('./routes/login.router'));
 app.use('/public',require('./routes/public.router'));
 
 
+
+//Router Formulario de Habil
+app.use('/habil', require('./routes/habil.router'))
+
+
+
+
+
 // exportamos este módulo para poder usar la constiable app fuera de este archivo
 module.exports = app;

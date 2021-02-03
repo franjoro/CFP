@@ -18,7 +18,7 @@ cursos.main = async (req, res) => {
     res.status(400).json(error);
   }
 };
-
+//Renderizar pantalla de cursos ya con programa
 cursos.cursos = async (req, res) => {
   let programa = req.params.id;
   if (!programa) return res.status(400).json({ error: "ID_NOT_EXIST" });
@@ -62,6 +62,8 @@ cursos.cursosFinalizados = async (req, res) => {
 cursos.curso_detalle = async (req, res) => {
   //VALIDAR si la peticion trae un codigo de curso
   let curso = req.params.id;
+  let programa = req.params.programa;
+
   if (!curso) return res.status(400).json({ error: "ID_NOT_EXIST" });
 
   try {
@@ -93,9 +95,56 @@ cursos.curso_detalle = async (req, res) => {
       i++;
     });
     //Responder
-    res.render("./admin/curso_detalle",{data ,curso: empresas[2][0]});
+    res.render("./admin/curso_detalle",{data ,curso: empresas[2][0], programa});
   } catch (error) {
     res.status(400).json(error);
+  }
+};
+
+
+
+cursos.getInstructores = async (req, res) => {
+  let post_var = req.body.searchTerm,
+    query = `SELECT DUI AS id, Nombre AS text FROM tb_instructor order By Nombre LIMIT 5`;
+  if (post_var)
+    query = `SELECT DUI AS id, Nombre AS text FROM tb_instructor WHERE Nombre like '%${post_var}%' order By Nombre LIMIT 5`;
+  try {
+    data = await pool.query(query);
+    res.json({ results: data });
+  } catch (error) {
+    res.status(400).json({ error });
+  }
+};
+
+
+//agregar nuevo curso
+cursos.add = async (req, res, next) => {
+  if (!req.body.programa || ! req.body.codigo_curso || ! req.body.nombre)
+    return res.status(400).json({ status: false, error: "empty_programa" });
+
+  let data = [
+    req.body.codigo_curso,
+    req.body.nombre,
+    req.body.date_inicio.split("-").reverse().join("-"),
+    req.body.date_fin.split("-").reverse().join("-"),
+    req.body.agrupacion,
+    req.body.orden,
+    req.body.horario,
+    req.body.costo,
+    req.body.factura,
+    req.body.instructor,
+    req.body.programa
+  ];
+  console.log(data);
+  try {
+    await pool.query(
+      "INSERT INTO tb_cursos(Codigo_curso, Nombre, Date_inicio, Date_fin, Agrupacion, Orden, Horario, CostoAlumno, Factura, id_instructor, id_programa, Estado)  VALUES(?,?,?,?,?,?,?,?,?,?,?, 1)",
+      data
+    );
+    res.json({ status: true });
+  } catch (error) {
+    console.log(error)
+    return res.status(400).json({ status: false, error });
   }
 };
 

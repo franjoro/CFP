@@ -11,8 +11,13 @@ var router = express.Router();
 router.get("/",  cursos.main);
 router.get("/:id",  cursos.cursos);
 router.get("/finalizados/:id",  cursos.cursosFinalizados);
-router.get("/detalle/:id",  cursos.curso_detalle);
+router.get("/detalle/:id/:programa",  cursos.curso_detalle);
+router.post("/getInstructores",cursos.getInstructores);
+router.post("/add",cursos.add);
 
 
 // Exportamos la configuración
 module.exports = router;
+
+
+

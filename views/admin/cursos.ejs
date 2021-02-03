@@ -1,4 +1,10 @@
 <link rel="stylesheet" href="/static/vendor/datatables/datatables.min.css" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link
+href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css"
+rel="stylesheet"
+type="text/css"
+/>
 <%- include('../partials/header.admin.ejs'); %>
 <div class="container-fluid">
   
@@ -7,6 +13,7 @@
       <div class="card shadow mb-4">
         <div class="card-header py-3">
           <a href="/admin/cursos" class="btn btn-success btn-sm float-left d-inline"><i class="fas fa-arrow-left"></i></a>
+          <a data-toggle="modal" data-target="#insertar_modal" class="btn btn-success btn-sm float-right d-inline"><i class="fas fa-plus"></i>Agregar nuevo curso</a>
 
         </div>
         <div class="card-body">
@@ -25,7 +32,7 @@
             <h5>Cursos Activos:</h5>
             <% } %>
             <% for(var i=0; i<data.length; i++) {%>
-          <a href="/admin/cursos/detalle/<%= data[i].Codigo_curso %>">
+          <a href="/admin/cursos/detalle/<%= data[i].Codigo_curso %>/<%= programa %>  ">
             <div class="card shadow mb-3">
               <div class="card-body">
                   <h4 class="text-dark">Nombre: <%= data[i].Nombre %> </h4>
@@ -37,8 +44,7 @@
                    <%if(data[i].Estado == 1) {%> EN PREPARACIÓN <%}%>  
                    <%if(data[i].Estado == 2) {%> EN CURSO <%}%> 
                   </p>
-                  <button class="btn btn-warning float-right d-inline ml-1"> Editar </button>
-                  <button class="btn btn-success float-right d-inline"> Participantes</button>
+                  <!-- <button class="btn btn-success float-right d-inline"> Participantes</button> -->
               </div>
             </div>
           </a>
@@ -48,5 +54,85 @@
     </div>
   </div>
 </div>
+
+
+<!-- Modal Insertar -->
+<div class="modal fade" id="insertar_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog  modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">AGREGAR NUEVO CURSO</h5> 
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="form_curso">
+          <input type="hidden" name="programa" value="<%= programa%>">
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <label for="codigo_curso">Código de curso*</label>
+              <input type="text" class="form-control" required name="codigo_curso" id="codigo_curso" >
+            </div>
+            <div class="form-group col-md-8">
+              <label for="nombre">Nombre del curso*</label>
+              <input type="text" class="form-control" required name="nombre" id="nombre" >
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-3">
+              <label for="date_inicio">Fecha de inicio</label>
+              <input type="text" class="form-control" name="date_inicio" id="date_inicio" >
+            </div>
+            <div class="col-3">
+              <label for="date_fin">Fecha de finalización</label>
+              <input type="text" class="form-control" name="date_fin" id="date_fin" >
+            </div>
+            <div class="col-3">
+              <label for="orden">Orden de inicio</label>
+              <input type="text" class="form-control" name="orden" id="orden" >
+            </div>
+            <div class="col-3">
+              <label for="agrupacion">Agrupación</label>
+              <input type="text" class="form-control" name="agrupacion" id="agrupacion" >
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="horario">Horario</label>
+            <input type="text" class="form-control" name="horario" id="horario" placeholder="Sábado de 0:00 a 0:00">
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <label for="factura">Factura</label>
+              <input type="text" class="form-control" name="factura" id="factura" placeholder="000000">
+            </div>
+            <div class="form-group col-md-4">
+              <label for="instructor">Instructor</label>
+              <select id="instructor" name="instructor" class="form-control">
+                <option selected>Seleccionar instructor</option>
+                <option>...</option>
+              </select>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="costo">Costo Por alumno</label>
+              <input type="text" class="form-control" name="costo" id="costo" placeholder="$0.00">
+            </div>           
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-primary">Agregar curso</button>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- /.container-fluid -->
 <%- include('../partials/footer'); %>
+<script src="/static/js/jquery.mask.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<script src="/static/js/cursos.js"></script>
