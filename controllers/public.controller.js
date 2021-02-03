@@ -13,7 +13,6 @@ public.main = async (req, res) => {
     req.params.id
   );
   if (!data[0].cantidad) return res.redirect("/public/");
-  console.log(data[0].ImgPortada);
   res.render("./public_empresas/empresa", data[0]);
 };
 
