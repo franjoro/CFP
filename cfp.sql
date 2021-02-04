@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-01-2021 a las 21:59:38
+-- Tiempo de generación: 03-02-2021 a las 15:28:26
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.4.10
 
@@ -44,17 +44,25 @@ CREATE TABLE `archivo_empresa_curso` (
 CREATE TABLE `tb_cursos` (
   `Codigo_curso` varchar(15) COLLATE utf8_spanish_ci NOT NULL,
   `Nombre` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
-  `Descripcion` varchar(200) COLLATE utf8_spanish_ci NOT NULL,
   `Date_inicio` date NOT NULL,
   `Date_fin` date NOT NULL,
   `Agrupacion` varchar(50) COLLATE utf8_spanish_ci DEFAULT NULL,
   `Orden` varchar(50) COLLATE utf8_spanish_ci DEFAULT NULL,
   `Horario` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
-  `Image` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
+  `CostoAlumno` decimal(15,2) NOT NULL,
+  `Factura` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
   `Estado` int(11) NOT NULL,
   `id_instructor` varchar(10) COLLATE utf8_spanish_ci DEFAULT NULL,
   `id_programa` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `tb_cursos`
+--
+
+INSERT INTO `tb_cursos` (`Codigo_curso`, `Nombre`, `Date_inicio`, `Date_fin`, `Agrupacion`, `Orden`, `Horario`, `CostoAlumno`, `Factura`, `Estado`, `id_instructor`, `id_programa`) VALUES
+('ITR-FCOO-48', 'MICROSOFT EXCEL BÁSICO', '0000-00-00', '0000-00-00', '950132835', '26733-5926-0112/2021', 'Sábado de 2:00 pm a 6:00 pm', '42.47', '15246-4', 2, '79', 29),
+('ITR-FCOO-49', 'MICROSOFT EXCEL PARA FINANCIEROS', '2021-02-01', '2021-02-19', '950132835', '26733-5926-0112/2021', 'Sábado de 2:00 pm a 6:00 pm', '42.47', '15246-4', 1, '2', 29);
 
 -- --------------------------------------------------------
 
@@ -64,7 +72,7 @@ CREATE TABLE `tb_cursos` (
 
 CREATE TABLE `tb_empresa` (
   `id_empresa` int(11) NOT NULL,
-  `Nombre` varchar(40) COLLATE utf8_spanish_ci NOT NULL,
+  `Nombre` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
   `Direccion` varchar(150) COLLATE utf8_spanish_ci DEFAULT NULL,
   `Actividad_eco` varchar(150) COLLATE utf8_spanish_ci DEFAULT NULL,
   `Tel` varchar(20) COLLATE utf8_spanish_ci DEFAULT NULL,
@@ -77,13 +85,13 @@ CREATE TABLE `tb_empresa` (
 --
 
 INSERT INTO `tb_empresa` (`id_empresa`, `Nombre`, `Direccion`, `Actividad_eco`, `Tel`, `Nota`, `Estado`) VALUES
-(1, 'Academia Nacional de Seguridad Pública', 'Av. Melvin Jones, Edificio Edf. Ex Cetipol, La Libertad.', NULL, '2343-8431', NULL, 1),
-(2, 'ACOPACREMS de R.L.', '19 Avenida Norte, y 1° Calle Ponuente, N° 139.', NULL, '2511-4403', NULL, 1),
-(3, 'ACOPUS de R.L.', '27 Calle Poniente, N° 1348, San Salvador.', NULL, '2239-8900', NULL, 1),
+(1, 'Academia Nacional de Seguridad Pública', 'Av. Melvin Jones, Edificio Edf. Ex Cetipol, La Libertad.', '', '2343-8431', '', 0),
+(2, 'ACOPACREMS de R.L.', '19 Avenida Norte, y 1° Calle Ponuente, N° 139.', '', '2511-4403', '', 1),
+(3, 'ACOPUS de R.L.', '27 Calle Poniente, N° 1348, San Salvador.', '', '2239-8900', '', 1),
 (4, 'Administración Nacional de Acueductos y ', 'Col. Libertad, Avenida Don Bosco, Edificio Ex IVU, San Salvador.', NULL, '2247-2667', NULL, 1),
-(5, 'ADOC', '-', NULL, '2277-227\r\n2251-7118', NULL, 0),
-(6, 'Aeromantenimiento, S.A.', '-', NULL, '2312-4000', NULL, 0),
-(7, 'Agencia Nacional de Clavos y Anclajes, S', '-', NULL, '2526-8700', NULL, 0),
+(5, 'ADOC', '-', NULL, '2277-227\r\n2251-7118', NULL, 1),
+(6, 'Aeromantenimiento, S.A.', '-', NULL, '2312-4000', NULL, 1),
+(7, 'Agencia Nacional de Clavos y Anclajes, S', '-', NULL, '2526-8700', NULL, 1),
 (8, 'Agencia para el Desarrollo y la Salud Ag', '-', NULL, '2274-7139', NULL, 1),
 (9, 'Agroquímicas Industriales, S.A. de C.V.', 'Colonia Harrison, Final 49 Avenida Sur, N°16, San Salvador.', NULL, '2223-1111', NULL, 1),
 (10, 'Akqa El Salvador, S.A. de C.V.', '-', NULL, '7602-1944', NULL, 1),
@@ -437,11 +445,104 @@ CREATE TABLE `tb_empresa_contact` (
 CREATE TABLE `tb_instructor` (
   `DUI` varchar(10) COLLATE utf8_spanish_ci NOT NULL,
   `Nombre` varchar(40) COLLATE utf8_spanish_ci NOT NULL,
-  `Email` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
+  `Email` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `Telefono` varchar(10) COLLATE utf8_spanish_ci NOT NULL,
-  `Area_tecnica` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
-  `Estado` int(11) NOT NULL
+  `Estado` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `tb_instructor`
+--
+
+INSERT INTO `tb_instructor` (`DUI`, `Nombre`, `Email`, `Telefono`, `Estado`) VALUES
+('1', 'Ilvin Daniel Lķpez', 'daniel_lopez@ricaldone.edu.sv', '7036-0724', 1),
+('10', 'Maura Guadalupe Del Cid Magaņa', 'mdm011009@outlook.com', '7862-2512\r', 1),
+('11', 'Juan Miguel Bran Mejía', 'juan_bran@ricaldone.edu.sv', '7496-6904', 1),
+('12', 'Marco Antonio Andrade', 'marco_andrade@ricaldone.edu.sv', '7741-3711', 1),
+('13', 'Franklin Ricardo Centeno', 'franklincenteno@outlook.es', '7583-6955', 1),
+('14', 'Hernán Alvarado Benítez', 'hernan_alvarado@ricaldone.edu.sv', '7855-5910', 1),
+('15', 'Francisco Javier Soriano', 'sorianofj@gmail.com', '6198-9951', 1),
+('16', 'Margarita Lizbeth Hernández Alegría', 'margarita_hernandez@ricaldone.edu.sv', '7729-7658', 1),
+('17', 'Mayra Cristina Lovato de Portillo', 'mayra_lovato@ricaldone.edu.sv', '7662-1648', 1),
+('18', 'Raúl Armando Bermúdez', 'raul_bermudez@ricaldone.edu.sv', '7683-9708', 1),
+('19', 'Roxana Beatriz Castillo', 'rbcc1971@gmail.com', '7870-7858', 1),
+('2', 'Karen Yasmin Flores', 'karen_flores@ricaldone.edu.sv', '7683-1637', 1),
+('20', 'Alonso Orlando Henríquez Domínguez', 'alonso_herniquez@ricaldone.edu.sv', '7841-3116', 1),
+('21', 'Carlos Alfredo Fuentes Alas', 'carlos_fuentes@ricaldone.edu.sv', '7810-4319', 1),
+('22', 'Irma Carballo de Canjura', 'irma_carballo@ricaldone.edu.sv', '78870156', 1),
+('23', 'José Andrés Márquez Pacas', 'jose_marquez@ricaldone.edu.sv', '7646-6855', 1),
+('24', 'Karla Patricia Campos Portillo', 'karla_campos@ricaldone.edu.sv', '7180-7146', 1),
+('25', 'Laura Yamileth Bolaņos de Medina', 'laura_medina@ricaldone.edu.sv', '7973-2498', 1),
+('26', 'Rudy Alberto Flores Rodríguez', 'rudy_flores@ricaldone.edu.sv', '7851-0946', 1),
+('27', 'Ruth Floridalma Lara Meléndez', 'ruth_lara@ricaldone.edu.sv', '7958-5689', 1),
+('28', 'Jonathan Alexander Solís Morales', 'jonathan_solis@ricaldone.edu.sv', '78410557', 1),
+('29', 'Rubén Alfonso Pérez Navarro', 'ruben_perez@ricaldone.edu.sv', '77671804', 1),
+('3', 'Rodrigo José Rodríguez', 'rodrigo_rodriguez@ricaldone.edu.sv', '7928-6129', 1),
+('30', 'Julia Marleni Zarceņo Interiano', 'julia_zarceno@ricaldone.edu.sv', '7678-9866', 1),
+('31', 'Gertrudis Patricia Avilés de Morán', 'patricia_aviles@ricaldone.edu.sv', '7874-5276', 1),
+('32', 'Guillermo Ernesto Abarca', 'guillermo_abarca@ricaldone.edu.sv', '7192-4246', 1),
+('33', 'Nubia Jacqueline Bautista de Rubio', 'nubia1504@gmail.com', '7815-1200', 1),
+('34', 'Ķscar Vladimir Lķpez', 'oscarlopezcp@gmail.com', '7091-7783', 1),
+('35', 'Julio Ventura', 'imagencorp2210@gmail.com', '7469-6722', 1),
+('36', 'Mauricio Ernesto Torres Solķrzano', 'mauricioernestotorressolorzano@gmail.com', '6190-5139\r', 1),
+('37', 'Oscar Emilio Castellanos Herrera', 'oscar_castellanos@ricaldone.edu.sv', '7822-3004\r', 1),
+('38', 'Medardo Antonio Sanchez Saravia', 'medardo_sanchez@ricaldone.edu.sv', '7800-5085', 1),
+('39', 'José Oscar Cárcamo', 'jose_carcamo@ricaldone.edu.sv', '78875877', 1),
+('4', 'Vicente de Jesús Escobar Mozo', 'vicente_escobar@ricaldone.edu.sv', '7014-1278', 1),
+('40', 'Javier Neftali Jimenez', 'javierjim21@gmail.com', '7418-6932', 1),
+('41', 'Reina Margarita Cabrera de Ávalos', 'reina_cabrera@ricaldone.edu.sv', '7730-5393', 1),
+('42', 'Ramķn Rafael Váldez', 'valdiviadiez@gmail.com', '7345-3165', 1),
+('43', 'Ana Guadalupe Guzmán Hernández', 'anaguzher@gmail.com', '7755-4241', 1),
+('44', 'Ana Yensy Ortega Abarca', 'ana_ortega@ricaldone.edu.sv', '7802-2547', 1),
+('45', 'Bessy Guadalupe Siciliano Peņate', 'bessy_siciliano@ricaldone.edu.sv', '7051-8579', 1),
+('46', 'Edgar Wilfredo Ayala Alas', 'wilfredo_ayala@ricaldone.edu.sv', '7968-8103', 1),
+('47', 'Elías Alexander Marroquín Ardķn', 'alexandermarroquin01@gmail.com', '7832-1461', 1),
+('48', 'Francisco Marcelo Pereira Hernández', 'fmarcelopereira@gmail.com', '7272-5347', 1),
+('49', 'Gilberto Alexander Motto García', 'gmotto2015@gmail.com', '7870-0903', 1),
+('5', 'Roberto Edmundo Cabrera Guillén', 'roberto_cabrera@ricaldone.edu.sv', '7308-4190\r', 1),
+('50', 'Harold Herbert Henríquez Hurtado', 'harold.herbert2@hotmail.com', '7887-6574', 1),
+('51', 'Joaquin Antonio Cerna Peņa', 'joaquin.cerna@grupojcarquitectos.com', '7003-9660', 1),
+('52', 'Julio Ricardo Campos Bonilla', 'juliocamposb@gmail.com', '7672-8402', 1),
+('53', 'Marco Antonio Andrade Guerrero', 'tecmarcoantonio@gmail.com', '7741-3711', 1),
+('54', 'Nelson Alberto Miranda Alas', 'nm.nelsonmiranda@gmail.com', '7740-7371', 1),
+('55', 'Odilia Antonia González De Carrillo', 'odisalon@hotmail.com', '7696-4610', 1),
+('56', 'Victor Anibal Hernández Reyes', 'anibalreyes2000@gmail.com', '7110-1514', 1),
+('57', 'Vladimir Arturo Carrillo Calderķn', 'vladimircarrillocalderon@gmail.com', '7937-3315', 1),
+('58', 'Wilfredo Alexander Melgar Lķpez', 'melgar.wilfredo@gmail.com', '7976-3213', 1),
+('59', 'José Enrique Lķpez Martínez', 'enriquegraficos@gmail.com', '7510-6166', 1),
+('6', 'Marcos Orlando Rosa', 'marcos_rosa@ricaldone.edu.sv', '7459-9629', 1),
+('60', 'José Alfredo Flores Franco', 'alfredofranco503@gmail.com', '7909-0900', 1),
+('61', 'David Isaac Ramirez Zometa', 'david_ramirez@ricaldone.edu.sv', '7856-0895', 1),
+('62', 'William Ernesto Lķpez Herrera', 'welopez_0406@hotmail.com', '7746-2499', 1),
+('63', 'Oscar Emilio Castellanos Herrera', 'oscar_castellanos@ricaldone.edu.sv', '7822-3004', 1),
+('64', 'Roxana Beatriz Castillo', 'rbcc1971@gmail.com', '7870-7858', 1),
+('65', 'Ada Guadalupe Arias Hernández', 'ada_arias@ricaldone.edu.sv', '7924-7351', 1),
+('66', 'Balmore Nicolas Ramírez Pérez', 'balmore_ramirez@ricaldone.edu.sv', '7480-1748', 1),
+('67', 'Briselda del Carmen Lķpez Martínez', 'briselda_lopez@ricaldone.edu.sv', '7005-4230', 1),
+('68', 'Diana Julissa Moreno Mejía', 'diana_moreno@ricaldone.edu.sv', '7933-2902', 1),
+('69', 'Gabriela Maribel Alvarado de Figueroa', 'gabriela_alvarado@ricaldone.edu.sv', '7436-0666', 1),
+('7', 'José Luis Hernández Ayala', 'luis_hernandez@ricaldone.edu.sv', '7159-1643\r', 1),
+('70', 'Gertrudis Patricia Avilés de Morán', 'patricia_aviles@ricaldone.edu.sv', '7874-5276', 1),
+('71', 'Jacqueline Lisseth Pérez Lķpez', 'jackeline_perez@ricaldone.edu.sv', '7959-6336', 1),
+('72', 'Josselin Haydeé Miranda Alvarado', 'josselin_miranda@ricaldone.edu.sv', '7501-0412', 1),
+('73', 'Juan José Bonilla', 'juan_bonilla@ricaldone.edu.sv', '7337-2534', 1),
+('74', 'Juan Jose Santamaría Palacios', 'juan_santamaria@ricaldone.edu.sv', '7212-8512', 1),
+('75', 'Katherine Vanessa Lķpez de Beltrán', 'katherine_lopez@ricaldone.edu.sv', '6109-3452', 1),
+('76', 'Katherinne Alejandra Morán Del Cid', 'katherinne_moran@ricaldone.edu.sv', '7840-6229', 1),
+('77', 'Laura Yamileth Bolaņos de Medina', 'laura_medina@ricaldone.edu.sv', '7973-2498', 1),
+('78', 'Liliana Beatriz Guardado Constanza', 'liliana_guardado@ricaldone.edu.sv', '7498-6320', 1),
+('79', 'Melvin Rony Campos Rodríguez', 'melvin_campos@ricaldone.edu.sv', '7777-3082', 1),
+('8', 'Juan Balmore Henríquez', 'juan_henriquez@ricaldone.edu.sv', '7886-4830', 1),
+('80', 'Patricia Guadalupe Arias de Cruz', 'patricia_arias@ricaldone.edu.sv', '7747-4704', 1),
+('81', 'Patricia Haydeé Lemus de Chávez', 'patricia_lemus@ricaldone.edu.sv', '7497-5228', 1),
+('82', 'Reynaldo Daniel Elías Granados', 'reynaldo_elias@ricaldone.edu.sv', '7393-1722', 1),
+('83', 'Tania Vanessa Escobar Fortis', 'tania_escobar@ricaldone.edu.sv', '7185-1777', 1),
+('84', 'Ulises Antonio Méndez Méndez', 'ulises_mendez@ricaldone.edu.sv', '7953-9913', 1),
+('85', 'Katherine Alejandra González Alvarado', 'katherine_alvarado@ricaldone.edu.sv', '7652-2608', 1),
+('86', 'Zulma Guadalupe Ayala de Cines', 'zulma_ayala@ricaldone.edu.sv', '7124-3820', 1),
+('87', 'Jonathan Alexander Solís Morales', 'jonathan_solis@ricaldone.edu.sv', '7841-0557', 1),
+('88', 'Irma Carballo de Canjura', 'irma_carballo@ricaldone.edu.sv', '7887-0156', 1),
+('9', 'Wilfredo Alexander Melgar', 'melgar.wilfredo@gmail.com', '7976-3213', 1);
 
 -- --------------------------------------------------------
 
@@ -466,8 +567,36 @@ CREATE TABLE `tb_participante` (
   `DUI` varchar(10) COLLATE utf8_spanish_ci NOT NULL,
   `Nombre` varchar(40) COLLATE utf8_spanish_ci NOT NULL,
   `Telefono` varchar(10) COLLATE utf8_spanish_ci NOT NULL,
-  `Email` varchar(20) COLLATE utf8_spanish_ci NOT NULL
+  `Email` varchar(50) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `tb_participante`
+--
+
+INSERT INTO `tb_participante` (`DUI`, `Nombre`, `Telefono`, `Email`) VALUES
+('1', 'Jennifer Tatiana Menjivar Guerra', '-', 'jennifer.menjivar@vi'),
+('10', 'Glenda Xiomara Castro Canales', '-', 'glenda.castro@tigo.c'),
+('11', 'Jian Carlo Guzmán Ramírez', '-', 'jian.guzman@cr.tigo.'),
+('12', 'Oscar Alejandro Medina Calderķn', '-', 'oscar.medina@cr.tigo'),
+('13', 'Wendy Carolina Rivera Reyes', '-', 'wendy.rivera@cr.tigo'),
+('14', 'Julia Regina Wer Cabrera Novales', '-', 'julia.cabrera@fonavi'),
+('15', 'Saúl Antonio Floes Guardado', '-', 'saul.flores@fonavipo'),
+('16', 'Ernesto Antonio Quintanilla Iraheta', '-', 'ernesto.quintanilla@'),
+('17', 'Sara Beatriz Cuéllar Hernández', '-', 'sarita.cuellar23@gma'),
+('18', 'Sandra Elizabeth Campos de Lķpez', '-', 'sandra.campos@sv.inf'),
+('19', 'Elida Alejandra Murillo Durán', '-', 'elidamurillo369@gmai'),
+('2', 'José Antonio Zaldaņa Tiznado', '-', 'jose.tiznado@vidri.c'),
+('20', 'Jonathan Francisco Lķpez Molina', '-', 'Jonimolina78@gmail.c'),
+('21', 'William Alfredo Santamaría Orellana', '-', 'wilsantamaria.asc@gm'),
+('22', 'Daniel Enrique Guevara Hernández', '-', 'degh2186@gmail.com'),
+('3', 'Salvador Heriberto Quintanilla Orellana', '-', 'salquin201529@gmail.'),
+('4', 'Miguel Ángel Jarquín Blanco', '-', 'miguel_jarquin@rical'),
+('5', 'Diego Enrique García Orellana', '-', 'diego37314@yahoo.com'),
+('6', 'Melvin Renato Santos Guzmán', '-', 'omerino@cbc.co'),
+('7', 'Jeancarlo Antonio Marroquín', '-', 'Jeanmarroquin479@gma'),
+('8', 'Alexander Alfredo Cruz García', '-', 'ac7825130@gmail.com'),
+('9', 'Carlos Alberto Aguirre Bautista', '-', 'Carlos14bautista31@g');
 
 -- --------------------------------------------------------
 
@@ -487,10 +616,10 @@ CREATE TABLE `tb_programa` (
 --
 
 INSERT INTO `tb_programa` (`id_programa`, `Nombre`, `ImgPortada`, `Estado`) VALUES
-(22, 'Formación en el idioma inglés', '1611338873213_fi.jpeg', 1),
-(23, 'Proyecto Especial', '1611674513625_INSAFORP TRASNPARENTE Y RESPLANDOR.png', 1),
-(24, 'AT- Ofimática', '1611674537426_LOGO AT - resplandor.png', 1),
-(25, 'Inglés para el trabajo', '1611674552184_INGLÉS PARA EL TRABAJO_TRANSPARENTE.png', 1);
+(28, 'Proyecto Especial', '1611934869304_INSAFORP TRASNPARENTE Y RESPLANDOR.png', 1),
+(29, 'AT- Ofimática', '1611934877770_LOGO AT - resplandor.png', 1),
+(30, 'Inglés para el trabajo', '1611934886035_INGLÉS PARA EL TRABAJO_TRANSPARENTE.png', 1),
+(31, 'Formación en el idioma inglés', '1611934896676_fi.jpeg', 1);
 
 -- --------------------------------------------------------
 
@@ -513,8 +642,29 @@ CREATE TABLE `tb_usuarios` (
 
 INSERT INTO `tb_usuarios` (`id_usuario`, `Nombre`, `Email`, `Password`, `Role`, `Estado`) VALUES
 ('franklin_lopez', 'Franklin Alejandro López Ramírez', 'franklin_lopez@ricaldone.edu.sv', '$2b$10$jiwslBFJ9MUDJofdfx695uVz73dpkO6OM0MepEeq/ayGOfXS6cjpy', 1, 1),
-('gloria_perez', 'Gloria Haydeé Perez Navarrete', 'gloria_perez@ricaldone.edu.sv', '$2b$10$AaqRogDDBheVK1wGHKfRY.2MMt81qC3xrD.B.EZ70j.9cGQoyDcTm', 0, 1),
+('gloria_perez', 'Gloria Haydeé Perez Navarrete', 'gloria_perez@ricaldone.edu.sv', '$2b$10$IHC6KwqQJSWp9LkCice5W.iaDZcfnh0n8unM13yTceqUlGCfbnY1S', 1, 1),
 ('god', 'god', 'god@god.com', '$2b$10$BqYxZpWHgz1ArmwHveJueu4O/LTYYHzamPfKMsDgES2lQGpepC.nO', 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `union_curso_empresa`
+--
+
+CREATE TABLE `union_curso_empresa` (
+  `id_union` int(11) NOT NULL,
+  `id_empresa` int(11) NOT NULL,
+  `id_curso` varchar(15) COLLATE utf8_spanish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `union_curso_empresa`
+--
+
+INSERT INTO `union_curso_empresa` (`id_union`, `id_empresa`, `id_curso`) VALUES
+(1, 17, 'ITR-FCOO-48'),
+(2, 23, 'ITR-FCOO-48'),
+(3, 25, 'ITR-FCOO-48');
 
 -- --------------------------------------------------------
 
@@ -528,6 +678,16 @@ CREATE TABLE `union_matricula` (
   `id_curso` varchar(15) COLLATE utf8_spanish_ci NOT NULL,
   `id_empresa` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `union_matricula`
+--
+
+INSERT INTO `union_matricula` (`id_matricula`, `id_participante`, `id_curso`, `id_empresa`) VALUES
+(1, '4', 'ITR-FCOO-48', 17),
+(2, '16', 'ITR-FCOO-48', 17),
+(3, '18', 'ITR-FCOO-48', 23),
+(4, '10', 'ITR-FCOO-48', 17);
 
 -- --------------------------------------------------------
 
@@ -579,7 +739,8 @@ ALTER TABLE `tb_empresa_contact`
 -- Indices de la tabla `tb_instructor`
 --
 ALTER TABLE `tb_instructor`
-  ADD PRIMARY KEY (`DUI`);
+  ADD PRIMARY KEY (`DUI`),
+  ADD KEY `Estado` (`Estado`);
 
 --
 -- Indices de la tabla `tb_logs`
@@ -605,6 +766,14 @@ ALTER TABLE `tb_programa`
 --
 ALTER TABLE `tb_usuarios`
   ADD PRIMARY KEY (`id_usuario`);
+
+--
+-- Indices de la tabla `union_curso_empresa`
+--
+ALTER TABLE `union_curso_empresa`
+  ADD PRIMARY KEY (`id_union`),
+  ADD KEY `union_curso_empresa_ibfk_1` (`id_empresa`),
+  ADD KEY `union_curso_empresa_ibfk_2` (`id_curso`);
 
 --
 -- Indices de la tabla `union_matricula`
@@ -649,7 +818,19 @@ ALTER TABLE `tb_logs`
 -- AUTO_INCREMENT de la tabla `tb_programa`
 --
 ALTER TABLE `tb_programa`
-  MODIFY `id_programa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id_programa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+
+--
+-- AUTO_INCREMENT de la tabla `union_curso_empresa`
+--
+ALTER TABLE `union_curso_empresa`
+  MODIFY `id_union` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de la tabla `union_matricula`
+--
+ALTER TABLE `union_matricula`
+  MODIFY `id_matricula` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `union_programa_usuario`
@@ -686,6 +867,13 @@ ALTER TABLE `tb_empresa_contact`
 --
 ALTER TABLE `tb_logs`
   ADD CONSTRAINT `tb_logs_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `tb_usuarios` (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `union_curso_empresa`
+--
+ALTER TABLE `union_curso_empresa`
+  ADD CONSTRAINT `union_curso_empresa_ibfk_1` FOREIGN KEY (`id_empresa`) REFERENCES `tb_empresa` (`id_empresa`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `union_curso_empresa_ibfk_2` FOREIGN KEY (`id_curso`) REFERENCES `tb_cursos` (`Codigo_curso`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `union_matricula`
