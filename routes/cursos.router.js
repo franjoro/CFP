@@ -14,6 +14,8 @@ router.get("/finalizados/:id",  cursos.cursosFinalizados);
 router.get("/detalle/:id/:programa",  cursos.curso_detalle);
 router.post("/getInstructores",cursos.getInstructores);
 router.post("/add",cursos.add);
+router.post("/addEmpresaInCourse",cursos.addEmpresaCurso);
+
 
 
 // Exportamos la configuración

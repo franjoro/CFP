@@ -16,6 +16,8 @@
       type="text/css"
       href="https://cdn.datatables.net/v/bs4/dt-1.10.23/datatables.min.css"
     />
+    <link rel="stylesheet" href="/static/css/dropzone.min.css">
+
   </head>
   <body class="bg-gradient-light">
     <header
@@ -53,11 +55,20 @@
         <div class="col">
           <div class="card mb-4 shadow-sm">
             <div class="card-body">
+
+
               <div class="card mb-4 shadow-sm">
-                <a class="card-header" data-toggle="collapse" href="#collapseCardExample" aria-controls="collapseCardExample" aria-expanded="true" role="button">
-                  <h4 class="my-0 fw-normal">#1 Seleccionar empresa</h4>
+                <a
+                  href="#collpaseOne"
+                  class="d-block card-header py-3 text-dark"
+                  data-toggle="collapse"
+                  role="button"
+                  aria-expanded="true"
+                  aria-controls="collpaseOne"
+                >
+                  <h4 class="my-0 fw-normal">Paso #1 Seleccionar empresa</h4>
                 </a>
-                <div class="card-body collapse show" id="collapseCardExample">
+                <div class="card-body collapse show" id="collpaseOne">
                   <p class="text-dark">
                     <b>Instrucciones: </b>Buscar nombre de empresa
                   </p>
@@ -66,11 +77,19 @@
                   </select>
                 </div>
               </div>
+
               <div class="card mb-4 shadow-sm">
-                <div class="card-header">
-                  <h4 class="my-0 fw-normal">#2 Ingresar participantes</h4>
-                </div>
-                <div class="card-body">
+                <a
+                  href="#collapseTwo"
+                  class="card-header text-dark"
+                  data-toggle="collapse"
+                  role="button"
+                  aria-expanded="true"
+                  aria-controls="collapseTwo"
+                >
+                  <h4 class="my-0 fw-normal">Paso #2 Ingresar participantes</h4>
+                </a>
+                <div class="card-body collapse" id="collapseTwo">
                   <p class="text-dark">
                     <b>Instrucciones: </b>Rellenar la información de los
                     participantes que desea inscribir y verificar la información
@@ -100,14 +119,21 @@
                       <label for="tel">Email</label>
                       <input type="text" id="email" class="form-control" />
                     </div>
-                    <div class="col-8">
+
+                    <div class="col-4">
                       <label for="tel">Curso que desea tomar:</label>
                       <select class="custom-select" id="curso">
-                        <option value="ITR-FCOO-48">
-                          - MICROSOFT EXCEL BÁSICO-
-                        </option>
-                        <option value="1">- Buscar cursos -</option>
-                        <option value="2">- Buscar cursos -</option>
+                        <option value="ITR-FCOO-48">MICROSOFT EXCEL BÁSICO</option>
+                        <option value="ITR-FCOO-48">MICROSOFT EXCEL BÁSICO</option>
+                        <option value="ITR-FCOO-48">MICROSOFT EXCEL BÁSICO</option>
+                      </select>
+                    </div>
+                    <div class="col-4">
+                      <label for="genero">Género</label>
+                      <select class="custom-select" required id="genero">
+                        <option disabled selected>Seleccionar Género</option>
+                        <option value="1">Hombre</option>
+                        <option value="2">Mujer</option>
                       </select>
                     </div>
                   </div>
@@ -137,38 +163,46 @@
                     </thead>
                     <tbody></tbody>
                   </table>
-                </div>
+                </div> 
               </div>
+
+
               <div class="card mb-4 shadow-sm">
-                <div class="card-header">
-                  <h4 class="my-0 fw-normal">
-                    #3 Ingresar documentación correspondiente
-                  </h4>
-                </div>
-                <div class="card-body">
+                <a
+                  href="#collpasetres"
+                  class="d-block card-header py-3 text-dark"
+                  data-toggle="collapse"
+                  role="button"
+                  aria-expanded="true"
+                  aria-controls="collpasetres"
+                >
+                  <h4 class="my-0 fw-normal">Paso #3 Subir archivos</h4>
+                </a>
+                <div class="card-body collapse " id="collpasetres">
                   <p class="text-dark">
-                    <b>Instrucciones: </b>Buscar nombre de empresa
+                    <b>Instrucciones: </b>Adjuntar los siguientes archivos: 
+                    <ol>
+                      <li>Ficha de registro firmada y sellada. Puede descargar la plantilla aquí: <a href="/static/files/ANEXO 6 - FORMULARIO DE INSCRIPCIÓN.pdf" download="Plantilla_Anexo_6.pdf">DESCARGAR PLANTILLA</a> </li>
+                      <li>RECIBO DE INGRESO POR COTIZACIONES ISSS</li>
+                      <li>Recibo de cancelación ISSS (En caso que el pago fue hecho en línea)</li>
+                      <li>Planilla preelaborada para el pago mensual ISSS</li>
+                    </ol>
                   </p>
-                  <select class="custom-select" id="select_empresa">
-                    <option value="0">- Buscar empresa -</option>
-                  </select>
+                  <form action="/file-upload"
+                  class="dropzone"
+                  id="dropzone">
+                  <div class="dz-message" data-dz-message><span>Arrastra o haz click aquí para subir tus archivos</span></div>
+                </form>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-
       <footer class="pt-4 my-md-5 pt-md-5 border-top">
         <div class="row">
           <div class="col-12 col-md">
-            <img
-              class="mb-2"
-              src="/docs/5.0/assets/brand/bootstrap-logo.svg"
-              alt=""
-              width="24"
-              height="19"
-            />
+            <img class="mb-2" alt="" width="24" height="19" />
             <small class="d-block mb-3 text-muted">&copy; 2017-2021</small>
           </div>
           <div class="col-6 col-md">
@@ -215,5 +249,7 @@
     <script src="/static/js/jquery.mask.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <script src="/static/js/public.js"></script>
+    <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/js/dropzone.min.js"></script>
   </body>
 </html>

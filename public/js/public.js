@@ -6,8 +6,11 @@ errorMessage = () => {
   });
 };
 $(document).ready(function () {
+  //Mascaras para dui y telefono
   $("#dui").mask("00000000-0");
   $("#tel").mask("0000-0000");
+
+  //Select de empresas
   $("#select_empresa").select2({
     width: "100%",
     ajax: {
@@ -28,12 +31,12 @@ $(document).ready(function () {
           };
         });
       },
-
       cache: true,
     },
   });
 
-  let t = $("#tablaParticipantes").DataTable({
+  //Cargar tabla
+  $("#tablaParticipantes").DataTable({
     searching: false,
     paging: false,
     bInfo: false,
@@ -54,12 +57,41 @@ $(document).ready(function () {
     ) {
       return errorMessage();
     }
-
-    $("#tablaParticipantes")
-      .DataTable()
-      .row.add([dui, nombre, tel, email, curso_text, cursoCodigo ])
-      .draw();
-      $('input[type="text"]').val('');
-
+    data = [dui, nombre, tel, email, curso_text, cursoCodigo];
+    populateTable(data);
+    create_OR_storage_localstorage(data);
+    $('input[type="text"]').val("");
   });
+  //Llenar tabla
+  populateTable = (data) => {
+    $("#tablaParticipantes").DataTable().row.add(data).draw();
+  };
+
+  //Verificar si existe y llenar
+  CheckLocalstorage = () => {
+    let storage = localStorage.getItem("storage");
+    if(storage){
+      storage = JSON.parse(storage);
+      console.log(storage);
+      storage.forEach(element =>{
+        populateTable(element);
+      })
+    }
+    return;
+  };
+  CheckLocalstorage();
+  //Crear o almacenar localstorage
+  create_OR_storage_localstorage = (data) => {
+    let storage = localStorage.getItem("storage");
+    if (!storage) {
+      data_json = [data];
+      data_json = JSON.stringify(data_json);
+      return localStorage.setItem("storage", data_json);
+    }
+    storage = JSON.parse(storage);
+    storage.push(data);
+    storage = JSON.stringify(storage);
+    localStorage.clear();
+    localStorage.setItem("storage", storage);
+  };
 });

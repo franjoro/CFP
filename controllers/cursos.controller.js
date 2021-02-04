@@ -59,6 +59,8 @@ cursos.cursosFinalizados = async (req, res) => {
   }
 };
 
+
+
 cursos.curso_detalle = async (req, res) => {
   //VALIDAR si la peticion trae un codigo de curso
   let curso = req.params.id;
@@ -100,6 +102,10 @@ cursos.curso_detalle = async (req, res) => {
     res.status(400).json(error);
   }
 };
+
+
+
+
 
 
 
@@ -147,5 +153,34 @@ cursos.add = async (req, res, next) => {
     return res.status(400).json({ status: false, error });
   }
 };
+
+
+
+//agregar nueva empresa en curso
+cursos.addEmpresaCurso = async (req, res) => {
+  console.log(req.body);
+  if (!req.body.select_add_empresa || ! req.body.curso)
+    return res.status(400).json({ status: false, error: "empty_data" });
+
+  let data = [
+    req.body.select_add_empresa,
+    req.body.curso,
+  ];
+  try {
+    await pool.query(
+      "INSERT INTO union_curso_empresa(id_empresa, id_curso)  VALUES(?,?)",
+      data
+    );
+    res.json({ status: true });
+  } catch (error) {
+    console.log(error)
+    return res.status(400).json({ status: false, error });
+  }
+};
+
+
+
+
+
 
 module.exports = cursos;
