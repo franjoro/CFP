@@ -9,7 +9,6 @@ $(document).ready(function () {
   //Mascaras para dui y telefono
   $("#dui").mask("00000000-0");
   $("#tel").mask("0000-0000");
-
   //Select de empresas
   $("#select_empresa").select2({
     width: "100%",
@@ -47,8 +46,10 @@ $(document).ready(function () {
       nombre = $("#nombre").val(),
       tel = $("#tel").val(),
       email = $("#email").val(),
+      genero = $("#genero").val(),
       cursoCodigo = $("#curso").children("option:selected").val();
     curso_text = $("#curso").children("option:selected").text();
+
     if (
       validate.isEmpty(dui) ||
       validate.isEmpty(nombre) ||
@@ -57,7 +58,7 @@ $(document).ready(function () {
     ) {
       return errorMessage();
     }
-    data = [dui, nombre, tel, email, curso_text, cursoCodigo];
+    data = [dui, nombre, tel, email, curso_text, cursoCodigo, genero];
     populateTable(data);
     create_OR_storage_localstorage(data);
     $('input[type="text"]').val("");
@@ -66,16 +67,21 @@ $(document).ready(function () {
   populateTable = (data) => {
     $("#tablaParticipantes").DataTable().row.add(data).draw();
   };
+  //Borar tabla y localstorage
+  deleteTableAndLocal = () => {
+    $("#tablaParticipantes").DataTable().clear().draw();
+    localStorage.clear();
+  };
 
   //Verificar si existe y llenar
   CheckLocalstorage = () => {
     let storage = localStorage.getItem("storage");
-    if(storage){
+    if (storage) {
       storage = JSON.parse(storage);
       console.log(storage);
-      storage.forEach(element =>{
+      storage.forEach((element) => {
         populateTable(element);
-      })
+      });
     }
     return;
   };

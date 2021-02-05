@@ -9,6 +9,8 @@ var router = express.Router();
 // Creamos una ruta para los métodos que tenemos en nuestros controladores
 
 router.get("/",  participantes.main);
+router.get("/table",  participantes.loadTable);
+
 
 
 

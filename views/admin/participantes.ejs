@@ -1,0 +1,160 @@
+<link rel="stylesheet" href="/static/vendor/datatables/datatables.min.css">
+<%- include('../partials/header.admin.ejs'); %>
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 d-inline text-gray-800">Administración de participantes</h1>
+        <button type="button" class="btn btn-primary float-right d-inline" data-toggle="modal"
+            data-target="#exampleModal">+ Agregar participante</button>
+        <p class="mb-4 ">Directorio principal de participantes</p>
+
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Tabla de participantes</h6>
+
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="tableUsuario" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>DUI</th>
+                                <th>Nombre</th>
+                                <th>Tel.</th>
+                                <th>Email</th>
+                                <th>Género</th>
+                                <th>Opciones</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Ingresar-->
+    <div class="modal " id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Crear nuevo usuario</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" id="formparticipantes" >
+                        <div class="form-row">
+                            <div class="col">
+                                <label for="dui">DUI</label>
+                                <input type="text" id="dui" name="dui" required class="form-control" placeholder="0000000-0">
+                            </div>
+                            <div class="col">
+                                <label for="name">Nombre</label>
+                                <input type="text" id="name" name="name" required class="form-control"
+                                    placeholder="Nombre Completo">
+                            </div>
+                            <div class="col">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" required class="form-control"
+                                    placeholder="Correo Electrónico">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col">
+                                <label for="tel">Teléfono</label>
+                                <input type="text" id="tel" name="tel" required class="form-control"
+                                    placeholder="Nombre Completo">
+                            </div>
+                            <div class="col">
+                                <label for="name">Gémero</label>
+                                <select class="custom-select" required name="role" >
+                                    <option value="Hombre">Hombre</option>
+                                    <option value="Mujer">Mujer</option>
+                                </select>
+                            </div>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary" >
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+ <!-- Modal Editar-->
+ <div class="modal " id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+ aria-hidden="true">
+ <div class="modal-dialog modal-lg" role="document">
+     <div class="modal-content">
+         <div class="modal-header">
+             <h5 class="modal-title" id="exampleModalLabel">EDITAR USUARIO</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+             </button>
+         </div>
+         <div class="modal-body">
+             <form method="POST" id="formEdit" action="/admin/usuarios/add">
+                 <div class="form-row">
+
+                     <div class="col">
+                         <label for="email">Email</label>
+                         <input type="email" id="emailEdit" name="emailEdit" required class="form-control"
+                             placeholder="Correo Electrónico">
+                     </div>
+                 </div>
+                 <div class="form-row">
+                     <div class="col">
+                         <label for="name">Nombre</label>
+                         <input type="text" id="nameEdit" name="nameEdit" required class="form-control"
+                             placeholder="Nombre Completo">
+                     </div>
+                     <div class="col">
+                         <label for="name">Role Plataforma</label>
+                         <select class="custom-select" required id="RoleEdit" name="RoleEdit" >
+                             <option value="0">Coordinador</option>
+                             <option value="1">Administrador</option>
+                         </select>
+                     </div>
+                 </div>
+                 <div class="form-row">
+                    <div class="col">
+                        <label for="name">Contraseña</label>
+                        <input type="password" id="password" name="password"  class="form-control"
+                            placeholder="****">
+                    </div>
+                    <div class="col">
+                        <label for="name">Estado:</label>
+                        <select class="custom-select" required name="EstadoEdit" id="EstadoEdit">
+                            <option value="0">Desactivado</option>
+                            <option value="1">Activo</option>
+                        </select>
+                    </div>
+                </div>
+
+                    <input type="hidden" id="userEdit" name="userEdit"  class="form-control" placeholder="Usuario">
+         </div>
+         <div class="modal-footer">
+             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+             <input type="submit" class="btn btn-primary" >
+         </div>
+         </form>
+     </div>
+ </div>
+</div>
+
+
+
+    <!-- /.container-fluid -->
+    <%- include('../partials/footer'); %>
+        <!-- Page level plugins -->
+        <script src="/static/vendor/datatables/dataTables.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+        <!-- Page level custom scripts -->
+        <script src="/static/js/participantes.js"></script>
