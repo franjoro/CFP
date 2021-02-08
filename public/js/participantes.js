@@ -18,8 +18,8 @@ errorMessage = () => {
 };
 
 table = () => {
-  //DataTable Usuarios
-  $("#tableUsuario").DataTable({
+  //DataTable Participantes
+  $("#tableParticipantes").DataTable({
     ajax: "/admin/participantes/table",
     columns: [
       { data: "DUI" },
@@ -39,17 +39,18 @@ table = () => {
 };
 
 
-$("#formUsuarios").submit(async function (e) {
+$("#formparticipantes").submit(async function (e) {
   e.preventDefault();
   const t = $(this).serialize();
   loader();
   try {
-    await $.ajax({ url: "/admin/usuarios/add", type: "POST", data: t });
-    $("#tableUsuario").DataTable().destroy();
+    let data = await $.ajax({ url: "/admin/participantes/add", type: "POST", data: t });
+    $("#tableParticipantes").DataTable().destroy();
     table();
     swal.close();
+    console.log(data)
     $("#exampleModal").modal("toggle");
-    $("#formUsuarios")[0].reset();
+  //  $("#formparticipantes")[0].reset();
   } catch (error) {
     swal.close();
     console.log(error.responseJSON.error);
@@ -64,9 +65,9 @@ $("#formEdit").submit(async function (e) {
   const t = $(this).serialize();
   loader();
   try {
-    let query = await $.ajax({ url: "/admin/usuarios/edit", type: "POST", data: t });
+    let query = await $.ajax({ url: "/admin/participantes/edit", type: "PUT", data: t });
     console.log(query);
-    $("#tableUsuario").DataTable().destroy();
+    $("#tableParticipantes").DataTable().destroy();
     table();
     swal.close();
     $("#editModal").modal("toggle");
@@ -80,12 +81,11 @@ $("#formEdit").submit(async function (e) {
 
 $(document).ready(function () {
   table();
-  $('#tableUsuario tbody').on( 'click', 'button', function () {
-    var data = $("#tableUsuario").DataTable().row( $(this).parents('tr') ).data();
-    $("#userEdit").val(data.id_usuario);
+  $('#tableParticipantes tbody').on( 'click', 'button', function () {
+    var data = $("#tableParticipantes").DataTable().row( $(this).parents('tr') ).data();
+    $("#duiEdit").val(data.DUI);
     $("#emailEdit").val(data.Email);
     $("#nameEdit").val(data.Nombre);
-    $('#EstadoEdit').val(data.Estado);
-    $('#RoleEdit').val(data.Role);
+    $('#telEdit').val(data.Telefono);
   } );
 });

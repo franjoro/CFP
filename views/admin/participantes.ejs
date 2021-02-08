@@ -16,7 +16,7 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered" id="tableUsuario" width="100%" cellspacing="0">
+                    <table class="table table-bordered" id="tableParticipantes" width="100%" cellspacing="0">
                         <thead>
                             <tr>
                                 <th>DUI</th>
@@ -45,7 +45,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form method="POST" id="formparticipantes" >
+                    <form id="formparticipantes" >
                         <div class="form-row">
                             <div class="col">
                                 <label for="dui">DUI</label>
@@ -66,11 +66,11 @@
                             <div class="col">
                                 <label for="tel">Teléfono</label>
                                 <input type="text" id="tel" name="tel" required class="form-control"
-                                    placeholder="Nombre Completo">
+                                    placeholder="0000-0000">
                             </div>
                             <div class="col">
-                                <label for="name">Gémero</label>
-                                <select class="custom-select" required name="role" >
+                                <label for="name">Género</label>
+                                <select class="custom-select" required name="genero" >
                                     <option value="Hombre">Hombre</option>
                                     <option value="Mujer">Mujer</option>
                                 </select>
@@ -94,21 +94,13 @@
  <div class="modal-dialog modal-lg" role="document">
      <div class="modal-content">
          <div class="modal-header">
-             <h5 class="modal-title" id="exampleModalLabel">EDITAR USUARIO</h5>
+             <h5 class="modal-title" id="exampleModalLabel">EDITAR PARTICIPANTE</h5>
              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                  <span aria-hidden="true">&times;</span>
              </button>
          </div>
          <div class="modal-body">
-             <form method="POST" id="formEdit" action="/admin/usuarios/add">
-                 <div class="form-row">
-
-                     <div class="col">
-                         <label for="email">Email</label>
-                         <input type="email" id="emailEdit" name="emailEdit" required class="form-control"
-                             placeholder="Correo Electrónico">
-                     </div>
-                 </div>
+             <form  id="formEdit">
                  <div class="form-row">
                      <div class="col">
                          <label for="name">Nombre</label>
@@ -116,29 +108,17 @@
                              placeholder="Nombre Completo">
                      </div>
                      <div class="col">
-                         <label for="name">Role Plataforma</label>
-                         <select class="custom-select" required id="RoleEdit" name="RoleEdit" >
-                             <option value="0">Coordinador</option>
-                             <option value="1">Administrador</option>
-                         </select>
+                         <label for="email">Email</label>
+                         <input type="email" id="emailEdit" name="emailEdit" required class="form-control"
+                             placeholder="Correo Electrónico">
                      </div>
+                     <div class="col">
+                        <label for="tel">tel</label>
+                        <input type="tel" id="telEdit" name="telEdit" required class="form-control"
+                            placeholder="Correo Electrónico">
+                    </div>
                  </div>
-                 <div class="form-row">
-                    <div class="col">
-                        <label for="name">Contraseña</label>
-                        <input type="password" id="password" name="password"  class="form-control"
-                            placeholder="****">
-                    </div>
-                    <div class="col">
-                        <label for="name">Estado:</label>
-                        <select class="custom-select" required name="EstadoEdit" id="EstadoEdit">
-                            <option value="0">Desactivado</option>
-                            <option value="1">Activo</option>
-                        </select>
-                    </div>
-                </div>
-
-                    <input type="hidden" id="userEdit" name="userEdit"  class="form-control" placeholder="Usuario">
+                    <input type="hidden" id="duiEdit" name="duiEdit"  class="form-control" placeholder="Usuario">
          </div>
          <div class="modal-footer">
              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

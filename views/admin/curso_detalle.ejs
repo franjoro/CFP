@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="/static/vendor/datatables/datatables.min.css" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link
   href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css"
   rel="stylesheet"
@@ -15,7 +16,7 @@
             class="btn btn-success btn-sm float-left d-inline"
             ><i class="fas fa-arrow-left"></i
           ></a>
-          <button class="btn btn-warning btn-sm float-right d-inline">
+          <button class="btn btn-warning btn-sm float-right d-inline" data-toggle="modal" data-target="#modificar_modal">
             Editar
           </button>
         </div>
@@ -71,6 +72,7 @@
               <div class="card-body">
                 <h5><%= element.Empresa %></h5>
                 <button class="btn btn-sm btn-info">Documentos</button>
+                <button class="btn btn-sm btn-danger" onclick="desasociarEmpresa('<%= element.id %>', '<%= curso.Codigo_curso %>')"> Eliminar</button>
               </div>
             </div>
           </div>
@@ -78,7 +80,7 @@
             <div class="card shadow mb-3">
               <div class="card-body">
                 <h5 class="text-dark d-inline">Participantes</h5>
-                <button class="btn btn-sm btn-success d-inline float-right">
+                <button class="btn btn-sm btn-success d-inline  float-right" onclick="agregarParticipante('<%= element.id %>')">
                   Agregar participante
                 </button>
                 <hr />
@@ -154,9 +156,128 @@
     </div>
   </div>
 </div>
+<!-- Modal editar curso -->
+<div class="modal fade" id="modificar_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog  modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">EDITAR CURSO </h5> 
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="form_editar">
+          <input type="hidden" name="id" value="<%= curso.Codigo_curso%>">
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label for="nombre">Nombre del curso*</label>
+              <input type="text" class="form-control" value="<%= curso.Nombre %>" required name="nombre" id="nombre" >
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-3">
+              <label for="date_inicio">Fecha de inicio</label>
+              <input type="text" class="form-control" value="<%= curso.Date_inicio.toLocaleDateString() %>" name="date_inicio" id="date_inicio" >
+            </div>
+            <div class="col-3">
+              <label for="date_fin">Fecha de finalización</label>
+              <input type="text" class="form-control" value="<%= curso.Date_fin.toLocaleDateString() %>" name="date_fin" id="date_fin" >
+            </div>
+            <div class="col-3">
+              <label for="orden">Orden de inicio</label>
+              <input type="text" class="form-control" name="orden" value="<%= curso.Orden %> " id="orden" >
+            </div>
+            <div class="col-3">
+              <label for="agrupacion">Agrupación</label>
+              <input type="text" class="form-control" name="agrupacion" value="<%= curso.Agrupacion %> " id="agrupacion" >
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="horario">Horario</label>
+            <input type="text" class="form-control" name="horario" value="<%= curso.Horario %> " id="horario" placeholder="Sábado de 0:00 a 0:00">
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="factura">Factura</label>
+              <input type="text" class="form-control" name="factura" value="<%= curso.Factura %> " id="factura" placeholder="000000">
+            </div>
+            <div class="form-group col-md-6">
+              <label for="costo">Costo Por alumno</label>
+              <input type="text" class="form-control" name="costo" value="<%= curso.CostoAlumno %>" id="costo" placeholder="$0.00">
+            </div>           
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-primary">Editar curso</button>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+    <!-- Modal Ingresar participante-->
+    <div class="modal " id="modal_participante" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Crear nuevo participante</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formparticipantes" >
+                        <div class="form-row">
+                            <div class="col">
+                                <label for="dui">DUI</label>
+                                <input type="text" id="dui" name="dui" required class="form-control" placeholder="0000000-0">
+                            </div>
+                            <div class="col">
+                                <label for="name">Nombre</label>
+                                <input type="text" id="name" name="name" required class="form-control"
+                                    placeholder="Nombre Completo">
+                            </div>
+                            <div class="col">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" required class="form-control"
+                                    placeholder="Correo Electrónico">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col">
+                                <label for="tel">Teléfono</label>
+                                <input type="text" id="tel" name="tel" required class="form-control"
+                                    placeholder="0000-0000">
+                            </div>
+                            <div class="col">
+                                <label for="name">Género</label>
+                                <select class="custom-select" required name="genero" >
+                                    <option value="Hombre">Hombre</option>
+                                    <option value="Mujer">Mujer</option>
+                                </select>
+                            </div>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary" >
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
 
 <!-- /.container-fluid -->
 <%- include('../partials/footer'); %>
+<script src="/static/js/jquery.mask.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 <script src="/static/js/curso_detalle.js"></script>

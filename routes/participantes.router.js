@@ -10,6 +10,11 @@ var router = express.Router();
 
 router.get("/",  participantes.main);
 router.get("/table",  participantes.loadTable);
+router.get("/get/:dui?*",  participantes.getByDUI);
+router.post("/add",  participantes.add);
+router.put("/edit",  participantes.edit);
+
+
 
 
 

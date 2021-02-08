@@ -12,7 +12,6 @@ cursos.main = async (req, res) => {
     let query = await pool.query(
       "SELECT id_programa AS id, Nombre , ImgPortada, (SELECT COUNT(*) FROM tb_cursos WHERE id_programa = tb_programa.id_programa ) AS cantidad FROM tb_programa WHERE Estado = 1 "
     );
-    console.log(query);
     res.render("./admin/programas.cursos.ejs", { query });
   } catch (error) {
     res.status(400).json(error);
@@ -59,8 +58,6 @@ cursos.cursosFinalizados = async (req, res) => {
   }
 };
 
-
-
 cursos.curso_detalle = async (req, res) => {
   //VALIDAR si la peticion trae un codigo de curso
   let curso = req.params.id;
@@ -82,7 +79,7 @@ cursos.curso_detalle = async (req, res) => {
     SELECT tb_participante.DUI, tb_participante.Nombre, tb_participante.Telefono, tb_participante.Email, union_matricula.id_empresa FROM tb_participante  INNER JOIN union_matricula ON union_matricula.id_participante = tb_participante.DUI WHERE union_matricula.id_curso = ? ;
     SELECT  tb_cursos . Codigo_curso ,  tb_cursos . Nombre ,  tb_cursos . Date_inicio ,  tb_cursos . Date_fin ,  tb_cursos . Orden ,  tb_cursos . Agrupacion ,  tb_cursos . Horario ,  tb_cursos . CostoAlumno ,  tb_cursos . Factura ,  tb_instructor . Nombre AS instructor FROM  tb_instructor  INNER JOIN  tb_cursos  ON  tb_cursos . id_instructor  =  tb_instructor . DUI  WHERE tb_cursos . Codigo_curso  = ?  GROUP BY tb_cursos.Codigo_curso  
     `,
-     [curso,curso,curso]
+      [curso, curso, curso]
     );
     //Formatear la informacion para que existan los alumnos adentro de un objeto de empresas
     data = [];
@@ -93,21 +90,19 @@ cursos.curso_detalle = async (req, res) => {
           alumnos_array.push(alumno);
         }
       });
-      data[i] = { Empresa: element.Nombre, Alumnos: alumnos_array };
+      data[i] = { id: element.codigo_empresa, Empresa: element.Nombre, Alumnos: alumnos_array };
       i++;
     });
     //Responder
-    res.render("./admin/curso_detalle",{data ,curso: empresas[2][0], programa});
+    res.render("./admin/curso_detalle", {
+      data,
+      curso: empresas[2][0],
+      programa,
+    });
   } catch (error) {
     res.status(400).json(error);
   }
 };
-
-
-
-
-
-
 
 cursos.getInstructores = async (req, res) => {
   let post_var = req.body.searchTerm,
@@ -122,10 +117,9 @@ cursos.getInstructores = async (req, res) => {
   }
 };
 
-
 //agregar nuevo curso
 cursos.add = async (req, res, next) => {
-  if (!req.body.programa || ! req.body.codigo_curso || ! req.body.nombre)
+  if (!req.body.programa || !req.body.codigo_curso || !req.body.nombre)
     return res.status(400).json({ status: false, error: "empty_programa" });
 
   let data = [
@@ -139,9 +133,8 @@ cursos.add = async (req, res, next) => {
     req.body.costo,
     req.body.factura,
     req.body.instructor,
-    req.body.programa
+    req.body.programa,
   ];
-  console.log(data);
   try {
     await pool.query(
       "INSERT INTO tb_cursos(Codigo_curso, Nombre, Date_inicio, Date_fin, Agrupacion, Orden, Horario, CostoAlumno, Factura, id_instructor, id_programa, Estado)  VALUES(?,?,?,?,?,?,?,?,?,?,?, 1)",
@@ -149,23 +142,17 @@ cursos.add = async (req, res, next) => {
     );
     res.json({ status: true });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     return res.status(400).json({ status: false, error });
   }
 };
 
-
-
 //agregar nueva empresa en curso
 cursos.addEmpresaCurso = async (req, res) => {
-  console.log(req.body);
-  if (!req.body.select_add_empresa || ! req.body.curso)
+  if (!req.body.select_add_empresa || !req.body.curso)
     return res.status(400).json({ status: false, error: "empty_data" });
 
-  let data = [
-    req.body.select_add_empresa,
-    req.body.curso,
-  ];
+  let data = [req.body.select_add_empresa, req.body.curso];
   try {
     await pool.query(
       "INSERT INTO union_curso_empresa(id_empresa, id_curso)  VALUES(?,?)",
@@ -173,12 +160,60 @@ cursos.addEmpresaCurso = async (req, res) => {
     );
     res.json({ status: true });
   } catch (error) {
-    console.log(error)
+    console.log(error);
+    return res.status(400).json({ status: false, error });
+  }
+};
+
+cursos.deleteEmpresaCurso = async (req, res) => {
+  if (!req.body.id_empresa || !req.body.id_curso)
+    return res.json({ status: false, error: "EMPTY_PARAMS" });
+  try {
+    data = [
+      req.body.id_empresa,
+      req.body.id_curso,
+      req.body.id_empresa,
+      req.body.id_curso,
+    ];
+    await pool.query(
+      `DELETE FROM union_curso_empresa WHERE id_empresa = ? AND id_curso = ? ;    
+     DELETE FROM union_matricula WHERE id_empresa = ? AND id_curso = ? 
+      `,
+      data
+    );
+    res.status(200).json({ status: true });
+  } catch (error) {
     return res.status(400).json({ status: false, error });
   }
 };
 
 
+
+cursos.edit = async (req, res) => {
+  console.log(req.body);
+  try {
+    if ( !req.body.id ) throw "EMPTY_ID";
+    let data = [
+      req.body.nombre,
+      req.body.date_inicio.split("-").reverse().join("-"),
+      req.body.date_fin.split("-").reverse().join("-"),
+      req.body.agrupacion,
+      req.body.orden,
+      req.body.horario,
+      req.body.costo,
+      req.body.factura,
+      req.body.id
+    ];
+    statment =
+      "UPDATE tb_cursos SET Nombre = ? ,Date_inicio = ?, Date_fin = ?,  Agrupacion =  ? , Orden = ?, Horario = ?, CostoAlumno = ?, Factura = ? WHERE Codigo_curso = ? ";
+    let query = await pool.query(statment, data);
+    res.status(200).json({status:true });
+  } catch (err) {
+    if (err)
+    console.log(err)
+    res.status(400).json({status: false, error: err});
+  }
+};
 
 
 
