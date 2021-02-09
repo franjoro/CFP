@@ -19,6 +19,8 @@ loader = () => {
 };
 
 $(document).ready(function () {
+  $("#dui").mask("00000000-0");
+  $("#tel").mask("0000-0000");
   $("#costo").mask("000,000,000,000,000.00", { reverse: true });
   $("#date_inicio").datepicker({ dateFormat: "dd-mm-yy" });
   $("#date_fin").datepicker({ dateFormat: "dd-mm-yy" });
@@ -121,11 +123,15 @@ $(document).ready(function () {
     }
   };
 
+  let global_estado_participante = false,
+    global_empresa;
+
   $("#dui").blur(async function () {
-    data  = await $.ajax({url: `/admin/participantes/get/${ $(this).val() }` } );
-    console.log(data.data[0])
+    global_estado_participante = false;
+    data = await $.ajax({ url: `/admin/participantes/get/${$(this).val()}` });
     try {
-      if(data.status){
+      if (data.status) {
+        global_estado_participante = true;
         values = data.data[0];
         $("#name").val(values.Nombre);
         $("#email").val(values.Email);
@@ -133,12 +139,49 @@ $(document).ready(function () {
         $("#genero").val(values.Genero);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-
   });
 
   agregarParticipante = (empresa) => {
+    global_empresa = empresa;
     $("#modal_participante").modal("show");
   };
+  //Agregar nuevo participante
+  $("#formparticipantes").submit(async function (e) {
+    e.preventDefault();
+    const t = $(this).serialize();
+    loader();
+    let curso = $("#curso").text(),
+      dui_existente = $("#dui").val(),
+      empresa = global_empresa;
+    try {
+      console.log(global_estado_participante)
+      if (global_estado_participante) {
+         await $.ajax({
+          url: "/admin/cursos/matricula",
+          type: "POST",
+          data: { participante: dui_existente, curso, empresa },
+        });
+      }else
+      {
+        await $.ajax({
+          url: "/admin/participantes/add",
+          type: "POST",
+          data: t,
+        });
+        await $.ajax({
+          url: "/admin/cursos/matricula",
+          type: "POST",
+          data: { participante: dui_existente, curso, empresa },
+        });
+      }
+      swal.close();
+      location.reload();
+    } catch (error) {
+      swal.close();
+      console.log(error);
+      errorMessage();
+    }
+  });
 });

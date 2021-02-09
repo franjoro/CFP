@@ -63,6 +63,7 @@ participantes.edit = async (req, res) => {
 
 participantes.getByDUI  = async (req,res) =>{
  const dui = req.params.dui;
+ console.log(dui);
  if(!dui) return res.status(400).json({status: false, error: "EMPTY_DUI"});
   try {
     const query = await pool.query("SELECT * FROM tb_participante WHERE DUI= ? ",dui)

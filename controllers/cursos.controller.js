@@ -90,7 +90,11 @@ cursos.curso_detalle = async (req, res) => {
           alumnos_array.push(alumno);
         }
       });
-      data[i] = { id: element.codigo_empresa, Empresa: element.Nombre, Alumnos: alumnos_array };
+      data[i] = {
+        id: element.codigo_empresa,
+        Empresa: element.Nombre,
+        Alumnos: alumnos_array,
+      };
       i++;
     });
     //Responder
@@ -187,12 +191,10 @@ cursos.deleteEmpresaCurso = async (req, res) => {
   }
 };
 
-
-
 cursos.edit = async (req, res) => {
   console.log(req.body);
   try {
-    if ( !req.body.id ) throw "EMPTY_ID";
+    if (!req.body.id) throw "EMPTY_ID";
     let data = [
       req.body.nombre,
       req.body.date_inicio.split("-").reverse().join("-"),
@@ -202,20 +204,33 @@ cursos.edit = async (req, res) => {
       req.body.horario,
       req.body.costo,
       req.body.factura,
-      req.body.id
+      req.body.id,
     ];
     statment =
       "UPDATE tb_cursos SET Nombre = ? ,Date_inicio = ?, Date_fin = ?,  Agrupacion =  ? , Orden = ?, Horario = ?, CostoAlumno = ?, Factura = ? WHERE Codigo_curso = ? ";
     let query = await pool.query(statment, data);
-    res.status(200).json({status:true });
+    res.status(200).json({ status: true });
   } catch (err) {
-    if (err)
-    console.log(err)
-    res.status(400).json({status: false, error: err});
+    if (err) console.log(err);
+    res.status(400).json({ status: false, error: err });
   }
 };
 
-
-
+//agregar nueva matricula
+cursos.matricula = async (req, res) => {
+  if (!req.body.participante || !req.body.empresa || !req.body.curso)
+    return res.status(400).json({ status: false, error: "empty_data" });
+  let data = [req.body.participante, req.body.curso , req.body.empresa];
+  try {
+    await pool.query(
+      "INSERT INTO union_matricula( id_participante ,id_curso , id_empresa)  VALUES(?,?, ? )",
+      data
+    );
+    res.json({ status: true });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ status: false, error });
+  }
+};
 
 module.exports = cursos;

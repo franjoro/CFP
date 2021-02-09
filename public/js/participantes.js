@@ -80,6 +80,10 @@ $("#formEdit").submit(async function (e) {
 });
 
 $(document).ready(function () {
+  $("#dui").mask("00000000-0");
+  $("#tel").mask("0000-0000");
+
+  
   table();
   $('#tableParticipantes tbody').on( 'click', 'button', function () {
     var data = $("#tableParticipantes").DataTable().row( $(this).parents('tr') ).data();

@@ -19,17 +19,13 @@ router.get("/detalle/:id/:programa",  cursos.curso_detalle);
 router.post("/getInstructores",cursos.getInstructores);
 //Agregar un nuevo curso
 router.post("/add",cursos.add);
-//Asocia empresa a un curso
-router.put("/edit",cursos.edit);
+//Agrega la asociación de participante en empresa y curso
+router.post("/matricula", cursos.matricula);
 //Asocia empresa a un curso
 router.post("/addEmpresaInCourse",cursos.addEmpresaCurso);
 //Elimina la asociacion de una empresa en un curso
 router.delete("/deleteEmpresaInCourse",cursos.deleteEmpresaCurso);
-//Agrega la asociación de participante en empresa y curso
-
-
+//Asocia empresa a un curso
+router.put("/edit",cursos.edit);
 // Exportamos la configuración
 module.exports = router;
-
-
-

@@ -225,7 +225,8 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Crear nuevo participante</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Crear o seleccionar nuevo participante Curso: <label id="curso"><%= curso.Codigo_curso %>  </label> </h5>
+                      
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -256,7 +257,7 @@
                             </div>
                             <div class="col">
                                 <label for="name">Género</label>
-                                <select class="custom-select" required name="genero" >
+                                <select class="custom-select" required name="genero" id="genero" >
                                     <option value="Hombre">Hombre</option>
                                     <option value="Mujer">Mujer</option>
                                 </select>
