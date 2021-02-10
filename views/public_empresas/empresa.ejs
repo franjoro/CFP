@@ -1,157 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Pricing example · Bootstrap v5.0</title>
 
-    <link href="/static/css/sb-admin-2.min.css" rel="stylesheet" />
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css"
-      rel="stylesheet"
-      type="text/css"
-    />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://cdn.datatables.net/v/bs4/dt-1.10.23/datatables.min.css"
-    />
-    <link rel="stylesheet" href="/static/css/dropzone.min.css">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pricing example · Bootstrap v5.0</title>
 
-  </head>
-  <body class="bg-gradient-light">
-    <header
-      class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm"
-    >
-      <b>Programa: </b> <%= Nombre %>
-      <!-- <p class="h5 my-0 me-md-auto fw-normal">Company name</p>
-      <nav class="my-2 my-md-0 me-md-3">
-        <a class="p-2 text-dark" href="#">Features</a>
-        <a class="p-2 text-dark" href="#">Enterprise</a>
-        <a class="p-2 text-dark" href="#">Support</a>
-        <a class="p-2 text-dark" href="#">Pricing</a>
-      </nav>
-      <a class="btn btn-outline-primary" href="#">Sign up</a> -->
-    </header>
+  <link href="/static/css/sb-admin-2.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"
+    type="text/css" />
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.23/datatables.min.css" />
+  <link rel="stylesheet" href="/static/css/dropzone.min.css">
 
-    <main class="container">
-      <img src="/static/img/logo.png" class="logo d-inline" />
-      <img
-        src="/static/img/uploads/<%= ImgPortada %>"
-        class="logo d-inline float-right"
-      />
-      <hr />
-      <div class="mx-auto">
-        <h3 class="text-primary">
-          Centro de formación profesional, hoja de inscipción empresas y
-          participantes
-        </h3>
-        <p class="text-dark">
-          <b>Ayuda: </b>Siga las instrucciones de cada paso
-        </p>
-      </div>
+</head>
 
-      <div class="row">
-        <div class="col">
-          <div class="card mb-4 shadow-sm">
-            <div class="card-body">
+<body class="bg-gradient-light">
+  <header class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+    <b>Programa: </b>
+    <%= Nombre %>
+  </header>
+
+  <main class="container">
+    <img src="/static/img/logo.png" class="logo d-inline" />
+    <img src="/static/img/uploads/<%= ImgPortada %>" class="logo d-inline float-right" />
+    <hr />
+    <div class="mx-auto">
+      <h3 class="text-primary">
+        Centro de formación profesional, hoja de inscipción empresas y
+        participantes
+      </h3>
+      <p class="text-dark">
+        <b>Ayuda: </b>Siga las instrucciones de cada paso
+      </p>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div class="card mb-4 shadow-sm">
+          <div class="card-body">
 
 
-              <div class="card mb-4 shadow-sm">
-                <a
-                  href="#collpaseOne"
-                  class="d-block card-header py-3 text-dark"
-                  data-toggle="collapse"
-                  role="button"
-                  aria-expanded="true"
-                  aria-controls="collpaseOne"
-                >
-                  <h4 class="my-0 fw-normal">Paso #1 Seleccionar empresa</h4>
-                </a>
-                <div class="card-body collapse show" id="collpaseOne">
-                  <p class="text-dark">
-                    <b>Instrucciones: </b>Buscar nombre de empresa
-                  </p>
-                  <select class="custom-select" id="select_empresa">
-                    <option value="0">- Buscar empresa -</option>
-                  </select>
-                </div>
+            <div class="card mb-4 shadow-sm">
+              <a href="#collpaseOne" class="d-block card-header py-3 text-dark" data-toggle="collapse" role="button"
+                aria-expanded="true" aria-controls="collpaseOne">
+                <h4 class="my-0 fw-normal">Paso #1 Seleccionar empresa</h4>
+              </a>
+              <div class="card-body collapse show" id="collpaseOne">
+                <p class="text-dark">
+                  <b>Instrucciones: </b>Buscar nombre de empresa y asegurese que la información sea la correcta
+                </p>
+                <select class="custom-select" id="select_empresa">
+                  <option value="0">- Buscar empresa -</option>
+                </select>
+                <hr>
+                <form id="update_form" style="display: none;">
+                  <h5>Actualización de información empresarial</h5>
+                  <div class="form-row">
+                    <div class="col">
+                      <label for="nit">NIT</label>
+                      <input type="text" id="nit" name="nit" required class="form-control"
+                        placeholder="0000-000000-0000">
+                    </div>
+                    <div class="col">
+                      <label for="patronal">Número Patronal</label>
+                      <input type="text" id="patronal" name="patronal" class="form-control">
+                    </div>
+                    <div class="col">
+                      <label for="num_empleados">Número de empleados</label>
+                      <input type="number" id="num_empleados" name="num_empleados" class="form-control">
+                    </div>
+                    <div class="col">
+                      <label for="aportacion">Aportación mensual al INSAFORP</label>
+                      <input type="text" id="aportacion" name="aportacion" placeholder="$0.00" class="form-control">
+                    </div>
+                  </div>
+                  <hr>
+                  <button type="button" onclick="updateEmpresaInfo()" class="btn btn-success float-right">Continuar al siguiente paso </button>
+                </form>
               </div>
-
-              <div class="card mb-4 shadow-sm">
-                <a
-                  href="#collapseTwo"
-                  class="card-header text-dark"
-                  data-toggle="collapse"
-                  role="button"
-                  aria-expanded="true"
-                  aria-controls="collapseTwo"
-                >
-                  <h4 class="my-0 fw-normal">Paso #2 Ingresar participantes</h4>
-                </a>
-                <div class="card-body collapse" id="collapseTwo">
-                  <p class="text-dark">
-                    <b>Instrucciones: </b>Rellenar la información de los
-                    participantes que desea inscribir y verificar la información
-                    de la tabla
-                  </p>
-                  <div class="form-row">
-                    <div class="col">
-                      <label for="name">DUI*</label>
-                      <input
-                        type="text"
-                        id="dui"
-                        class="form-control"
-                        placeholder="0000000-0"
-                      />
-                    </div>
-                    <div class="col">
-                      <label for="tel">Nombre*</label>
-                      <input type="text" id="nombre" class="form-control" />
-                    </div>
-                    <div class="col">
-                      <label for="tel">Teléfono</label>
-                      <input type="text" id="tel" class="form-control" />
-                    </div>
+            </div>
+            <div class="card mb-4 shadow-sm">
+              <a href="#collapseTwo" class="card-header text-dark" data-toggle="collapse" role="button"
+                aria-expanded="true" aria-controls="collapseTwo">
+                <h4 class="my-0 fw-normal">Paso #2 Ingresar participantes</h4>
+              </a>
+              <div class="card-body collapse" id="collapseTwo">
+                <p class="text-dark">
+                  <b>Instrucciones: </b>Rellenar la información de los
+                  participantes que desea inscribir y verificar la información
+                  de la tabla
+                </p>
+                <div class="form-row">
+                  <div class="col">
+                    <label for="name">DUI*</label>
+                    <input type="text" id="dui" class="form-control" placeholder="0000000-0" />
                   </div>
-                  <div class="form-row">
-                    <div class="col-4">
-                      <label for="tel">Email</label>
-                      <input type="text" id="email" class="form-control" />
-                    </div>
-
-                    <div class="col-4">
-                      <label for="tel">Curso que desea tomar:</label>
-                      <select class="custom-select" id="curso">
-                        <option value="ITR-FCOO-48">MICROSOFT EXCEL BÁSICO</option>
-                        <option value="ITR-FCOO-48">MICROSOFT EXCEL BÁSICO</option>
-                        <option value="ITR-FCOO-48">MICROSOFT EXCEL BÁSICO</option>
-                      </select>
-                    </div>
-                    <div class="col-4">
-                      <label for="genero">Género</label>
-                      <select class="custom-select" required id="genero">
-                        <option disabled selected>Seleccionar Género</option>
-                        <option value="1">Hombre</option>
-                        <option value="2">Mujer</option>
-                      </select>
-                    </div>
+                  <div class="col">
+                    <label for="tel">Nombre*</label>
+                    <input type="text" id="nombre" class="form-control" />
                   </div>
-                  <button
-                    class="btn btn-success float-right my-2"
-                    id="botonAdd"
-                  >
-                    Agregar
-                  </button>
-                  <br />
-                  <br /><br />
-                  <div class="table-responsive">
-                  <table
-                    class="table table-bordered "
-                    id="tablaParticipantes"
-                    width="100%"
-                    cellspacing="0"
-                  >
+                  <div class="col">
+                    <label for="tel">Teléfono</label>
+                    <input type="text" id="tel" class="form-control" />
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="col-4">
+                    <label for="tel">Email</label>
+                    <input type="text" id="email" class="form-control" />
+                  </div>
+
+                  <div class="col-4">
+                    <label for="tel">Curso que desea tomar:</label>
+                    <select class="custom-select" id="curso">
+                      <option value="ITR-FCOO-48">MICROSOFT EXCEL BÁSICO</option>
+                      <option value="ITR-FCOO-48">MICROSOFT EXCEL BÁSICO</option>
+                      <option value="ITR-FCOO-48">MICROSOFT EXCEL BÁSICO</option>
+                    </select>
+                  </div>
+                  <div class="col-4">
+                    <label for="genero">Género</label>
+                    <select class="custom-select" required id="genero">
+                      <option disabled selected>Seleccionar Género</option>
+                      <option value="1">Hombre</option>
+                      <option value="2">Mujer</option>
+                    </select>
+                  </div>
+                </div>
+                <button class="btn btn-success float-right my-2" id="botonAdd">
+                  Agregar
+                </button>
+                <br />
+                <br /><br />
+                <div class="table-responsive">
+                  <table class="table table-bordered " id="tablaParticipantes" width="100%" cellspacing="0">
                     <thead>
                       <tr>
                         <th>DUI</th>
@@ -166,44 +148,40 @@
                     <tbody></tbody>
                   </table>
                 </div>
-                  <button class="btn btn-danger btn-small float-left" onclick="deleteTableAndLocal()" >Borrar Tabla</button>
-                  <p class="d-line float-right">Continue en el paso #3</p>
-                </div> 
+                <button class="btn btn-danger btn-small float-left" onclick="deleteTableAndLocal()">Borrar
+                  Tabla</button>
+                <p class="d-line float-right">Continue en el paso #3</p>
               </div>
+            </div>
 
-              <div class="card mb-4 shadow-sm">
-                <a
-                  href="#collpasetres"
-                  class="d-block card-header py-3 text-dark"
-                  data-toggle="collapse"
-                  role="button"
-                  aria-expanded="true"
-                  aria-controls="collpasetres"
-                >
-                  <h4 class="my-0 fw-normal">Paso #3 Subir archivos</h4>
-                </a>
-                <div class="card-body collapse " id="collpasetres">
-                  <p class="text-dark">
-                    <b>Instrucciones: </b>Adjuntar los siguientes archivos: 
-                    <ol>
-                      <li>Ficha de registro firmada y sellada. Puede descargar la plantilla aquí: <a href="/static/files/ANEXO 6 - FORMULARIO DE INSCRIPCIÓN.pdf" download="Plantilla_Anexo_6.pdf">DESCARGAR PLANTILLA</a> </li>
-                      <li>RECIBO DE INGRESO POR COTIZACIONES ISSS</li>
-                      <li>Recibo de cancelación ISSS (En caso que el pago fue hecho en línea)</li>
-                      <li>Planilla preelaborada para el pago mensual ISSS</li>
-                    </ol>
-                  </p>
-                  <form action="/file-upload"
-                  class="dropzone"
-                  id="dropzone">
-                  <div class="dz-message" data-dz-message><span>Arrastra o haz click aquí para subir tus archivos</span></div>
+            <div class="card mb-4 shadow-sm">
+              <a href="#collpasetres" class="d-block card-header py-3 text-dark" data-toggle="collapse" role="button"
+                aria-expanded="true" aria-controls="collpasetres">
+                <h4 class="my-0 fw-normal">Paso #3 Subir archivos</h4>
+              </a>
+              <div class="card-body collapse " id="collpasetres">
+                <p class="text-dark">
+                  <b>Instrucciones: </b>Adjuntar los siguientes archivos:
+                <ol>
+                  <li>Ficha de registro firmada y sellada. Puede descargar la plantilla aquí: <a
+                      href="/static/files/ANEXO 6 - FORMULARIO DE INSCRIPCIÓN.pdf"
+                      download="Plantilla_Anexo_6.pdf">DESCARGAR PLANTILLA</a> </li>
+                  <li>RECIBO DE INGRESO POR COTIZACIONES ISSS</li>
+                  <li>Recibo de cancelación ISSS (En caso que el pago fue hecho en línea)</li>
+                  <li>Planilla preelaborada para el pago mensual ISSS</li>
+                </ol>
+                </p>
+                <form action="/file-upload" class="dropzone" id="dropzone">
+                  <div class="dz-message" data-dz-message><span>Arrastra o haz click aquí para subir tus archivos</span>
+                  </div>
                 </form>
-                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-        <!-- <footer class="pt-4 my-md-5 pt-md-5 border-top">
+    </div>
+    <!-- <footer class="pt-4 my-md-5 pt-md-5 border-top">
           <div class="row">
             <div class="col-12 col-md">
               <img class="mb-2" alt="" width="24" height="19" />
@@ -242,18 +220,16 @@
             </div>
           </div>
         </footer> -->
-    </main>
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/validate.js/0.13.1/validate.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <script
-      type="text/javascript"
-      src="https://cdn.datatables.net/v/bs4/dt-1.10.23/datatables.min.js"
-    ></script>
-    <script src="/static/js/jquery.mask.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
-    <script src="/static/js/public.js"></script>
-    <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="/static/js/dropzone.min.js"></script>
-  </body>
+  </main>
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/validate.js/0.13.1/validate.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.23/datatables.min.js"></script>
+  <script src="/static/js/jquery.mask.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+  <script src="/static/js/public.js"></script>
+  <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/js/dropzone.min.js"></script>
+</body>
+
 </html>

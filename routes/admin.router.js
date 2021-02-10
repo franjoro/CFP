@@ -11,7 +11,7 @@ var router = express.Router();
 router.get("/", authcheck, admin.main);
 router.get("/programa", authcheck, admin.renderPrograma);
 router.get("/usuarios", authcheck, admin.rendeUsuarios);
-router.get("/empresas", authcheck, admin.renderEmpresas);
+router.get("/empresas",  admin.renderEmpresas);
 router.get("/instructor", admin.renderInstructor);
 
 

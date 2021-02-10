@@ -5,7 +5,50 @@ errorMessage = () => {
     text: "Debes rellenar toda la información",
   });
 };
+
+let global_empresa_seleccionada;
+
+const updateEmpresaInfo = () => {
+  $("#collpaseOne").hide();
+  $("#collapseTwo").show();
+  try {
+    data = {
+      nit: $("#nit").val(),
+      aportacion: $("#patronal").val(),
+      num_empleados: $("#num_empleados").val(),
+      patronal: $("#aportacion").val(),
+      id: global_empresa_seleccionada,
+    };
+    $.ajax({url: "/public/updateEmpresaData" , type:"PUT" , data})
+  } catch (error) {
+    console.log(error);
+    errorMessage();
+  }
+};
+
 $(document).ready(function () {
+  $("#select_empresa").on("select2:select", async function (e) {
+    $("#update_form").css("display", "block");
+    const param = e.params.data.id;
+    global_empresa_seleccionada = e.params.data.id;
+    try {
+      data = await $.ajax({
+        url: "/public/getDataEmpresas",
+        type: "POST",
+        data: { param },
+      });
+      $("#nit").val(data.data.NIT);
+      $("#patronal").val(data.data.Num_Patronal);
+      $("#num_empleados").val(data.data.Num_Empleados);
+      $("#num_empleados").val(data.data.Num_Empleados);
+      $("#aportacion").val(data.data.Aportacion_insaforp);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+      errorMessage();
+    }
+  });
+
   //Mascaras para dui y telefono
   $("#dui").mask("00000000-0");
   $("#tel").mask("0000-0000");

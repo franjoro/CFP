@@ -26,7 +26,6 @@ function LoadTablaEmpresas(estado = 1) {
       { data: "Nombre" },
       { data: "Direccion" },
       { data: "Tel" },
-      { data: "Nota" },
       {
         render: function (data, type, row) {
           if (row.Estado == 1) {
@@ -36,7 +35,6 @@ function LoadTablaEmpresas(estado = 1) {
           }
         },
       },
-      { data: "Actividad_eco", visible: false },
       { data: "id_empresa", visible: false },
       {
         render: function (data, type, row) {
@@ -90,6 +88,8 @@ $("#formEmpresas").submit(async function (e) {
     errorMessage();
   }
 });
+
+
 //Eliminar contacto de una empresa
 function EliminarContactoDeEmpresa(contacto,empresa) {
   Swal.fire({
@@ -171,9 +171,57 @@ $(document).ready(function () {
     $("#nota_edit").val(data.Nota);
     $("#id_empresa").val(data.id_empresa);
   } );
+  
+
+  $("#actividad_edit").select2({
+    width: "100%",
+    ajax: {
+      url: "/admin/empresas/actividades",
+      type: "post",
+      dataType: "json",
+      delay: 250,
+      data: function (params) {
+        return {
+          searchTerm: params.term, // search term
+        };
+      },
+      results: function (response) {
+        $.map(response, function (item) {
+          return {
+            id: item.id,
+            text: item.text,
+          };
+        });
+      },
+      cache: true,
+    },
+  });
 
 
   
+  $("#actividad").select2({
+    width: "100%",
+    ajax: {
+      url: "/admin/empresas/actividades",
+      type: "post",
+      dataType: "json",
+      delay: 250,
+      data: function (params) {
+        return {
+          searchTerm: params.term, // search term
+        };
+      },
+      results: function (response) {
+        $.map(response, function (item) {
+          return {
+            id: item.id,
+            text: item.text,
+          };
+        });
+      },
+      cache: true,
+    },
+  });
 
 
   

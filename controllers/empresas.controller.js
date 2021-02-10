@@ -13,11 +13,10 @@ empresas.add = async (req, res, next) => {
     req.body.direccion,
     req.body.actividad,
     req.body.tel,
-    req.body.nota,
   ];
   try {
     await pool.query(
-      "INSERT INTO tb_empresa(Nombre,Direccion,Actividad_eco,Tel,Nota,Estado) VALUES(?,?,?,?,?,1)",
+      "INSERT INTO tb_empresa(Nombre,Direccion,Actividad_eco,Tel,Estado) VALUES(?,?,?,?,1)",
       data
     );
     res.json({ status: true });
@@ -35,12 +34,11 @@ empresas.editar_empresa = async (req, res, next) => {
     req.body.direccion_edit,
     req.body.actividad_edit,
     req.body.tel_edit,
-    req.body.nota_edit,
     req.body.id_empresa,
   ];
   try {
     await pool.query(
-      "UPDATE tb_empresa SET Nombre = ?, Direccion = ? , Actividad_eco= ? , Tel = ?, Nota = ? WHERE id_empresa = ?",
+      "UPDATE tb_empresa SET Nombre = ?, Direccion = ? , Actividad_eco= ? , Tel = ? WHERE id_empresa = ?",
       data
     );
     res.json({ status: true });
@@ -56,7 +54,7 @@ empresas.table = async (req, res) => {
   if (!status) return res.status(400).json({ error: "Not_status" });
   //Hacemos consulta y devolvemos data
   try {
-    let data = await pool.query("SELECT * FROM tb_empresa WHERE Estado = ? ", [
+    let data = await pool.query("SELECT Nombre, Direccion, Tel, Estado, id_empresa FROM tb_empresa WHERE Estado = ? ", [
       status,
     ]);
     res.json({ data });
@@ -166,5 +164,20 @@ empresas.contactoEditar = async (req, res) => {
     return res.status(400).send(error);
   }
 };
+
+
+empresas.actividades = async (req,res ) =>{
+  let post_var = req.body.searchTerm,
+    query = `SELECT id , Nombre AS text FROM tb_actividad_economica order By Nombre LIMIT 25`;
+  if (post_var)
+    query = `SELECT id , Nombre AS text FROM tb_actividad_economica WHERE Nombre like '%${post_var}%' order By Nombre LIMIT 25`;
+  try {
+    data = await pool.query(query);
+    res.json({ results: data });
+  } catch (error) {
+    res.status(400).json({ error });
+  }
+}
+
 
 module.exports = empresas;

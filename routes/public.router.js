@@ -9,6 +9,8 @@ var router = express.Router();
 
 router.get("/form/:id?", public_.main);
 router.post("/getEmpresas", public_.getEmpresas);
+router.post("/getDataEmpresas", public_.getDataEmpresas);
+router.put("/updateEmpresaData", public_.UpdateDataEmpresa);
 
 
 // Exportamos la configuración
