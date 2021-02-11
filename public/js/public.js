@@ -26,6 +26,25 @@ const updateEmpresaInfo = () => {
   }
 };
 
+
+$("#dui").blur(async function () {
+  global_estado_participante = false;
+  data = await $.ajax({ url: `/admin/participantes/get/${$(this).val()}` });
+  try {
+    if (data.status) {
+      global_estado_participante = true;
+      values = data.data[0];
+      $("#nombre").val(values.Nombre);
+      $("#email").val(values.Email);
+      $("#tel").val(values.Telefono);
+      $("#genero").val(values.Genero);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+
 $(document).ready(function () {
   $("#select_empresa").on("select2:select", async function (e) {
     $("#update_form").css("display", "block");

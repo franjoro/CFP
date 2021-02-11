@@ -17,12 +17,12 @@
 <body class="bg-gradient-light">
   <header class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
     <b>Programa: </b>
-    <%= Nombre %>
+    <%= programa.Nombre %>
   </header>
 
   <main class="container">
     <img src="/static/img/logo.png" class="logo d-inline" />
-    <img src="/static/img/uploads/<%= ImgPortada %>" class="logo d-inline float-right" />
+    <img src="/static/img/uploads/<%= programa.ImgPortada %>" class="logo d-inline float-right" />
     <hr />
     <div class="mx-auto">
       <h3 class="text-primary">
@@ -75,7 +75,8 @@
                     </div>
                   </div>
                   <hr>
-                  <button type="button" onclick="updateEmpresaInfo()" class="btn btn-success float-right">Continuar al siguiente paso </button>
+                  <button type="button" onclick="updateEmpresaInfo()" class="btn btn-success float-right">Continuar al
+                    siguiente paso </button>
                 </form>
               </div>
             </div>
@@ -93,11 +94,11 @@
                 <div class="form-row">
                   <div class="col">
                     <label for="name">DUI*</label>
-                    <input type="text" id="dui" class="form-control" placeholder="0000000-0" />
+                    <input type="text" id="dui" name="dui" class="form-control" placeholder="0000000-0" />
                   </div>
                   <div class="col">
                     <label for="tel">Nombre*</label>
-                    <input type="text" id="nombre" class="form-control" />
+                    <input type="text" id="nombre" name="nombre" class="form-control" />
                   </div>
                   <div class="col">
                     <label for="tel">Teléfono</label>
@@ -105,25 +106,24 @@
                   </div>
                 </div>
                 <div class="form-row">
-                  <div class="col-4">
+                  <div class="col-3">
                     <label for="tel">Email</label>
                     <input type="text" id="email" class="form-control" />
                   </div>
-
-                  <div class="col-4">
-                    <label for="tel">Curso que desea tomar:</label>
-                    <select class="custom-select" id="curso">
-                      <option value="ITR-FCOO-48">MICROSOFT EXCEL BÁSICO</option>
-                      <option value="ITR-FCOO-48">MICROSOFT EXCEL BÁSICO</option>
-                      <option value="ITR-FCOO-48">MICROSOFT EXCEL BÁSICO</option>
+                  <div class="col-3">
+                    <label for="genero">Sexo</label>
+                    <select class="custom-select" required id="genero">
+                      <option disabled selected>Seleccionar Sexo</option>
+                      <option value="Hombre">Hombre</option>
+                      <option value="Mujer">Mujer</option>
                     </select>
                   </div>
-                  <div class="col-4">
-                    <label for="genero">Género</label>
-                    <select class="custom-select" required id="genero">
-                      <option disabled selected>Seleccionar Género</option>
-                      <option value="1">Hombre</option>
-                      <option value="2">Mujer</option>
+                  <div class="col-6">
+                    <label for="tel">Curso que desea tomar:</label>
+                    <select class="custom-select" id="curso">
+                      <% cursos.forEach(element=> { %>
+                        <option value="<%= element.Codigo_curso %>">  <%= element.Nombre + ' ' +  element.Horario %>  </option>
+                        <% }) %>
                     </select>
                   </div>
                 </div>
@@ -171,7 +171,7 @@
                   <li>Planilla preelaborada para el pago mensual ISSS</li>
                 </ol>
                 </p>
-                <form action="/file-upload" class="dropzone" id="dropzone">
+                <form action="/prueba" method="POST" class="dropzone" id="dropzone">
                   <div class="dz-message" data-dz-message><span>Arrastra o haz click aquí para subir tus archivos</span>
                   </div>
                 </form>

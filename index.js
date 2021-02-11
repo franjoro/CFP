@@ -6,7 +6,8 @@ require('dotenv').config();
 const app = require('./app');
 // Creamos la variable PORT para indicar el puerto en el que va a funcionar el servidor
 const port = process.env.PORT;
-app.listen(port,  () => {
+
+app.listen(port, async  () => {
     console.log("servidor corriendo en http://localhost:" + port);
 })
 
