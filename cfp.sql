@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-02-2021 a las 21:54:16
+-- Tiempo de generación: 12-02-2021 a las 22:30:48
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.4.10
 
@@ -125,8 +125,8 @@ CREATE TABLE `tb_empresa` (
 --
 
 INSERT INTO `tb_empresa` (`id_empresa`, `Nombre`, `Direccion`, `Actividad_eco`, `Tel`, `NIT`, `Aportacion_insaforp`, `Num_Patronal`, `Num_Empleados`, `Estado`) VALUES
-(335, 'Compañía de Telecomunicaciones de El Salvador, S.A. de C.V.', 'Colonia Roma, Cl. El Progreso y Avenida Liverpool, Complejo Roma Edif. A, San Salvador.\r\n', 5, '2250-3389', '0614-180898-164-8', '1250.50', '1250.20', 15, 1),
-(339, 'Otro', NULL, NULL, NULL, '05457-56445-45466', '123456.00', '1250.20', 4, 1);
+(335, 'Compañía de Telecomunicaciones de El Salvador, S.A. de C.V.', 'Colonia Roma, Cl. El Progreso y Avenida Liverpool, Complejo Roma Edif. A, San Salvador.\r\n', 5, '2250-3389', '0614-180898-164-8', '10000.00', '1500.00', 14, 1),
+(339, 'Otro', NULL, NULL, NULL, '05457-56445-45466', '1250.20', '123456.00', 4, 1);
 
 -- --------------------------------------------------------
 
@@ -335,6 +335,19 @@ INSERT INTO `tb_programa` (`id_programa`, `Nombre`, `ImgPortada`, `Estado`) VALU
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `tb_solicitud_matricula`
+--
+
+CREATE TABLE `tb_solicitud_matricula` (
+  `code` int(11) NOT NULL,
+  `id_curso` varchar(15) COLLATE utf8_spanish_ci NOT NULL,
+  `id_empresa` int(11) NOT NULL,
+  `status` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `tb_usuarios`
 --
 
@@ -378,7 +391,8 @@ CREATE TABLE `union_matricula` (
   `id_matricula` int(11) NOT NULL,
   `id_participante` varchar(10) COLLATE utf8_spanish_ci NOT NULL,
   `id_curso` varchar(15) COLLATE utf8_spanish_ci NOT NULL,
-  `id_empresa` int(11) NOT NULL
+  `id_empresa` int(11) NOT NULL,
+  `id_solicitud` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -461,6 +475,14 @@ ALTER TABLE `tb_programa`
   ADD PRIMARY KEY (`id_programa`);
 
 --
+-- Indices de la tabla `tb_solicitud_matricula`
+--
+ALTER TABLE `tb_solicitud_matricula`
+  ADD PRIMARY KEY (`code`),
+  ADD KEY `id_curso` (`id_curso`),
+  ADD KEY `id_empresa` (`id_empresa`);
+
+--
 -- Indices de la tabla `tb_usuarios`
 --
 ALTER TABLE `tb_usuarios`
@@ -481,7 +503,8 @@ ALTER TABLE `union_matricula`
   ADD PRIMARY KEY (`id_matricula`),
   ADD KEY `id_participante` (`id_participante`),
   ADD KEY `id_curso` (`id_curso`),
-  ADD KEY `id_empresa` (`id_empresa`);
+  ADD KEY `id_empresa` (`id_empresa`),
+  ADD KEY `id_solicitud` (`id_solicitud`);
 
 --
 -- Indices de la tabla `union_programa_usuario`
@@ -526,16 +549,22 @@ ALTER TABLE `tb_programa`
   MODIFY `id_programa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
+-- AUTO_INCREMENT de la tabla `tb_solicitud_matricula`
+--
+ALTER TABLE `tb_solicitud_matricula`
+  MODIFY `code` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `union_curso_empresa`
 --
 ALTER TABLE `union_curso_empresa`
-  MODIFY `id_union` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id_union` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `union_matricula`
 --
 ALTER TABLE `union_matricula`
-  MODIFY `id_matricula` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_matricula` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `union_programa_usuario`
@@ -580,6 +609,13 @@ ALTER TABLE `tb_logs`
   ADD CONSTRAINT `tb_logs_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `tb_usuarios` (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Filtros para la tabla `tb_solicitud_matricula`
+--
+ALTER TABLE `tb_solicitud_matricula`
+  ADD CONSTRAINT `tb_solicitud_matricula_ibfk_1` FOREIGN KEY (`id_curso`) REFERENCES `tb_cursos` (`Codigo_curso`),
+  ADD CONSTRAINT `tb_solicitud_matricula_ibfk_2` FOREIGN KEY (`id_empresa`) REFERENCES `tb_empresa` (`id_empresa`);
+
+--
 -- Filtros para la tabla `union_curso_empresa`
 --
 ALTER TABLE `union_curso_empresa`
@@ -592,7 +628,8 @@ ALTER TABLE `union_curso_empresa`
 ALTER TABLE `union_matricula`
   ADD CONSTRAINT `union_matricula_ibfk_1` FOREIGN KEY (`id_participante`) REFERENCES `tb_participante` (`DUI`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `union_matricula_ibfk_2` FOREIGN KEY (`id_curso`) REFERENCES `tb_cursos` (`Codigo_curso`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `union_matricula_ibfk_3` FOREIGN KEY (`id_empresa`) REFERENCES `tb_empresa` (`id_empresa`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `union_matricula_ibfk_3` FOREIGN KEY (`id_empresa`) REFERENCES `tb_empresa` (`id_empresa`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `union_matricula_ibfk_4` FOREIGN KEY (`id_solicitud`) REFERENCES `tb_solicitud_matricula` (`code`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `union_programa_usuario`
