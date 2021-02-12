@@ -46,6 +46,9 @@ $("#dui").blur(async function () {
 
 
 $(document).ready(function () {
+  //Creacion de los dropzone
+
+
   $("#select_empresa").on("select2:select", async function (e) {
     $("#update_form").css("display", "block");
     const param = e.params.data.id;
@@ -162,4 +165,8 @@ $(document).ready(function () {
     localStorage.clear();
     localStorage.setItem("storage", storage);
   };
+
+
+
+
 });
