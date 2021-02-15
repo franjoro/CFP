@@ -24,9 +24,11 @@ function LoadTablaInstructor(estado = 1) {
     destroy: true,
     columns: [
       { data: "DUI" },
+      { data: "NIT" },
       { data: "Nombre" },
       { data: "Email" },
       { data: "Telefono" },
+      { data: "Nombre_categoria" },
       {
         render: function (data, type, row) {
           if (row.Estado == 1) {

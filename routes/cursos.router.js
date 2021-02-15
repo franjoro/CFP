@@ -25,7 +25,7 @@ router.post("/matricula", cursos.matricula);
 router.post("/addEmpresaInCourse",cursos.addEmpresaCurso);
 //Elimina la asociacion de una empresa en un curso
 router.delete("/deleteEmpresaInCourse",cursos.deleteEmpresaCurso);
-//Asocia empresa a un curso
+//Editar curso
 router.put("/edit",cursos.edit);
 // Exportamos la configuración
 module.exports = router;

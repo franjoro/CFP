@@ -13,7 +13,7 @@ instructor.table = async (req, res) => {
     if (!status) return res.status(400).json({ error: "Not_status" });
     //Hacemos consulta y devolvemos data
     try {
-      let data = await pool.query("SELECT * FROM tb_instructor WHERE Estado = ? ", [
+      let data = await pool.query("SELECT tb_instructor.* , tb_categoria_instructores.Categoria AS Nombre_categoria FROM tb_instructor INNER JOIN tb_categoria_instructores  ON tb_instructor.Categoria = tb_categoria_instructores.id WHERE Estado = ? ", [
         status,
       ]);
       res.json({ data });
@@ -44,13 +44,15 @@ instructor.add = async (req, res, next) => {
       return res.status(400).json({ status: false, error: "empty_name" });
     let data = [
       req.body.DUI,
+      req.body.NIT,
       req.body.name,
-      req.body.tel,
       req.body.email,
+      req.body.tel,
+      req.body.categoria,
     ];
     try {
       await pool.query(
-        "INSERT INTO tb_instructor(DUI,Nombre,Email,Telefono,Estado) VALUES(?,?,?,?,1)",
+        "INSERT INTO tb_instructor(DUI,NIT,Nombre,Email,Telefono,Estado,Categoria) VALUES(?,?,?,?,?,1,?)",
         data
       );
       res.json({ status: true });

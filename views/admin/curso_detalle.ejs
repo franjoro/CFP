@@ -33,6 +33,8 @@
                     %> <br />
                     <b>Orden de inicio:</b> <%= curso.Orden %> <br />
                     <b>Agrupación:</b> <%= curso.Agrupacion %><br />
+                    <b>Modalidad:</b> <%= curso.Modalidad %><br />
+                    <b>Identificador Modalidad:</b> <%= curso.id_modalidad %><br />
                   </p>
                 </div>
                 <div class="col-6">
@@ -41,6 +43,8 @@
                     <b>Costo Por alumno:</b> $<%= curso.CostoAlumno %> <br />
                     <b>Factura:</b> <%= curso.Factura %> <br />
                     <b>Profesor:</b> <%= curso.instructor %> <br />
+                    <b>Documento:</b> <%= curso.Modalidad %><br />
+                    <b>Identificador Documento:</b> <%= curso.id_documento %><br />
                   </p>
                 </div>
               </div>
@@ -193,6 +197,24 @@
               <input type="text" class="form-control" name="agrupacion" value="<%= curso.Agrupacion %> " id="agrupacion" >
             </div>
           </div>
+          <div class="form-row">
+            <div class="col-3">
+              <label for="modalidad">Modalidad</label>
+              <input type="text" class="form-control" value="<%= curso.Modalidad %>" name="modalidad" id="modalidad" >
+            </div>
+            <div class="col-3">
+              <label for="modalidad_id">Identificador Modalidad</label>
+              <input type="text" class="form-control" value="<%= curso.id_modalidad %>" name="modalidad_id" id="modalidad_id" >
+            </div>
+            <div class="col-3">
+              <label for="Documento">Documento</label>
+              <input type="text" class="form-control" name="Documento" value="<%= curso.Documento %> " id="Documento" >
+            </div>
+            <div class="col-3">
+              <label for="documento_id">Identificador Documento</label>
+              <input type="text" class="form-control" name="documento_id" value="<%= curso.id_documento %> " id="documento_id" >
+            </div>
+          </div>
           <div class="form-group">
             <label for="horario">Horario</label>
             <input type="text" class="form-control" name="horario" value="<%= curso.Horario %> " id="horario" placeholder="Sábado de 0:00 a 0:00">
@@ -256,7 +278,7 @@
                                     placeholder="0000-0000">
                             </div>
                             <div class="col">
-                                <label for="name">Género</label>
+                                <label for="name">Sexo</label>
                                 <select class="custom-select" required name="genero" id="genero" >
                                     <option value="Hombre">Hombre</option>
                                     <option value="Mujer">Mujer</option>

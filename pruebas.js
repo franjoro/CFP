@@ -18,7 +18,21 @@ let file = { content: `
 </head>
 
 <body>
-  <br><br><br><br><br><br><br>
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+</style>
+  <br><br><br><br>
   <div class="container-fluid">
     <img src="${imgSrc}" alt="" style="width: 250px; margin-left:-120px; margin-right: 50px"
       class="img-fluid float-right ">
@@ -30,19 +44,48 @@ let file = { content: `
     <div class="container">
       <p><b>ANEXO 6</b></p>
       <p><b>FECHA : </b> 10 - 10 - 2021</p>
-      <p><b>NOMBRE DE LA EMPRESA: </b> &nbsp; Almacenes SIMAN S.A. de CV.</p>
-      <p><b>NIT DE LA EMPRESA: </b> &nbsp; &nbsp; 0614 - 180898 - 164-8</p>
+      <p><b>NOMBRE DE LA EMPRESA: </b> &nbsp; Almacenes SIMAN S.A. de CV.  &nbsp; &nbsp; 
+      <b>NIT DE LA EMPRESA: </b> &nbsp; &nbsp; 0614 - 180898 - 164-8</p>
       <p><b>TELEFONO: </b> &nbsp; &nbsp; +503 2278-0457</p>
-      <p><b>APORTACIÓN MENSUAL AL INSAFORP:</b> &nbsp; &nbsp; +503 2278-0457 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+      <p><b>APORTACIÓN MENSUAL AL INSAFORP:</b> &nbsp; &nbsp; $1250.00 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
       <b>NUMERO PATRONAL:</b> 0567687   </p>
-      <p><b>NUMERO DE EMPLEADOS</b> &nbsp; 10</p>        
-
-
-      
-
+      <p><b>NUMERO DE EMPLEADOS:</b> &nbsp; 10</p>        
       <br>
+      <p><b>ACTIVIDAD ECONÓMICA:</b> &nbsp; AGRICULTURA, GANADERÍA, SILVICULTURA Y PESCA </p>
+      <p><b>NOMBRE DEL RESPONSABLE DE <br> CAPACITACION EN LA EMPRESA: </b> &nbsp; __________________________________________________________________________________________________</p>   
+      <p><b>CORREO ELECTRÓNICO:</b> &nbsp; _____________________________________________________________________________________________________________</p>  
+      <br>
+      <p><b>NOMBRE DE LA CAPACITACION:</b> Microsoft Excel Básico Online</p>  
+      <br>
+      <p><b>RAZON SOCIAL DEL ORGANIZADOR :</b> Asociación Institución Salesiana/ITR &nbsp; &nbsp;     <b>COSTE POR PERSONA :</b> $42.47  </p>
+      <p><b>LUGAR DE EJECUCIÓN:</b> ONLINE  &nbsp; &nbsp;    <b>DEPARTAMENTO Y MUNICIPIO DE EJECUCION: </b> San Salvador, San Salvador   </p>  
+      <p><b>No. HORAS : </b> 20 &nbsp; &nbsp;    <b>DETALLE DE FECHAS DE EJECUCION: </b> Sabado 16, 23 , 30 de enero , 6 y 13 de febrero de 2021  </p>  
+      <p><b>Horarios : </b> 8:00 am a 12:00 md   </p>  
     </div>
-
+    <div class="container">
+    <table>
+    <thead>
+        <tr>
+            <th>N°</th>
+            <th>Nombre</th>
+            <th>N° ISSS</th>
+            <th>N° DUI</th>
+            <th>F</th>
+            <th>M</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>Franklin Alejandro López Ramírez</td>
+            <td>123456789</td>
+            <td>05756113-8</td>
+            <td><input type="checkbox"></td>
+            <td><input type="checkbox"></td>
+        </tr>
+    </tbody>
+</table>
+    </div>
   </div>
 
 </body>

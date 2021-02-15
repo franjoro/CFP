@@ -77,7 +77,7 @@ cursos.curso_detalle = async (req, res) => {
     let empresas = await pool.query(
       `SELECT tb_empresa.Nombre,tb_empresa.id_empresa AS codigo_empresa FROM tb_empresa INNER JOIN union_curso_empresa ON tb_empresa.id_empresa = union_curso_empresa.id_empresa WHERE union_curso_empresa.id_curso = ? ;
     SELECT tb_participante.DUI, tb_participante.Nombre, tb_participante.Telefono, tb_participante.Email, union_matricula.id_empresa FROM tb_participante  INNER JOIN union_matricula ON union_matricula.id_participante = tb_participante.DUI WHERE union_matricula.id_curso = ? ;
-    SELECT  tb_cursos . Codigo_curso ,  tb_cursos . Nombre ,  tb_cursos . Date_inicio ,  tb_cursos . Date_fin ,  tb_cursos . Orden ,  tb_cursos . Agrupacion ,  tb_cursos . Horario ,  tb_cursos . CostoAlumno ,  tb_cursos . Factura ,  tb_instructor . Nombre AS instructor FROM  tb_instructor  INNER JOIN  tb_cursos  ON  tb_cursos . id_instructor  =  tb_instructor . DUI  WHERE tb_cursos . Codigo_curso  = ?  GROUP BY tb_cursos.Codigo_curso  
+    SELECT  tb_cursos . Codigo_curso ,  tb_cursos . Nombre ,  tb_cursos . Date_inicio ,  tb_cursos . Date_fin ,  tb_cursos . Orden ,  tb_cursos . Agrupacion ,  tb_cursos . Horario ,  tb_cursos . CostoAlumno ,  tb_cursos . Factura ,  tb_instructor . Nombre AS instructor , tb_cursos.Modalidad , tb_cursos.id_modalidad, tb_cursos.Documento , tb_cursos.id_documento   FROM  tb_instructor  INNER JOIN  tb_cursos  ON  tb_cursos . id_instructor  =  tb_instructor . DUI  WHERE tb_cursos . Codigo_curso  = ?  GROUP BY tb_cursos.Codigo_curso  
     `,
       [curso, curso, curso]
     );
@@ -138,10 +138,15 @@ cursos.add = async (req, res, next) => {
     req.body.factura,
     req.body.instructor,
     req.body.programa,
+    req.body.modalidad,
+    req.body.modadlidad_id,
+    req.body.documento,
+    req.body.documento_id,
   ];
   try {
+    console.log(data);
     await pool.query(
-      "INSERT INTO tb_cursos(Codigo_curso, Nombre, Date_inicio, Date_fin, Agrupacion, Orden, Horario, CostoAlumno, Factura, id_instructor, id_programa, Estado)  VALUES(?,?,?,?,?,?,?,?,?,?,?, 1)",
+      "INSERT INTO tb_cursos(Codigo_curso, Nombre, Date_inicio, Date_fin, Agrupacion, Orden, Horario, CostoAlumno, Factura, id_instructor, id_programa,   Modalidad , id_modalidad , Documento, id_documento,    Estado)  VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,1)",
       data
     );
     res.json({ status: true });
@@ -192,7 +197,6 @@ cursos.deleteEmpresaCurso = async (req, res) => {
 };
 
 cursos.edit = async (req, res) => {
-  console.log(req.body);
   try {
     if (!req.body.id) throw "EMPTY_ID";
     let data = [
@@ -204,10 +208,14 @@ cursos.edit = async (req, res) => {
       req.body.horario,
       req.body.costo,
       req.body.factura,
+      req.body.modalidad,
+      req.body.modalidad_id,
+      req.body.Documento,
+      req.body.documento_id,
       req.body.id,
     ];
     statment =
-      "UPDATE tb_cursos SET Nombre = ? ,Date_inicio = ?, Date_fin = ?,  Agrupacion =  ? , Orden = ?, Horario = ?, CostoAlumno = ?, Factura = ? WHERE Codigo_curso = ? ";
+      "UPDATE tb_cursos SET Nombre = ? ,Date_inicio = ?, Date_fin = ?,  Agrupacion =  ? , Orden = ?, Horario = ?, CostoAlumno = ?, Factura = ?   , Modalidad = ? , id_modalidad= ?, Documento=?, id_documento=?    WHERE Codigo_curso = ? ";
     let query = await pool.query(statment, data);
     res.status(200).json({ status: true });
   } catch (err) {
@@ -220,7 +228,7 @@ cursos.edit = async (req, res) => {
 cursos.matricula = async (req, res) => {
   if (!req.body.participante || !req.body.empresa || !req.body.curso)
     return res.status(400).json({ status: false, error: "empty_data" });
-  let data = [req.body.participante, req.body.curso , req.body.empresa];
+  let data = [req.body.participante, req.body.curso, req.body.empresa];
   try {
     await pool.query(
       "INSERT INTO union_matricula( id_participante ,id_curso , id_empresa)  VALUES(?,?, ? )",

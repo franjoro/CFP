@@ -1,8 +1,7 @@
 //declarar variable a exportar
 const admin = {};
 
-//Requerimos pool de base de datos si es necesario
-//const pool = require('../models/db')
+
 
 //const mailer = require ('../utils/mailer');
 
@@ -24,9 +23,17 @@ admin.renderEmpresas = (req,res) =>{
     res.render('./admin/empresas');
 }
 
-admin.renderInstructor = (req,res) =>{
-    res.render('./admin/instructor');
+//Requerimos pool de base de datos si es necesario
+const pool = require('../models/db')
+
+admin.renderInstructor = async (req,res) =>{
+    let data = await pool.query("SELECT * FROM tb_categoria_instructores");
+    console.log(data);
+    res.render('./admin/instructor' ,{data});
 }
 
 
 module.exports = admin;
+
+
+    
