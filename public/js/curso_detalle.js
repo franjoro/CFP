@@ -123,6 +123,38 @@ $(document).ready(function () {
     }
   };
 
+  quitarMatricula = async (participante, curso) => {
+    let alerta = await Swal.fire({
+      title: "¿Borrar participación en este curso?",
+      text: "Se eliminara a este participante del curso",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, borrar",
+    });
+
+    if (alerta.isConfirmed) {
+      try {
+        loader();
+        let data = await $.ajax({
+          url: "/admin/cursos/deleteMatricula",
+          type: "DELETE",
+          data: { participante,curso },
+        });
+        console.log(data);
+        swal.close();
+        location.reload();
+      } catch (error) {
+        console.log(error);
+        errorMessage();
+      }
+    }
+  };
+
+
+
+
   let global_estado_participante = false,
     global_empresa;
 
@@ -152,7 +184,7 @@ $(document).ready(function () {
     e.preventDefault();
     const t = $(this).serialize();
     loader();
-    let curso = $("#curso").text(),
+    let curso = $("#curso").text().trim(),
       dui_existente = $("#dui").val(),
       empresa = global_empresa;
     try {

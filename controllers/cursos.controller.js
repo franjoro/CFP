@@ -229,6 +229,7 @@ cursos.matricula = async (req, res) => {
   if (!req.body.participante || !req.body.empresa || !req.body.curso)
     return res.status(400).json({ status: false, error: "empty_data" });
   let data = [req.body.participante, req.body.curso, req.body.empresa];
+  console.log(data);
   try {
     await pool.query(
       "INSERT INTO union_matricula( id_participante ,id_curso , id_empresa)  VALUES(?,?, ? )",
@@ -238,6 +239,52 @@ cursos.matricula = async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(400).json({ status: false, error });
+  }
+};
+
+//Cambiar matricula curso
+cursos.ChangeMatriculaCurso = async (req, res) => {
+  if (
+    !(
+      req.body.participante ||
+      req.body.curso ||
+      req.body.empresa ||
+      req.body.tocurso
+    )
+  )
+    return res.status(400).json({ status: false, error: "VALUES_NOT_EXIST" });
+  data = [
+    req.body.tocurso,
+    req.body.participante,
+    req.body.curso,
+    req.body.empresa,
+  ];
+  try {
+    let query = await pool.query(
+      "UPDATE union_matricula SET id_curso= ?  WHERE id_participante = ? AND id_curso=? AND id_empresa = ?  ",
+      data
+    );
+    res.status(200).json({ status: true });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ status: false, error });
+  }
+};
+
+cursos.deleteMatricula = async (req, res) => {
+  if (!(req.body.participante || req.body.curso))
+    return res.status(400).json({ status: false, error: "VALUES_NOT_EXIST" });
+
+  data = [req.body.participante, req.body.curso];
+  try {
+    let query =  await pool.query(
+      " DELETE FROM union_matricula WHERE id_participante=? AND id_curso = ? ",
+      data
+    );
+    res.status(200).json({ status: true , query ,data});
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ status: false, error });
   }
 };
 
