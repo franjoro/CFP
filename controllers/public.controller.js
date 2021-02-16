@@ -1,7 +1,5 @@
 //declarar variable a exportar
 const public = {};
-const { poly } = require("googleapis/build/src/apis/poly");
-const { query } = require("../models/db");
 const pool = require("../models/db");
 
 //Requerimos pool de base de datos si es necesario
@@ -71,5 +69,10 @@ public.UpdateDataEmpresa = async (req, res) => {
     return res.status(400).json({ status: false, error });
   }
 };
+
+
+public.CreateSolicitud  = async (req,res)=>{
+
+}
 
 module.exports = public;

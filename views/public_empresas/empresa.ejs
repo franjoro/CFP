@@ -162,8 +162,26 @@
                       />
                     </div>
                     <div class="col">
+                      <label for="isss">N° ISSS</label>
+                      <input
+                        type="text"
+                        id="isss"
+                        name="isss"
+                        class="form-control"
+                      />
+                    </div>
+                    <div class="col">
+                      <label for="cargo">Cargo</label>
+                      <input
+                        type="text"
+                        id="cargo"
+                        name="cargo"
+                        class="form-control"
+                      />
+                    </div>
+                    <div class="col">
                       <label for="tel">Teléfono</label>
-                      <input type="text" id="tel" class="form-control" />
+                      <input type="text" id="tel" class="form-control" placeholder="0000-0000" />
                     </div>
                   </div>
                   <div class="form-row">
@@ -184,7 +202,7 @@
                       <select class="custom-select" id="curso">
                         <% cursos.forEach(element=> { %>
                         <option value="<%= element.Codigo_curso %>">
-                          <%= element.Nombre + ' ' + element.Horario %>
+                          <%= element.Nombre.trim() + ' ' + element.Horario.trim() %>
                         </option>
                         <% }) %>
                       </select>
@@ -210,6 +228,8 @@
                           <th>DUI</th>
                           <th>Nombre</th>
                           <th>Teléfono</th>
+                          <th>ISSS</th>
+                          <th>Cargo</th>
                           <th>Email</th>
                           <th>Curso</th>
                           <th>Código de curso</th>
@@ -246,7 +266,7 @@
                 >
                   <h4 class="my-0 fw-normal">Paso #3 Subir archivos</h4>
                 </a>
-                <div class="card-body collapse show" id="collpasetres">
+                <div class="card-body collapse " id="collpasetres">
                   <p class="text-dark">
                     <b>Instrucciones: </b>Adjuntar los siguientes archivos:
                   </p>

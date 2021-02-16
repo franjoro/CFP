@@ -28,15 +28,16 @@ participantes.add = async (req, res) => {
       req.body.tel,
       req.body.email,
       req.body.genero,
+      req.body.isss,
+      req.body.cargo,
     ];
     statment =
-      "INSERT INTO tb_participante(DUI,Nombre,Telefono,Email,Genero) VALUES(?,?,?,?,?)";
+      "INSERT INTO tb_participante(DUI,Nombre,Telefono,Email,Genero, ISSS, Cargo) VALUES(?,?,?,?,?,?,?)";
     query = await pool.query(statment, data);
     res.status(200).json({ status: true, data: query });
   } catch (err) {
-    if (err.sqlState)
-      return res.status(400).json({ error: "SQL ERROR", data: err.sqlMessage });
-    res.json(err);
+    console.log(err)
+    return res.status(400).json({ status: 400, err });
   }
 };
 
@@ -60,26 +61,25 @@ participantes.edit = async (req, res) => {
   }
 };
 
-
-participantes.getByDUI  = async (req,res) =>{
- const dui = req.params.dui;
- console.log(dui);
- if(!dui) return res.status(400).json({status: false, error: "EMPTY_DUI"});
+participantes.getByDUI = async (req, res) => {
+  const dui = req.params.dui;
+  console.log(dui);
+  if (!dui) return res.status(400).json({ status: false, error: "EMPTY_DUI" });
   try {
-    const query = await pool.query("SELECT * FROM tb_participante WHERE DUI= ? ",dui)
-    if(query.length){ 
-      return res.status(200).json({status:true, data : query});
-    }{
-      return res.status(404).json({status:"NOT_EXIST"});
+    const query = await pool.query(
+      "SELECT * FROM tb_participante WHERE DUI= ? ",
+      dui
+    );
+    if (query.length) {
+      return res.status(200).json({ status: true, data: query });
+    }
+    {
+      return res.status(404).json({ status: "NOT_EXIST" });
     }
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.status(400).json(error);
   }
-
-}
-
-
-
+};
 
 module.exports = participantes;

@@ -6,10 +6,12 @@ errorMessage = () => {
   });
 };
 
-let global_empresa_seleccionada;
+let global_empresa_seleccionada,
+  global_estado_participante = false;
 
 const updateEmpresaInfo = () => {
   $("#collpaseOne").hide();
+  $("#collpasetres").hide();
   $("#collapseTwo").show();
   try {
     data = {
@@ -19,18 +21,17 @@ const updateEmpresaInfo = () => {
       patronal: $("#aportacion").val(),
       id: global_empresa_seleccionada,
     };
-    $.ajax({url: "/public/updateEmpresaData" , type:"PUT" , data})
+    $.ajax({ url: "/public/updateEmpresaData", type: "PUT", data });
   } catch (error) {
     console.log(error);
     errorMessage();
   }
 };
 
-
 $("#dui").blur(async function () {
   global_estado_participante = false;
-  data = await $.ajax({ url: `/admin/participantes/get/${$(this).val()}` });
   try {
+    data = await $.ajax({ url: `/admin/participantes/get/${$(this).val()}` });
     if (data.status) {
       global_estado_participante = true;
       values = data.data[0];
@@ -38,17 +39,17 @@ $("#dui").blur(async function () {
       $("#email").val(values.Email);
       $("#tel").val(values.Telefono);
       $("#genero").val(values.Genero);
+      $("#isss").val(values.ISSS);
+      $("#cargo").val(values.Cargo);
     }
   } catch (error) {
+    global_estado_participante = false;
     console.log(error);
   }
 });
 
-
 $(document).ready(function () {
   //Creacion de los dropzone
-
-
   $("#select_empresa").on("select2:select", async function (e) {
     $("#update_form").css("display", "block");
     const param = e.params.data.id;
@@ -109,6 +110,8 @@ $(document).ready(function () {
   $("#botonAdd").on("click", function () {
     let dui = $("#dui").val(),
       nombre = $("#nombre").val(),
+      isss = $("#isss").val(),
+      cargo = $("#cargo").val(),
       tel = $("#tel").val(),
       email = $("#email").val(),
       genero = $("#genero").val(),
@@ -123,16 +126,37 @@ $(document).ready(function () {
     ) {
       return errorMessage();
     }
-    data = [dui, nombre, tel, email, curso_text, cursoCodigo, genero];
+    data = [
+      dui,
+      nombre,
+      tel,
+      isss,
+      cargo,
+      email,
+      curso_text.trim(),
+      cursoCodigo.trim(),
+      genero,
+    ];
     populateTable(data);
     create_OR_storage_localstorage(data);
     $('input[type="text"]').val("");
+    if (!global_estado_participante) {
+      data = { dui, 'name': nombre, tel, email, genero, tel, isss, cargo };
+      console.log(data);
+      $.ajax({
+        url: "/admin/participantes/add",
+        type: "POST",
+        data,
+      }).then((data) => {
+        console.log(data);
+      });
+    }
   });
   //Llenar tabla
   populateTable = (data) => {
     $("#tablaParticipantes").DataTable().row.add(data).draw();
   };
-  //Borar tabla y localstorage
+  //Borar tabla y localstorage+
   deleteTableAndLocal = () => {
     $("#tablaParticipantes").DataTable().clear().draw();
     localStorage.clear();
@@ -165,8 +189,4 @@ $(document).ready(function () {
     localStorage.clear();
     localStorage.setItem("storage", storage);
   };
-
-
-
-
 });
