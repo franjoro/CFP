@@ -17,6 +17,8 @@ router.get("/finalizados/:id",  cursos.cursosFinalizados);
 router.get("/detalle/:id/:programa",  cursos.curso_detalle);
 //Devuelve todos los instructores para select
 router.post("/getInstructores",cursos.getInstructores);
+//Devuelve todos los cursos de esta categoria para select
+router.post("/getCursos/:categoria",cursos.getCursosCategoria);
 //Agregar un nuevo curso
 router.post("/add",cursos.add);
 //Agrega la asociación de participante en empresa y curso

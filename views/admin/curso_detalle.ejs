@@ -122,7 +122,7 @@
                                 <%= alumno.Email %>
                               </td>
                               <td>
-                                <button class="btn btn-sm btn-warning"><i class="fas fa-exchange-alt"></i></button>
+                                <button onclick="cambiarMatricula('<%= alumno.DUI %>', '<%= curso.Codigo_curso  %>'  ,  '<%= programa  %>' , ' <%=  element.id  %> '  ) "  class="btn btn-sm btn-warning"><i class="fas fa-exchange-alt"></i></button>
                                 <button onclick="quitarMatricula( '<%= alumno.DUI %>', '<%= curso.Codigo_curso  %>' )"
                                   class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
                               </td>
@@ -168,6 +168,8 @@
       </div>
     </div>
   </div>
+
+
   <!-- Modal editar curso -->
   <div class="modal fade" id="modificar_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
@@ -313,7 +315,30 @@
     </div>
   </div>
 
-
+  <div class="modal fade" id="modal_migrar_curso" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Migrar estudiante a otro curso </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <select class="custom-select" id="selec_cursos" name="selec_cursos">
+              <option value="0">- Buscar curso -</option>
+            </select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Close
+          </button>
+          <button id="change_matricula" class="btn btn-primary">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- /.container-fluid -->
   <%- include('../partials/footer'); %>

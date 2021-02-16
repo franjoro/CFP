@@ -121,6 +121,17 @@ cursos.getInstructores = async (req, res) => {
   }
 };
 
+cursos.getCursosCategoria = async (req, res) => {
+  let categoria = req.params.categoria;
+  query = `SELECT Codigo_curso  AS id, CONCAT(Nombre, ' '  , Horario) AS text FROM tb_cursos  WHERE id_programa = ${categoria}  AND Estado != 0`;
+  try {
+    data = await pool.query(query);
+    res.json({ results: data });
+  } catch (error) {
+    res.status(400).json({ error });
+  }
+};
+
 //agregar nuevo curso
 cursos.add = async (req, res, next) => {
   if (!req.body.programa || !req.body.codigo_curso || !req.body.nombre)
@@ -244,26 +255,26 @@ cursos.matricula = async (req, res) => {
 
 //Cambiar matricula curso
 cursos.ChangeMatriculaCurso = async (req, res) => {
-  if (
-    !(
-      req.body.participante ||
-      req.body.curso ||
-      req.body.empresa ||
-      req.body.tocurso
-    )
-  )
+  if (!(req.body.participante || req.body.curso || req.body.tocurso))
     return res.status(400).json({ status: false, error: "VALUES_NOT_EXIST" });
-  data = [
-    req.body.tocurso,
-    req.body.participante,
-    req.body.curso,
-    req.body.empresa,
-  ];
+  data = [req.body.tocurso, req.body.participante, req.body.curso];
   try {
-    let query = await pool.query(
-      "UPDATE union_matricula SET id_curso= ?  WHERE id_participante = ? AND id_curso=? AND id_empresa = ?  ",
+    let query1 = pool.query(
+      "UPDATE union_matricula SET id_curso= ?  WHERE id_participante = ? AND id_curso=?  ",
       data
     );
+    let query2 = pool.query(
+      "SELECT COUNT(*) AS c FROM   union_curso_empresa WHERE id_empresa = ? AND id_curso = ?  ",
+      [req.body.empresa, req.body.tocurso]
+    );
+
+    let values = await Promise.all([query2, query1]);
+    if (!values[0][0].c) {
+      await pool.query(
+        "INSERT INTO union_curso_empresa(id_empresa, id_curso) VALUES(?,?) ",
+        [req.body.empresa, req.body.tocurso]
+      );
+    }
     res.status(200).json({ status: true });
   } catch (error) {
     console.log(error);
@@ -277,11 +288,11 @@ cursos.deleteMatricula = async (req, res) => {
 
   data = [req.body.participante, req.body.curso];
   try {
-    let query =  await pool.query(
+    let query = await pool.query(
       " DELETE FROM union_matricula WHERE id_participante=? AND id_curso = ? ",
       data
     );
-    res.status(200).json({ status: true , query ,data});
+    res.status(200).json({ status: true, query, data });
   } catch (error) {
     console.log(error);
     res.status(400).json({ status: false, error });

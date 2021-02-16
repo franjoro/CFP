@@ -140,7 +140,7 @@ $(document).ready(function () {
         let data = await $.ajax({
           url: "/admin/cursos/deleteMatricula",
           type: "DELETE",
-          data: { participante,curso },
+          data: { participante, curso },
         });
         console.log(data);
         swal.close();
@@ -152,8 +152,50 @@ $(document).ready(function () {
     }
   };
 
+  cambiarMatricula = async (participante, curso, programa, empresa) => {
+    $("#selec_cursos").select2({
+      width: "100%",
+      ajax: {
+        url: "/admin/cursos/getCursos/" + programa,
+        type: "post",
+        dataType: "json",
+        delay: 250,
+        data: function (params) {
+          return {
+            searchTerm: params.term, // search term
+          };
+        },
+        results: function (response) {
+          $.map(response, function (item) {
+            return {
+              id: item.id,
+              text: item.text,
+            };
+          });
+        },
 
-
+        cache: true,
+      },
+    });
+    $("#modal_migrar_curso").modal("show");
+    $("#change_matricula").click(async function () {
+      try {
+        let tocurso = $("#selec_cursos").val()
+        loader();
+        let data = await $.ajax({
+          url: "/admin/cursos/ChangeMatriculaCurso",
+          type: "PUT",
+          data: { participante, curso, tocurso, empresa },
+        });
+        console.log(data);
+        swal.close();
+        location.reload();
+      } catch (error) {
+        console.log(error);
+        errorMessage();
+      }
+    });
+  };
 
   let global_estado_participante = false,
     global_empresa;
@@ -188,15 +230,14 @@ $(document).ready(function () {
       dui_existente = $("#dui").val(),
       empresa = global_empresa;
     try {
-      console.log(global_estado_participante)
+      console.log(global_estado_participante);
       if (global_estado_participante) {
-         await $.ajax({
+        await $.ajax({
           url: "/admin/cursos/matricula",
           type: "POST",
           data: { participante: dui_existente, curso, empresa },
         });
-      }else
-      {
+      } else {
         await $.ajax({
           url: "/admin/participantes/add",
           type: "POST",
@@ -216,9 +257,4 @@ $(document).ready(function () {
       errorMessage();
     }
   });
-
-
-
-
-  
 });
