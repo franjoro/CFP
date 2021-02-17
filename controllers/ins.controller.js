@@ -1,19 +1,19 @@
-//declarar variable a exportar
+// declarar variable a exportar
 const instructor = {};
 
-//Requerimos pool de base de datos si es necesario
+// Requerimos pool de base de datos si es necesario
 const pool = require('../models/db')
 
-//const mailer = require ('../utils/mailer');
+// const mailer = require ('../utils/mailer');
 
-//Tabla principal de instructores
+// Tabla principal de instructores
 instructor.table = async (req, res) => {
-    let status = req.params.estado;
-    //validamos que venga un estado de instructor activo o inactivos
+    const status = req.params.estado;
+    // validamos que venga un estado de instructor activo o inactivos
     if (!status) return res.status(400).json({ error: "Not_status" });
-    //Hacemos consulta y devolvemos data
+    // Hacemos consulta y devolvemos data
     try {
-      let data = await pool.query("SELECT tb_instructor.* , tb_categoria_instructores.Categoria AS Nombre_categoria FROM tb_instructor INNER JOIN tb_categoria_instructores  ON tb_instructor.Categoria = tb_categoria_instructores.id WHERE Estado = ? ", [
+      const data = await pool.query("SELECT tb_instructor.* , tb_categoria_instructores.Categoria AS Nombre_categoria FROM tb_instructor INNER JOIN tb_categoria_instructores  ON tb_instructor.Categoria = tb_categoria_instructores.id WHERE Estado = ? ", [
         status,
       ]);
       res.json({ data });
@@ -21,14 +21,14 @@ instructor.table = async (req, res) => {
       res.status(400).json({ error });
     }
 }
-//Cambiar estado de activo a inactivo
+// Cambiar estado de activo a inactivo
 instructor.changeEstado = async (req, res) => {
-    //validar codigo y estado
+    // validar codigo y estado
     let estadoCambio = 1;
     if (req.body.estado == 1) estadoCambio = 0;
-    let data = [estadoCambio, req.body.dui];
+    const data = [estadoCambio, req.body.dui];
     try {
-      let query = await pool.query(
+      const query = await pool.query(
         "UPDATE tb_instructor SET Estado= ? WHERE DUI = ? ",
         data
       );
@@ -38,11 +38,11 @@ instructor.changeEstado = async (req, res) => {
     }
   };
 
-//agregar nueva empresa
+// agregar nueva empresa
 instructor.add = async (req, res, next) => {
     if (!req.body.name || ! req.body.DUI)
       return res.status(400).json({ status: false, error: "empty_name" });
-    let data = [
+    const data = [
       req.body.DUI,
       req.body.NIT,
       req.body.name,
@@ -64,7 +64,7 @@ instructor.add = async (req, res, next) => {
   instructor.editar = async (req, res, next) => {
     if (!req.body.name_editar  || !req.body.DUI_editar)
       return res.status(400).json({ status: false, error: "empty_name" });
-    let data = [
+    const data = [
       req.body.name_editar,
       req.body.email_editar,
       req.body.tel_editar,

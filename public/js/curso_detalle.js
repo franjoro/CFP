@@ -18,7 +18,7 @@ loader = () => {
   });
 };
 
-$(document).ready(function () {
+$(document).ready(() => {
   $("#dui").mask("00000000-0");
   $("#tel").mask("0000-0000");
   $("#costo").mask("000,000,000,000,000.00", { reverse: true });
@@ -31,31 +31,29 @@ $(document).ready(function () {
       type: "post",
       dataType: "json",
       delay: 250,
-      data: function (params) {
+      data (params) {
         return {
           searchTerm: params.term, // search term
         };
       },
-      results: function (response) {
-        $.map(response, function (item) {
-          return {
+      results (response) {
+        $.map(response, (item) => ({
             id: item.id,
             text: item.text,
-          };
-        });
+          }));
       },
 
       cache: true,
     },
   });
 
-  //Agregar nueva empresa
+  // Agregar nueva empresa
   $("#newEmpresa").submit(async function (e) {
     e.preventDefault();
     const t = $(this).serialize();
     loader();
     try {
-      let data = await $.ajax({
+      const data = await $.ajax({
         url: "/admin/cursos/addEmpresaInCourse",
         type: "POST",
         data: t,
@@ -71,13 +69,13 @@ $(document).ready(function () {
     }
   });
 
-  //Editar curso
+  // Editar curso
   $("#form_editar").submit(async function (e) {
     e.preventDefault();
     const t = $(this).serialize();
     loader();
     try {
-      let data = await $.ajax({
+      const data = await $.ajax({
         url: "/admin/cursos/edit",
         type: "PUT",
         data: t,
@@ -95,7 +93,7 @@ $(document).ready(function () {
   });
 
   desasociarEmpresa = async (empresa, curso) => {
-    let alerta = await Swal.fire({
+    const alerta = await Swal.fire({
       title: "¿Borrar participación de empresa en este curso?",
       text: "Se eliminaran los participantes asociados",
       icon: "warning",
@@ -108,7 +106,7 @@ $(document).ready(function () {
     if (alerta.isConfirmed) {
       try {
         loader();
-        let data = await $.ajax({
+        const data = await $.ajax({
           url: "/admin/cursos/deleteEmpresaInCourse",
           type: "DELETE",
           data: { id_empresa: empresa, id_curso: curso },
@@ -124,7 +122,7 @@ $(document).ready(function () {
   };
 
   quitarMatricula = async (participante, curso) => {
-    let alerta = await Swal.fire({
+    const alerta = await Swal.fire({
       title: "¿Borrar participación en este curso?",
       text: "Se eliminara a este participante del curso",
       icon: "warning",
@@ -137,7 +135,7 @@ $(document).ready(function () {
     if (alerta.isConfirmed) {
       try {
         loader();
-        let data = await $.ajax({
+        const data = await $.ajax({
           url: "/admin/cursos/deleteMatricula",
           type: "DELETE",
           data: { participante, curso },
@@ -156,33 +154,31 @@ $(document).ready(function () {
     $("#selec_cursos").select2({
       width: "100%",
       ajax: {
-        url: "/admin/cursos/getCursos/" + programa,
+        url: `/admin/cursos/getCursos/${  programa}`,
         type: "post",
         dataType: "json",
         delay: 250,
-        data: function (params) {
+        data (params) {
           return {
             searchTerm: params.term, // search term
           };
         },
-        results: function (response) {
-          $.map(response, function (item) {
-            return {
+        results (response) {
+          $.map(response, (item) => ({
               id: item.id,
               text: item.text,
-            };
-          });
+            }));
         },
 
         cache: true,
       },
     });
     $("#modal_migrar_curso").modal("show");
-    $("#change_matricula").click(async function () {
+    $("#change_matricula").click(async () => {
       try {
-        let tocurso = $("#selec_cursos").val()
+        const tocurso = $("#selec_cursos").val()
         loader();
-        let data = await $.ajax({
+        const data = await $.ajax({
           url: "/admin/cursos/ChangeMatriculaCurso",
           type: "PUT",
           data: { participante, curso, tocurso, empresa },
@@ -197,8 +193,8 @@ $(document).ready(function () {
     });
   };
 
-  let global_estado_participante = false,
-    global_empresa;
+  let global_estado_participante = false;
+    let global_empresa;
 
   $("#dui").blur(async function () {
     global_estado_participante = false;
@@ -221,14 +217,14 @@ $(document).ready(function () {
     global_empresa = empresa;
     $("#modal_participante").modal("show");
   };
-  //Agregar nuevo participante
+  // Agregar nuevo participante
   $("#formparticipantes").submit(async function (e) {
     e.preventDefault();
     const t = $(this).serialize();
     loader();
-    let curso = $("#curso").text().trim(),
-      dui_existente = $("#dui").val(),
-      empresa = global_empresa;
+    const curso = $("#curso").text().trim();
+      const dui_existente = $("#dui").val();
+      const empresa = global_empresa;
     try {
       console.log(global_estado_participante);
       if (global_estado_participante) {

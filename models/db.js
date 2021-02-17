@@ -1,9 +1,9 @@
-//Requerimos mysql, dotenv, promisify
+// Requerimos mysql, dotenv, promisify
 const mysql = require("mysql2");
 require("dotenv").config();
 const { promisify } = require("util");
 
-//Hacemos conexion
+// Hacemos conexion
 const pool = mysql.createPool({
   host: process.env.HOST,
   user: process.env.USER,
@@ -29,7 +29,7 @@ pool.getConnection((err, connection) => {
     connection.release();
     console.log("DB is Connected");
   }
-  return;
+  
 });
 
 // Promisify Pool Querys

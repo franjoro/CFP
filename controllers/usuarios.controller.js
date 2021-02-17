@@ -1,12 +1,12 @@
-//declarar variable a exportar
+// declarar variable a exportar
 const usuarios = {};
-const { query } = require("../models/db");
-//Requerimos pool de base de datos si es necesario
-const pool = require("../models/db");
-//Requremimos utils encriptador
-const encriptador = require("../utils/decrypt");
-//Requerimos validator
 const { isEmail, isEmpty } = require("validator");
+const { query } = require("../models/db");
+// Requerimos pool de base de datos si es necesario
+const pool = require("../models/db");
+// Requremimos utils encriptador
+const encriptador = require("../utils/decrypt");
+// Requerimos validator
 
 usuarios.addUsuario = async (req, res) => {
   try {
@@ -57,7 +57,7 @@ usuarios.editUsuario = async (req, res) => {
     ];
     statment =
       "UPDATE tb_usuarios SET Nombre = ? , Email = ?, Password = ?,  Role= ?, Estado = ? WHERE id_usuario= ? ";
-    let query = await pool.query(statment, data);
+    const query = await pool.query(statment, data);
     res.json(query);
   } catch (err) {
     if (err.sqlState)

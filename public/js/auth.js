@@ -21,9 +21,9 @@ $("#loginForm").submit(async function (e) {
   const t = $(this).serialize();
   loader();
   try {
-    let data = await $.ajax({ url: "/signin", type: "POST", data: t });
+    const data = await $.ajax({ url: "/signin", type: "POST", data: t });
     if(data.status){
-        //CAMBIAR RUTAS
+        // CAMBIAR RUTAS
         if(data.role  == 1) window.location.replace('/admin/');
         if(data.role  == 0) window.location.replace('/admin/programa');
         console.log(data);

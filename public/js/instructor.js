@@ -16,11 +16,11 @@ errorMessage = () => {
     text: "No se pudo realizar la operación",
   });
 };
-//CARGAR TABLA
+// CARGAR TABLA
 function LoadTablaInstructor(estado = 1) {
-  //DataTable Programas
+  // DataTable Programas
   $("#tablaInstructor").DataTable({
-    ajax: "/admin/instructor/table/" + estado,
+    ajax: `/admin/instructor/table/${  estado}`,
     destroy: true,
     columns: [
       { data: "DUI" },
@@ -30,16 +30,16 @@ function LoadTablaInstructor(estado = 1) {
       { data: "Telefono" },
       { data: "Nombre_categoria" },
       {
-        render: function (data, type, row) {
+        render (data, type, row) {
           if (row.Estado == 1) {
             return '<p class="text-primary">Activo</p>';
-          } else {
+          } 
             return '<p class="text-danger">Inactivo</p>';
-          }
+          
         },
       },
       {
-        render: function (data, type, row) {
+        render (data, type, row) {
           const html = `<div class="btn-group" role = "group" aria - label="Basic example"><button type="button" class="btn btn-success" data-toggle="modal" id="btn_editar" data-target="#editModal"><i class="fas fa-edit"></i></button><button type="button" class="btn btn-danger" onclick="changeEstado('${row.Estado}','${row.DUI}')"  ><i class="fas fa-eye-slash"></i></button></div >`;
           return html;
         },
@@ -47,11 +47,11 @@ function LoadTablaInstructor(estado = 1) {
     ],
   });
 }
-//Cambiar depende del estado
+// Cambiar depende del estado
 $("#selector").on("change", function () {
   LoadTablaInstructor(this.value);
 });
-//cambiar estado de instructor de activo a inactivo y viceversa
+// cambiar estado de instructor de activo a inactivo y viceversa
 async function changeEstado(estado, dui) {
   try {
     loader();
@@ -68,13 +68,13 @@ async function changeEstado(estado, dui) {
     errorMessage();
   }
 }
-//Agregar nuevo instructor
+// Agregar nuevo instructor
 $("#formInstructor").submit(async function (e) {
   e.preventDefault();
   const t = $(this).serialize();
   loader();
   try {
-     let data = await $.ajax({
+     const data = await $.ajax({
       url: "/admin/instructor/add",
       type: "POST",
       data: t,
@@ -93,13 +93,13 @@ $("#formInstructor").submit(async function (e) {
 });
 
 
-//Editar empresa
+// Editar empresa
 $("#formInstructor_editar").submit(async function (e) {
   e.preventDefault();
   const t = $(this).serialize();
   loader();
   try {
-     let data = await $.ajax({
+     const data = await $.ajax({
       url: "/admin/instructor/editar",
       type: "PUT",
       data: t,
@@ -118,10 +118,10 @@ $("#formInstructor_editar").submit(async function (e) {
 });
 
 // Call the dataTables jQuery plugin
-$(document).ready(function () {
+$(document).ready(() => {
   LoadTablaInstructor();
   $('#tablaInstructor tbody').on( 'click', '#btn_editar', function () {
-    var data = $("#tablaInstructor").DataTable().row( $(this).parents('tr') ).data();
+    const data = $("#tablaInstructor").DataTable().row( $(this).parents('tr') ).data();
     console.log(data);
     $("#name_editar").val(data.Nombre);
     $("#DUI_editar").val(data.DUI);

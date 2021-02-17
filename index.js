@@ -1,6 +1,8 @@
 // Utilizar funcionalidades del Ecmascript 6
-'use strict'
-//Requerimos Dotenv para variables de entorno
+
+
+
+// Requerimos Dotenv para variables de entorno
 require('dotenv').config();
 // *Cargamos el fichero app.js con la configuración de Express
 const app = require('./app');
@@ -8,7 +10,7 @@ const app = require('./app');
 const port = process.env.PORT;
 
 app.listen(port, async  () => {
-    console.log("servidor corriendo en http://localhost:" + port);
+    console.log(`servidor corriendo en http://localhost:${  port}`);
 })
 
 

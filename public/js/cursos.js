@@ -18,7 +18,7 @@ loader = () => {
   });
 };
 
-$(document).ready(function () {
+$(document).ready(() => {
   $("#costo").mask("000,000,000,000,000.00", { reverse: true });
   $("#date_inicio").datepicker({ dateFormat: "dd-mm-yy" });
   $("#date_fin").datepicker({ dateFormat: "dd-mm-yy" });
@@ -29,30 +29,28 @@ $(document).ready(function () {
       type: "post",
       dataType: "json",
       delay: 250,
-      data: function (params) {
+      data (params) {
         return {
           searchTerm: params.term, // search term
         };
       },
-      results: function (response) {
-        $.map(response, function (item) {
-          return {
+      results (response) {
+        $.map(response, (item) => ({
             id: item.id,
             text: item.text,
-          };
-        });
+          }));
       },
       cache: true,
     },
   });
 
-  //Agregar nueva empresa
+  // Agregar nueva empresa
   $("#form_curso").submit(async function (e) {
     e.preventDefault();
     const t = $(this).serialize();
     loader();
     try {
-      let data = await $.ajax({
+      const data = await $.ajax({
         url: "/admin/cursos/add",
         type: "POST",
         data: t,

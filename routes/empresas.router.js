@@ -1,30 +1,30 @@
-'use strict'
+
 // Cargamos el módulo de express para poder crear rutas
-var express = require('express');
+const express = require('express');
 // Cargamos el controlador
-var empresas = require('../controllers/empresas.controller');
+const empresas = require('../controllers/empresas.controller');
 const {  } = require('../middlewares/auth');
 // Llamamos al router
-var router = express.Router();
+const router = express.Router();
 // Creamos una ruta para los métodos que tenemos en nuestros controladores
 
-//Mandar a traer la info de la tabla
+// Mandar a traer la info de la tabla
 router.get("/table/:estado*?",   empresas.table);
-//Mandar a traer la info del contacto según empresa
+// Mandar a traer la info del contacto según empresa
 router.get("/contacto/:empresa*?",   empresas.renderContacto);
-//AGregar nueva empres
+// AGregar nueva empres
 router.post("/add",    empresas.add);
-//Agregar nuevo contacto
+// Agregar nuevo contacto
 router.post("/ContactoAdd",    empresas.contactoAdd);
-//Editar contacto
+// Editar contacto
 router.post("/ContactoEditar",    empresas.contactoEditar);
-//Cambiar estado
+// Cambiar estado
 router.put("/changeEstado",    empresas.putEstado);
-//Editar empresa
+// Editar empresa
 router.put("/editarEmpresa",    empresas.editar_empresa);
-//Borrar contacto
+// Borrar contacto
 router.delete("/DeleteContacto",  empresas.deleteContacto);
-//Traer actividades economicas
+// Traer actividades economicas
 router.post("/actividades", empresas.actividades);
 
 

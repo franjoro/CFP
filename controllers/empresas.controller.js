@@ -1,14 +1,14 @@
-//declarar variable a exportar
+// declarar variable a exportar
 const empresas = {};
 
-//Requerimos pool de base de datos si es necesario
+// Requerimos pool de base de datos si es necesario
 const pool = require("../models/db");
 
-//agregar nueva empresa
+// agregar nueva empresa
 empresas.add = async (req, res, next) => {
   if (!req.body.name)
     return res.status(400).json({ status: false, error: "empty_name" });
-  let data = [
+  const data = [
     req.body.name,
     req.body.direccion,
     req.body.actividad,
@@ -25,11 +25,11 @@ empresas.add = async (req, res, next) => {
   }
 };
 
-//Editar empresa
+// Editar empresa
 empresas.editar_empresa = async (req, res, next) => {
   if (!req.body.name_edit)
     return res.status(400).json({ status: false, error: "empty_name" });
-  let data = [
+  const data = [
     req.body.name_edit,
     req.body.direccion_edit,
     req.body.actividad_edit,
@@ -47,14 +47,14 @@ empresas.editar_empresa = async (req, res, next) => {
   }
 };
 
-//Cargar tabla
+// Cargar tabla
 empresas.table = async (req, res) => {
-  let status = req.params.estado;
-  //validamos que venga un estado de empresas activo o inactivos
+  const status = req.params.estado;
+  // validamos que venga un estado de empresas activo o inactivos
   if (!status) return res.status(400).json({ error: "Not_status" });
-  //Hacemos consulta y devolvemos data
+  // Hacemos consulta y devolvemos data
   try {
-    let data = await pool.query("SELECT Nombre, Direccion, Tel, Estado, id_empresa FROM tb_empresa WHERE Estado = ? ", [
+    const data = await pool.query("SELECT Nombre, Direccion, Tel, Estado, id_empresa FROM tb_empresa WHERE Estado = ? ", [
       status,
     ]);
     res.json({ data });
@@ -63,14 +63,14 @@ empresas.table = async (req, res) => {
   }
 };
 
-//Cambiar estado de activo a inactivo
+// Cambiar estado de activo a inactivo
 empresas.putEstado = async (req, res) => {
-  //validar codigo y estado
+  // validar codigo y estado
   let estadoCambio = 1;
   if (req.body.estado == 1) estadoCambio = 0;
-  let data = [estadoCambio, req.body.id];
+  const data = [estadoCambio, req.body.id];
   try {
-    let query = await pool.query(
+    const query = await pool.query(
       "UPDATE tb_empresa SET Estado= ? WHERE id_empresa = ? ",
       data
     );
@@ -80,23 +80,23 @@ empresas.putEstado = async (req, res) => {
   }
 };
 
-//Cargar y mandar informacion de contacto de cada empresa
+// Cargar y mandar informacion de contacto de cada empresa
 empresas.renderContacto = async (req, res) => {
-  let empresa_id = req.params.empresa;
+  const empresa_id = req.params.empresa;
   if (!empresa_id) return res.status(400).json({ error: "EMPRESA_NOT_EXIST" });
   try {
-    let query = await pool.query(
+    const query = await pool.query(
       `SELECT * FROM tb_empresa_contact WHERE id_empresa  = ?; SELECT Nombre,id_empresa AS id FROM tb_empresa WHERE id_empresa = ${empresa_id}`,
       [empresa_id]
     );
-    let data = { empresa: query[1][0], contactos: query[0] };
+    const data = { empresa: query[1][0], contactos: query[0] };
     res.render("admin/union_empresa_contacto", data);
   } catch (error) {
     res.status(400).json({ error });
   }
 };
 
-//Desvincular contacto y empresa
+// Desvincular contacto y empresa
 empresas.deleteContacto = async (req, res) => {
   data = [req.body.contacto, req.body.empresa];
   try {
@@ -110,10 +110,10 @@ empresas.deleteContacto = async (req, res) => {
   }
 };
 
-//Agregar contacto
+// Agregar contacto
 empresas.contactoAdd = async (req, res) => {
   try {
-    //Formatear data
+    // Formatear data
     data = [
       req.body.name,
       req.body.tel,
@@ -123,24 +123,24 @@ empresas.contactoAdd = async (req, res) => {
       req.body.id_empresa,
     ];
 
-    //Ingresar si no existe
+    // Ingresar si no existe
     await pool.query(
       "INSERT INTO tb_empresa_contact(Nombre,Telefono,Celular,Puesto,Email,id_empresa) VALUES(?,?,?,?,?,?)",
       data
     );
-    //Retornar
+    // Retornar
     return res.redirect(`/admin/empresas/contacto/${req.body.id_empresa}`);
   } catch (error) {
     console.log(error);
-    //Error si no encuentra programa
+    // Error si no encuentra programa
     return res.status(400).send(error);
   }
 };
 
-//Editar información de contacto
+// Editar información de contacto
 empresas.contactoEditar = async (req, res) => {
   try {
-    //Formatear data
+    // Formatear data
     data = [
       req.body.name_editar,
       req.body.tel_editar,
@@ -150,25 +150,25 @@ empresas.contactoEditar = async (req, res) => {
       req.body.id_contacto,
     ];
 
-    //Ingresar si no existe
-    let querry = await pool.query(
+    // Ingresar si no existe
+    const querry = await pool.query(
       "UPDATE tb_empresa_contact SET Nombre = ?, Telefono = ?, Celular = ?, Puesto = ? , Email = ? WHERE id_contacto = ?",
       data
     );
-    //Retornar
+    // Retornar
 
     return res.redirect(`/admin/empresas/contacto/${req.body.id_empresa}`);
   } catch (error) {
     console.log(error);
-    //Error si no encuentra programa
+    // Error si no encuentra programa
     return res.status(400).send(error);
   }
 };
 
 
 empresas.actividades = async (req,res ) =>{
-  let post_var = req.body.searchTerm,
-    query = `SELECT id , Nombre AS text FROM tb_actividad_economica order By Nombre LIMIT 25`;
+  const post_var = req.body.searchTerm;
+    let query = `SELECT id , Nombre AS text FROM tb_actividad_economica order By Nombre LIMIT 25`;
   if (post_var)
     query = `SELECT id , Nombre AS text FROM tb_actividad_economica WHERE Nombre like '%${post_var}%' order By Nombre LIMIT 25`;
   try {

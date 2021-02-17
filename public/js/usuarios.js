@@ -18,7 +18,7 @@ errorMessage = () => {
 };
 
 table = () => {
-  //DataTable Usuarios
+  // DataTable Usuarios
   $("#tableUsuario").DataTable({
     ajax: "/admin/usuarios/table",
     columns: [
@@ -26,21 +26,21 @@ table = () => {
       { data: "Nombre" },
       { data: "Email" },
       {
-        render: function (data, type, row) {
+        render (data, type, row) {
           if (row.Role == 1) {
             return "Administrador";
-          } else {
+          } 
             return "Coordinador";
-          }
+          
         },
       },
       {
-        render: function (data, type, row) {
+        render (data, type, row) {
           if (row.Estado == 1) {
             return '<p class="text-primary">Activo</p>';
-          } else {
+          } 
             return '<p class="text-danger">Desactivado</p>';
-          }
+          
         },
       },
       {
@@ -79,7 +79,7 @@ $("#formEdit").submit(async function (e) {
   const t = $(this).serialize();
   loader();
   try {
-    let query = await $.ajax({ url: "/admin/usuarios/edit", type: "POST", data: t });
+    const query = await $.ajax({ url: "/admin/usuarios/edit", type: "POST", data: t });
     console.log(query);
     $("#tableUsuario").DataTable().destroy();
     table();
@@ -93,10 +93,10 @@ $("#formEdit").submit(async function (e) {
   }
 });
 
-$(document).ready(function () {
+$(document).ready(() => {
   table();
   $('#tableUsuario tbody').on( 'click', 'button', function () {
-    var data = $("#tableUsuario").DataTable().row( $(this).parents('tr') ).data();
+    const data = $("#tableUsuario").DataTable().row( $(this).parents('tr') ).data();
     $("#userEdit").val(data.id_usuario);
     $("#emailEdit").val(data.Email);
     $("#nameEdit").val(data.Nombre);

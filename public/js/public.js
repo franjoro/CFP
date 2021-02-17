@@ -6,8 +6,8 @@ errorMessage = () => {
   });
 };
 
-let global_empresa_seleccionada,
-  global_estado_participante = false;
+let global_empresa_seleccionada;
+  let global_estado_participante = false;
 
 const updateEmpresaInfo = () => {
   $("#collpaseOne").hide();
@@ -48,9 +48,9 @@ $("#dui").blur(async function () {
   }
 });
 
-$(document).ready(function () {
-  //Creacion de los dropzone
-  $("#select_empresa").on("select2:select", async function (e) {
+$(document).ready(() => {
+  // Creacion de los dropzone
+  $("#select_empresa").on("select2:select", async (e) => {
     $("#update_form").css("display", "block");
     const param = e.params.data.id;
     global_empresa_seleccionada = e.params.data.id;
@@ -72,10 +72,10 @@ $(document).ready(function () {
     }
   });
 
-  //Mascaras para dui y telefono
+  // Mascaras para dui y telefono
   $("#dui").mask("00000000-0");
   $("#tel").mask("0000-0000");
-  //Select de empresas
+  // Select de empresas
   $("#select_empresa").select2({
     width: "100%",
     ajax: {
@@ -83,39 +83,37 @@ $(document).ready(function () {
       type: "post",
       dataType: "json",
       delay: 250,
-      data: function (params) {
+      data (params) {
         return {
           searchTerm: params.term, // search term
         };
       },
-      results: function (response) {
-        $.map(response, function (item) {
-          return {
+      results (response) {
+        $.map(response, (item) => ({
             id: item.id,
             text: item.text,
-          };
-        });
+          }));
       },
       cache: true,
     },
   });
 
-  //Cargar tabla
+  // Cargar tabla
   $("#tablaParticipantes").DataTable({
     searching: false,
     paging: false,
     bInfo: false,
   });
 
-  $("#botonAdd").on("click", function () {
-    let dui = $("#dui").val(),
-      nombre = $("#nombre").val(),
-      isss = $("#isss").val(),
-      cargo = $("#cargo").val(),
-      tel = $("#tel").val(),
-      email = $("#email").val(),
-      genero = $("#genero").val(),
-      cursoCodigo = $("#curso").children("option:selected").val();
+  $("#botonAdd").on("click", () => {
+    const dui = $("#dui").val();
+      const nombre = $("#nombre").val();
+      const isss = $("#isss").val();
+      const cargo = $("#cargo").val();
+      const tel = $("#tel").val();
+      const email = $("#email").val();
+      const genero = $("#genero").val();
+      const cursoCodigo = $("#curso").children("option:selected").val();
     curso_text = $("#curso").children("option:selected").text();
 
     if (
@@ -152,17 +150,17 @@ $(document).ready(function () {
       });
     }
   });
-  //Llenar tabla
+  // Llenar tabla
   populateTable = (data) => {
     $("#tablaParticipantes").DataTable().row.add(data).draw();
   };
-  //Borar tabla y localstorage+
+  // Borar tabla y localstorage+
   deleteTableAndLocal = () => {
     $("#tablaParticipantes").DataTable().clear().draw();
     localStorage.clear();
   };
 
-  //Verificar si existe y llenar
+  // Verificar si existe y llenar
   CheckLocalstorage = () => {
     let storage = localStorage.getItem("storage");
     if (storage) {
@@ -172,10 +170,10 @@ $(document).ready(function () {
         populateTable(element);
       });
     }
-    return;
+    
   };
   CheckLocalstorage();
-  //Crear o almacenar localstorage
+  // Crear o almacenar localstorage
   create_OR_storage_localstorage = (data) => {
     let storage = localStorage.getItem("storage");
     if (!storage) {

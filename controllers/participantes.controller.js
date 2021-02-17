@@ -1,9 +1,9 @@
-//declarar variable a exportar
+// declarar variable a exportar
 const participantes = {};
 
-//Requerimos pool de base de datos si es necesario
-const pool = require("../models/db");
+// Requerimos pool de base de datos si es necesario
 const { isEmpty } = require("validator");
+const pool = require("../models/db");
 
 participantes.main = (req, res) => {
   res.render("./admin/participantes");
@@ -52,7 +52,7 @@ participantes.edit = async (req, res) => {
     ];
     statment =
       "UPDATE tb_participante SET Nombre = ? , Email = ?, Telefono = ?  WHERE DUI= ? ";
-    let query = await pool.query(statment, data);
+    const query = await pool.query(statment, data);
     res.json(query);
   } catch (err) {
     if (err.sqlState)
@@ -62,7 +62,7 @@ participantes.edit = async (req, res) => {
 };
 
 participantes.getByDUI = async (req, res) => {
-  const dui = req.params.dui;
+  const {dui} = req.params;
   console.log(dui);
   if (!dui) return res.status(400).json({ status: false, error: "EMPTY_DUI" });
   try {

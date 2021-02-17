@@ -18,7 +18,7 @@ errorMessage = () => {
 };
 
 table = () => {
-  //DataTable Participantes
+  // DataTable Participantes
   $("#tableParticipantes").DataTable({
     ajax: "/admin/participantes/table",
     columns: [
@@ -44,7 +44,7 @@ $("#formparticipantes").submit(async function (e) {
   const t = $(this).serialize();
   loader();
   try {
-    let data = await $.ajax({ url: "/admin/participantes/add", type: "POST", data: t });
+    const data = await $.ajax({ url: "/admin/participantes/add", type: "POST", data: t });
     $("#tableParticipantes").DataTable().destroy();
     table();
     swal.close();
@@ -65,7 +65,7 @@ $("#formEdit").submit(async function (e) {
   const t = $(this).serialize();
   loader();
   try {
-    let query = await $.ajax({ url: "/admin/participantes/edit", type: "PUT", data: t });
+    const query = await $.ajax({ url: "/admin/participantes/edit", type: "PUT", data: t });
     console.log(query);
     $("#tableParticipantes").DataTable().destroy();
     table();
@@ -79,14 +79,14 @@ $("#formEdit").submit(async function (e) {
   }
 });
 
-$(document).ready(function () {
+$(document).ready(() => {
   $("#dui").mask("00000000-0");
   $("#tel").mask("0000-0000");
 
   
   table();
   $('#tableParticipantes tbody').on( 'click', 'button', function () {
-    var data = $("#tableParticipantes").DataTable().row( $(this).parents('tr') ).data();
+    const data = $("#tableParticipantes").DataTable().row( $(this).parents('tr') ).data();
     $("#duiEdit").val(data.DUI);
     $("#emailEdit").val(data.Email);
     $("#nameEdit").val(data.Nombre);

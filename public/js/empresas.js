@@ -16,28 +16,28 @@ errorMessage = () => {
     text: "No se pudo realizar la operación",
   });
 };
-//CARGAR TABLA
+// CARGAR TABLA
 function LoadTablaEmpresas(estado = 1) {
-  //DataTable Programas
+  // DataTable Programas
   $("#tableEmpresas").DataTable({
-    ajax: "/admin/empresas/table/" + estado,
+    ajax: `/admin/empresas/table/${  estado}`,
     destroy: true,
     columns: [
       { data: "Nombre" },
       { data: "Direccion" },
       { data: "Tel" },
       {
-        render: function (data, type, row) {
+        render (data, type, row) {
           if (row.Estado == 1) {
             return '<p class="text-primary">Activo</p>';
-          } else {
+          } 
             return '<p class="text-danger">Inactivo</p>';
-          }
+          
         },
       },
       { data: "id_empresa", visible: false },
       {
-        render: function (data, type, row) {
+        render (data, type, row) {
           const html = `<div class="btn-group" role = "group" aria - label="Basic example"><button type="button" class="btn btn-success" data-toggle="modal" id="btn_editar" data-target="#editModal"><i class="fas fa-edit"></i></button><button type="button" class="btn btn-danger" onclick="changeEstado('${row.Estado}','${row.id_empresa}')"  ><i class="fas fa-eye-slash"></i></button><a type="button" href="/admin/empresas/contacto/${row.id_empresa}" class="btn btn-info"   ><i class="fa fa-user-friends"></i></a></div >`;
           return html;
         },
@@ -45,15 +45,15 @@ function LoadTablaEmpresas(estado = 1) {
     ],
   });
 }
-//Cambiar depende del estado
+// Cambiar depende del estado
 $("#selector").on("change", function () {
   LoadTablaEmpresas(this.value);
 });
-//cambiar estado de empresa de activo a inactivo y viceversa
+// cambiar estado de empresa de activo a inactivo y viceversa
 async function changeEstado(estado, id) {
   try {
     loader();
-    let query = await $.ajax({
+    const query = await $.ajax({
       url: "/admin/empresas/changeEstado",
       type: "PUT",
       data: { estado, id },
@@ -66,13 +66,13 @@ async function changeEstado(estado, id) {
     errorMessage();
   }
 }
-//Agregar nueva empresa
+// Agregar nueva empresa
 $("#formEmpresas").submit(async function (e) {
   e.preventDefault();
   const t = $(this).serialize();
   loader();
   try {
-     let data = await $.ajax({
+     const data = await $.ajax({
       url: "/admin/empresas/add",
       type: "POST",
       data: t,
@@ -90,7 +90,7 @@ $("#formEmpresas").submit(async function (e) {
 });
 
 
-//Eliminar contacto de una empresa
+// Eliminar contacto de una empresa
 function EliminarContactoDeEmpresa(contacto,empresa) {
   Swal.fire({
     title: "¿Estás Seguro?",
@@ -120,13 +120,13 @@ function EliminarContactoDeEmpresa(contacto,empresa) {
     }
   });
 }
-//Editar empresa
+// Editar empresa
 $("#formEmpresasEditar").submit(async function (e) {
   e.preventDefault();
   const t = $(this).serialize();
   loader();
   try {
-     let data = await $.ajax({
+     const data = await $.ajax({
       url: "/admin/empresas/editarEmpresa",
       type: "PUT",
       data: t,
@@ -144,12 +144,12 @@ $("#formEmpresasEditar").submit(async function (e) {
   }
 });
 // Call the dataTables jQuery plugin
-$(document).ready(function () {
+$(document).ready(() => {
   LoadTablaEmpresas();
 
   $("#tablaContacto").DataTable();
   $('#tablaContacto tbody').on( 'click', '#editar', function () {
-    var data = $("#tablaContacto").DataTable().row( $(this).parents('tr') ).data();
+    const data = $("#tablaContacto").DataTable().row( $(this).parents('tr') ).data();
     id = $(this).data().id_contacto;
     $("#name_editar").val(data[0]);
     $("#tel_editar").val(data[1]);
@@ -163,7 +163,7 @@ $(document).ready(function () {
 
 
   $('#tableEmpresas tbody').on( 'click', '#btn_editar', function () {
-    var data = $("#tableEmpresas").DataTable().row( $(this).parents('tr') ).data();
+    const data = $("#tableEmpresas").DataTable().row( $(this).parents('tr') ).data();
     $("#name_edit").val(data.Nombre);
     $("#tel_edit").val(data.Tel);
     $("#actividad_edit").val(data.Actividad_eco);
@@ -180,18 +180,16 @@ $(document).ready(function () {
       type: "post",
       dataType: "json",
       delay: 250,
-      data: function (params) {
+      data (params) {
         return {
           searchTerm: params.term, // search term
         };
       },
-      results: function (response) {
-        $.map(response, function (item) {
-          return {
+      results (response) {
+        $.map(response, (item) => ({
             id: item.id,
             text: item.text,
-          };
-        });
+          }));
       },
       cache: true,
     },
@@ -206,18 +204,16 @@ $(document).ready(function () {
       type: "post",
       dataType: "json",
       delay: 250,
-      data: function (params) {
+      data (params) {
         return {
           searchTerm: params.term, // search term
         };
       },
-      results: function (response) {
-        $.map(response, function (item) {
-          return {
+      results (response) {
+        $.map(response, (item) => ({
             id: item.id,
             text: item.text,
-          };
-        });
+          }));
       },
       cache: true,
     },
