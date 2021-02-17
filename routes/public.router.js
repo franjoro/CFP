@@ -1,4 +1,3 @@
-
 // Cargamos el módulo de express para poder crear rutas
 const express = require("express");
 // Cargamos el controlador
@@ -17,7 +16,8 @@ router.post("/getDataEmpresas", public_.getDataEmpresas);
 router.put("/updateEmpresaData", public_.UpdateDataEmpresa);
 // Crear solicitud y matriculas
 router.post("/CreateSolicitud", public_.CreateSolicitud);
+//Responde con el file de ficha de registro
+router.get("/ficha", public_.FichaRegistro);
 
 // Exportamos la configuración
 module.exports = router;
-

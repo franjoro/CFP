@@ -1,4 +1,4 @@
-errorMessage = () => {
+const errorMessage = () => {
   Swal.fire({
     icon: "error",
     title: "Oops...",
@@ -7,7 +7,8 @@ errorMessage = () => {
 };
 
 let global_empresa_seleccionada;
-  let global_estado_participante = false;
+let global_estado_participante = false;
+let global_data_solicitud ;
 
 const updateEmpresaInfo = () => {
   $("#collpaseOne").hide();
@@ -22,6 +23,27 @@ const updateEmpresaInfo = () => {
       id: global_empresa_seleccionada,
     };
     $.ajax({ url: "/public/updateEmpresaData", type: "PUT", data });
+  } catch (error) {
+    console.log(error);
+    errorMessage();
+  }
+};
+const registrarSolicitud = async () => {
+  $("#collpaseOne").hide();
+  $("#collapseTwo").hide();
+  $("#collpasetres").show();
+  let data = localStorage.getItem("storage");
+  data = JSON.parse(data);
+  try {
+    let query = await $.ajax({
+      url: "/public/CreateSolicitud",
+      type: "POST",
+      data: {
+        data: JSON.stringify(data),
+        empresa: global_empresa_seleccionada,
+      },
+    });
+    global_data_solicitud = query.data
   } catch (error) {
     console.log(error);
     errorMessage();
@@ -83,16 +105,16 @@ $(document).ready(() => {
       type: "post",
       dataType: "json",
       delay: 250,
-      data (params) {
+      data(params) {
         return {
           searchTerm: params.term, // search term
         };
       },
-      results (response) {
+      results(response) {
         $.map(response, (item) => ({
-            id: item.id,
-            text: item.text,
-          }));
+          id: item.id,
+          text: item.text,
+        }));
       },
       cache: true,
     },
@@ -107,13 +129,13 @@ $(document).ready(() => {
 
   $("#botonAdd").on("click", () => {
     const dui = $("#dui").val();
-      const nombre = $("#nombre").val();
-      const isss = $("#isss").val();
-      const cargo = $("#cargo").val();
-      const tel = $("#tel").val();
-      const email = $("#email").val();
-      const genero = $("#genero").val();
-      const cursoCodigo = $("#curso").children("option:selected").val();
+    const nombre = $("#nombre").val();
+    const isss = $("#isss").val();
+    const cargo = $("#cargo").val();
+    const tel = $("#tel").val();
+    const email = $("#email").val();
+    const genero = $("#genero").val();
+    const cursoCodigo = $("#curso").children("option:selected").val();
     curso_text = $("#curso").children("option:selected").text();
 
     if (
@@ -136,10 +158,10 @@ $(document).ready(() => {
       genero,
     ];
     populateTable(data);
-    create_OR_storage_localstorage(data);
+    CreateOrStorage(data);
     $('input[type="text"]').val("");
     if (!global_estado_participante) {
-      data = { dui, 'name': nombre, tel, email, genero, tel, isss, cargo };
+      data = { dui, name: nombre, tel, email, genero, tel, isss, cargo };
       console.log(data);
       $.ajax({
         url: "/admin/participantes/add",
@@ -151,17 +173,18 @@ $(document).ready(() => {
     }
   });
   // Llenar tabla
-  populateTable = (data) => {
+  const populateTable = (data) => {
     $("#tablaParticipantes").DataTable().row.add(data).draw();
   };
   // Borar tabla y localstorage+
+  // eslint-disable-next-line no-undef
   deleteTableAndLocal = () => {
     $("#tablaParticipantes").DataTable().clear().draw();
     localStorage.clear();
   };
 
   // Verificar si existe y llenar
-  CheckLocalstorage = () => {
+  const CheckLocalstorage = () => {
     let storage = localStorage.getItem("storage");
     if (storage) {
       storage = JSON.parse(storage);
@@ -170,21 +193,21 @@ $(document).ready(() => {
         populateTable(element);
       });
     }
-    
   };
   CheckLocalstorage();
   // Crear o almacenar localstorage
-  create_OR_storage_localstorage = (data) => {
+  const CreateOrStorage = (data) => {
     let storage = localStorage.getItem("storage");
     if (!storage) {
-      data_json = [data];
-      data_json = JSON.stringify(data_json);
-      return localStorage.setItem("storage", data_json);
+      let DataJson = [data];
+      DataJson = JSON.stringify(DataJson);
+      return localStorage.setItem("storage", DataJson);
     }
     storage = JSON.parse(storage);
     storage.push(data);
     storage = JSON.stringify(storage);
     localStorage.clear();
     localStorage.setItem("storage", storage);
+    return 1;
   };
 });
