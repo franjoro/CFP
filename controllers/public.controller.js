@@ -155,11 +155,15 @@ public.CreateSolicitud = async (req, res) => {
     return res.status(400).json({ status: false, error });
   }
 };
+const fs = require("fs");
 
 public.FichaRegistro = async (req, res) => {
-  // const data = req.body.data;
-  const data = ["ITR-FCOO-51", 77, "ITR-FCOO-50", 78];
-  const empresa = 335;
+  const data = JSON.parse(req.params.data);
+  const empresa = req.params.empresa;
+  if (!data || !empresa)
+    return res.json({ status: false, error: "PARAMS_NOT_EXIST" });
+  //const data = ["ITR-FCOO-51", 82, "ITR-FCOO-50", 81];
+  // const empresa = 335;
   let cursos = [],
     solicitudes = [];
   data.forEach((element, index) => {
@@ -193,31 +197,71 @@ public.FichaRegistro = async (req, res) => {
 
     let largo = solicitudes.length;
     solicitudes.forEach((solicitud, index) => {
-      if (index == largo-1) {
+      if (index == largo - 1) {
         statment += " union_matricula.id_solicitud = " + solicitud;
-        console.log("Entra")
-
-      }
-      else{
+      } else {
         statment += " union_matricula.id_solicitud = " + solicitud + " OR";
       }
     });
 
+    let alumnos = await pool.query(statment);
+    MainQuery = await Promise.all(queries);
+    // res.json(MainQuery);
 
-    let alumnos = (MainQuery = await Promise.all(queries));
-    res.json(MainQuery);
+    const { GenerarPdf } = require("../utils/htmlToPdf");
+    let pdf = await GenerarPdf({ data: MainQuery, alumnos });
+
+    var file = fs.readFileSync("./public/files/" + pdf);
+    res.contentType("application/pdf");
+    res.send(file);
   } catch (error) {
     console.log(error);
     return res.status(400).json({ status: false, error });
   }
-
-  // const { GenerarPdf } = require("../utils/htmlToPdf");
-  // let pdf = await GenerarPdf({ data: MainQuery });
-
-  // const fs = require("fs");
-  // var file = fs.readFileSync("./public/files/" + pdf);
-  // res.contentType("application/pdf");
-  // res.send(file);
 };
+const { upload, getFiles } = require("../utils/s3");
+
+public.archivos = async (req, res) => {
+  if (!req.files) return res.json({ status: false, error: "FILE_NOT_EXIST" });
+  var count = Object.keys(req.files);
+  const CursosCrud = req.body.curso;
+  const cursos = JSON.parse(CursosCrud);
+
+  const empresa = req.body.empresa;
+
+  try {
+    let promesas = [];
+    cursos.forEach((curso) => {
+      count.forEach((element) => {
+        const ext = req.files[element].name.split(".")[1];
+        const fileContent = Buffer.from(req.files[element].data, "binary");
+        promesas.push(upload(fileContent, curso, element, ext, empresa));
+      });
+    });
+
+    let datos = await Promise.all(promesas);
+    res.send(datos);
+  } catch (error) {
+    res.json({ status: false, error });
+    console.log(error);
+  }
+};
+
+public.GetFiles = async (req, res) => {
+  if (!req.params.key) return res.json({ status: false, error: "KEY_NOT_EXIST" });
+  const key = req.params.key.replace(/_/g, "/") ;
+  console.log(key)
+  try {
+    let url = await getFiles(key);
+    var file = fs.readFileSync(url);
+    res.contentType("application/pdf");
+    res.send(file);
+  } catch (error) {
+    res.json({ status: false, error });
+    console.log(error);
+  }
+};
+
+
 
 module.exports = public;

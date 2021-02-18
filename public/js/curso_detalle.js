@@ -18,6 +18,21 @@ loader = () => {
   });
 };
 
+let global_empresa, global_curso;
+const OpenFiles = (curso, empresa) => {
+  $("#modal_files").modal("show");
+  global_empresa = empresa;
+  global_curso = curso;
+};
+
+const makeKey = archivo =>{
+  key = `app_cursos_${global_curso}_${global_empresa}_${archivo}.pdf`
+  window.open(
+    `/public/getFiles/${key}`
+  );
+}
+
+
 $(document).ready(() => {
   $("#dui").mask("00000000-0");
   $("#tel").mask("0000-0000");
@@ -31,16 +46,16 @@ $(document).ready(() => {
       type: "post",
       dataType: "json",
       delay: 250,
-      data (params) {
+      data(params) {
         return {
           searchTerm: params.term, // search term
         };
       },
-      results (response) {
+      results(response) {
         $.map(response, (item) => ({
-            id: item.id,
-            text: item.text,
-          }));
+          id: item.id,
+          text: item.text,
+        }));
       },
 
       cache: true,
@@ -154,20 +169,20 @@ $(document).ready(() => {
     $("#selec_cursos").select2({
       width: "100%",
       ajax: {
-        url: `/admin/cursos/getCursos/${  programa}`,
+        url: `/admin/cursos/getCursos/${programa}`,
         type: "post",
         dataType: "json",
         delay: 250,
-        data (params) {
+        data(params) {
           return {
             searchTerm: params.term, // search term
           };
         },
-        results (response) {
+        results(response) {
           $.map(response, (item) => ({
-              id: item.id,
-              text: item.text,
-            }));
+            id: item.id,
+            text: item.text,
+          }));
         },
 
         cache: true,
@@ -176,7 +191,7 @@ $(document).ready(() => {
     $("#modal_migrar_curso").modal("show");
     $("#change_matricula").click(async () => {
       try {
-        const tocurso = $("#selec_cursos").val()
+        const tocurso = $("#selec_cursos").val();
         loader();
         const data = await $.ajax({
           url: "/admin/cursos/ChangeMatriculaCurso",
@@ -194,7 +209,7 @@ $(document).ready(() => {
   };
 
   let global_estado_participante = false;
-    let global_empresa;
+  let global_empresa;
 
   $("#dui").blur(async function () {
     global_estado_participante = false;
@@ -223,8 +238,8 @@ $(document).ready(() => {
     const t = $(this).serialize();
     loader();
     const curso = $("#curso").text().trim();
-      const dui_existente = $("#dui").val();
-      const empresa = global_empresa;
+    const dui_existente = $("#dui").val();
+    const empresa = global_empresa;
     try {
       console.log(global_estado_participante);
       if (global_estado_participante) {

@@ -42,28 +42,6 @@ app.use("/public", require("./routes/public.router"));
 // Router Formulario de Habil
 app.use("/habil", require("./routes/habil.router"));
 
-const fileUpload = require("express-fileupload");
-const { upload } = require("./utils/s3");
-
-
-
-
-
-app.post("/prueba", fileUpload(), async (req, res) => {
-    try {
-        const curso = "Curso_De_Prueba";
-        if(!req.files.file) return res.json({status: false, error:"FILE_NOT_EXIST"})
-        const ext = req.files.file.name.split(".")[1];
-        const fileContent = Buffer.from(req.files.file.data, "binary");
-        const data = await upload(fileContent, curso, ext);
-        // let data = await Promise.all([data1,data2,data3,data4]);
-        res.json(data);      
-    } catch (error) {
-        res.json({status: false, error})
-        console.log(error);
-    }
-
-});
 
 // exportamos este módulo para poder usar la constiable app fuera de este archivo
 module.exports = app;

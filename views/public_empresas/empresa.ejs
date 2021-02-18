@@ -266,7 +266,7 @@
                 >
                   <h4 class="my-0 fw-normal">Paso #3 Subir archivos</h4>
                 </a>
-                <div class="card-body collapse " id="collpasetres">
+                <div class="card-body collapse  " id="collpasetres">
                   <p class="text-dark">
                     <b>Instrucciones: </b>Adjuntar los siguientes archivos:
                   </p>
@@ -277,32 +277,38 @@
                         1. Ficha de registro firmada y sellada. Puede descargar
                         la plantilla aquí:
                         <a
-                          href="/static/files/ANEXO 6 - FORMULARIO DE INSCRIPCIÓN.pdf"
-                          download="Plantilla_Anexo_6.pdf"
+                          onclick="GenerarPdf()"
                           >DESCARGAR PLANTILLA</a
                         >
                       </p>
-                      <input type="file" name="" id="" />
+                      <input type="file" name="ficha" id="ficha" />
                     </div>
                   </div>
                   <div class="card mb-4 shadow-sm">
                     <div class="card-body">
                       <p>2.1 RECIBO DE INGRESO POR COTIZACIONES - <a target="_blank" href="/static/files/recibo.pdf" class="text-danger"> VER EJEMPLO </a></p> 
-                      <input type="file" name="" id="" />
+                      <input type="file" name="recibo" id="recibo" />
                       <hr>
                       <p> 2.2
                         Recibo de cancelación ISSS al (En caso que el pago fue
                         hecho en línea) - <a target="_blank" href="/static/files/cancelacion.pdf" class="text-danger"> VER EJEMPLO </a>
                       </p>
-                      <input type="file" name="" id="" />
+                      <input type="file" name="cancelacion" id="cancelacion" />
                     </div>
                   </div>
                   <div class="card mb-4 shadow-sm">
                     <div class="card-body">
                       <p>3. Planilla preelaborada para el pago mensual ISSS - <a target="_blank" href="/static/files/planilla.pdf" class="text-danger"> VER EJEMPLO </a></p>
-                      <input type="file" name="" id="" />
+                      <input type="file" name="planilla" id="planilla" />
                     </div>
                   </div>
+                  <button
+                  type="button"
+                  onclick="SendFiles()" 
+                  class="btn btn-success float-right"
+                >
+                  Finalizar y enviar solicitud 
+                </button>
                 </div>
               </div>
             </div>

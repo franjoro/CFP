@@ -17,7 +17,15 @@ router.put("/updateEmpresaData", public_.UpdateDataEmpresa);
 // Crear solicitud y matriculas
 router.post("/CreateSolicitud", public_.CreateSolicitud);
 //Responde con el file de ficha de registro
-router.get("/ficha", public_.FichaRegistro);
+router.get("/ficha/:empresa?/:data?", public_.FichaRegistro);
+//Recibir documentos de AWS
+router.get("/getFiles/:key?" ,public_.GetFiles)
+//Enviar documentos para guardar en AWS 
+const fileUpload = require("express-fileupload");
+router.post("/EnviarFiles" , fileUpload() , public_.archivos);
+
+
+
 
 // Exportamos la configuración
 module.exports = router;

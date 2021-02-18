@@ -17,10 +17,40 @@ const GenerarPdf = (data) => {
       }
     });
 
-    const options = { format: "A4", path: `./public/files/${tmpName}` };
+    itineracion = "";
+    data.alumnos.forEach((element, index) => {
+      let h = "", m = "";
+      if(element.Genero === 'Hombre'){
+        h = "checked";
+      }
+      if(element.Genero === 'Mujer'){
+        m = "checked";
+
+      }
+      itineracion +=
+           `
+          <tr>
+            <td>${index + 1}</td>
+            <td>${element.Nombre}</td>
+            <td>${element.Cargo}</td>
+            <td>${element.ISSS}</td>
+            <td>${element.DUI}</td>
+            <td>
+              <input type="checkbox" ${m} />
+            </td>
+            <td>
+              <input type="checkbox" ${h} />
+            </td>
+          </tr>
+           `;
+    });
+
+    const options = {
+      format: "A4",
+      path: `./public/files/${tmpName}`
+    };
     const file = {
-      content:
-        `
+      content: `
             <!DOCTYPE html>
             <html lang="en">
             
@@ -64,42 +94,32 @@ const GenerarPdf = (data) => {
                     </div>
                     <div class="container">
                         <p><b>ANEXO 6</b></p>
-                        <p><b>FECHA :</b> ${d.getDate()} - ${
-          d.getMonth() + 1
+                        <p><b>FECHA :</b> ${d.getDate()} - ${d.getMonth() + 1
         } - ${d.getFullYear()}</p>
-                        <p><b>NOMBRE DE LA EMPRESA:</b>&nbsp; <input type="text" class="complete" value="${
-                          empresa.Nombre
-                        }" /></p>
+                        <p><b>NOMBRE DE LA EMPRESA:</b>&nbsp; <input type="text" class="complete" value="${empresa.Nombre
+        }" /></p>
                         <p><b>NIT DE LA EMPRESA:</b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <input type="text" style="width:7%;"
-                                value="${
-                                  nit[0]
-                                }" />- <input type="text" value="${
-          nit[1]
+                                value="${nit[0]
+        }" />- <input type="text" value="${nit[1]
         }" style="width:20%;" />- <input type="text"
-                                value="${
-                                  nit[2]
-                                }" style="width:7%;" />- <input type="text" value="${
-          nit[3]
+                                value="${nit[2]
+        }" style="width:7%;" />- <input type="text" value="${nit[3]
         }" style="width:4%;" /></p>
-                        <p><b>TELEFONO:</b>&nbsp; &nbsp; <input type="text" class="" value="${
-                          empresa.Tel
-                        }" />&nbsp; &nbsp; &nbsp;
+                        <p><b>TELEFONO:</b>&nbsp; &nbsp; <input type="text" class="" value="${empresa.Tel
+        }" />&nbsp; &nbsp; &nbsp;
                             &nbsp; <b>Ext:</b><input type="text" class="" value="" /></p>
-                        <p><b>APORTACIÓN MENSUAL AL INSAFORP:</b>&nbsp; <input type="text" value="${
-                          empresa.Aportacion_insaforp
-                        }"
+                        <p><b>APORTACIÓN MENSUAL AL INSAFORP:</b>&nbsp; <input type="text" value="${empresa.Aportacion_insaforp
+        }"
                                 style="width:15%;" /><span style="font-size:10px;">(Según Ultimo recibo ISSS) </span>&nbsp; &nbsp;
-                            &nbsp; <b>NUMERO PATRONAL:</b><input type="text" value="${
-                              empresa.Num_Patronal
-                            }" style="width:15%;" /></p>
+                            &nbsp; <b>NUMERO PATRONA
+                            L:</b><input type="text" value="${empresa.Num_Patronal
+        }" style="width:15%;" /></p>
                         <p style="float:right; margin-right:50px"><b>NUMERO DE EMPLEADOS:</b>&nbsp; <br /><input type="text"
-                                value="${
-                                  empresa.Num_Empleados
-                                }" /></p><br /><br />
+                                value="${empresa.Num_Empleados
+        }" /></p><br /><br />
                         <p><b>ACTIVIDAD ECONÓMICA:(De acuerdo a Clasificacion ISSS)</b>&nbsp; </p><input class="complete"
-                            type="text" value="${
-                              empresa.Actividad
-                            }" /><br /><br />
+                            type="text" value="${empresa.Actividad
+        }" /><br /><br />
                         <p style="float:left"><b>NOMBRE DEL RESPONSABLE DE <br />CAPACITACION EN LA EMPRESA:</b></p><input
                             type="text" style="float:right; width:70%; margin-top:10px" value="" /><br /><br /><br />
                         <p style="float:left"><b>CORREO ELECTRÓNICO:</b></p><input type="text"
@@ -138,15 +158,7 @@ const GenerarPdf = (data) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Franklin Alejandro López Ramírez</td>
-                                    <td>IT</td>
-                                    <td>123456789</td>
-                                    <td>05756113-8</td>
-                                    <td><input type="checkbox" /></td>
-                                    <td><input type="checkbox" checked /></td>
-                                </tr>
+                            ${itineracion}
                             </tbody>
                         </table>
                     </div><br><br>
@@ -196,4 +208,6 @@ const GenerarPdf = (data) => {
   });
 };
 
-module.exports = { GenerarPdf };
+module.exports = {
+  GenerarPdf
+};

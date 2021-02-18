@@ -2,13 +2,25 @@ const errorMessage = () => {
   Swal.fire({
     icon: "error",
     title: "Oops...",
-    text: "Debes rellenar toda la información",
+    text: "No se pudo realizar la operación",
+  });
+};
+
+const loader = () => {
+  Swal.fire({
+    title: "Por favor, Espere",
+    html: "Cargando Data",
+    allowOutsideClick: !1,
+    showConfirmButton: false,
+    willOpen: () => {
+      Swal.showLoading();
+    },
   });
 };
 
 let global_empresa_seleccionada;
 let global_estado_participante = false;
-let global_data_solicitud ;
+let global_data_solicitud;
 
 const updateEmpresaInfo = () => {
   $("#collpaseOne").hide();
@@ -43,7 +55,8 @@ const registrarSolicitud = async () => {
         empresa: global_empresa_seleccionada,
       },
     });
-    global_data_solicitud = query.data
+    global_data_solicitud = query.data;
+    localStorage.removeItem("storage");
   } catch (error) {
     console.log(error);
     errorMessage();
@@ -70,6 +83,58 @@ $("#dui").blur(async function () {
   }
 });
 
+const GenerarPdf = () => {
+  window.open(
+    `/public/ficha/${global_empresa_seleccionada}/${JSON.stringify(
+      global_data_solicitud
+    )} `
+  );
+};
+const SendFiles = async () => {
+  //Hacer validaciones aqui Pendiente
+  var fd = new FormData();
+  var ficha = $("#ficha")[0].files;
+  var recibo = $("#recibo")[0].files;
+  var cancelacion = $("#cancelacion")[0].files;
+  var planilla = $("#planilla")[0].files;
+
+  cursos = [];
+  global_data_solicitud.forEach((element, index) => {
+    if ((index + 1) % 2) {
+      cursos.push(element);
+    }
+  });
+
+  fd.append("ficha", ficha[0]);
+  fd.append("recibo", recibo[0]);
+  fd.append("cancelacion", cancelacion[0]);
+  fd.append("planilla", planilla[0]);
+  fd.append("curso", JSON.stringify(cursos));
+  fd.append("empresa", global_empresa_seleccionada);
+
+  try {
+    loader();
+    let datos = await $.ajax({
+      url: "/public/EnviarFiles",
+      type: "POST",
+      data: fd,
+      processData: false,
+      contentType: false,
+    });
+    swal.close();
+
+    Swal.fire({
+      icon: "success",
+      title: "Solicitud enviada correctamente",
+      showConfirmButton: false,
+    });
+    console.log(datos);
+  } catch (error) {
+    console.log(error);
+    errorMessage();
+  }
+};
+
 $(document).ready(() => {
   // Creacion de los dropzone
   $("#select_empresa").on("select2:select", async (e) => {
@@ -77,6 +142,7 @@ $(document).ready(() => {
     const param = e.params.data.id;
     global_empresa_seleccionada = e.params.data.id;
     try {
+      loader();
       data = await $.ajax({
         url: "/public/getDataEmpresas",
         type: "POST",
@@ -88,6 +154,7 @@ $(document).ready(() => {
       $("#num_empleados").val(data.data.Num_Empleados);
       $("#aportacion").val(data.data.Aportacion_insaforp);
       console.log(data);
+      swal.close();
     } catch (error) {
       console.log(error);
       errorMessage();
