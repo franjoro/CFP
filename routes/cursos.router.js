@@ -8,6 +8,7 @@ const { authcheck } = require('../middlewares/auth');
 const router = express.Router();
 // Creamos una ruta para los métodos que tenemos en nuestros controladores
 // Genera la vista
+
 router.get("/",  cursos.main);
 // Muestra todos los cursos de una categoria en la variable id
 router.get("/:id",  cursos.cursos);
@@ -33,6 +34,16 @@ router.put("/ChangeMatriculaCurso", cursos.ChangeMatriculaCurso);
 router.delete("/deleteMatricula", cursos.deleteMatricula);
 // Elimina la asociacion de una empresa en un curso
 router.delete("/deleteEmpresaInCourse",cursos.deleteEmpresaCurso);
+
+
+
+// ==== ARCHIVOS
+//Guardar archivo en zip
+router.get("/savezip", cursos.getAtZipAllFiles);
+//Descargar archivo
+router.get("/archivo", cursos.dowloadZip);
+
+
 
 
 // Exportamos la configuración

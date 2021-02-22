@@ -6,11 +6,22 @@ errorMessage = () => {
   });
 };
 
-loader = () => {
+const loader = () => {
   Swal.fire({
     title: "Por favor, Espere",
     html: "Cargando Data",
     allowOutsideClick: !1,
+    showConfirmButton: false,
+    willOpen: () => {
+      Swal.showLoading();
+    },
+  });
+};
+const loaderFile = () => {
+  Swal.fire({
+    title: "Por favor espere",
+    html: "Descargando archivo",
+    allowOutsideClick: false,
     showConfirmButton: false,
     willOpen: () => {
       Swal.showLoading();
@@ -23,15 +34,25 @@ const OpenFiles = (curso, empresa) => {
   $("#modal_files").modal("show");
   global_empresa = empresa;
   global_curso = curso;
+  $("#susempresa").text($("#NameEmpresa").text());
 };
+//btn descargar
+$("#btn-descargar").click(() => {
+  $.ajax(`/admin/cursos/getOnZip/${global_empresa}/${global_curso}`);
+});
 
-const makeKey = archivo =>{
-  key = `app_cursos_${global_curso}_${global_empresa}_${archivo}.pdf`
-  window.open(
-    `/public/getFiles/${key}`
-  );
-}
-
+const makeKey = async (archivo) => {
+  key = `app_cursos_${global_curso}_${global_empresa}_${archivo}.pdf`;
+  try {
+    loaderFile();
+    const query = await $.ajax(`/public/getFiles/${key}`);
+    window.open(`/public/archivo`);
+    swal.close();
+  } catch (error) {
+    errorMessage();
+    console.log(error);
+  }
+};
 
 $(document).ready(() => {
   $("#dui").mask("00000000-0");

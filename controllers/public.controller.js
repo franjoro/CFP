@@ -95,51 +95,25 @@ public.CreateSolicitud = async (req, res) => {
     }
   });
 
-  //Crear promesas de solicitudes del curso
-  solicitudes = [];
-
-  cursos.forEach(async (curso) => {
-    solicitudes.push(
-      pool.query(
-        "INSERT INTO tb_solicitud_matricula(id_curso,id_empresa) VALUES (?,?)",
-        [curso, empresa]
-      )
-    );
-  });
-
   try {
-    //IDS de solicitudes recien creadas
-    const InsertedIds = await Promise.all(solicitudes);
-    //Crear arreglo de solicitudes y cursos
-    CursosYSolicitudes = [];
-    InsertedIds.forEach((element, index) => {
-      CursosYSolicitudes.push(cursos[index]);
-      CursosYSolicitudes.push(element.insertId);
-    });
     // Crear solicitudes de alumnos
     Matriculas = [];
     data.forEach((participante) => {
-      solicitud = CursosYSolicitudes.indexOf(participante[7].trim()) + 1;
       Matriculas.push(
         pool.query(
-          "INSERT INTO union_matricula(id_participante,id_curso,id_empresa,id_solicitud, Estado) VALUES( ? , ? , ? , ?, 0) ",
-          [
-            participante[0],
-            participante[7],
-            empresa,
-            CursosYSolicitudes[solicitud],
-          ]
+          "INSERT INTO union_matricula(id_participante,id_curso,id_empresa) VALUES( ? , ? , ?) ",
+          [participante[0], participante[7], empresa]
         )
       );
     });
+
     //Creación de empresas
     empresas = [];
     cursos.forEach((curso) => {
-      solicitud = CursosYSolicitudes.indexOf(curso.trim()) + 1;
       empresas.push(
         pool.query(
-          "INSERT INTO union_curso_empresa(id_empresa,id_curso, id_solicitud, Estado) VALUES (?,?,?,0)",
-          [empresa, curso, CursosYSolicitudes[solicitud]]
+          "INSERT INTO union_curso_empresa(id_empresa,id_curso) VALUES (?,?)",
+          [empresa, curso]
         )
       );
     });
@@ -149,7 +123,7 @@ public.CreateSolicitud = async (req, res) => {
     const Participantes = await Promise.all(PromesasActualizacion);
     //IDS de creación de empresas
     const IdsEmpresas = await Promise.all(empresas);
-    res.status(200).json({ status: true, data: CursosYSolicitudes });
+    res.status(200).json({ status: true , data:cursos });
   } catch (error) {
     console.log(error);
     return res.status(400).json({ status: false, error });
@@ -158,21 +132,16 @@ public.CreateSolicitud = async (req, res) => {
 const fs = require("fs");
 
 public.FichaRegistro = async (req, res) => {
-  const data = JSON.parse(req.params.data);
+  let cursos = req.params.data;
   const empresa = req.params.empresa;
-  if (!data || !empresa)
+  if (!cursos || !empresa || cursos === "undefined" || empresa === "undefined")
     return res.json({ status: false, error: "PARAMS_NOT_EXIST" });
-  //const data = ["ITR-FCOO-51", 82, "ITR-FCOO-50", 81];
+
+  cursos = JSON.parse(cursos);
+
+  //const cursos = ["ITR-FCOO-51", "ITR-FCOO-50"];
   // const empresa = 335;
-  let cursos = [],
-    solicitudes = [];
-  data.forEach((element, index) => {
-    if ((index + 1) % 2) {
-      cursos.push(element);
-    } else {
-      solicitudes.push(element);
-    }
-  });
+
 
   queries = [];
   try {
@@ -193,20 +162,20 @@ public.FichaRegistro = async (req, res) => {
     });
 
     let statment =
-      "SELECT tb_participante.Nombre, tb_participante.Cargo, tb_participante.ISSS , tb_participante.DUI, tb_participante.Genero , union_matricula.id_solicitud FROM tb_participante INNER JOIN union_matricula ON tb_participante.DUI  = union_matricula.id_participante WHERE ";
+      "SELECT tb_participante.Nombre, tb_participante.Cargo, tb_participante.ISSS , tb_participante.DUI, tb_participante.Genero  FROM tb_participante INNER JOIN union_matricula ON tb_participante.DUI  = union_matricula.id_participante WHERE ";
 
-    let largo = solicitudes.length;
-    solicitudes.forEach((solicitud, index) => {
+    const largo = cursos.length ;
+    cursos.forEach((curso, index) => {
       if (index == largo - 1) {
-        statment += " union_matricula.id_solicitud = " + solicitud;
+        statment += `(union_matricula.id_curso = '${curso}' AND  union_matricula.id_empresa= '${empresa}' ) `;
       } else {
-        statment += " union_matricula.id_solicitud = " + solicitud + " OR";
+        statment += `(union_matricula.id_curso = '${curso}' AND  union_matricula.id_empresa= '${empresa}' )  OR `;
       }
     });
 
-    let alumnos = await pool.query(statment);
-    MainQuery = await Promise.all(queries);
-    // res.json(MainQuery);
+     let alumnos = await pool.query(statment);
+     MainQuery = await Promise.all(queries);
+    //  res.json({MainQuery, alumnos});
 
     const { GenerarPdf } = require("../utils/htmlToPdf");
     let pdf = await GenerarPdf({ data: MainQuery, alumnos });
@@ -248,19 +217,24 @@ public.archivos = async (req, res) => {
 };
 
 public.GetFiles = async (req, res) => {
-  if (!req.params.key) return res.json({ status: false, error: "KEY_NOT_EXIST" });
-  const key = req.params.key.replace(/_/g, "/") ;
-  console.log(key)
+  if (!req.params.key)
+    return res.json({ status: false, error: "KEY_NOT_EXIST" });
+  const key = req.params.key.replace(/_/g, "/");
+  console.log(key);
   try {
-    let url = await getFiles(key);
-    var file = fs.readFileSync(url);
-    res.contentType("application/pdf");
-    res.send(file);
+    const get = await getFiles(key);
+    res.status(200).json({status:true})
   } catch (error) {
     res.json({ status: false, error });
     console.log(error);
   }
 };
+
+public.archivo = (req,res) =>{
+  var file = fs.readFileSync("./public/files/tmpfile.pdf");
+  res.contentType("application/pdf");
+  res.send(file);
+}
 
 
 

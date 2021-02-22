@@ -1,7 +1,5 @@
 // Utilizar funcionalidades del Ecmascript 6
 
-
-
 // Cargamos los módulos de express y body-parser, morgan, cors
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -19,7 +17,7 @@ app.use(cors());
 // Seteamos ejs como motor de vistas
 app.set("view engine", "ejs");
 // Seteamos carpeta de archivos estaticos
-app.use("/static", express.static(`${__dirname  }/public`));
+app.use("/static", express.static(`${__dirname}/public`));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 // Cargamos las rutas

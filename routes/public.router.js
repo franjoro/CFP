@@ -20,6 +20,8 @@ router.post("/CreateSolicitud", public_.CreateSolicitud);
 router.get("/ficha/:empresa?/:data?", public_.FichaRegistro);
 //Recibir documentos de AWS
 router.get("/getFiles/:key?" ,public_.GetFiles)
+//Recibir documentos de AWS
+router.get("/archivo" ,public_.archivo)
 //Enviar documentos para guardar en AWS 
 const fileUpload = require("express-fileupload");
 router.post("/EnviarFiles" , fileUpload() , public_.archivos);

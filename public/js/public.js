@@ -9,7 +9,7 @@ const errorMessage = () => {
 const loader = () => {
   Swal.fire({
     title: "Por favor, Espere",
-    html: "Cargando Data",
+    html: "Procesando información",
     allowOutsideClick: !1,
     showConfirmButton: false,
     willOpen: () => {
@@ -40,18 +40,24 @@ const updateEmpresaInfo = () => {
     errorMessage();
   }
 };
+
 const registrarSolicitud = async () => {
+  let local = localStorage.getItem("storage");
+  local = local;
+  if (!local)
+    return alert(
+      "Algo salio mal, contacta con el equipo de soporte técnico soporte_cfp@ricaldone.edu.sv código de error: localstorage"
+    );
   $("#collpaseOne").hide();
   $("#collapseTwo").hide();
   $("#collpasetres").show();
-  let data = localStorage.getItem("storage");
-  data = JSON.parse(data);
+
   try {
     let query = await $.ajax({
       url: "/public/CreateSolicitud",
       type: "POST",
       data: {
-        data: JSON.stringify(data),
+        data: local,
         empresa: global_empresa_seleccionada,
       },
     });

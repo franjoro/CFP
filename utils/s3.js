@@ -46,13 +46,35 @@ s3Functions.getFiles = (Key) =>
           "Binary",
           (err) => {
             if (err) throw err;
-            resolve("./public/files/tmpfile.pdf");
+            resolve(data);
           }
         );
       });
     } catch (error) {
+      resolve(error);
+    }
+  });
+
+s3Functions.getFolderData = async (folder) => {
+  new Promise(async (resolve, reject) => {
+    const fs = require("fs");
+    const join = require("path").join;
+    const s3Zip = require("s3-zip");
+    try {
+      const output = fs.createWriteStream(join(__dirname, "archivos.zip"));
+      s3Zip
+        .archive({ s3, bucket: process.env.Bucket }, folder, [
+          "recibo.pdf",
+          "cancelacion.pdf",
+          "ficha.pdf",
+          "planilla.pdf",
+        ])
+        .pipe(output);
+      resolve();
+    } catch (error) {
       reject(error);
     }
   });
+};
 
 module.exports = s3Functions;

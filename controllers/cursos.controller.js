@@ -61,7 +61,7 @@ cursos.cursosFinalizados = async (req, res) => {
 cursos.curso_detalle = async (req, res) => {
   // VALIDAR si la peticion trae un codigo de curso
   const curso = req.params.id;
-  const {programa} = req.params;
+  const { programa } = req.params;
 
   if (!curso) return res.status(400).json({ error: "ID_NOT_EXIST" });
 
@@ -102,6 +102,7 @@ cursos.curso_detalle = async (req, res) => {
       data,
       curso: empresas[2][0],
       programa,
+      cAlumnos: empresas[1].length,
     });
   } catch (error) {
     res.status(400).json(error);
@@ -110,7 +111,7 @@ cursos.curso_detalle = async (req, res) => {
 
 cursos.getInstructores = async (req, res) => {
   const post_var = req.body.searchTerm;
-    let query = `SELECT DUI AS id, Nombre AS text FROM tb_instructor order By Nombre LIMIT 5`;
+  let query = `SELECT DUI AS id, Nombre AS text FROM tb_instructor order By Nombre LIMIT 5`;
   if (post_var)
     query = `SELECT DUI AS id, Nombre AS text FROM tb_instructor WHERE Nombre like '%${post_var}%' order By Nombre LIMIT 5`;
   try {
@@ -122,7 +123,7 @@ cursos.getInstructores = async (req, res) => {
 };
 
 cursos.getCursosCategoria = async (req, res) => {
-  const {categoria} = req.params;
+  const { categoria } = req.params;
   query = `SELECT Codigo_curso  AS id, CONCAT(Nombre, ' '  , Horario) AS text FROM tb_cursos  WHERE id_programa = ${categoria}  AND Estado != 0`;
   try {
     data = await pool.query(query);
@@ -297,6 +298,25 @@ cursos.deleteMatricula = async (req, res) => {
     console.log(error);
     res.status(400).json({ status: false, error });
   }
+};
+
+cursos.getAtZipAllFiles = async (req, res) => {
+  res.send("Hola mundo")
+  // const { getFolderData } = require("../utils/s3");
+  // const empresa = req.params.empresa;
+  // const curso = req.params.curso;
+  // if (!empresa || !curso)
+  //   return res.status(400).json({ status: false, error: "PARAMS_NOT_VALID" });
+  // try {
+  //   await getFolderData(`app/cursos/${curso}/${empresa}/`);
+  //   res.status(200).json({ status: true });
+  // } catch (error) {
+  //   res.status(400).json({ status: false });
+  // }
+};
+cursos.dowloadZip = (req, res) => {
+  res.contentType("application/zip");
+  res.sendFile(__dirname + "/utils/archivos.zip", "pruebasssss");
 };
 
 module.exports = cursos;

@@ -56,6 +56,8 @@
                 </div>
               </div>
             </div>
+            <p class="float-right">Cantidad de inscritos: <%= cAlumnos %>
+            </p>
           </div>
         </div>
       </div>
@@ -77,10 +79,11 @@
               <div class="col-md-3">
                 <div class="card shadow mb-3">
                   <div class="card-body">
-                    <h5>
+                    <h5 id="NameEmpresa">
                       <%= element.Empresa %>
                     </h5>
-                    <button onclick="OpenFiles('<%= curso.Codigo_curso %>' , '<%= element.id %>'  ) " class="btn btn-sm btn-info">Documentos</button>
+                    <button onclick="OpenFiles('<%= curso.Codigo_curso %>' , '<%= element.id %>'  ) "
+                      class="btn btn-sm btn-info">Documentos</button>
                     <button class="btn btn-sm btn-danger"
                       onclick="desasociarEmpresa('<%= element.id %>', '<%= curso.Codigo_curso %>')"> Eliminar</button>
                   </div>
@@ -110,10 +113,14 @@
                           <% element.Alumnos.forEach( (alumno)=> { %>
                             <tr>
                               <td>
-                                <%= alumno.DUI %>
+                                <p>
+                                  <%= alumno.DUI %>
+                                </p>
                               </td>
                               <td>
-                                <%= alumno.Nombre %>
+                                <label>
+                                  <%= alumno.Nombre %>
+                                </label>
                               </td>
                               <td>
                                 <%= alumno.Telefono %>
@@ -122,7 +129,9 @@
                                 <%= alumno.Email %>
                               </td>
                               <td>
-                                <button onclick="cambiarMatricula('<%= alumno.DUI %>', '<%= curso.Codigo_curso  %>'  ,  '<%= programa  %>' , ' <%=  element.id  %> '  ) "  class="btn btn-sm btn-warning"><i class="fas fa-exchange-alt"></i></button>
+                                <button
+                                  onclick="cambiarMatricula('<%= alumno.DUI %>', '<%= curso.Codigo_curso  %>'  ,  '<%= programa  %>' , ' <%=  element.id  %> '  ) "
+                                  class="btn btn-sm btn-warning"><i class="fas fa-exchange-alt"></i></button>
                                 <button onclick="quitarMatricula( '<%= alumno.DUI %>', '<%= curso.Codigo_curso  %>' )"
                                   class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
                               </td>
@@ -326,9 +335,9 @@
           </button>
         </div>
         <div class="modal-body">
-            <select class="custom-select" id="selec_cursos" name="selec_cursos">
-              <option value="0">- Buscar curso -</option>
-            </select>
+          <select class="custom-select" id="selec_cursos" name="selec_cursos">
+            <option value="0">- Buscar curso -</option>
+          </select>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">
@@ -345,36 +354,39 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Migrar estudiante a otro curso </h5>
+          <h5 class="modal-title">Gestor de documentos para empresas</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
+          <p> Empresa: <label id="susempresa"></label></p>
           <div class="row">
             <div class="col">
-              <button class="btn btn-success" onclick="makeKey('ficha')" >Ficha de registro firmada</button>
+              <button class="btn btn-success" onclick="makeKey('ficha')">Ficha de registro firmada</button>
             </div>
             <div class="col">
-              <button class="btn btn-success" onclick="makeKey('recibo')"  >Recibo de ingresos por cotización</button>
+              <button class="btn btn-success" onclick="makeKey('recibo')">Recibo de ingresos por cotización</button>
             </div>
             <div class="col">
-              <button class="btn btn-success" onclick="makeKey('cancelacion')" >Recibo de cancelación</button>
+              <button class="btn btn-success" onclick="makeKey('cancelacion')">Recibo de cancelación</button>
             </div>
             <div class="col">
-              <button class="btn btn-success" onclick="makeKey('planilla')" >Planilla preelaborada</button>
+              <button class="btn btn-success" onclick="makeKey('planilla')">Planilla preelaborada</button>
             </div>
           </div>
+          <hr>
+          <p class="float-left px-3">Acciones masivas:</p>
+          <button class="btn btn-info btn-sm d-inline" id="btn-descargar"> <i class="fas fa-cloud-download-alt"></i> Descargar todos en
+            .zip</button>
+          <button class="btn btn-danger btn-sm d-inline"><i class="fas fa-trash"></i> Eliminar todos</button>
+        </div>
       </div>
     </div>
-  </div>
-
-
-
-  <!-- /.container-fluid -->
-  <%- include('../partials/footer'); %>
-    <script src="/static/js/jquery.mask.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
-    <script src="/static/js/curso_detalle.js"></script>
+    <!-- /.container-fluid -->
+    <%- include('../partials/footer'); %>
+      <script src="/static/js/jquery.mask.min.js"></script>
+      <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+      <script src="/static/js/curso_detalle.js"></script>
