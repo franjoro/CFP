@@ -26,23 +26,23 @@ type="text/css"
               </div>
             </div>
           </a>
-            <%if(!data.length) {%> 
+            <%if(!datos.length) {%> 
               <h5>No existen cursos activos</h5>              
             <%}else{%> 
             <h5>Cursos Activos:</h5>
             <% } %>
-            <% for(var i=0; i<data.length; i++) {%>
-          <a href="/admin/cursos/detalle/<%= data[i].Codigo_curso %>/<%= programa %>  ">
+            <% for(var i=0; i<datos.length; i++) {%>
+          <a href="/admin/cursos/detalle/<%= datos[i].Codigo_curso %>/<%= programa %>  ">
             <div class="card shadow mb-3">
               <div class="card-body">
-                  <h4 class="text-dark">Nombre: <%= data[i].Nombre %> </h4>
-                  <p class="d-inline"><b>Código del curso:</b> <%= data[i].Codigo_curso %> <br>
-                  <b>Profesor:</b> <%= data[i].instructor %><br>
-                  <b>Orden de inicio:</b> <%= data[i].Orden %> <br>  
-                  <b>Agrupación:</b> <%= data[i].Agrupacion %>  <br>
+                  <h4 class="text-dark">Nombre: <%= datos[i].Nombre %> </h4>
+                  <p class="d-inline"><b>Código del curso:</b> <%= datos[i].Codigo_curso %> <br>
+                  <b>Profesor:</b> <%= datos[i].instructor %><br>
+                  <b>Orden de inicio:</b> <%= datos[i].Orden %> <br>  
+                  <b>Agrupación:</b> <%= datos[i].Agrupacion %>  <br>
                   <b>Estado:</b>
-                   <%if(data[i].Estado == 1) {%> EN PREPARACIÓN <%}%>  
-                   <%if(data[i].Estado == 2) {%> EN CURSO <%}%> 
+                   <%if(datos[i].Estado == 1) {%> EN PREPARACIÓN <%}%>  
+                   <%if(datos[i].Estado == 2) {%> EN CURSO <%}%> 
                   </p>
                   <!-- <button class="btn btn-success float-right d-inline"> Participantes</button> -->
               </div>

@@ -6,19 +6,10 @@ const pool = require("../models/db");
 
 // const mailer = require ('../utils/mailer');
 
-// Renderizar selector de programa por cursos
-cursos.main = async (req, res) => {
-  try {
-    const query = await pool.query(
-      "SELECT id_programa AS id, Nombre , ImgPortada, (SELECT COUNT(*) FROM tb_cursos WHERE id_programa = tb_programa.id_programa ) AS cantidad FROM tb_programa WHERE Estado = 1 "
-    );
-    res.render("./admin/programas.cursos.ejs", { query });
-  } catch (error) {
-    res.status(400).json(error);
-  }
-};
 // Renderizar pantalla de cursos ya con programa
 cursos.cursos = async (req, res) => {
+  const { getUserDataByToken } = require("../middlewares/auth");
+  const usuario = getUserDataByToken(req.cookies.token);
   const programa = req.params.id;
   if (!programa) return res.status(400).json({ error: "ID_NOT_EXIST" });
   try {
@@ -28,17 +19,19 @@ cursos.cursos = async (req, res) => {
     );
     if (!query[0].c)
       return res.status(400).json({ error: "PROGRAM_NOT_EXIST" });
-    const data = await pool.query(
+    const datos = await pool.query(
       "SELECT `tb_cursos`.`Codigo_curso`, `tb_cursos`.`Nombre`, `tb_instructor`.`Nombre` AS instructor, `tb_cursos`.`Orden`, `tb_cursos`.`Agrupacion`, `tb_cursos`.`Estado` FROM `tb_cursos` LEFT JOIN `tb_instructor` ON `tb_cursos`.`id_instructor` = `tb_instructor`.`DUI` WHERE tb_cursos.id_programa = ? AND tb_cursos.Estado != 0",
       [programa]
     );
-    res.render("./admin/cursos", { data, programa });
+    res.render("./admin/cursos", { datos, programa, data: usuario.data });
   } catch (error) {
     res.status(400).json(error);
   }
 };
 
 cursos.cursosFinalizados = async (req, res) => {
+  const { getUserDataByToken } = require("../middlewares/auth");
+  const usuario = getUserDataByToken(req.cookies.token);
   const programa = req.params.id;
   if (!programa) return res.status(400).json({ error: "ID_NOT_EXIST" });
   try {
@@ -48,17 +41,24 @@ cursos.cursosFinalizados = async (req, res) => {
     );
     if (!query[0].c)
       return res.status(400).json({ error: "PROGRAM_NOT_EXIST" });
-    const data = await pool.query(
+    const datos = await pool.query(
       "SELECT `tb_cursos`.`Codigo_curso`, `tb_cursos`.`Nombre`, `tb_instructor`.`Nombre` AS instructor, `tb_cursos`.`Orden`, `tb_cursos`.`Agrupacion` FROM `tb_cursos` LEFT JOIN `tb_instructor` ON `tb_cursos`.`id_instructor` = `tb_instructor`.`DUI` WHERE tb_cursos.id_programa = ? AND tb_cursos.Estado = 0",
       [programa]
     );
-    res.render("./admin/cursos_finalizados", { data, programa });
+    res.render("./admin/cursos_finalizados", {
+      datos,
+      programa,
+      data: usuario.data,
+    });
   } catch (error) {
     res.status(400).json(error);
   }
 };
 
 cursos.curso_detalle = async (req, res) => {
+  const { getUserDataByToken } = require("../middlewares/auth");
+  const usuario = getUserDataByToken(req.cookies.token);
+
   // VALIDAR si la peticion trae un codigo de curso
   const curso = req.params.id;
   const { programa } = req.params;
@@ -82,7 +82,7 @@ cursos.curso_detalle = async (req, res) => {
       [curso, curso, curso]
     );
     // Formatear la informacion para que existan los alumnos adentro de un objeto de empresas
-    data = [];
+    datos = [];
     empresas[0].forEach((element, i) => {
       const alumnos_array = [];
       empresas[1].forEach((alumno) => {
@@ -90,7 +90,7 @@ cursos.curso_detalle = async (req, res) => {
           alumnos_array.push(alumno);
         }
       });
-      data[i] = {
+      datos[i] = {
         id: element.codigo_empresa,
         Empresa: element.Nombre,
         Alumnos: alumnos_array,
@@ -99,10 +99,11 @@ cursos.curso_detalle = async (req, res) => {
     });
     // Responder
     res.render("./admin/curso_detalle", {
-      data,
+      datos,
       curso: empresas[2][0],
       programa,
       cAlumnos: empresas[1].length,
+      data: usuario.data
     });
   } catch (error) {
     res.status(400).json(error);
@@ -301,22 +302,40 @@ cursos.deleteMatricula = async (req, res) => {
 };
 
 cursos.getAtZipAllFiles = async (req, res) => {
-  res.send("Hola mundo")
-  // const { getFolderData } = require("../utils/s3");
-  // const empresa = req.params.empresa;
-  // const curso = req.params.curso;
-  // if (!empresa || !curso)
-  //   return res.status(400).json({ status: false, error: "PARAMS_NOT_VALID" });
-  // try {
-  //   await getFolderData(`app/cursos/${curso}/${empresa}/`);
-  //   res.status(200).json({ status: true });
-  // } catch (error) {
-  //   res.status(400).json({ status: false });
-  // }
+  const { getFolderData } = require("../utils/s3");
+  const empresa = req.params.empresa;
+  const curso = req.params.curso;
+  if (!empresa || !curso)
+    return res.status(400).json({ status: false, error: "PARAMS_NOT_VALID" });
+  try {
+    await getFolderData(`app/cursos/${curso}/${empresa}/`);
+    res.status(200).json({ status: true, data });
+  } catch (data) {
+    console.log(error);
+    res.status(400).json({ status: false });
+  }
 };
 cursos.dowloadZip = (req, res) => {
   res.contentType("application/zip");
-  res.sendFile(__dirname + "/utils/archivos.zip", "pruebasssss");
+  res.sendFile("/utils/archivos.zip", { root: "./" });
+};
+
+const { upload } = require("../utils/s3");
+
+cursos.archivos = async (req, res) => {
+  if (!req.files) return res.json({ status: false, error: "FILE_NOT_EXIST" });
+  const empresa = req.body.empresa;
+  const curso = req.body.curso;
+  const archivo = req.body.archivo;
+  const ext = req.files.file.name.split(".")[1];
+  const fileContent = Buffer.from(req.files.file.data, "binary");
+
+  try {
+    await upload(fileContent, curso, archivo, ext, empresa);
+    res.status(200).json({ status: true });
+  } catch (error) {
+    res.status(400).json({ status: false, error });
+  }
 };
 
 module.exports = cursos;

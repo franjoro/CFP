@@ -8,6 +8,10 @@ const cors = require("cors");
 const helmet = require("helmet");
 // Llamamos a express para poder crear el servidor
 const app = express();
+
+var cookieParser = require('cookie-parser');
+app.use(cookieParser());
+
 // Llamamos helmet
 // app.use(helmet());
 // Llamamos morgan en dev

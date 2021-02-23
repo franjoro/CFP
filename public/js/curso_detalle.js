@@ -36,9 +36,18 @@ const OpenFiles = (curso, empresa) => {
   global_curso = curso;
   $("#susempresa").text($("#NameEmpresa").text());
 };
+
 //btn descargar
 $("#btn-descargar").click(() => {
-  $.ajax(`/admin/cursos/getOnZip/${global_empresa}/${global_curso}`);
+  loaderFile();
+  $.ajax(`/admin/cursos/savezip/${global_empresa}/${global_curso}`).done(
+    (data) => {
+      if (data.status) {
+        window.open(`/admin/cursos/archivo`);
+        swal.close();
+      }
+    }
+  );
 });
 
 const makeKey = async (archivo) => {
@@ -290,3 +299,53 @@ $(document).ready(() => {
     }
   });
 });
+
+$("#ficha").change(function (e) {
+  var fileName = e.target.files[0].name;
+  $("#ficha1").html(fileName);
+});
+$("#recibo").change(function (e) {
+  var fileName = e.target.files[0].name;
+  $("#recibo1").html(fileName);
+});
+$("#cancelacion").change(function (e) {
+  var fileName = e.target.files[0].name;
+  $("#cancelacion1").html(fileName);
+});
+$("#planilla").change(function (e) {
+  var fileName = e.target.files[0].name;
+  $("#planilla1").html(fileName);
+});
+
+
+const SendFiles = async (key) => {
+  //Hacer validaciones aqui Pendiente
+  var fd = new FormData();
+  var ficha = $(`#${key}`)[0].files;
+  fd.append("file", ficha[0]);
+  fd.append("empresa", global_empresa);
+  fd.append("curso", global_curso);
+  fd.append("archivo", key);
+  try {
+    loader();
+    let datos = await $.ajax({
+      url: "/admin/cursos/EnviarFiles",
+      type: "POST",
+      data: fd,
+      processData: false,
+      contentType: false,
+    });
+    swal.close();
+    $(`#${key}1`).html("Choose File");
+    Swal.fire({
+      icon: "success",
+      title: "Archivo actualizado correctamente",
+      showConfirmButton: false,
+    });
+
+    console.log(datos);
+  } catch (error) {
+    console.log(error);
+    errorMessage();
+  }
+};

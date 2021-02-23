@@ -10,7 +10,7 @@
 
         </div>
         <div class="card-body">
-            <%if(!data.length) {%> 
+            <%if(!datos.length) {%> 
               <h5>No existen cursos Finalizados</h5>              
             <%}else{%> 
             <h5>Cursos finalizados:</h5>
@@ -29,13 +29,13 @@
                     </tr>
                   </thead>
                   <tbody>
-                      <% for(var i=0; i<data.length; i++) {%>
+                      <% for(var i=0; i<datos.length; i++) {%>
                         <tr>
-                            <td><%= data[i].Codigo_curso %> </td>
-                            <td><%= data[i].Nombre %> </td>
-                            <td><%= data[i].instructor %></td>
-                            <td><%= data[i].Orden %></td>
-                            <td><%= data[i].Agrupacion %></td>
+                            <td><%= datos[i].Codigo_curso %> </td>
+                            <td><%= datos[i].Nombre %> </td>
+                            <td><%= datos[i].instructor %></td>
+                            <td><%= datos[i].Orden %></td>
+                            <td><%= datos[i].Agrupacion %></td>
                             <td><button class="btn btn-sm btn-info">Ver</button></td>
                         </tr>
                       <% } %>

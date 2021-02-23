@@ -9,8 +9,8 @@ auth.firmar = (data) => {
 };
 
 auth.authcheck = (req, res, next) =>{
-    const token = req.header.auth;
-    try {
+  let token = req.cookies.token;
+  try {
         jwt.verify(token, process.env.JWTPASS);
         next();
     } catch (error) {

@@ -81,7 +81,7 @@
                             <div class="col">
                                 <label for="categoria">Categoría</label>
                                 <select name="categoria" id="categoria" class="form-control">
-                                    <%  data.forEach(element => { %>
+                                    <%  query.forEach(element => { %>
                                     <option value="<%= element.id %>"><%= element.Categoria %>  </option>
                                     <% }); %>
                                 </select>

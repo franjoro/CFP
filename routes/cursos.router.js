@@ -1,4 +1,3 @@
-
 // Cargamos el módulo de express para poder crear rutas
 const express = require('express');
 // Cargamos el controlador
@@ -9,9 +8,17 @@ const router = express.Router();
 // Creamos una ruta para los métodos que tenemos en nuestros controladores
 // Genera la vista
 
-router.get("/",  cursos.main);
+
+
+// ==== ARCHIVOS
+//Guardar archivo en zip
+router.get("/savezip/:empresa?/:curso?", cursos.getAtZipAllFiles);
+//Descargar archivo
+router.get("/archivo", cursos.dowloadZip);
+
+
 // Muestra todos los cursos de una categoria en la variable id
-router.get("/:id",  cursos.cursos);
+router.get("/:id?",  cursos.cursos);
 // Muestra los finalizados de la categoria ID
 router.get("/finalizados/:id",  cursos.cursosFinalizados);
 // Muestra el detalle de cada curso con empresas y alumnos
@@ -34,14 +41,10 @@ router.put("/ChangeMatriculaCurso", cursos.ChangeMatriculaCurso);
 router.delete("/deleteMatricula", cursos.deleteMatricula);
 // Elimina la asociacion de una empresa en un curso
 router.delete("/deleteEmpresaInCourse",cursos.deleteEmpresaCurso);
+const fileUpload = require("express-fileupload");
+router.post("/EnviarFiles" , fileUpload() , cursos.archivos);
 
 
-
-// ==== ARCHIVOS
-//Guardar archivo en zip
-router.get("/savezip", cursos.getAtZipAllFiles);
-//Descargar archivo
-router.get("/archivo", cursos.dowloadZip);
 
 
 

@@ -35,9 +35,9 @@ login.signin = async (req, res) => {
     if(!await desincriptar(req.body.password,data[0].Password)) return res.status(400).json({error:"ERROR_PASSWORD",status:false});
     // Creamos JWT
     data = data[0];
-    const payload = {Nombre: data.Nombre, Role: data.Role};
+    const payload = {Nombre: data.Nombre, Role: data.Role , usuario: req.body.username};
     const token = firmar(payload)
-    req.header.auth = token;
+    res.cookie('token', token)
     res.status(200).json({status:true,role:data.Role});
 } catch (error) {
     res.status(400).json({error,status:false});

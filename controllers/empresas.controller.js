@@ -82,6 +82,8 @@ empresas.putEstado = async (req, res) => {
 
 // Cargar y mandar informacion de contacto de cada empresa
 empresas.renderContacto = async (req, res) => {
+  const { getUserDataByToken } = require("../middlewares/auth"); 
+  const usuario = getUserDataByToken(req.cookies.token);
   const empresa_id = req.params.empresa;
   if (!empresa_id) return res.status(400).json({ error: "EMPRESA_NOT_EXIST" });
   try {
@@ -89,7 +91,7 @@ empresas.renderContacto = async (req, res) => {
       `SELECT * FROM tb_empresa_contact WHERE id_empresa  = ?; SELECT Nombre,id_empresa AS id FROM tb_empresa WHERE id_empresa = ${empresa_id}`,
       [empresa_id]
     );
-    const data = { empresa: query[1][0], contactos: query[0] };
+    const data = { empresa: query[1][0], contactos: query[0]    ,  data: usuario.data };
     res.render("admin/union_empresa_contacto", data);
   } catch (error) {
     res.status(400).json({ error });

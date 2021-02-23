@@ -74,7 +74,7 @@
             <p></p>
           </div>
           <div class="card-body row">
-            <% data.forEach( (element)=> { %>
+            <% datos.forEach( (element)=> { %>
 
               <div class="col-md-3">
                 <div class="card shadow mb-3">
@@ -351,7 +351,7 @@
 
   <div class="modal fade" id="modal_files" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-xl" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Gestor de documentos para empresas</h5>
@@ -359,27 +359,87 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body table-responsive">
           <p> Empresa: <label id="susempresa"></label></p>
-          <div class="row">
-            <div class="col">
-              <button class="btn btn-success" onclick="makeKey('ficha')">Ficha de registro firmada</button>
-            </div>
-            <div class="col">
-              <button class="btn btn-success" onclick="makeKey('recibo')">Recibo de ingresos por cotización</button>
-            </div>
-            <div class="col">
-              <button class="btn btn-success" onclick="makeKey('cancelacion')">Recibo de cancelación</button>
-            </div>
-            <div class="col">
-              <button class="btn btn-success" onclick="makeKey('planilla')">Planilla preelaborada</button>
-            </div>
-          </div>
+
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Archivo</th>
+                <th>Descargar</th>
+                <th>Sustituir</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Ficha de registro firmada</td>
+                <td><button class="btn btn-success" onclick="makeKey('ficha')">Descargar</button></td>
+                <td>
+                  <div class="input-group">
+                    <div class="custom-file">
+                      <input type="file" class="custom-file-input" id="ficha"
+                        aria-describedby="inputGroupFileAddon01">
+                      <label class="custom-file-label"  id="ficha1">Choose file</label>
+                    </div>
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-success" onclick="SendFiles('ficha')" type="button" 
+                        id="inputGroupFileAddon04">Sustituir</button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>Recibo de ingresos por cotización</td>
+                <td><button class="btn btn-success" onclick="makeKey('recibo')">Descargar</button></td>
+                <td>
+                  <div class="input-group">
+                    <div class="custom-file">
+                      <input type="file" class="custom-file-input" id="recibo"
+                        aria-describedby="inputGroupFileAddon02">
+                      <label class="custom-file-label" id="recibo1">Choose file</label>
+                    </div>
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-success" onclick="SendFiles('recibo')" type="button"
+                        id="inputGroupFileAddon04">Sustituir</button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>Recibo de cancelación</td>
+                <td><button class="btn btn-success" onclick="makeKey('cancelacion')">Descargar</button></td>
+                <td>                  <div class="input-group">
+                  <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="cancelacion"
+                      aria-describedby="inputGroupFileAddon03">
+                    <label class="custom-file-label" id="cancelacion1">Choose file</label>
+                  </div>
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-success" onclick="SendFiles('cancelacion')" type="button" id="inputGroupFileAddon04">Sustituir</button>
+                  </div>
+                </div> </td>
+              </tr>
+              <tr>
+                <td>Planilla preelaborada</td>
+                <td><button class="btn btn-success" onclick="makeKey('planilla')">Descargar</button></td>
+                <td>                   <div class="input-group">
+                    <div class="custom-file">
+                      <input type="file" class="custom-file-input" id="planilla"
+                        aria-describedby="inputGroupFileAddon04">
+                      <label class="custom-file-label" id="planilla1">Choose file</label>
+                    </div>
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-success" onclick="SendFiles('planilla')" type="button" id="inputGroupFileAddon04">Sustituir</button>
+                    </div>
+                  </div></td>
+              </tr>
+            </tbody>
+          </table>
           <hr>
           <p class="float-left px-3">Acciones masivas:</p>
-          <button class="btn btn-info btn-sm d-inline" id="btn-descargar"> <i class="fas fa-cloud-download-alt"></i> Descargar todos en
+          <button class="btn btn-info btn-sm d-inline" id="btn-descargar"> <i class="fas fa-cloud-download-alt"></i>
+            Descargar todos en
             .zip</button>
-          <button class="btn btn-danger btn-sm d-inline"><i class="fas fa-trash"></i> Eliminar todos</button>
         </div>
       </div>
     </div>

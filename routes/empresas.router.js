@@ -3,29 +3,29 @@
 const express = require('express');
 // Cargamos el controlador
 const empresas = require('../controllers/empresas.controller');
-const {  } = require('../middlewares/auth');
+const { authcheck } = require('../middlewares/auth');
 // Llamamos al router
 const router = express.Router();
 // Creamos una ruta para los métodos que tenemos en nuestros controladores
 
 // Mandar a traer la info de la tabla
-router.get("/table/:estado*?",   empresas.table);
+router.get("/table/:estado*?", authcheck ,  empresas.table);
 // Mandar a traer la info del contacto según empresa
-router.get("/contacto/:empresa*?",   empresas.renderContacto);
+router.get("/contacto/:empresa*?",  authcheck ,  empresas.renderContacto);
 // AGregar nueva empres
 router.post("/add",    empresas.add);
 // Agregar nuevo contacto
-router.post("/ContactoAdd",    empresas.contactoAdd);
+router.post("/ContactoAdd",  authcheck,  empresas.contactoAdd);
 // Editar contacto
-router.post("/ContactoEditar",    empresas.contactoEditar);
+router.post("/ContactoEditar",  authcheck,  empresas.contactoEditar);
 // Cambiar estado
-router.put("/changeEstado",    empresas.putEstado);
+router.put("/changeEstado", authcheck,   empresas.putEstado);
 // Editar empresa
-router.put("/editarEmpresa",    empresas.editar_empresa);
+router.put("/editarEmpresa", authcheck,   empresas.editar_empresa);
 // Borrar contacto
-router.delete("/DeleteContacto",  empresas.deleteContacto);
+router.delete("/DeleteContacto",authcheck,  empresas.deleteContacto);
 // Traer actividades economicas
-router.post("/actividades", empresas.actividades);
+router.post("/actividades", authcheck, empresas.actividades);
 
 
 

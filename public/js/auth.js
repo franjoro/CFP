@@ -25,7 +25,7 @@ $("#loginForm").submit(async function (e) {
     if(data.status){
         // CAMBIAR RUTAS
         if(data.role  == 1) window.location.replace('/admin/');
-        if(data.role  == 0) window.location.replace('/admin/programa');
+        if(data.role  == 0) window.location.replace('/admin/cursos');
         console.log(data);
         swal.close();
     }

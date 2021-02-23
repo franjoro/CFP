@@ -56,25 +56,33 @@ s3Functions.getFiles = (Key) =>
   });
 
 s3Functions.getFolderData = async (folder) => {
-  new Promise(async (resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     const fs = require("fs");
     const join = require("path").join;
     const s3Zip = require("s3-zip");
-    try {
-      const output = fs.createWriteStream(join(__dirname, "archivos.zip"));
-      s3Zip
-        .archive({ s3, bucket: process.env.Bucket }, folder, [
-          "recibo.pdf",
-          "cancelacion.pdf",
-          "ficha.pdf",
-          "planilla.pdf",
-        ])
-        .pipe(output);
-      resolve();
-    } catch (error) {
-      reject(error);
-    }
+    const output = fs.createWriteStream(join(__dirname, "archivos.zip"));
+    s3Zip
+      .archive({ s3, bucket: process.env.Bucket }, folder, [
+        "recibo.pdf",
+        "cancelacion.pdf",
+        "ficha.pdf",
+        "planilla.pdf",
+      ])
+      .pipe(output)
+      .on("finish", () => {
+        resolve(true);
+      })
+      .on("error", (err) => {
+        reject({ message: `Something went wrong ${err.message}` });
+      });
   });
 };
+
+
+s3Functions.DeleteAll = (folder)=>{
+  return new Promise ( async (Resolve, Reject) =>{
+    
+  })
+}
 
 module.exports = s3Functions;
