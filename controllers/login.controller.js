@@ -46,7 +46,7 @@ login.signin = async (req, res) => {
 
 
 login.signout = async (req, res) => {
-  req.header.auth = "";
+  res.cookie('token',null);
   res.redirect("/");
 }
 
