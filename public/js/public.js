@@ -20,38 +20,57 @@ const loader = () => {
 
 let global_empresa_seleccionada;
 let global_estado_participante = false;
-let global_data_solicitud;
 
-const updateEmpresaInfo = () => {
-  $("#collpaseOne").hide();
-  $("#collpasetres").hide();
-  $("#collapseTwo").show();
-  try {
-    data = {
-      nit: $("#nit").val(),
-      aportacion: $("#patronal").val(),
-      num_empleados: $("#num_empleados").val(),
-      patronal: $("#aportacion").val(),
-      id: global_empresa_seleccionada,
-    };
-    $.ajax({ url: "/public/updateEmpresaData", type: "PUT", data });
-  } catch (error) {
-    console.log(error);
-    errorMessage();
-  }
+//Contiene información a insertar
+let global_data_solicitud;
+let global_data_actualizacionEmpresa;
+
+const AsginarGlobalEmpresa = () => {
+  global_data_actualizacionEmpresa = {
+    nit: $("#nit").val(),
+    aportacion: $("#patronal").val(),
+    num_empleados: $("#num_empleados").val(),
+    patronal: $("#aportacion").val(),
+    id: global_empresa_seleccionada,
+  };
+  // $.ajax({ url: "/public/updateEmpresaData", type: "PUT", data });
+};
+
+const AsginarGlobalCursos = () => {
+  let local = localStorage.getItem("storage");
+  if (!local)
+    return alert(
+      "Algo salio mal, contacta con el equipo de soporte técnico soporte_cfp@ricaldone.edu.sv código de error: LOCALSTORAGE_NOT_EXIST_IN_ASSIGMENT"
+    );
+  local = JSON.parse(local);
+  let ContentHtml = "";
+  data = [];
+  local.forEach((element, index) => {
+    if (!data.includes(element[7])) {
+      data.push(element[7]);
+      let select = $(`#curso option[value='${element[7]}'] `).text().trim();
+      ContentHtml += `
+      <label>Curso: <b> ${select}</b> Puede descargar la ficha aquí: <a href="#" onclick="GenerarPdf('${element[7]}')">DESCARGAR PLANTILLA</a></label>
+<div class="input-group">
+<div class="custom-file">
+  <input type="file" class="custom-file-input ficha" data-next="ficha${index+1}" id="ficha${index}" name="ficha${index}" >
+  <label class="custom-file-label" id="ficha${index+1}">Choose file</label>
+</div>
+</div>
+<hr>
+      `;
+    }
+  });
+  $("#cursos_files").append(ContentHtml);
+  global_data_solicitud = data;
 };
 
 const registrarSolicitud = async () => {
   let local = localStorage.getItem("storage");
-  local = local;
   if (!local)
     return alert(
       "Algo salio mal, contacta con el equipo de soporte técnico soporte_cfp@ricaldone.edu.sv código de error: localstorage"
     );
-  $("#collpaseOne").hide();
-  $("#collapseTwo").hide();
-  $("#collpasetres").show();
-
   try {
     let query = await $.ajax({
       url: "/public/CreateSolicitud",
@@ -62,6 +81,7 @@ const registrarSolicitud = async () => {
       },
     });
     global_data_solicitud = query.data;
+    console.log(global_data_solicitud);
     localStorage.removeItem("storage");
   } catch (error) {
     console.log(error);
@@ -89,11 +109,9 @@ $("#dui").blur(async function () {
   }
 });
 
-const GenerarPdf = () => {
+const GenerarPdf = (curso) => {
   window.open(
-    `/public/ficha/${global_empresa_seleccionada}/${JSON.stringify(
-      global_data_solicitud
-    )} `
+    `/public/ficha/${global_empresa_seleccionada}/${curso} `
   );
 };
 const SendFiles = async () => {
@@ -283,4 +301,22 @@ $(document).ready(() => {
     localStorage.setItem("storage", storage);
     return 1;
   };
+});
+
+$(document).on('change', '.ficha', function(e) {
+  var fileName = e.target.files[0].name;
+  $("#"+$(this).data().next).html(fileName);
+});
+
+$("#cancelacion").change(function (e) {
+  var fileName = e.target.files[0].name;
+  $("#cancelacion1").html(fileName);
+});
+$("#recibo").change(function (e) {
+  var fileName = e.target.files[0].name;
+  $("#recibo1").html(fileName);
+});
+$("#planilla").change(function (e) {
+  var fileName = e.target.files[0].name;
+  $("#planilla1").html(fileName);
 });

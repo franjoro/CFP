@@ -123,7 +123,7 @@ public.CreateSolicitud = async (req, res) => {
     const Participantes = await Promise.all(PromesasActualizacion);
     //IDS de creación de empresas
     const IdsEmpresas = await Promise.all(empresas);
-    res.status(200).json({ status: true , data:cursos });
+    res.status(200).json({ status: true, data: cursos });
   } catch (error) {
     console.log(error);
     return res.status(400).json({ status: false, error });
@@ -137,12 +137,6 @@ public.FichaRegistro = async (req, res) => {
   if (!cursos || !empresa || cursos === "undefined" || empresa === "undefined")
     return res.json({ status: false, error: "PARAMS_NOT_EXIST" });
 
-  cursos = JSON.parse(cursos);
-
-  //const cursos = ["ITR-FCOO-51", "ITR-FCOO-50"];
-  // const empresa = 335;
-
-
   queries = [];
   try {
     queries.push(
@@ -152,29 +146,19 @@ public.FichaRegistro = async (req, res) => {
       )
     );
 
-    cursos.forEach((curso) => {
-      queries.push(
-        pool.query(
-          "SELECT Horario, Nombre FROM tb_cursos WHERE Codigo_curso = ? ",
-          [curso]
-        )
-      );
-    });
+    queries.push(
+      pool.query(
+        "SELECT Horario, Nombre FROM tb_cursos WHERE Codigo_curso = ? ",
+        [cursos]
+      )
+    );
 
     let statment =
-      "SELECT tb_participante.Nombre, tb_participante.Cargo, tb_participante.ISSS , tb_participante.DUI, tb_participante.Genero  FROM tb_participante INNER JOIN union_matricula ON tb_participante.DUI  = union_matricula.id_participante WHERE ";
+      "SELECT tb_participante.Nombre, tb_participante.Cargo, tb_participante.ISSS , tb_participante.DUI, tb_participante.Genero  FROM tb_participante INNER JOIN union_matricula ON tb_participante.DUI  = union_matricula.id_participante WHERE (union_matricula.id_curso = '${curso}' AND  union_matricula.id_empresa= '${empresa}' )  ";
 
-    const largo = cursos.length ;
-    cursos.forEach((curso, index) => {
-      if (index == largo - 1) {
-        statment += `(union_matricula.id_curso = '${curso}' AND  union_matricula.id_empresa= '${empresa}' ) `;
-      } else {
-        statment += `(union_matricula.id_curso = '${curso}' AND  union_matricula.id_empresa= '${empresa}' )  OR `;
-      }
-    });
 
-     let alumnos = await pool.query(statment);
-     MainQuery = await Promise.all(queries);
+    let alumnos = await pool.query(statment);
+    MainQuery = await Promise.all(queries);
     //  res.json({MainQuery, alumnos});
 
     const { GenerarPdf } = require("../utils/htmlToPdf");
@@ -223,19 +207,17 @@ public.GetFiles = async (req, res) => {
   console.log(key);
   try {
     const get = await getFiles(key);
-    res.status(200).json({status:true})
+    res.status(200).json({ status: true });
   } catch (error) {
     res.json({ status: false, error });
     console.log(error);
   }
 };
 
-public.archivo = (req,res) =>{
+public.archivo = (req, res) => {
   var file = fs.readFileSync("./public/files/tmpfile.pdf");
   res.contentType("application/pdf");
   res.send(file);
-}
-
-
+};
 
 module.exports = public;

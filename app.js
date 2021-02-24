@@ -45,5 +45,10 @@ app.use("/public", require("./routes/public.router"));
 app.use("/habil", require("./routes/habil.router"));
 
 
+app.get("/prueba", (req, res) =>{
+    res.render("public_empresas/prueba")
+})
+
+
 // exportamos este módulo para poder usar la constiable app fuera de este archivo
 module.exports = app;
