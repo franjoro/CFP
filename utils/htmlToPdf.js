@@ -20,10 +20,10 @@ const GenerarPdf = (data) => {
     itineracion = "";
     data.alumnos.forEach((element, index) => {
       let h = "", m = "";
-      if(element.Genero === 'Hombre'){
+      if(element[8] === 'Hombre'){
         h = "checked";
       }
-      if(element.Genero === 'Mujer'){
+      if(element[8] === 'Mujer'){
         m = "checked";
 
       }
@@ -31,10 +31,10 @@ const GenerarPdf = (data) => {
            `
           <tr>
             <td>${index + 1}</td>
-            <td>${element.Nombre}</td>
-            <td>${element.Cargo}</td>
-            <td>${element.ISSS}</td>
-            <td>${element.DUI}</td>
+            <td>${element[1]}</td>
+            <td>${element[4]}</td>
+            <td>${element[3]}</td>
+            <td>${element[0]}</td>
             <td>
               <input type="checkbox" ${m} />
             </td>

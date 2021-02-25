@@ -2,7 +2,45 @@ const errorMessage = () => {
   Swal.fire({
     icon: "error",
     title: "Oops...",
-    text: "No se pudo realizar la operación",
+    text: "No se pudo realizar la operación, verifica la información",
+  });
+};
+const errorMessageEmpresa = () => {
+  Swal.fire({
+    icon: "error",
+    title: "Oops...",
+    text: "Debe seleccionar su empresa para continuar",
+  });
+};
+const errorMessageArchivo = () => {
+  Swal.fire({
+    icon: "error",
+    title: "Oops... Archivos faltantes",
+    text: "Debe subir los archivos obligatorios",
+  });
+};
+
+const loaderEnviar = () => {
+  Swal.fire({
+    title: "Por favor, Espere",
+    html: "Estamos ingresando la información de su solicitud",
+    allowOutsideClick: !1,
+    showConfirmButton: false,
+    willOpen: () => {
+      Swal.showLoading();
+    },
+  });
+};
+
+const loaderArchivos = () => {
+  Swal.fire({
+    title: "Por favor, Espere",
+    html: "Estamos guardando los archivos adjuntados",
+    allowOutsideClick: !1,
+    showConfirmButton: false,
+    willOpen: () => {
+      Swal.showLoading();
+    },
   });
 };
 
@@ -18,12 +56,13 @@ const loader = () => {
   });
 };
 
-let global_empresa_seleccionada;
+let global_empresa_seleccionada = false;
 let global_estado_participante = false;
 
 //Contiene información a insertar
 let global_data_solicitud;
 let global_data_actualizacionEmpresa;
+let global_data_cursos;
 
 const AsginarGlobalEmpresa = () => {
   global_data_actualizacionEmpresa = {
@@ -33,7 +72,11 @@ const AsginarGlobalEmpresa = () => {
     patronal: $("#aportacion").val(),
     id: global_empresa_seleccionada,
   };
-  // $.ajax({ url: "/public/updateEmpresaData", type: "PUT", data });
+  $.ajax({
+    url: "/public/updateEmpresaData",
+    type: "PUT",
+    data: { data: global_data_actualizacionEmpresa },
+  });
 };
 
 const AsginarGlobalCursos = () => {
@@ -50,11 +93,15 @@ const AsginarGlobalCursos = () => {
       data.push(element[7]);
       let select = $(`#curso option[value='${element[7]}'] `).text().trim();
       ContentHtml += `
-      <label>Curso: <b> ${select}</b> Puede descargar la ficha aquí: <a href="#" onclick="GenerarPdf('${element[7]}')">DESCARGAR PLANTILLA</a></label>
+      <label>Curso: <b> ${select}</b> Puede descargar la ficha aquí: <a href="#" onclick="GenerarPdf('${
+        element[7]
+      }')">DESCARGAR PLANTILLA</a></label>
 <div class="input-group">
 <div class="custom-file">
-  <input type="file" class="custom-file-input ficha" data-next="ficha${index+1}" id="ficha${index}" name="ficha${index}" >
-  <label class="custom-file-label" id="ficha${index+1}">Choose file</label>
+  <input type="file" class="custom-file-input ficha" data-next="fichass${
+    index + 1
+  }" id="ficha${index}" name="ficha${index}" >
+  <label class="custom-file-label" id="fichass${index + 1}">Choose file</label>
 </div>
 </div>
 <hr>
@@ -62,27 +109,70 @@ const AsginarGlobalCursos = () => {
     }
   });
   $("#cursos_files").append(ContentHtml);
-  global_data_solicitud = data;
+  global_data_solicitud = JSON.stringify(local);
+  global_data_cursos = JSON.stringify(data);
 };
 
 const registrarSolicitud = async () => {
-  let local = localStorage.getItem("storage");
-  if (!local)
+  let participantes = localStorage.getItem("storage");
+  const cursos = global_data_cursos;
+  const empresa = global_empresa_seleccionada;
+  //Validar si existe
+  if (!participantes || !cursos || !empresa)
     return alert(
-      "Algo salio mal, contacta con el equipo de soporte técnico soporte_cfp@ricaldone.edu.sv código de error: localstorage"
+      "Algo salio mal, contacta con el equipo de soporte técnico soporte_cfp@ricaldone.edu.sv código de error: DATA_NOT_COMPLETE"
     );
   try {
+    loaderEnviar();
     let query = await $.ajax({
       url: "/public/CreateSolicitud",
       type: "POST",
-      data: {
-        data: local,
-        empresa: global_empresa_seleccionada,
-      },
+      data: { cursos, empresa, participantes, programa : $("#id_programa").text()},
     });
-    global_data_solicitud = query.data;
-    console.log(global_data_solicitud);
-    localStorage.removeItem("storage");
+    if (query.status) {
+      swal.close();
+      SendFiles();
+      localStorage.removeItem("storage");
+    }
+  } catch (error) {
+    console.log(error);
+    errorMessage();
+  }
+};
+
+const SendFiles = async () => {
+  //Hacer validaciones aqui Pendiente
+  const recibo = $("#recibo")[0].files;
+  const cancelacion = $("#cancelacion")[0].files;
+  const planilla = $("#planilla")[0].files;
+  const cursos = JSON.parse(global_data_cursos);
+  
+  const fd = new FormData();
+  cursos.forEach((element, index) => {
+    fd.append(`ficha${index}`, ( $(`#ficha${index}`)[0].files )[0] );
+  });
+
+  fd.append("recibo", recibo[0]);
+  fd.append("cancelacion", cancelacion[0]);
+  fd.append("planilla", planilla[0]);
+  fd.append("curso", global_data_cursos);
+  fd.append("empresa", global_empresa_seleccionada);
+  try {
+    loaderArchivos();
+    let datos = await $.ajax({
+      url: "/public/EnviarFiles",
+      type: "POST",
+      data: fd,
+      processData: false,
+      contentType: false,
+    });
+    swal.close();
+
+    Swal.fire({
+      icon: "success",
+      title: "Solicitud enviada correctamente",
+      showConfirmButton: false,
+    });
   } catch (error) {
     console.log(error);
     errorMessage();
@@ -109,50 +199,26 @@ $("#dui").blur(async function () {
   }
 });
 
-const GenerarPdf = (curso) => {
-  window.open(
-    `/public/ficha/${global_empresa_seleccionada}/${curso} `
-  );
-};
-const SendFiles = async () => {
-  //Hacer validaciones aqui Pendiente
-  var fd = new FormData();
-  var ficha = $("#ficha")[0].files;
-  var recibo = $("#recibo")[0].files;
-  var cancelacion = $("#cancelacion")[0].files;
-  var planilla = $("#planilla")[0].files;
-
-  cursos = [];
-  global_data_solicitud.forEach((element, index) => {
-    if ((index + 1) % 2) {
-      cursos.push(element);
-    }
-  });
-
-  fd.append("ficha", ficha[0]);
-  fd.append("recibo", recibo[0]);
-  fd.append("cancelacion", cancelacion[0]);
-  fd.append("planilla", planilla[0]);
-  fd.append("curso", JSON.stringify(cursos));
-  fd.append("empresa", global_empresa_seleccionada);
-
+const GenerarPdf = async (curso) => {
+  loader();
+  AlumnosParaEnviar = [];
   try {
-    loader();
-    let datos = await $.ajax({
-      url: "/public/EnviarFiles",
+    alumnos = JSON.parse(global_data_solicitud);
+    alumnos.forEach((element) => {
+      if (element.includes(curso)) {
+        AlumnosParaEnviar.push(element);
+      }
+    });
+    AlumnosParaEnviar = JSON.stringify(AlumnosParaEnviar);
+    let query = await $.ajax({
+      url: `/public/ficha/${global_empresa_seleccionada}/${curso} `,
       type: "POST",
-      data: fd,
-      processData: false,
-      contentType: false,
+      data: { alumnos: AlumnosParaEnviar },
     });
-    swal.close();
-
-    Swal.fire({
-      icon: "success",
-      title: "Solicitud enviada correctamente",
-      showConfirmButton: false,
-    });
-    console.log(datos);
+    if (query.status) {
+      swal.close();
+      window.open(`/public/ficha/OpenFile `);
+    }
   } catch (error) {
     console.log(error);
     errorMessage();
@@ -160,7 +226,6 @@ const SendFiles = async () => {
 };
 
 $(document).ready(() => {
-  // Creacion de los dropzone
   $("#select_empresa").on("select2:select", async (e) => {
     $("#update_form").css("display", "block");
     const param = e.params.data.id;
@@ -177,7 +242,6 @@ $(document).ready(() => {
       $("#num_empleados").val(data.data.Num_Empleados);
       $("#num_empleados").val(data.data.Num_Empleados);
       $("#aportacion").val(data.data.Aportacion_insaforp);
-      console.log(data);
       swal.close();
     } catch (error) {
       console.log(error);
@@ -253,13 +317,10 @@ $(document).ready(() => {
     $('input[type="text"]').val("");
     if (!global_estado_participante) {
       data = { dui, name: nombre, tel, email, genero, tel, isss, cargo };
-      console.log(data);
       $.ajax({
         url: "/admin/participantes/add",
         type: "POST",
         data,
-      }).then((data) => {
-        console.log(data);
       });
     }
   });
@@ -268,7 +329,6 @@ $(document).ready(() => {
     $("#tablaParticipantes").DataTable().row.add(data).draw();
   };
   // Borar tabla y localstorage+
-  // eslint-disable-next-line no-undef
   deleteTableAndLocal = () => {
     $("#tablaParticipantes").DataTable().clear().draw();
     localStorage.clear();
@@ -279,7 +339,6 @@ $(document).ready(() => {
     let storage = localStorage.getItem("storage");
     if (storage) {
       storage = JSON.parse(storage);
-      console.log(storage);
       storage.forEach((element) => {
         populateTable(element);
       });
@@ -303,9 +362,9 @@ $(document).ready(() => {
   };
 });
 
-$(document).on('change', '.ficha', function(e) {
+$(document).on("change", ".ficha", function (e) {
   var fileName = e.target.files[0].name;
-  $("#"+$(this).data().next).html(fileName);
+  $("#" + $(this).data().next).html(fileName);
 });
 
 $("#cancelacion").change(function (e) {
@@ -320,3 +379,24 @@ $("#planilla").change(function (e) {
   var fileName = e.target.files[0].name;
   $("#planilla1").html(fileName);
 });
+
+const ReiniciarInputs = () => {
+  $("#cursos_files").html("<div></div>");
+};
+const VerificarEmpresa = () => {
+  if (!global_empresa_seleccionada) {
+    errorMessageEmpresa();
+  } else {
+    AsginarGlobalEmpresa();
+    stepper1.next();
+  }
+};
+const VerificarArchivos = () => {
+  const recibo = $("#recibo")[0];
+  const planilla = $("#planilla")[0];
+  if (recibo.files.length == 0 || planilla.files.length == 0) {
+    errorMessageArchivo();
+  } else {
+    registrarSolicitud()
+  }
+};

@@ -60,7 +60,7 @@
               </div>
               <hr />
             </form>
-            <button class="btn btn-primary float-right" onclick="AsginarGlobalEmpresa() ; stepper1.next()">
+            <button class="btn btn-primary float-right" onclick=" VerificarEmpresa()">
               Continuar al siguiente paso
             </button>
           </div>
@@ -141,10 +141,6 @@
             <button class="btn btn-danger btn-small float-left" onclick="deleteTableAndLocal()">
               Borrar Tabla
             </button>
-
-            <button class="btn btn-primary float-left" onclick="stepper1.previous()">
-              Anterior
-            </button>
             <button class="btn btn-primary float-right" onclick="AsginarGlobalCursos(); stepper1.next()">
               Continuar al siguiente paso
             </button>
@@ -196,10 +192,10 @@
                 </div>
               </div>
             </div>
-            <button class="btn btn-primary float-left" onclick="stepper1.previous()">
+            <button class="btn btn-primary float-left" onclick="ReiniciarInputs(); stepper1.previous()">
               Anterior
             </button>
-            <button class="btn btn-primary float-right" onclick="SendFiles(); stepper1.next()">
+            <button class="btn btn-primary float-right" onclick="VerificarArchivos(); stepper1.next()">
               Enviar y finalizar solicitud
             </button>
           </div>
@@ -207,11 +203,6 @@
       </div>
     </div>
   </div>
-
-
-
-
-
 
 
   <%- include('../partials/footer.public.ejs'); %>

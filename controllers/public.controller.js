@@ -10,7 +10,7 @@ public.main = async (req, res) => {
   if (!programa) return res.redirect("/public/");
   try {
     data = await pool.query(
-      `SELECT  tb_programa.Nombre, tb_programa.ImgPortada FROM tb_programa WHERE id_programa= ? ;  
+      `SELECT  tb_programa.Nombre, tb_programa.ImgPortada , tb_programa.id_programa  FROM tb_programa WHERE id_programa= ? ;  
      SELECT Codigo_curso, Nombre, Horario FROM tb_cursos WHERE id_programa = ? AND Estado= 1 `,
       [req.params.id, programa]
     );
@@ -72,34 +72,33 @@ public.UpdateDataEmpresa = async (req, res) => {
 
 public.CreateSolicitud = async (req, res) => {
   const empresa = req.body.empresa;
-  //VALIDAR QUE EXISTA EMPRESA
-  if (!empresa)
-    return res
-      .status(400)
-      .json({ status: false, error: "EMPRESA_NOT_DEFINED" });
-  //Traer todo el arreglo de información de cada alumno
-  let data = req.body.data;
-  data = JSON.parse(data);
-  //Crear arreglo de cursos unicos y crear promesas de actualización
-  let cursos = [];
-  let PromesasActualizacion = [];
-  data.forEach((element) => {
-    if (!cursos.includes(element[7])) {
-      cursos.push(element[7]);
-      PromesasActualizacion.push(
-        pool.query(
-          "UPDATE tb_participante SET Telefono = ? , Email = ? , Cargo = ? WHERE DUI = ? ",
-          [element[2], element[5], element[4], element[0]]
-        )
-      );
-    }
-  });
+  const cursos = JSON.parse(req.body.cursos);
+  const participantes = JSON.parse(req.body.participantes);
 
   try {
-    // Crear solicitudes de alumnos
-    Matriculas = [];
-    data.forEach((participante) => {
-      Matriculas.push(
+    //VALIDAR QUE EXISTAN LOS DATOS
+    if (!empresa) throw "EMPRESA_NOT_EXIST";
+    if (!cursos) throw "CURSOS_NOT_EXIST";
+    if (!participantes) throw "PARTICIPANTES_NOT_EXIST";
+
+    //Hacer consultas en arreglos para hacer promesas
+    let empresas_cursos = [];
+    let participantes_cursos = [];
+    let participantes_actualizacion = [];
+
+    //Empresas y cursos
+    cursos.forEach((curso) => {
+      empresas_cursos.push(
+        pool.query(
+          "INSERT INTO union_curso_empresa(id_empresa,id_curso) VALUES (?,?)",
+          [empresa, curso]
+        )
+      );
+    });
+
+    //Matriculas
+    participantes.forEach((participante) => {
+      participantes_cursos.push(
         pool.query(
           "INSERT INTO union_matricula(id_participante,id_curso,id_empresa) VALUES( ? , ? , ?) ",
           [participante[0], participante[7], empresa]
@@ -107,34 +106,63 @@ public.CreateSolicitud = async (req, res) => {
       );
     });
 
-    //Creación de empresas
-    empresas = [];
-    cursos.forEach((curso) => {
-      empresas.push(
+    //Actualización participantes
+    participantes.forEach((element) => {
+      participantes_actualizacion.push(
         pool.query(
-          "INSERT INTO union_curso_empresa(id_empresa,id_curso) VALUES (?,?)",
-          [empresa, curso]
+          "UPDATE tb_participante SET Telefono = ? , Email = ? , Cargo = ? WHERE DUI = ? ",
+          [element[2], element[5], element[4], element[0]]
         )
       );
     });
-    //IDS de creación de matriculas
-    const IdsMatriculas = await Promise.all(Matriculas);
-    // IDS de actualización de iformación de cada alumno
-    const Participantes = await Promise.all(PromesasActualizacion);
-    //IDS de creación de empresas
-    const IdsEmpresas = await Promise.all(empresas);
-    res.status(200).json({ status: true, data: cursos });
+
+    const QueryEmpresas = await Promise.all(empresas_cursos);
+    const QueryMatriculas = await Promise.all(participantes_cursos);
+    const QueryActualizacionP = await Promise.all(participantes_actualizacion);
+
+    res.status(200).json({
+      status: true,
+      data: { QueryEmpresas, QueryMatriculas, QueryActualizacionP },
+    });
+
+    const { sendEmail } = require("../utils/mailer");
+    let correos = await pool.query(
+      "SELECT tb_usuarios.Email FROM tb_usuarios INNER JOIN union_programa_usuario ON union_programa_usuario.id_usuario = tb_usuarios.id_usuario WHERE union_programa_usuario.id_programa=? ",
+      [req.body.programa]
+    );
+
+    cursos.forEach(async (curso) => {
+      let data = await pool.query(
+        "SELECT Nombre, Horario FROM tb_cursos WHERE Codigo_curso = ? ; SELECT Nombre FROM tb_empresa WHERE id_empresa = ? ",
+        [curso, empresa]
+      );
+      console.log(correos);
+      correos.forEach((element) => {
+        sendEmail(
+          element.Email,
+          "SOLICITUD DE EMPRESA REALIZADA",
+          `Notificación automática de sistema Razón: Solicitud de empresa creada en el curso : ${curso} Nombre: ${data[0][0].Nombre} Horario: ${data[0][0].Horario}  - Cantidad de participantes: ${participantes.length}   - Empresa: ${data[1][0].Nombre}   `
+        );
+      });
+    });
   } catch (error) {
     console.log(error);
     return res.status(400).json({ status: false, error });
   }
 };
-const fs = require("fs");
 
 public.FichaRegistro = async (req, res) => {
   let cursos = req.params.data;
   const empresa = req.params.empresa;
-  if (!cursos || !empresa || cursos === "undefined" || empresa === "undefined")
+  let alumnos = req.body.alumnos;
+
+  if (
+    !alumnos ||
+    !cursos ||
+    !empresa ||
+    cursos === "undefined" ||
+    empresa === "undefined"
+  )
     return res.json({ status: false, error: "PARAMS_NOT_EXIST" });
 
   queries = [];
@@ -152,26 +180,26 @@ public.FichaRegistro = async (req, res) => {
         [cursos]
       )
     );
-
-    let statment =
-      "SELECT tb_participante.Nombre, tb_participante.Cargo, tb_participante.ISSS , tb_participante.DUI, tb_participante.Genero  FROM tb_participante INNER JOIN union_matricula ON tb_participante.DUI  = union_matricula.id_participante WHERE (union_matricula.id_curso = '${curso}' AND  union_matricula.id_empresa= '${empresa}' )  ";
-
-
-    let alumnos = await pool.query(statment);
+    let alumnos = req.body.alumnos;
+    alumnos = JSON.parse(alumnos);
     MainQuery = await Promise.all(queries);
-    //  res.json({MainQuery, alumnos});
-
+    // res.json({MainQuery, alumnos});
     const { GenerarPdf } = require("../utils/htmlToPdf");
     let pdf = await GenerarPdf({ data: MainQuery, alumnos });
-
-    var file = fs.readFileSync("./public/files/" + pdf);
-    res.contentType("application/pdf");
-    res.send(file);
+    res.status(200).json({ status: true, data: pdf });
   } catch (error) {
     console.log(error);
     return res.status(400).json({ status: false, error });
   }
 };
+
+public.AbrirFile = (req, res) => {
+  const fs = require("fs");
+  var file = fs.readFileSync("./public/files/archivo_random.pdf");
+  res.contentType("application/pdf");
+  res.send(file);
+};
+
 const { upload, getFiles } = require("../utils/s3");
 
 public.archivos = async (req, res) => {
@@ -179,21 +207,83 @@ public.archivos = async (req, res) => {
   var count = Object.keys(req.files);
   const CursosCrud = req.body.curso;
   const cursos = JSON.parse(CursosCrud);
-
   const empresa = req.body.empresa;
-
   try {
     let promesas = [];
-    cursos.forEach((curso) => {
-      count.forEach((element) => {
-        const ext = req.files[element].name.split(".")[1];
-        const fileContent = Buffer.from(req.files[element].data, "binary");
-        promesas.push(upload(fileContent, curso, element, ext, empresa));
+    let inserts = [];
+    let ext;
+    let fileContent;
+    cursos.forEach((curso, index) => {
+      ext = req.files[`ficha${index}`].name.split(".")[1];
+      fileContent = Buffer.from(req.files[`ficha${index}`].data, "binary");
+      promesas.push(
+        upload(fileContent, Date.now(), ext, empresa, `ficha${index}`)
+      );
+    });
+
+    ext = req.files[`recibo`].name.split(".")[1];
+    fileContent = Buffer.from(req.files[`recibo`].data, "binary");
+    promesas.push(upload(fileContent, Date.now(), ext, empresa, "recibo"));
+
+    if (req.files[`cancelacion`]) {
+      ext = req.files[`cancelacion`].name.split(".")[1];
+      fileContent = Buffer.from(req.files[`recibo`].data, "binary");
+      promesas.push(
+        upload(fileContent, Date.now(), ext, empresa, "cancelacion")
+      );
+    }
+
+    ext = req.files[`planilla`].name.split(".")[1];
+    fileContent = Buffer.from(req.files[`recibo`].data, "binary");
+    promesas.push(upload(fileContent, Date.now(), ext, empresa, "planilla"));
+
+    let datos = await Promise.all(promesas);
+    cursos.forEach((curso, index) => {
+      let key;
+      datos.forEach((element, index2) => {
+        if (element.posicion == `ficha${index}`) {
+          key = element.key;
+          inserts.push(
+            pool.query(
+              "INSERT INTO archivo_empresa_curso(s3key, Role, id_empresa, id_curso) VALUES(?,?,?,?) ",
+              [key, 1, empresa, curso]
+            )
+          );
+        }
+        if (element.posicion == `recibo`) {
+          key = element.key;
+          inserts.push(
+            pool.query(
+              "INSERT INTO archivo_empresa_curso(s3key, Role, id_empresa, id_curso) VALUES(?,?,?,?) ",
+              [key, 2, empresa, curso]
+            )
+          );
+        }
+        if (req.files[`cancelacion`]) {
+          if (element.posicion == `cancelacion`) {
+            key = element.key;
+            inserts.push(
+              pool.query(
+                "INSERT INTO archivo_empresa_curso(s3key, Role, id_empresa, id_curso) VALUES(?,?,?,?) ",
+                [key, 3, empresa, curso]
+              )
+            );
+          }
+        }
+        if (element.posicion == `planilla`) {
+          key = element.key;
+          inserts.push(
+            pool.query(
+              "INSERT INTO archivo_empresa_curso(s3key, Role, id_empresa, id_curso) VALUES(?,?,?,?) ",
+              [key, 4, empresa, curso]
+            )
+          );
+        }
       });
     });
 
-    let datos = await Promise.all(promesas);
-    res.send(datos);
+    const inserted = await Promise.all(inserts);
+    res.status(200).json({ status: true });
   } catch (error) {
     res.json({ status: false, error });
     console.log(error);
@@ -204,7 +294,6 @@ public.GetFiles = async (req, res) => {
   if (!req.params.key)
     return res.json({ status: false, error: "KEY_NOT_EXIST" });
   const key = req.params.key.replace(/_/g, "/");
-  console.log(key);
   try {
     const get = await getFiles(key);
     res.status(200).json({ status: true });

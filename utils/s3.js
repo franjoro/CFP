@@ -10,20 +10,18 @@ const s3 = new AWS.S3({
 
 s3Functions = {};
 
-s3Functions.upload = (file, curso, identifier, ext, empresa) =>
+s3Functions.upload = (file,  identifier, ext, empresa, posicion) =>
   new Promise((resolve, reject) => {
     const uploadParams = { Bucket: process.env.Bucket, Key: "", Body: file };
-
-    uploadParams.Key = `app/cursos/${curso}/${empresa}/${identifier}.${ext}`;
+    uploadParams.Key = `app/empresas/${empresa}/${identifier}.${ext}`;
     let status = s3.upload(uploadParams, (err, data) => {
       if (err) {
         status = false;
         reject(err);
       }
       if (data) {
-        console.log("done");
         status = true;
-        resolve(data);
+        resolve({ posicion, key : uploadParams.Key });
       }
     });
     return status;

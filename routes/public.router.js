@@ -8,8 +8,9 @@ const router = express.Router();
 
 // Carga el formulario principal con la iformación del programa
 router.get("/form/:id?", public_.main);
-//Responde con el file de ficha de registro
-router.get("/ficha/:empresa?/:data?", public_.FichaRegistro);
+//Crea el file con la información pero no lo envia
+router.post("/ficha/:empresa?/:data?", public_.FichaRegistro);
+router.get("/ficha/OpenFile", public_.AbrirFile);
 //Recibir documentos de AWS
 router.get("/getFiles/:key?" ,public_.GetFiles)
 //Recibir documentos de AWS
