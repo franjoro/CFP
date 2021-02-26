@@ -193,12 +193,6 @@ public.FichaRegistro = async (req, res) => {
   }
 };
 
-public.AbrirFile = (req, res) => {
-  const fs = require("fs");
-  var file = fs.readFileSync("./public/files/archivo_random.pdf");
-  res.contentType("application/pdf");
-  res.send(file);
-};
 
 const { upload, getFiles } = require("../utils/s3");
 
@@ -291,22 +285,29 @@ public.archivos = async (req, res) => {
 };
 
 public.GetFiles = async (req, res) => {
-  if (!req.params.key)
+  if (!req.body.key)
     return res.json({ status: false, error: "KEY_NOT_EXIST" });
-  const key = req.params.key.replace(/_/g, "/");
+  const key = req.body.key;
   try {
     const get = await getFiles(key);
-    res.status(200).json({ status: true });
+    res.status(200).json({ status: true, ext: get  });
   } catch (error) {
-    res.json({ status: false, error });
+    res.json({ status: false, error});
     console.log(error);
   }
 };
+const fs = require("fs");
 
-public.archivo = (req, res) => {
-  var file = fs.readFileSync("./public/files/tmpfile.pdf");
+public.AbrirFile = (req, res) => {
+  var file = fs.readFileSync("./public/files/tmp/ficha.pdf");
   res.contentType("application/pdf");
   res.send(file);
+};
+
+public.archivo = (req, res) => {
+  const path = `./public/files/tmp/tmpfile.${req.params.file}`;
+  res.contentType("application/pdf");
+  res.download(path, `archivo.${req.params.file}`);
 };
 
 module.exports = public;

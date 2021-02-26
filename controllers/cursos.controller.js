@@ -1,6 +1,7 @@
 // declarar variable a exportar
 const cursos = {};
 
+const { query } = require("../models/db");
 // Requerimos pool de base de datos si es necesario
 const pool = require("../models/db");
 
@@ -103,7 +104,7 @@ cursos.curso_detalle = async (req, res) => {
       curso: empresas[2][0],
       programa,
       cAlumnos: empresas[1].length,
-      data: usuario.data
+      data: usuario.data,
     });
   } catch (error) {
     res.status(400).json(error);
@@ -125,7 +126,7 @@ cursos.getInstructores = async (req, res) => {
 
 cursos.getCursosCategoria = async (req, res) => {
   const { categoria } = req.params;
-  query = `SELECT Codigo_curso  AS id, CONCAT(Nombre, ' '  , Horario) AS text FROM tb_cursos  WHERE id_programa = ${categoria}  AND Estado != 0`;
+  const query = `SELECT Codigo_curso  AS id, CONCAT(Nombre, ' '  , Horario) AS text FROM tb_cursos  WHERE id_programa = ${categoria}  AND Estado != 0`;
   try {
     data = await pool.query(query);
     res.json({ results: data });
@@ -303,14 +304,20 @@ cursos.deleteMatricula = async (req, res) => {
 
 cursos.getAtZipAllFiles = async (req, res) => {
   const { getFolderData } = require("../utils/s3");
-  const empresa = req.params.empresa;
-  const curso = req.params.curso;
-  if (!empresa || !curso)
+  const query = await pool.query(
+    "SELECT  s3key  FROM archivo_empresa_curso WHERE id_empresa=? AND id_curso = ?",
+    [req.body.empresa, req.body.curso]
+  );
+  keys = [];
+  query.forEach((element) => {
+    keys.push(element.s3key);
+  });
+  if (!keys)
     return res.status(400).json({ status: false, error: "PARAMS_NOT_VALID" });
   try {
-    await getFolderData(`app/cursos/${curso}/${empresa}/`);
-    res.status(200).json({ status: true, data });
-  } catch (data) {
+    await getFolderData(``, keys);
+    res.status(200).json({ status: true });
+  } catch (error) {
     console.log(error);
     res.status(400).json({ status: false });
   }
@@ -320,20 +327,89 @@ cursos.dowloadZip = (req, res) => {
   res.sendFile("/utils/archivos.zip", { root: "./" });
 };
 
-const { upload } = require("../utils/s3");
+cursos.GestorDeDocumentos = async (req, res) => {
+  const { getUserDataByToken } = require("../middlewares/auth");
+  const usuario = getUserDataByToken(req.cookies.token);
+  if (!req.params.curso || !req.params.empresa || !req.params.programa)
+    return res.status(400).json({ status: false, error: "EMPTY_PARAMS" });
 
+  const query = await pool.query(
+    "SELECT id, s3key, Role, isEditable  FROM archivo_empresa_curso WHERE id_empresa=? AND id_curso = ? AND Role != 0; SELECT Nombre FROM tb_empresa WHERE id_empresa = ?",
+    [req.params.empresa, req.params.curso, req.params.empresa]
+  );
+
+  res.render("admin/gestor_documentos", {
+    data: usuario.data,
+    query,
+    curso: req.params.curso,
+    programa: req.params.programa,
+    empresa: req.params.empresa,
+  });
+};
+
+cursos.deletes3 = (req, res) => {};
+
+cursos.UpdatePermisos = async (req, res) => {
+  const valor = req.body.valor,
+    id = req.body.id;
+  if (!valor || !id)
+    return res
+      .status(400)
+      .json({ status: false, error: "PARAMS_NOT_COMPLETE" });
+  try {
+    await pool.query(
+      "UPDATE archivo_empresa_curso SET isEditable = ? WHERE id = ? ",
+      [valor, id]
+    );
+    res.status(200).json({ status: true });
+  } catch (error) {
+    res.status(400).json({ status: false, error });
+  }
+};
+const { upload } = require("../utils/s3");
 cursos.archivos = async (req, res) => {
   if (!req.files) return res.json({ status: false, error: "FILE_NOT_EXIST" });
   const empresa = req.body.empresa;
   const curso = req.body.curso;
   const archivo = req.body.archivo;
+  const id = req.body.id;
   const ext = req.files.file.name.split(".")[1];
   const fileContent = Buffer.from(req.files.file.data, "binary");
-
+  let promesas = [];
   try {
-    await upload(fileContent, curso, archivo, ext, empresa);
+    promesas.push(upload(fileContent, Date.now(), ext, empresa, archivo));
+    promesas.push(
+      pool.query("UPDATE archivo_empresa_curso SET Role=0 WHERE id=? ", [id])
+    );
+    let key = await Promise.all(promesas);
+    key = key[0].key;
+    await pool.query(
+      "INSERT INTO archivo_empresa_curso(s3Key, Role, id_empresa, id_curso, isEditable) VALUES(?,?,?,?,0)",
+      [key, archivo, empresa, curso]
+    );
     res.status(200).json({ status: true });
   } catch (error) {
+    res.status(400).json({ status: false, error });
+  }
+};
+
+cursos.ArchivoExtra = async (req, res) => {
+
+  if (!req.files) return res.json({ status: false, error: "FILE_NOT_EXIST" });
+  const empresa = req.body.empresa;
+  const curso = req.body.curso;
+  const ext = req.files.file.name.split(".")[1];
+  const fileContent = Buffer.from(req.files.file.data, "binary");
+  try {
+    key = await upload(fileContent, Date.now(), ext, empresa, '6');
+    key = key.key;
+    await pool.query(
+      "INSERT INTO archivo_empresa_curso(s3Key, Role, id_empresa, id_curso, isEditable) VALUES(?,6,?,?,0)",
+      [key,  empresa, curso]
+    );
+    res.status(200).json({ status: true });
+  } catch (error) {
+    console.log(error)
     res.status(400).json({ status: false, error });
   }
 };

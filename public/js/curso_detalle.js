@@ -1,4 +1,4 @@
-errorMessage = () => {
+const errorMessage = () => {
   Swal.fire({
     icon: "error",
     title: "Oops...",
@@ -17,17 +17,7 @@ const loader = () => {
     },
   });
 };
-const loaderFile = () => {
-  Swal.fire({
-    title: "Por favor espere",
-    html: "Descargando archivo",
-    allowOutsideClick: false,
-    showConfirmButton: false,
-    willOpen: () => {
-      Swal.showLoading();
-    },
-  });
-};
+
 
 let global_empresa, global_curso;
 const OpenFiles = (curso, empresa) => {
@@ -35,32 +25,6 @@ const OpenFiles = (curso, empresa) => {
   global_empresa = empresa;
   global_curso = curso;
   $("#susempresa").text($("#NameEmpresa").text());
-};
-
-//btn descargar
-$("#btn-descargar").click(() => {
-  loaderFile();
-  $.ajax(`/admin/cursos/savezip/${global_empresa}/${global_curso}`).done(
-    (data) => {
-      if (data.status) {
-        window.open(`/admin/cursos/archivo`);
-        swal.close();
-      }
-    }
-  );
-});
-
-const makeKey = async (archivo) => {
-  key = `app_cursos_${global_curso}_${global_empresa}_${archivo}.pdf`;
-  try {
-    loaderFile();
-    const query = await $.ajax(`/public/getFiles/${key}`);
-    window.open(`/public/archivo`);
-    swal.close();
-  } catch (error) {
-    errorMessage();
-    console.log(error);
-  }
 };
 
 $(document).ready(() => {

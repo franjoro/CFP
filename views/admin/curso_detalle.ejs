@@ -82,8 +82,7 @@
                     <h5 id="NameEmpresa">
                       <%= element.Empresa %>
                     </h5>
-                    <button onclick="OpenFiles('<%= curso.Codigo_curso %>' , '<%= element.id %>'  ) "
-                      class="btn btn-sm btn-info">Documentos</button>
+                     <a href="/admin/cursos/documentos/<%=curso.Codigo_curso%>/<%= element.id %>/<%= programa %>"><button class="btn btn-sm btn-info">Documentos</button></a>
                     <button class="btn btn-sm btn-danger"
                       onclick="desasociarEmpresa('<%= element.id %>', '<%= curso.Codigo_curso %>')"> Eliminar</button>
                   </div>
@@ -377,12 +376,11 @@
                 <td>
                   <div class="input-group">
                     <div class="custom-file">
-                      <input type="file" class="custom-file-input" id="ficha"
-                        aria-describedby="inputGroupFileAddon01">
-                      <label class="custom-file-label"  id="ficha1">Choose file</label>
+                      <input type="file" class="custom-file-input" id="ficha" aria-describedby="inputGroupFileAddon01">
+                      <label class="custom-file-label" id="ficha1">Choose file</label>
                     </div>
                     <div class="input-group-append">
-                      <button class="btn btn-outline-success" onclick="SendFiles('ficha')" type="button" 
+                      <button class="btn btn-outline-success" onclick="SendFiles('ficha')" type="button"
                         id="inputGroupFileAddon04">Sustituir</button>
                     </div>
                   </div>
@@ -394,8 +392,7 @@
                 <td>
                   <div class="input-group">
                     <div class="custom-file">
-                      <input type="file" class="custom-file-input" id="recibo"
-                        aria-describedby="inputGroupFileAddon02">
+                      <input type="file" class="custom-file-input" id="recibo" aria-describedby="inputGroupFileAddon02">
                       <label class="custom-file-label" id="recibo1">Choose file</label>
                     </div>
                   </div>
@@ -404,30 +401,36 @@
               <tr>
                 <td>Recibo de cancelación</td>
                 <td><button class="btn btn-success" onclick="makeKey('cancelacion')">Descargar</button></td>
-                <td>                  <div class="input-group">
-                  <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="cancelacion"
-                      aria-describedby="inputGroupFileAddon03">
-                    <label class="custom-file-label" id="cancelacion1">Choose file</label>
+                <td>
+                  <div class="input-group">
+                    <div class="custom-file">
+                      <input type="file" class="custom-file-input" id="cancelacion"
+                        aria-describedby="inputGroupFileAddon03">
+                      <label class="custom-file-label" id="cancelacion1">Choose file</label>
+                    </div>
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-success" onclick="SendFiles('cancelacion')" type="button"
+                        id="inputGroupFileAddon04">Sustituir</button>
+                    </div>
                   </div>
-                  <div class="input-group-append">
-                    <button class="btn btn-outline-success" onclick="SendFiles('cancelacion')" type="button" id="inputGroupFileAddon04">Sustituir</button>
-                  </div>
-                </div> </td>
+                </td>
               </tr>
               <tr>
                 <td>Planilla preelaborada</td>
                 <td><button class="btn btn-success" onclick="makeKey('planilla')">Descargar</button></td>
-                <td>                   <div class="input-group">
+                <td>
+                  <div class="input-group">
                     <div class="custom-file">
                       <input type="file" class="custom-file-input" id="planilla"
                         aria-describedby="inputGroupFileAddon04">
                       <label class="custom-file-label" id="planilla1">Choose file</label>
                     </div>
                     <div class="input-group-append">
-                      <button class="btn btn-outline-success" onclick="SendFiles('planilla')" type="button" id="inputGroupFileAddon04">Sustituir</button>
+                      <button class="btn btn-outline-success" onclick="SendFiles('planilla')" type="button"
+                        id="inputGroupFileAddon04">Sustituir</button>
                     </div>
-                  </div></td>
+                  </div>
+                </td>
               </tr>
             </tbody>
           </table>

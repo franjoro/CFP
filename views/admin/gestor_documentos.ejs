@@ -1,0 +1,131 @@
+<link rel="stylesheet" href="/static/vendor/datatables/datatables.min.css" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"
+  type="text/css" />
+<%- include('../partials/header.admin.ejs'); %>
+  <div class="container-fluid">
+    <div class="row container-fluid">
+      <div class="col-lg-12">
+        <div class="card shadow mb-4">
+          <div class="card-header py-3">
+            <a href="/admin/cursos/detalle/<%= curso %>/<%= programa %>"
+              class="btn btn-success btn-sm float-left d-inline"><i class="fas fa-arrow-left"></i></a>
+            <button class="btn btn-info btn-sm float-right d-inline mx-1"
+              onclick="createZip('<%=curso %>','<%=empresa %>')" data-toggle="modal" data-target="#modificar_modal">
+              <i class="fas fa-cloud-download-alt"></i>
+              Descargar todos los archivos en .zip
+            </button>
+            <button class="btn btn-success btn-sm float-right d-inline mx-1" data-toggle="modal" onclick="CrearArchivoExtra('<%= curso %>', '<%= empresa %>')"
+              data-target="#modificar_modal">
+              <i class="fas fa-upload"></i>
+              Subir archivos extra
+            </button>
+          </div>
+          <div class="card-body">
+            <div class="card shadow mb-3">
+              <div class="card-body">
+                <h4>Archivos adjuntos empresa: <b>
+                    <%= query[1][0].Nombre %>
+                  </b></h4>
+                <h5>Curso: <b>
+                    <%= curso %>
+                  </b></h5>
+                <div class="row table-responsive">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Tipo de archivo</th>
+                        <th>Descargar</th>
+                        <th>Eliminar</th>
+                        <th>Sustituir</th>
+                        <th>¿Permitir edición a la empresa? <i style="cursor: pointer;" data-toggle="tooltip"
+                            title="Permitir edición por terceros habilita a las empresas a poder sustituir este documento"
+                            class="fas fa-info-circle"></i></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% query[0].forEach(element=> {
+                        let archivo="Archivo extra", checked1="", checked2="";
+                        if(element.Role == 1 ) {archivo = "Solicitud de capacitación"}
+                        if(element.Role == 2 ) {archivo = "Recibo de aportación"}
+                        if(element.Role == 3 ) {archivo = "Comprobante de pago en línea"}
+                        if(element.Role == 4 ) {archivo = "Planilla ISSS"}
+                        element.isEditable == 1 ? checked1 = "checked" : checked2 = "checked";
+                        %>
+                        <tr>
+                          <td>
+                            <%= archivo %>
+                          </td>
+                          <td>
+                            <button class="btn btn-success btn-sm" onclick="DowloadS3File('<%=element.s3key %>')">
+                              <i class="fas fa-cloud-download-alt"></i>
+                            </button>
+                          </td>
+                          <td>
+                            <button class="btn btn-danger btn-sm" onclick="deleteS3('<%=element.id %>')">
+                              <i class="fas fa-trash"></i>
+                            </button>
+                          </td>
+                          <td>
+                            <button class="btn btn-info btn-sm"
+                              onclick="SustituirArchivo('<%=curso %>','<%=empresa %>', '<%=element.id %>', '<%=element.Role %>')">
+                              <i class="fas fa-file-signature"></i>
+                            </button>
+                          </td>
+                          <td>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" data-id="<%=element.id %>" data-valor="1"
+                                name="r<%=element.id%>" id="r<%=element.id%>1" value="option1" <%=checked1 %> />
+                              <label class="form-check-label" for="r<%=element.id%>1">Permitir edición</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" data-id="<%=element.id %>" data-valor="0" type="radio"
+                                name="r<%=element.id%>" id="r<%=element.id%>2" value="option2" <%=checked2 %>>
+                              <label class="form-check-label" for="r<%=element.id%>2">No permimitir</label>
+                            </div>
+                          </td>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="modal fade" id="modal_migrar_curso" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Migrar estudiante a otro curso </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <select class="custom-select" id="selec_cursos" name="selec_cursos">
+            <option value="0">- Buscar curso -</option>
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Close
+          </button>
+          <button id="change_matricula" class="btn btn-primary">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+  <!-- /.container-fluid -->
+  <%- include('../partials/footer'); %>
+    <script src="/static/js/jquery.mask.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <script src="/static/js/gestor_documentos.js"></script>

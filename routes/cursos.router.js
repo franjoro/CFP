@@ -9,12 +9,19 @@ const router = express.Router();
 // Genera la vista
 
 
-
-// ==== ARCHIVOS
-//Guardar archivo en zip
-router.get("/savezip/:empresa?/:curso?", cursos.getAtZipAllFiles);
-//Descargar archivo
+// = = = = = = = = Gestor de documentos
+//Main
+router.get("/documentos/:curso/:empresa/:programa" ,cursos.GestorDeDocumentos)
+// Guardar archivo en zip
+router.post("/savezip", cursos.getAtZipAllFiles);
+//Descargar zip de archivos
 router.get("/archivo", cursos.dowloadZip);
+//actualizar para borrar la key
+router.delete("/borrarArchivo", cursos.deletes3); //Pendiente
+//actualizar permisos de edición
+router.put("/UpdatePermisos", cursos.UpdatePermisos)
+
+
 
 
 // Muestra todos los cursos de una categoria en la variable id
@@ -41,13 +48,11 @@ router.put("/ChangeMatriculaCurso", cursos.ChangeMatriculaCurso);
 router.delete("/deleteMatricula", cursos.deleteMatricula);
 // Elimina la asociacion de una empresa en un curso
 router.delete("/deleteEmpresaInCourse",cursos.deleteEmpresaCurso);
+
 const fileUpload = require("express-fileupload");
 router.post("/EnviarFiles" , fileUpload() , cursos.archivos);
-
-
-
-
-
+//Subir archivos extra
+router.post("/archivoExtra",fileUpload() , cursos.ArchivoExtra)
 
 // Exportamos la configuración
 module.exports = router;

@@ -4,7 +4,7 @@ imgSrc =
 
 const GenerarPdf = (data) => {
   return new Promise((resolver, rechazar) => {
-    tmpName = "archivo_random.pdf";
+    tmpName = "ficha.pdf";
     let empresa = data.data[0][0];
     let nit = data.data[0][0].NIT.split("-");
     const d = new Date();
@@ -47,7 +47,7 @@ const GenerarPdf = (data) => {
 
     const options = {
       format: "A4",
-      path: `./public/files/${tmpName}`
+      path: `./public/files/tmp/${tmpName}`
     };
     const file = {
       content: `
@@ -199,8 +199,6 @@ const GenerarPdf = (data) => {
 
 `,
     };
-    // or //
-    // let file = { url: "http://localhost:8080/public/form/29" };
 
     html_to_pdf.generatePdf(file, options).then((pdfBuffer) => {
       resolver(tmpName);

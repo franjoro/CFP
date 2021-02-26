@@ -10,7 +10,7 @@ const s3 = new AWS.S3({
 
 s3Functions = {};
 
-s3Functions.upload = (file,  identifier, ext, empresa, posicion) =>
+s3Functions.upload = (file, identifier, ext, empresa, posicion) =>
   new Promise((resolve, reject) => {
     const uploadParams = { Bucket: process.env.Bucket, Key: "", Body: file };
     uploadParams.Key = `app/empresas/${empresa}/${identifier}.${ext}`;
@@ -21,7 +21,7 @@ s3Functions.upload = (file,  identifier, ext, empresa, posicion) =>
       }
       if (data) {
         status = true;
-        resolve({ posicion, key : uploadParams.Key });
+        resolve({ posicion, key: uploadParams.Key });
       }
     });
     return status;
@@ -34,40 +34,32 @@ s3Functions.getFiles = (Key) =>
       Key,
     };
     const fs = require("fs");
-
+    keyarr = Key.split(".");
     try {
       s3.getObject(uploadParams, (err, data) => {
         if (err) throw err;
-        fs.writeFile(
-          "./public/files/tmpfile.pdf",
-          data.Body,
-          "Binary",
-          (err) => {
-            if (err) throw err;
-            resolve(data);
-          }
-        );
+        const path = `./public/files/tmp/tmpfile.${keyarr[1]}`;
+        fs.writeFile(path, data.Body, "Binary", (err) => {
+          if (err) throw err;
+          resolve(keyarr[1]);
+        });
       });
     } catch (error) {
       resolve(error);
     }
   });
 
-s3Functions.getFolderData = async (folder) => {
+s3Functions.getFolderData = async (folder, keys) => {
   return new Promise(async (resolve, reject) => {
     const fs = require("fs");
     const join = require("path").join;
     const s3Zip = require("s3-zip");
     const output = fs.createWriteStream(join(__dirname, "archivos.zip"));
     s3Zip
-      .archive({ s3, bucket: process.env.Bucket }, folder, [
-        "recibo.pdf",
-        "cancelacion.pdf",
-        "ficha.pdf",
-        "planilla.pdf",
-      ])
+      .archive({ s3, bucket: process.env.Bucket }, folder, keys)
       .pipe(output)
       .on("finish", () => {
+        console.log("Zip created");
         resolve(true);
       })
       .on("error", (err) => {
@@ -76,11 +68,8 @@ s3Functions.getFolderData = async (folder) => {
   });
 };
 
-
-s3Functions.DeleteAll = (folder)=>{
-  return new Promise ( async (Resolve, Reject) =>{
-    
-  })
-}
+s3Functions.DeleteAll = (folder) => {
+  return new Promise(async (Resolve, Reject) => {});
+};
 
 module.exports = s3Functions;

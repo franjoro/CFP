@@ -12,9 +12,9 @@ router.get("/form/:id?", public_.main);
 router.post("/ficha/:empresa?/:data?", public_.FichaRegistro);
 router.get("/ficha/OpenFile", public_.AbrirFile);
 //Recibir documentos de AWS
-router.get("/getFiles/:key?" ,public_.GetFiles)
-//Recibir documentos de AWS
-router.get("/archivo" ,public_.archivo)
+router.post("/getFiles" ,public_.GetFiles)
+//descargar archivo con documentos de AWS
+router.get("/archivo/:file?" ,public_.archivo)
 
 // Obtener empresas para select
 router.post("/getEmpresas", public_.getEmpresas);
