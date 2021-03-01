@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-02-2021 a las 23:06:47
+-- Tiempo de generación: 01-03-2021 a las 16:26:53
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.4.10
 
@@ -28,12 +28,31 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `archivo_empresa_curso` (
-  `ID` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
+  `id` int(11) NOT NULL,
+  `s3key` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
   `Role` int(11) NOT NULL,
-  `Time` varchar(30) COLLATE utf8_spanish_ci NOT NULL,
   `id_empresa` int(11) DEFAULT NULL,
-  `id_curso` varchar(15) COLLATE utf8_spanish_ci NOT NULL
+  `id_curso` varchar(15) COLLATE utf8_spanish_ci NOT NULL,
+  `isEditable` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `archivo_empresa_curso`
+--
+
+INSERT INTO `archivo_empresa_curso` (`id`, `s3key`, `Role`, `id_empresa`, `id_curso`, `isEditable`) VALUES
+(1, 'app/empresas/335/1614351276453.pdf', 1, 335, 'ITR-FCOO-50', 1),
+(2, 'app/empresas/335/1614351276542.txt', 2, 335, 'ITR-FCOO-50', 1),
+(3, 'app/empresas/335/1614351276544.txt', 3, 335, 'ITR-FCOO-50', 1),
+(4, 'app/empresas/335/1614351276546.txt', 4, 335, 'ITR-FCOO-50', 1),
+(5, 'app/empresas/339/1614361734567.png', 0, 339, 'ITR-FCOO-50', 0),
+(6, 'app/empresas/339/1614361734593.png', 3, 339, 'ITR-FCOO-50', 0),
+(7, 'app/empresas/339/1614361734591.jpg', 2, 339, 'ITR-FCOO-50', 0),
+(8, 'app/empresas/339/1614361734595.xlsx', 4, 339, 'ITR-FCOO-50', 0),
+(9, 'app/empresas/339/1614373157735.png', 1, 339, 'ITR-FCOO-50', 0),
+(10, 'app/empresas/335/1614374205860.png', 0, 335, 'ITR-FCOO-50', 0),
+(11, 'app/empresas/335/1614374244074.png', 6, 335, 'ITR-FCOO-50', 1),
+(12, 'app/empresas/335/1614374251092.png', 6, 335, 'ITR-FCOO-50', 1);
 
 -- --------------------------------------------------------
 
@@ -149,8 +168,8 @@ CREATE TABLE `tb_empresa` (
 --
 
 INSERT INTO `tb_empresa` (`id_empresa`, `Nombre`, `Direccion`, `Actividad_eco`, `Tel`, `NIT`, `Aportacion_insaforp`, `Num_Patronal`, `Num_Empleados`, `Estado`) VALUES
-(335, 'Compañía de Telecomunicaciones de El Salvador, S.A. de C.V.', 'Colonia Roma, Cl. El Progreso y Avenida Liverpool, Complejo Roma Edif. A, San Salvador.\r\n', 5, '2250-3389', '0614-180898-164-8', '10000.00', '1500.00', 14, 1),
-(339, 'Otro', NULL, NULL, NULL, '05457-56445-45466', '123456.00', '1250.20', 4, 1);
+(335, 'Compañía de Telecomunicaciones de El Salvador, S.A. de C.V.', 'Colonia Roma, Cl. El Progreso y Avenida Liverpool, Complejo Roma Edif. A, San Salvador.\r\n', 5, '2250-3389', '0614-180898-164-8', '1500.00', '10000.00', 14, 1),
+(339, 'Otro', NULL, NULL, NULL, '05457-56445-45466', '1250.20', '123456.00', 4, 1);
 
 -- --------------------------------------------------------
 
@@ -315,6 +334,7 @@ CREATE TABLE `tb_participante` (
 
 INSERT INTO `tb_participante` (`DUI`, `Nombre`, `Telefono`, `Email`, `Genero`, `ISSS`, `Cargo`) VALUES
 ('05756113-8', 'Franklin Alejandro López Ramírez', '7836-3690', 'franklin_lopez@ricaldone.edu.sv', 'Hombre', 'ISSS', 'IT'),
+('05756113-9', 'Alejandro Juan', '1223-5646', 'fral_98@outlook.com', 'Hombre', '123465', 'IT'),
 ('05756117-8', 'López Portillo', '-', 'diego37314@yahoo.com', 'Hombre', 'ISSS', ''),
 ('1', 'Jennifer Tatiana Menjivar Guerra', '1234-567', 'diego37314@yahoo.com', 'Hombre', '', 'Empleada'),
 ('10', 'Glenda Xiomara Castro Canales', '-', 'diego37314@yahoo.com', 'Hombre', '', ''),
@@ -328,7 +348,7 @@ INSERT INTO `tb_participante` (`DUI`, `Nombre`, `Telefono`, `Email`, `Genero`, `
 ('17', 'Sara Beatriz Cuéllar Hernández', '-', 'diego37314@yahoo.com', 'Hombre', '', ''),
 ('18', 'Sandra Elizabeth Campos de Lķpez', '-', 'diego37314@yahoo.com', 'Hombre', '', ''),
 ('19', 'Elida Alejandra Murillo Durán', '-', 'diego37314@yahoo.com', 'Hombre', '', ''),
-('2', 'José Antonio Zaldaņa Tiznado', '-', 'diego37314@yahoo.com', 'Hombre', '', ''),
+('2', 'José Antonio Zaldaņa Tiznado', '2278-0457', 'diego37314@yahoo.com', 'Hombre', '', 'IT'),
 ('20', 'Jonathan Francisco Lķpez Molina', '-', 'diego37314@yahoo.com', 'Hombre', '', ''),
 ('21', 'William Alfredo Santamaría Orellana', '-', 'diego37314@yahoo.com', 'Hombre', '', ''),
 ('22', 'Daniel Enrique Guevara Hernández', '-', 'diego37314@yahoo.com', 'Hombre', '', ''),
@@ -367,28 +387,6 @@ INSERT INTO `tb_programa` (`id_programa`, `Nombre`, `ImgPortada`, `Estado`) VALU
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `tb_solicitud_matricula`
---
-
-CREATE TABLE `tb_solicitud_matricula` (
-  `code` int(11) NOT NULL,
-  `id_curso` varchar(15) COLLATE utf8_spanish_ci NOT NULL,
-  `id_empresa` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
---
--- Volcado de datos para la tabla `tb_solicitud_matricula`
---
-
-INSERT INTO `tb_solicitud_matricula` (`code`, `id_curso`, `id_empresa`) VALUES
-(77, 'ITR-FCOO-51', 335),
-(78, 'ITR-FCOO-50', 335),
-(79, 'ITR-FCOO-51', 335),
-(80, 'ITR-FCOO-50', 335);
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `tb_usuarios`
 --
 
@@ -406,8 +404,8 @@ CREATE TABLE `tb_usuarios` (
 --
 
 INSERT INTO `tb_usuarios` (`id_usuario`, `Nombre`, `Email`, `Password`, `Role`, `Estado`) VALUES
-('franklin_lopez', 'Franklin Alejandro López Ramírez', 'franklin_lopez@ricaldone.edu.sv', '$2b$10$jiwslBFJ9MUDJofdfx695uVz73dpkO6OM0MepEeq/ayGOfXS6cjpy', 1, 1),
-('gloria_perez', 'Gloria Haydeé Perez Navarrete', 'gloria_perez@ricaldone.edu.sv', '$2b$10$P3J05RvHNpkaS3XADuFWSuIqbHVLjXLOXS.H1NRFvLRmDCWQU7nBG', 0, 1),
+('franklin_lopez', 'Franklin Alejandro López Ramírez', 'franklin_lopez@ricaldone.edu.sv', '$2b$10$gNJzARVTjyIZyzsOvbELcuBNvhVsLauIWyre2Ip79T4GYpmg/UrOS', 0, 1),
+('gloria_perez', 'Gloria Haydeé Perez Navarrete', 'gloria_perez@ricaldone.edu.sv', '$2b$10$qLxG2eIeIh9T6xX6b8RCC.846AMSU9tkKviym52zfLbQGvLfa38T6', 0, 1),
 ('god', 'god', 'god@god.com', '$2b$10$BqYxZpWHgz1ArmwHveJueu4O/LTYYHzamPfKMsDgES2lQGpepC.nO', 1, 1);
 
 -- --------------------------------------------------------
@@ -419,18 +417,16 @@ INSERT INTO `tb_usuarios` (`id_usuario`, `Nombre`, `Email`, `Password`, `Role`, 
 CREATE TABLE `union_curso_empresa` (
   `id_union` int(11) NOT NULL,
   `id_empresa` int(11) NOT NULL,
-  `id_curso` varchar(15) COLLATE utf8_spanish_ci NOT NULL,
-  `id_solicitud` int(11) DEFAULT NULL,
-  `Estado` int(11) DEFAULT NULL
+  `id_curso` varchar(15) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `union_curso_empresa`
 --
 
-INSERT INTO `union_curso_empresa` (`id_union`, `id_empresa`, `id_curso`, `id_solicitud`, `Estado`) VALUES
-(48, 335, 'ITR-FCOO-51', 77, 0),
-(50, 335, 'ITR-FCOO-51', 79, 0);
+INSERT INTO `union_curso_empresa` (`id_union`, `id_empresa`, `id_curso`) VALUES
+(100, 335, 'ITR-FCOO-50'),
+(101, 339, 'ITR-FCOO-50');
 
 -- --------------------------------------------------------
 
@@ -442,19 +438,16 @@ CREATE TABLE `union_matricula` (
   `id_matricula` int(11) NOT NULL,
   `id_participante` varchar(10) COLLATE utf8_spanish_ci NOT NULL,
   `id_curso` varchar(15) COLLATE utf8_spanish_ci NOT NULL,
-  `id_empresa` int(11) NOT NULL,
-  `id_solicitud` int(11) DEFAULT NULL,
-  `Estado` int(11) DEFAULT NULL
+  `id_empresa` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `union_matricula`
 --
 
-INSERT INTO `union_matricula` (`id_matricula`, `id_participante`, `id_curso`, `id_empresa`, `id_solicitud`, `Estado`) VALUES
-(48, '05756113-8', 'ITR-FCOO-51', 335, 77, 0),
-(50, '20', 'ITR-FCOO-51', 335, 79, 0),
-(52, '12', 'ITR-FCOO-51', 335, 80, 0);
+INSERT INTO `union_matricula` (`id_matricula`, `id_participante`, `id_curso`, `id_empresa`) VALUES
+(102, '05756113-8', 'ITR-FCOO-50', 335),
+(103, '1', 'ITR-FCOO-50', 339);
 
 -- --------------------------------------------------------
 
@@ -469,6 +462,16 @@ CREATE TABLE `union_programa_usuario` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
+-- Volcado de datos para la tabla `union_programa_usuario`
+--
+
+INSERT INTO `union_programa_usuario` (`id_union`, `id_usuario`, `id_programa`) VALUES
+(26, 'gloria_perez', 30),
+(27, 'franklin_lopez', 30),
+(28, 'gloria_perez', 29),
+(29, 'franklin_lopez', 29);
+
+--
 -- Índices para tablas volcadas
 --
 
@@ -476,7 +479,7 @@ CREATE TABLE `union_programa_usuario` (
 -- Indices de la tabla `archivo_empresa_curso`
 --
 ALTER TABLE `archivo_empresa_curso`
-  ADD PRIMARY KEY (`ID`),
+  ADD PRIMARY KEY (`id`),
   ADD KEY `id_curso` (`id_curso`),
   ADD KEY `archivo_empresa_curso_ibfk_1` (`id_empresa`);
 
@@ -543,14 +546,6 @@ ALTER TABLE `tb_programa`
   ADD PRIMARY KEY (`id_programa`);
 
 --
--- Indices de la tabla `tb_solicitud_matricula`
---
-ALTER TABLE `tb_solicitud_matricula`
-  ADD PRIMARY KEY (`code`),
-  ADD KEY `id_curso` (`id_curso`),
-  ADD KEY `id_empresa` (`id_empresa`);
-
---
 -- Indices de la tabla `tb_usuarios`
 --
 ALTER TABLE `tb_usuarios`
@@ -562,8 +557,7 @@ ALTER TABLE `tb_usuarios`
 ALTER TABLE `union_curso_empresa`
   ADD PRIMARY KEY (`id_union`),
   ADD KEY `union_curso_empresa_ibfk_1` (`id_empresa`),
-  ADD KEY `union_curso_empresa_ibfk_2` (`id_curso`),
-  ADD KEY `id_solicitud` (`id_solicitud`);
+  ADD KEY `union_curso_empresa_ibfk_2` (`id_curso`);
 
 --
 -- Indices de la tabla `union_matricula`
@@ -572,8 +566,7 @@ ALTER TABLE `union_matricula`
   ADD PRIMARY KEY (`id_matricula`),
   ADD KEY `id_participante` (`id_participante`),
   ADD KEY `id_curso` (`id_curso`),
-  ADD KEY `id_empresa` (`id_empresa`),
-  ADD KEY `id_solicitud` (`id_solicitud`);
+  ADD KEY `id_empresa` (`id_empresa`);
 
 --
 -- Indices de la tabla `union_programa_usuario`
@@ -586,6 +579,12 @@ ALTER TABLE `union_programa_usuario`
 --
 -- AUTO_INCREMENT de las tablas volcadas
 --
+
+--
+-- AUTO_INCREMENT de la tabla `archivo_empresa_curso`
+--
+ALTER TABLE `archivo_empresa_curso`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_actividad_economica`
@@ -624,28 +623,22 @@ ALTER TABLE `tb_programa`
   MODIFY `id_programa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
--- AUTO_INCREMENT de la tabla `tb_solicitud_matricula`
---
-ALTER TABLE `tb_solicitud_matricula`
-  MODIFY `code` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
-
---
 -- AUTO_INCREMENT de la tabla `union_curso_empresa`
 --
 ALTER TABLE `union_curso_empresa`
-  MODIFY `id_union` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `id_union` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
 
 --
 -- AUTO_INCREMENT de la tabla `union_matricula`
 --
 ALTER TABLE `union_matricula`
-  MODIFY `id_matricula` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `id_matricula` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
 
 --
 -- AUTO_INCREMENT de la tabla `union_programa_usuario`
 --
 ALTER TABLE `union_programa_usuario`
-  MODIFY `id_union` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id_union` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- Restricciones para tablas volcadas
@@ -690,19 +683,11 @@ ALTER TABLE `tb_logs`
   ADD CONSTRAINT `tb_logs_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `tb_usuarios` (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `tb_solicitud_matricula`
---
-ALTER TABLE `tb_solicitud_matricula`
-  ADD CONSTRAINT `tb_solicitud_matricula_ibfk_1` FOREIGN KEY (`id_curso`) REFERENCES `tb_cursos` (`Codigo_curso`),
-  ADD CONSTRAINT `tb_solicitud_matricula_ibfk_2` FOREIGN KEY (`id_empresa`) REFERENCES `tb_empresa` (`id_empresa`);
-
---
 -- Filtros para la tabla `union_curso_empresa`
 --
 ALTER TABLE `union_curso_empresa`
   ADD CONSTRAINT `union_curso_empresa_ibfk_1` FOREIGN KEY (`id_empresa`) REFERENCES `tb_empresa` (`id_empresa`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `union_curso_empresa_ibfk_2` FOREIGN KEY (`id_curso`) REFERENCES `tb_cursos` (`Codigo_curso`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `union_curso_empresa_ibfk_3` FOREIGN KEY (`id_solicitud`) REFERENCES `tb_solicitud_matricula` (`code`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `union_curso_empresa_ibfk_2` FOREIGN KEY (`id_curso`) REFERENCES `tb_cursos` (`Codigo_curso`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `union_matricula`
@@ -710,8 +695,7 @@ ALTER TABLE `union_curso_empresa`
 ALTER TABLE `union_matricula`
   ADD CONSTRAINT `union_matricula_ibfk_1` FOREIGN KEY (`id_participante`) REFERENCES `tb_participante` (`DUI`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `union_matricula_ibfk_2` FOREIGN KEY (`id_curso`) REFERENCES `tb_cursos` (`Codigo_curso`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `union_matricula_ibfk_3` FOREIGN KEY (`id_empresa`) REFERENCES `tb_empresa` (`id_empresa`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `union_matricula_ibfk_4` FOREIGN KEY (`id_solicitud`) REFERENCES `tb_solicitud_matricula` (`code`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `union_matricula_ibfk_3` FOREIGN KEY (`id_empresa`) REFERENCES `tb_empresa` (`id_empresa`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `union_programa_usuario`
