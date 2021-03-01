@@ -106,7 +106,7 @@ const SustituirArchivo = async (curso, empresa, id, archivo) => {
       });
     }
   } catch (error) {
-    console.log(error )
+    console.log(error);
     errorMessage();
   }
 };
@@ -144,7 +144,6 @@ const CrearArchivoExtra = async (curso, empresa) => {
       fd.append("empresa", empresa);
       fd.append("curso", curso);
 
-
       loader();
       let datos = await $.ajax({
         url: "/admin/cursos/archivoExtra",
@@ -153,7 +152,7 @@ const CrearArchivoExtra = async (curso, empresa) => {
         processData: false,
         contentType: false,
       });
-      console.log(datos)
+      console.log(datos);
       Swal.fire({
         icon: "success",
         title: "Archivo subido correctamente",
@@ -162,7 +161,68 @@ const CrearArchivoExtra = async (curso, empresa) => {
       location.reload();
     }
   } catch (error) {
-    console.log(error )
+    console.log(error);
     errorMessage();
   }
 };
+let global_linkToShare;
+const GetLinkToShare = (curso, empresa) => {
+  let link = `https://${document.domain}/public/editar/${curso}/${empresa}`;
+  $("#link").val(link);
+  global_linkToShare = link;
+  return;
+};
+
+$("#btnCorreo").click(async () => {
+  const email = $("#email").val(),
+    text = $("#mensaje").val(),
+    enlace = global_linkToShare;
+  if (!email || !text || !enlace) alert("Debe completar todos los campos");
+  try {
+    loader();
+    const peticion = $.ajax({
+      url: "/sendMail",
+      type: "POST",
+      data: { email, text, enlace },
+    });
+    console.log(peticion);
+    if (peticion) {
+      swal.close();
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+      });
+      Toast.fire({
+        icon: "success",
+        title: "Mensaje enviado correctamente",
+      });
+      $("#modal_compartir").modal("toggle");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+});
+$("#btnCopy").click(() => {
+  console.log("entra");
+  var copyTextarea = document.querySelector("#link");
+  copyTextarea.select();
+  try {
+    document.execCommand("copy");
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 2000,
+      timerProgressBar: true,
+    });
+    Toast.fire({
+      icon: "success",
+      title: "Copiado en portapapeles",
+    });
+  } catch (err) {
+    console.log("Oops, unable to copy");
+  }
+});

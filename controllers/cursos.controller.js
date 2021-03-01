@@ -347,7 +347,6 @@ cursos.GestorDeDocumentos = async (req, res) => {
   });
 };
 
-cursos.deletes3 = (req, res) => {};
 
 cursos.UpdatePermisos = async (req, res) => {
   const valor = req.body.valor,

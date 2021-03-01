@@ -16,11 +16,9 @@ s3Functions.upload = (file, identifier, ext, empresa, posicion) =>
     uploadParams.Key = `app/empresas/${empresa}/${identifier}.${ext}`;
     let status = s3.upload(uploadParams, (err, data) => {
       if (err) {
-        status = false;
         reject(err);
       }
       if (data) {
-        status = true;
         resolve({ posicion, key: uploadParams.Key });
       }
     });

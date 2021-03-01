@@ -16,8 +16,6 @@ router.get("/documentos/:curso/:empresa/:programa" ,cursos.GestorDeDocumentos)
 router.post("/savezip", cursos.getAtZipAllFiles);
 //Descargar zip de archivos
 router.get("/archivo", cursos.dowloadZip);
-//actualizar para borrar la key
-router.delete("/borrarArchivo", cursos.deletes3); //Pendiente
 //actualizar permisos de edición
 router.put("/UpdatePermisos", cursos.UpdatePermisos)
 
