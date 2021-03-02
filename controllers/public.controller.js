@@ -3,6 +3,12 @@ const public = {};
 const pool = require("../models/db");
 
 //Requerimos pool de base de datos si es necesario
+public.home = (req, res) => {
+  res.render("./public_empresas/main");
+};
+public.thanks = (req, res) => {
+  res.render("./public_empresas/gracias");
+};
 
 public.main = async (req, res) => {
   let programa = req.params.id;
@@ -169,7 +175,7 @@ public.FichaRegistro = async (req, res) => {
   try {
     queries.push(
       pool.query(
-        "SELECT tb_empresa.Nombre, tb_empresa.NIT, tb_empresa.Tel, tb_empresa.Aportacion_insaforp,  tb_empresa.Num_Patronal , tb_empresa.Num_Empleados , tb_actividad_economica.Nombre  AS 'Actividad' FROM tb_empresa INNER JOIN tb_actividad_economica ON tb_actividad_economica.id = tb_empresa.Actividad_eco WHERE tb_empresa.id_empresa = ? ",
+        "SELECT tb_empresa.Nombre, tb_empresa.NIT, tb_empresa.Tel, tb_empresa.Aportacion_insaforp,  tb_empresa.Num_Patronal , tb_empresa.Num_Empleados  FROM tb_empresa WHERE tb_empresa.id_empresa = ? ",
         [empresa]
       )
     );
@@ -183,7 +189,6 @@ public.FichaRegistro = async (req, res) => {
     let alumnos = req.body.alumnos;
     alumnos = JSON.parse(alumnos);
     MainQuery = await Promise.all(queries);
-    // res.json({MainQuery, alumnos});
     const { GenerarPdf } = require("../utils/htmlToPdf");
     let pdf = await GenerarPdf({ data: MainQuery, alumnos });
     res.status(200).json({ status: true, data: pdf });
@@ -192,7 +197,6 @@ public.FichaRegistro = async (req, res) => {
     return res.status(400).json({ status: false, error });
   }
 };
-
 
 const { upload, getFiles } = require("../utils/s3");
 
@@ -285,14 +289,13 @@ public.archivos = async (req, res) => {
 };
 
 public.GetFiles = async (req, res) => {
-  if (!req.body.key)
-    return res.json({ status: false, error: "KEY_NOT_EXIST" });
+  if (!req.body.key) return res.json({ status: false, error: "KEY_NOT_EXIST" });
   const key = req.body.key;
   try {
     const get = await getFiles(key);
-    res.status(200).json({ status: true, ext: get  });
+    res.status(200).json({ status: true, ext: get });
   } catch (error) {
-    res.json({ status: false, error});
+    res.json({ status: false, error });
     console.log(error);
   }
 };

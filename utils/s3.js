@@ -12,7 +12,7 @@ s3Functions = {};
 
 s3Functions.upload = (file, identifier, ext, empresa, posicion) =>
   new Promise((resolve, reject) => {
-    const uploadParams = { Bucket: process.env.Bucket, Key: "", Body: file };
+    const uploadParams = { Bucket: process.env.BUCKET, Key: "", Body: file };
     uploadParams.Key = `app/empresas/${empresa}/${identifier}.${ext}`;
     let status = s3.upload(uploadParams, (err, data) => {
       if (err) {
@@ -28,7 +28,7 @@ s3Functions.upload = (file, identifier, ext, empresa, posicion) =>
 s3Functions.getFiles = (Key) =>
   new Promise(async (resolve, reject) => {
     const uploadParams = {
-      Bucket: process.env.Bucket,
+      Bucket: process.env.BUCKET,
       Key,
     };
     const fs = require("fs");
@@ -54,7 +54,7 @@ s3Functions.getFolderData = async (folder, keys) => {
     const s3Zip = require("s3-zip");
     const output = fs.createWriteStream(join(__dirname, "archivos.zip"));
     s3Zip
-      .archive({ s3, bucket: process.env.Bucket }, folder, keys)
+      .archive({ s3, bucket: process.env.BUCKET }, folder, keys)
       .pipe(output)
       .on("finish", () => {
         console.log("Zip created");

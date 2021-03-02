@@ -12,6 +12,13 @@ const errorMessageEmpresa = () => {
     text: "Debe seleccionar su empresa para continuar",
   });
 };
+const errorMessageParticipante = () => {
+  Swal.fire({
+    icon: "error",
+    title: "Oops...",
+    text: "Debe ingresar participantes para continuar",
+  });
+};
 const errorMessageArchivo = () => {
   Swal.fire({
     icon: "error",
@@ -75,16 +82,13 @@ const AsginarGlobalEmpresa = () => {
   $.ajax({
     url: "/public/updateEmpresaData",
     type: "PUT",
-    data: { data: global_data_actualizacionEmpresa },
+    data: global_data_actualizacionEmpresa,
   });
 };
 
 const AsginarGlobalCursos = () => {
   let local = localStorage.getItem("storage");
-  if (!local)
-    return alert(
-      "Algo salio mal, contacta con el equipo de soporte técnico soporte_cfp@ricaldone.edu.sv código de error: LOCALSTORAGE_NOT_EXIST_IN_ASSIGMENT"
-    );
+  if (!local) return errorMessageParticipante();
   local = JSON.parse(local);
   let ContentHtml = "";
   data = [];
@@ -111,6 +115,7 @@ const AsginarGlobalCursos = () => {
   $("#cursos_files").append(ContentHtml);
   global_data_solicitud = JSON.stringify(local);
   global_data_cursos = JSON.stringify(data);
+  stepper1.next();
 };
 
 const registrarSolicitud = async () => {
@@ -127,7 +132,12 @@ const registrarSolicitud = async () => {
     let query = await $.ajax({
       url: "/public/CreateSolicitud",
       type: "POST",
-      data: { cursos, empresa, participantes, programa : $("#id_programa").text()},
+      data: {
+        cursos,
+        empresa,
+        participantes,
+        programa: $("#id_programa").text(),
+      },
     });
     if (query.status) {
       swal.close();
@@ -146,10 +156,10 @@ const SendFiles = async () => {
   const cancelacion = $("#cancelacion")[0].files;
   const planilla = $("#planilla")[0].files;
   const cursos = JSON.parse(global_data_cursos);
-  
+
   const fd = new FormData();
   cursos.forEach((element, index) => {
-    fd.append(`ficha${index}`, ( $(`#ficha${index}`)[0].files )[0] );
+    fd.append(`ficha${index}`, $(`#ficha${index}`)[0].files[0]);
   });
 
   fd.append("recibo", recibo[0]);
@@ -173,6 +183,7 @@ const SendFiles = async () => {
       title: "Solicitud enviada correctamente",
       showConfirmButton: false,
     });
+    window.location.href ="/public/gracias"
   } catch (error) {
     console.log(error);
     errorMessage();
@@ -252,6 +263,9 @@ $(document).ready(() => {
   // Mascaras para dui y telefono
   $("#dui").mask("00000000-0");
   $("#tel").mask("0000-0000");
+  $("#nit").mask("0000-000000-000-0");
+  $("#aportacion").mask("000,000,000,000,000.00", { reverse: true });
+
   // Select de empresas
   $("#select_empresa").select2({
     width: "100%",
@@ -397,6 +411,6 @@ const VerificarArchivos = () => {
   if (recibo.files.length == 0 || planilla.files.length == 0) {
     errorMessageArchivo();
   } else {
-    registrarSolicitud()
+    registrarSolicitud();
   }
 };

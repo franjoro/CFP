@@ -69,5 +69,9 @@ app.post("/sendMail", async (req, res) => {
   }
 });
 
+app.get('*', function(req, res){
+  res.status(200).send("Page Not Found");
+});
+
 // exportamos este módulo para poder usar la constiable app fuera de este archivo
 module.exports = app;

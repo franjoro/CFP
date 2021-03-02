@@ -104,6 +104,7 @@ const SustituirArchivo = async (curso, empresa, id, archivo) => {
         title: "Archivo actualizado correctamente",
         showConfirmButton: false,
       });
+      location.reload();
     }
   } catch (error) {
     console.log(error);

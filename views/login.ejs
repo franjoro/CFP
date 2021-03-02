@@ -6,69 +6,62 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
+    <link rel="icon" type="image/png" href="/static/img/logo.ico">
     <title>App - CFP</title>
-
-    <!-- Custom fonts for this template-->
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-
-    <!-- Custom styles for this template-->
     <link href="static/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="static/css/login.css" rel="stylesheet">
 
 </head>
 
 <body class="bg-gradient-primary">
-
-    <div class="container">
-
-        <!-- Outer Row -->
-        <div class="row justify-content-center">
-
-            <div class="col-xl-6 col-lg-5 col-md-8">
-
-                <div class="card o-hidden border-0 shadow-lg my-5">
-                    <div class="card-body p-0">
-                        <!-- Nested Row within Card Body -->
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="p-5">
-                                    <div class="text-center">
-                                        <img src="/static/img/logo.png" class="img-fluid float-center">
-                                      </div>
-                                    <hr>
-                                    <form class="user" method="POST" id="loginForm">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control form-control-user"
-                                                id="exampleInputEmail" autocomplete="username" name="username"
-                                                placeholder="Usuario">
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="password" autocomplete="current-password" class="form-control form-control-user"
-                                                id="exampleInputPassword" name="password" placeholder="Contraseña">
-                                        </div>
-                                        <button type="submit" class="btn btn-primary btn-user btn-block">
-                                            Iniciar
-                                        </button>
-                                    </form>
-                                    <hr>
-                                </div>
-                            </div>
-                        </div>
+    <div class="container-fluid px-1 px-md-5 px-lg-1 px-xl-5 py-5 mx-auto">
+        <div class="card card0 border-0">
+            <div class="row d-flex">
+                <div class="col-lg-6">
+                    <div class="card1 pb-5">
+                        <div class="row"> <img src="/static/img/logoi.png" class="logo"> </div>
+                        <div class="row px-3 justify-content-center mt-4 mb-5 border-line"> <img
+                                src="/static/img/logo.png" class="image"> </div>
                     </div>
                 </div>
-
+                <div class="col-lg-6">
+                    <div class="card2 card border-0 px-4 py-5">
+                        <div class="row px-3 mb-4">
+                            <div class="line"></div>
+                        </div>
+                        <form id="loginForm">
+                            <div class="row px-3"> <label class="mb-1">
+                                    <h6 class="mb-0 text-sm">Correo eletrónico o usuario</h6>
+                                </label> <input class="mb-4" type="text" name="username"
+                                    placeholder="Ingrese un usuario valido"> </div>
+                            <div class="row px-3"> <label class="mb-1">
+                                    <h6 class="mb-0 text-sm">Contraseña</h6>
+                                </label> <input type="password" name="password" placeholder="Ingrese la contraseña">
+                            </div>
+                            <div class="row px-3 mb-4"></div>
+                            <div class="row mb-3 px-3"> <button type="submit" class="btn btn-blue text-center">Iniciar
+                                    sesión</button> </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-
+            <div class="bg-blue py-4">
+                <div class="row px-3"> <a href="/public"> <small class="ml-4 ml-sm-5 mb-2">¿Eres una empresa? , haz clic
+                            aquí para ir al formulario de inscripción</small></a>
+                    <div class="social-contact ml-4 ml-sm-auto"> <span class="fa fa-facebook mr-4 text-sm"></span> <span
+                            class="fa fa-google-plus mr-4 text-sm"></span> <span
+                            class="fa fa-linkedin mr-4 text-sm"></span> <span
+                            class="fa fa-twitter mr-4 mr-sm-5 text-sm"></span> </div>
+                </div>
+            </div>
         </div>
-
     </div>
-
 </body>
 <script src="/static/vendor/jquery/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script src="static/js/auth.js"></script>
+
 </html>

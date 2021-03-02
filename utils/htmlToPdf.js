@@ -70,7 +70,7 @@ const GenerarPdf = (data) => {
                     }
             
                     .complete {
-                        width: 75%;
+                        width: 60%;
                     }
             
                     table {
@@ -96,8 +96,7 @@ const GenerarPdf = (data) => {
                         <p><b>ANEXO 6</b></p>
                         <p><b>FECHA :</b> ${d.getDate()} - ${d.getMonth() + 1
         } - ${d.getFullYear()}</p>
-                        <p><b>NOMBRE DE LA EMPRESA:</b>&nbsp; <input type="text" class="complete" value="${empresa.Nombre
-        }" /></p>
+        <p><b>NOMBRE DE LA EMPRESA:</b><input type="text" class="complete" value="${empresa.Nombre}"/></p>
                         <p><b>NIT DE LA EMPRESA:</b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <input type="text" style="width:7%;"
                                 value="${nit[0]
         }" />- <input type="text" value="${nit[1]
@@ -118,8 +117,7 @@ const GenerarPdf = (data) => {
                                 value="${empresa.Num_Empleados
         }" /></p><br /><br />
                         <p><b>ACTIVIDAD ECONÓMICA:(De acuerdo a Clasificacion ISSS)</b>&nbsp; </p><input class="complete"
-                            type="text" value="${empresa.Actividad
-        }" /><br /><br />
+                            type="text" /><br /><br />
                         <p style="float:left"><b>NOMBRE DEL RESPONSABLE DE <br />CAPACITACION EN LA EMPRESA:</b></p><input
                             type="text" style="float:right; width:70%; margin-top:10px" value="" /><br /><br /><br />
                         <p style="float:left"><b>CORREO ELECTRÓNICO:</b></p><input type="text"
