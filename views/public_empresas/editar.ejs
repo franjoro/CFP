@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <title>Formulario de inscripción</title>
+  <link rel="icon" type="image/png" href="/static/img/logo.ico">
+
+  <link href="/static/css/sb-admin-2.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"
+    type="text/css" />
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.23/datatables.min.css" />
+  <link href="/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body class="d-flex flex-column min-vh-100 bg-gradient-light" style="color: black">
+  <header class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+    <!-- <a href="/"><b>Volver al inicio</b></a> -->
+  </header>
+  <main class="container">
+    <h3 class="text-primary ">Edición de archivos enviados</h3>
+    <img src="/static/img/logo.png" style="width: 130px;" class="d-inline float-right" />
+
+    <p>Centro de Formación Profesional Don Pedro Ricaldone</p>
+    <p><b>Empresa:</b>
+      <%= empresa.Nombre %> <b>Curso: </b>
+        <%= curso.curso %>
+    </p>
+    <hr>
+    <p>
+      <b>Instrucciones : </b> Los siguientes son los archivos solicitados por el coordinador del programa para su
+      edición. Estos deben ser verificados por parte de la empresa y mandarlos correctamente.
+    </p>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body">
+            <h6><b>Archivos:</b></h6>
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Nombre del archivo</th>
+                    <th>Descargar</th>
+                    <th>Sustituir</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% 
+                  if(archivos.length) {
+                  archivos.forEach( element=> { 
+                    let archivo="Archivo extra";
+                    if(element.Role == 1 ) {archivo = "Solicitud de capacitación"}
+                    if(element.Role == 2 ) {archivo = "Recibo de aportación"}
+                    if(element.Role == 3 ) {archivo = "Comprobante de pago en línea"}
+                    if(element.Role == 4 ) {archivo = "Planilla ISSS"}
+
+                    %>
+
+                    <tr>
+                      <td><%= archivo%></td>
+                      <td>
+                        <button class="btn btn-success btn-sm" onclick="DowloadS3File('<%= element.s3key %>')">
+                          <i class="fas fa-cloud-download-alt"></i>
+                        </button>
+                      <td>
+                        <button class="btn btn-info btn-sm"
+                          onclick="SustituirArchivo('<%= curso.id %>','<%= empresa.id %>', '<%= element.id %>', '<%=   element.Role %>' , '<%=   programa %>')">
+                          <i class="fas fa-file-signature"></i>
+                        </button>
+                      </td>
+                    </tr>
+                    <% })} else{   %>
+                      <tr>
+                        <td colspan="3" class="text-center">Sin archivos disponibles a editar</td>
+                      </tr>
+                    <% } %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%- include('../partials/footer.public.ejs'); %>
+<script>
+
+const loaderFile = () => {
+  Swal.fire({
+    title: "Por favor espere",
+    html: "Descargando archivo",
+    allowOutsideClick: false,
+    showConfirmButton: false,
+    willOpen: () => {
+      Swal.showLoading();
+    },
+  });
+};
+
+
+  const DowloadS3File = async (key) => {
+  try {
+    loaderFile();
+    const query = await $.ajax({
+      url: "/public/getFiles",
+      type: "POST",
+      data: { key },
+    });
+    if (query.status) {
+      window.open(`/public/archivo/${query.ext}`);
+      Swal.close();
+    }
+  } catch (error) {}
+};
+
+const SustituirArchivo = async (curso, empresa, id, archivo, programa) => {
+  try {
+    const { value: file } = await Swal.fire({
+      title: "Seleccionar archivo",
+      showCancelButton: true,
+      input: "file",
+      inputAttributes: {
+        "aria-label": "Reemplazar archivo",
+      },
+    });
+    if (file) {
+      var fd = new FormData();
+      fd.append("file", file);
+      fd.append("empresa", empresa);
+      fd.append("curso", curso);
+      fd.append("id", id);
+      fd.append("archivo", archivo);
+      fd.append("programa", programa);
+
+
+      loader();
+      let datos = await $.ajax({
+        url: "/admin/cursos/EnviarFiles",
+        type: "POST",
+        data: fd,
+        processData: false,
+        contentType: false,
+      });
+      Swal.fire({
+        icon: "success",
+        title: "Archivo actualizado correctamente",
+        showConfirmButton: false,
+      });
+      location.reload();
+    }
+  } catch (error) {
+    console.log(error);
+    errorMessage();
+  }
+};
+</script>

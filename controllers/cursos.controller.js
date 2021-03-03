@@ -5,8 +5,6 @@ const { query } = require("../models/db");
 // Requerimos pool de base de datos si es necesario
 const pool = require("../models/db");
 
-// const mailer = require ('../utils/mailer');
-
 // Renderizar pantalla de cursos ya con programa
 cursos.cursos = async (req, res) => {
   const { getUserDataByToken } = require("../middlewares/auth");
@@ -347,7 +345,6 @@ cursos.GestorDeDocumentos = async (req, res) => {
   });
 };
 
-
 cursos.UpdatePermisos = async (req, res) => {
   const valor = req.body.valor,
     id = req.body.id;
@@ -378,7 +375,10 @@ cursos.archivos = async (req, res) => {
   try {
     promesas.push(upload(fileContent, Date.now(), ext, empresa, archivo));
     promesas.push(
-      pool.query("UPDATE archivo_empresa_curso SET Role=0 WHERE id=? ", [id])
+      pool.query(
+        "UPDATE archivo_empresa_curso SET Role=0, isEditable=0  WHERE id=? ",
+        [id]
+      )
     );
     let key = await Promise.all(promesas);
     key = key[0].key;
@@ -387,28 +387,41 @@ cursos.archivos = async (req, res) => {
       [key, archivo, empresa, curso]
     );
     res.status(200).json({ status: true });
+
+    const { sendEmail } = require("../utils/mailer");
+    let correos = await pool.query(
+      "SELECT tb_usuarios.Email FROM tb_usuarios INNER JOIN union_programa_usuario ON union_programa_usuario.id_usuario = tb_usuarios.id_usuario WHERE union_programa_usuario.id_programa=? ",
+      [req.body.programa]
+    );
+    let data = await pool.query(
+      "SELECT Nombre, Horario FROM tb_cursos WHERE Codigo_curso = ? ; SELECT Nombre FROM tb_empresa WHERE id_empresa = ? ",
+      [curso, empresa]
+    );
+    correos.forEach((element) => {
+      let html = `<h1>Notificación automática de sistema Razón: EDICIÓN DE ARCHIVO EN CURSO : ${curso}</h1> <p> Nombre: ${data[0][0].Nombre}  Horario: ${data[0][0].Horario} </p>  <p> Empresa: ${data[1][0].Nombre}  </p>`;
+      sendEmail(element.Email, `EDICIÓN DE ARCHIVO REALIZADA EN CURSO: ${curso }`, html );
+    });
   } catch (error) {
     res.status(400).json({ status: false, error });
   }
 };
 
 cursos.ArchivoExtra = async (req, res) => {
-
   if (!req.files) return res.json({ status: false, error: "FILE_NOT_EXIST" });
   const empresa = req.body.empresa;
   const curso = req.body.curso;
   const ext = req.files.file.name.split(".")[1];
   const fileContent = Buffer.from(req.files.file.data, "binary");
   try {
-    key = await upload(fileContent, Date.now(), ext, empresa, '6');
+    key = await upload(fileContent, Date.now(), ext, empresa, "6");
     key = key.key;
     await pool.query(
       "INSERT INTO archivo_empresa_curso(s3Key, Role, id_empresa, id_curso, isEditable) VALUES(?,6,?,?,0)",
-      [key,  empresa, curso]
+      [key, empresa, curso]
     );
     res.status(200).json({ status: true });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.status(400).json({ status: false, error });
   }
 };

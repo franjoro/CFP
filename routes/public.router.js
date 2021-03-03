@@ -10,6 +10,8 @@ const router = express.Router();
 router.get("/archivo/:file?" ,public_.archivo)
 // Carga el formulario principal con la iformación del programa
 router.get("/form/:id?", public_.main);
+// Carga el formulario principal con la iformación del programa
+router.get("/editar/:curso/:empresa/:programa", public_.editar);
 //Crea el file con la información pero no lo envia
 router.post("/ficha/:empresa?/:data?", public_.FichaRegistro);
 //Descargar el file

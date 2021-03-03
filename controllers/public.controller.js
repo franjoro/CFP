@@ -144,11 +144,8 @@ public.CreateSolicitud = async (req, res) => {
       );
       console.log(correos);
       correos.forEach((element) => {
-        sendEmail(
-          element.Email,
-          "SOLICITUD DE EMPRESA REALIZADA",
-          `Notificación automática de sistema Razón: Solicitud de empresa creada en el curso : ${curso} Nombre: ${data[0][0].Nombre} Horario: ${data[0][0].Horario}  - Cantidad de participantes: ${participantes.length}   - Empresa: ${data[1][0].Nombre}   `
-        );
+        let html = `<h1>Notificación automática de sistema Razón: Solicitud de empresa creada en el curso : ${curso}</h1> <p> Nombre: ${data[0][0].Nombre} </p>  <p> Horario: ${data[0][0].Horario} </p>   <p> Cantidad de participantes: ${participantes.length}   </p>  <p> Empresa: ${data[1][0].Nombre}  </p>`;
+        sendEmail(element.Email, `SOLICITUD REALIZADA EN CURSO: ${curso }`, html );
       });
     });
   } catch (error) {
@@ -311,6 +308,49 @@ public.archivo = (req, res) => {
   const path = `./public/files/tmp/tmpfile.${req.params.file}`;
   res.contentType("application/pdf");
   res.download(path, `archivo.${req.params.file}`);
+};
+
+public.editar = async (req, res) => {
+  const curso = req.params.curso,
+    empresa = req.params.empresa,
+    programa = req.params.programa;
+
+  if (!empresa || !curso)
+    return res
+      .status(400)
+      .json({ status: false, error: "PARAMS_NOT_COMPLETE" });
+  try {
+    let queries = [];
+    queries.push(
+      pool.query(
+        "SELECT Nombre ,id_empresa AS id FROM tb_empresa WHERE id_empresa= ?",
+        [empresa]
+      )
+    );
+    queries.push(
+      pool.query(
+        "SELECT CONCAT(Nombre,' - ' ,Horario) AS curso , Codigo_curso AS id FROM  tb_cursos WHERE Codigo_curso  = ? ",
+        [curso]
+      )
+    );
+    queries.push(
+      pool.query(
+        "SELECT id, s3key, Role  FROM archivo_empresa_curso WHERE id_curso = ? AND id_empresa  = ? AND isEditable = 1  ",
+        [curso, empresa]
+      )
+    );
+    const query = await Promise.all(queries);
+    res.render("./public_empresas/editar", {
+      curso: query[1][0],
+      empresa: query[0][0],
+      archivos: query[2],
+      programa
+    });
+
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ status: false, error });
+  }
 };
 
 module.exports = public;
