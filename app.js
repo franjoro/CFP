@@ -1,21 +1,14 @@
 // Utilizar funcionalidades del Ecmascript 6
-
 // Cargamos los módulos de express y body-parser, morgan, cors
 const express = require("express");
 const bodyParser = require("body-parser");
-const morgan = require("morgan");
 const cors = require("cors");
-const helmet = require("helmet");
+const compression = require('compression');
 // Llamamos a express para poder crear el servidor
 const app = express();
-
 var cookieParser = require("cookie-parser");
 app.use(cookieParser());
-
-// Llamamos helmet
-// app.use(helmet());
-// Llamamos morgan en dev
-app.use(morgan("dev"));
+app.use(compression());
 // Llamamos cors
 app.use(cors());
 // Seteamos ejs como motor de vistas

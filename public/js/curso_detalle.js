@@ -18,7 +18,6 @@ const loader = () => {
   });
 };
 
-
 let global_empresa, global_curso;
 const OpenFiles = (curso, empresa) => {
   $("#modal_files").modal("show");
@@ -182,6 +181,7 @@ $(document).ready(() => {
         cache: true,
       },
     });
+
     $("#modal_migrar_curso").modal("show");
     $("#change_matricula").click(async () => {
       try {
@@ -281,7 +281,6 @@ $("#planilla").change(function (e) {
   $("#planilla1").html(fileName);
 });
 
-
 const SendFiles = async (key) => {
   //Hacer validaciones aqui Pendiente
   var fd = new FormData();
@@ -312,4 +311,59 @@ const SendFiles = async (key) => {
     console.log(error);
     errorMessage();
   }
+};
+
+
+const MigrarAll = async (empresa, curso, programa) => {
+  $("#selec_cursos2").select2({
+    width: "100%",
+    ajax: {
+      url: `/admin/cursos/getCursos/${programa}`,
+      type: "post",
+      dataType: "json",
+      delay: 250,
+      data(params) {
+        return {
+          searchTerm: params.term, // search term
+        };
+      },
+      results(response) {
+        $.map(response, (item) => ({
+          id: item.id,
+          text: item.text,
+        }));
+      },
+
+      cache: true,
+    },
+  });
+  $("#modal_migrar_all").modal("show");
+  $("#btn_migrar_todo").click(async () => {
+    const alerta = await Swal.fire({
+      title: "¿Deseá migrar la solicitud a otro curso ? ",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, migrar",
+    });
+
+    if (alerta.isConfirmed) {
+      try {
+        const tocurso = $("#selec_cursos2").val();
+        loader();
+        const data = await $.ajax({
+          url: "/admin/cursos/migrarall",
+          type: "PUT",
+          data: { curso, tocurso, empresa },
+        });
+        console.log(data);
+        swal.close();
+        location.reload();
+      } catch (error) {
+        console.log(error);
+        errorMessage();
+      }
+    }
+  });
 };

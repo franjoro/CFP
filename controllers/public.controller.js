@@ -17,7 +17,7 @@ public.main = async (req, res) => {
   try {
     data = await pool.query(
       `SELECT  tb_programa.Nombre, tb_programa.ImgPortada , tb_programa.id_programa  FROM tb_programa WHERE id_programa= ? ;  
-     SELECT Codigo_curso, Nombre, Horario FROM tb_cursos WHERE id_programa = ? AND Estado= 1 `,
+     SELECT Codigo_curso, Nombre, Horario FROM tb_cursos WHERE id_programa = ? AND Estado= 5 `,
       [req.params.id, programa]
     );
     if (!data.length) return res.redirect("/public/");
@@ -144,8 +144,12 @@ public.CreateSolicitud = async (req, res) => {
       );
       console.log(correos);
       correos.forEach((element) => {
-        let html = `<h1>Notificación automática de sistema Razón: Solicitud de empresa creada en el curso : ${curso}</h1> <p> Nombre: ${data[0][0].Nombre} </p>  <p> Horario: ${data[0][0].Horario} </p>   <p> Cantidad de participantes: ${participantes.length}   </p>  <p> Empresa: ${data[1][0].Nombre}  </p>`;
-        sendEmail(element.Email, `SOLICITUD REALIZADA EN CURSO: ${curso }`, html );
+        let html = `<h1>Notificación automática de sistema Razón: Solicitud de empresa creada en el curso : ${data[0][0].Nombre}</h1> <p> Nombre: ${data[0][0].Nombre} </p>  <p> Horario: ${data[0][0].Horario} </p>   <p> Cantidad de participantes: ${participantes.length}   </p>  <p> Empresa: ${data[1][0].Nombre}  </p>`;
+        sendEmail(
+          element.Email,
+          `SOLICITUD REALIZADA EN CURSO: ${curso}`,
+          html
+        );
       });
     });
   } catch (error) {
@@ -344,9 +348,8 @@ public.editar = async (req, res) => {
       curso: query[1][0],
       empresa: query[0][0],
       archivos: query[2],
-      programa
+      programa,
     });
-
   } catch (error) {
     console.log(error);
     res.status(400).json({ status: false, error });

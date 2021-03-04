@@ -167,8 +167,8 @@ const CrearArchivoExtra = async (curso, empresa) => {
   }
 };
 let global_linkToShare;
-const GetLinkToShare = (curso, empresa) => {
-  let link = `https://${document.domain}/public/editar/${curso}/${empresa}`;
+const GetLinkToShare = (curso, empresa, programa) => {
+  let link = `https://${document.domain}/public/editar/${curso}/${empresa}/${programa}`;
   $("#link").val(link);
   global_linkToShare = link;
   return;

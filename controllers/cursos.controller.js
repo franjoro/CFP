@@ -12,17 +12,26 @@ cursos.cursos = async (req, res) => {
   const programa = req.params.id;
   if (!programa) return res.status(400).json({ error: "ID_NOT_EXIST" });
   try {
-    const query = await pool.query(
-      "SELECT COUNT(*) AS c FROM tb_programa WHERE id_programa = ?",
-      [programa]
+    let queries = [];
+    queries.push(
+      pool.query(
+        "SELECT `tb_cursos`.`Codigo_curso`, `tb_cursos`.`Nombre`, `tb_instructor`.`Nombre` AS instructor, `tb_cursos`.`Orden`, `tb_cursos`.`Agrupacion`, `tb_cursos`.`Estado` FROM `tb_cursos` LEFT JOIN `tb_instructor` ON `tb_cursos`.`id_instructor` = `tb_instructor`.`DUI` WHERE tb_cursos.id_programa = ? AND tb_cursos.Estado != 0  AND tb_cursos.Estado != 5",
+        [programa]
+      )
     );
-    if (!query[0].c)
-      return res.status(400).json({ error: "PROGRAM_NOT_EXIST" });
-    const datos = await pool.query(
-      "SELECT `tb_cursos`.`Codigo_curso`, `tb_cursos`.`Nombre`, `tb_instructor`.`Nombre` AS instructor, `tb_cursos`.`Orden`, `tb_cursos`.`Agrupacion`, `tb_cursos`.`Estado` FROM `tb_cursos` LEFT JOIN `tb_instructor` ON `tb_cursos`.`id_instructor` = `tb_instructor`.`DUI` WHERE tb_cursos.id_programa = ? AND tb_cursos.Estado != 0",
-      [programa]
+
+    queries.push(
+      pool.query(
+        "SELECT CONCAT(Nombre,' - ',Horario) AS Nombre , Codigo_curso FROM tb_cursos WHERE Estado = 5"
+      )
     );
-    res.render("./admin/cursos", { datos, programa, data: usuario.data });
+    const query = await Promise.all(queries);
+    res.render("./admin/cursos", {
+      datos: query[0],
+      programa,
+      data: usuario.data,
+      oferta: query[1],
+    });
   } catch (error) {
     res.status(400).json(error);
   }
@@ -60,26 +69,22 @@ cursos.curso_detalle = async (req, res) => {
 
   // VALIDAR si la peticion trae un codigo de curso
   const curso = req.params.id;
-  const { programa } = req.params;
-
+  const { programa, tipo } = req.params;
   if (!curso) return res.status(400).json({ error: "ID_NOT_EXIST" });
-
+  if (!(tipo == "curso" || tipo == "oferta"))
+    return res.status(400).json({ error: "TIPO_NOT_VALID" });
   try {
-    // validar si este codigo existe
-    const query = await pool.query(
-      "SELECT COUNT(*) AS c FROM tb_cursos WHERE Codigo_curso = ?",
-      [curso]
-    );
-    if (!query[0].c) return res.status(400).json({ error: "CURSO_NOT_EXIST" });
-
     // Traer de bd Las empresas que estan matriculadas al curso y los alumnos asociados
-    const empresas = await pool.query(
-      `SELECT tb_empresa.Nombre,tb_empresa.id_empresa AS codigo_empresa FROM tb_empresa INNER JOIN union_curso_empresa ON tb_empresa.id_empresa = union_curso_empresa.id_empresa WHERE union_curso_empresa.id_curso = ? ;
-    SELECT tb_participante.DUI, tb_participante.Nombre, tb_participante.Telefono, tb_participante.Email, union_matricula.id_empresa FROM tb_participante  INNER JOIN union_matricula ON union_matricula.id_participante = tb_participante.DUI WHERE union_matricula.id_curso = ? ;
-    SELECT  tb_cursos . Codigo_curso ,  tb_cursos . Nombre ,  tb_cursos . Date_inicio ,  tb_cursos . Date_fin ,  tb_cursos . Orden ,  tb_cursos . Agrupacion ,  tb_cursos . Horario ,  tb_cursos . CostoAlumno ,  tb_cursos . Factura ,  tb_instructor . Nombre AS instructor , tb_cursos.Modalidad , tb_cursos.id_modalidad, tb_cursos.Documento , tb_cursos.id_documento   FROM  tb_instructor  INNER JOIN  tb_cursos  ON  tb_cursos . id_instructor  =  tb_instructor . DUI  WHERE tb_cursos . Codigo_curso  = ?  GROUP BY tb_cursos.Codigo_curso  
-    `,
-      [curso, curso, curso]
-    );
+    let typeQuery;
+    if (tipo == "curso") {
+      typeQuery = `SELECT  tb_cursos . Codigo_curso ,  tb_cursos . Nombre ,  tb_cursos . Date_inicio ,  tb_cursos . Date_fin ,  tb_cursos . Orden ,  tb_cursos . Agrupacion ,  tb_cursos . Horario ,  tb_cursos . CostoAlumno ,  tb_cursos . Factura ,  tb_instructor . Nombre AS instructor , tb_cursos.Modalidad , tb_cursos.id_modalidad, tb_cursos.Documento , tb_cursos.id_documento   FROM  tb_instructor  INNER JOIN  tb_cursos  ON  tb_cursos . id_instructor  =  tb_instructor . DUI  WHERE tb_cursos . Codigo_curso  = ?  GROUP BY tb_cursos.Codigo_curso`;
+    }
+    if (tipo == "oferta") {
+      typeQuery = `SELECT CONCAT(Nombre,' - ',Horario) AS Nombre , Codigo_curso FROM tb_cursos WHERE Codigo_curso  = ?`;
+    }
+    const statment = `SELECT tb_empresa.Nombre,tb_empresa.id_empresa AS codigo_empresa FROM tb_empresa INNER JOIN union_curso_empresa ON tb_empresa.id_empresa = union_curso_empresa.id_empresa WHERE union_curso_empresa.id_curso = ? ;SELECT tb_participante.DUI, tb_participante.Nombre, tb_participante.Telefono, tb_participante.Email, union_matricula.id_empresa FROM tb_participante  INNER JOIN union_matricula ON union_matricula.id_participante = tb_participante.DUI WHERE union_matricula.id_curso = ? ; ${typeQuery}`;
+
+    const empresas = await pool.query(statment, [curso, curso, curso]);
     // Formatear la informacion para que existan los alumnos adentro de un objeto de empresas
     datos = [];
     empresas[0].forEach((element, i) => {
@@ -103,6 +108,7 @@ cursos.curso_detalle = async (req, res) => {
       programa,
       cAlumnos: empresas[1].length,
       data: usuario.data,
+      tipo,
     });
   } catch (error) {
     res.status(400).json(error);
@@ -124,7 +130,7 @@ cursos.getInstructores = async (req, res) => {
 
 cursos.getCursosCategoria = async (req, res) => {
   const { categoria } = req.params;
-  const query = `SELECT Codigo_curso  AS id, CONCAT(Nombre, ' '  , Horario) AS text FROM tb_cursos  WHERE id_programa = ${categoria}  AND Estado != 0`;
+  const query = `SELECT Codigo_curso  AS id, CONCAT(Nombre, ' '  , Horario) AS text FROM tb_cursos  WHERE id_programa = ${categoria}  AND Estado != 0 AND Estado != 5`;
   try {
     data = await pool.query(query);
     res.json({ results: data });
@@ -156,9 +162,31 @@ cursos.add = async (req, res, next) => {
     req.body.documento_id,
   ];
   try {
-    console.log(data);
     await pool.query(
       "INSERT INTO tb_cursos(Codigo_curso, Nombre, Date_inicio, Date_fin, Agrupacion, Orden, Horario, CostoAlumno, Factura, id_instructor, id_programa,   Modalidad , id_modalidad , Documento, id_documento,    Estado)  VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,1)",
+      data
+    );
+    res.json({ status: true });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ status: false, error });
+  }
+};
+//Agregar oferta
+cursos.oferta = async (req, res) => {
+  if (!req.body.programa || !req.body.codigo_curso || !req.body.nombre)
+    return res.status(400).json({ status: false, error: "empty_params" });
+  const data = [
+    req.body.codigo_curso,
+    req.body.nombre,
+    req.body.horario,
+    req.body.costo,
+    req.body.programa,
+    req.body.role,
+  ];
+  try {
+    await pool.query(
+      "INSERT INTO tb_cursos(Codigo_curso, Nombre,Horario, CostoAlumno, id_programa, Estado)  VALUES(?,?,?,?,?,?)",
       data
     );
     res.json({ status: true });
@@ -208,6 +236,19 @@ cursos.deleteEmpresaCurso = async (req, res) => {
   }
 };
 
+cursos.delteCursoOferta = async (req, res) => {
+  if (!req.body.id_curso)
+    return res.json({ status: false, error: "EMPTY_PARAMS" });
+  try {
+    await pool.query(`DELETE FROM tb_cursos WHERE Codigo_curso  = ?   `, [
+      req.body.id_curso,
+    ]);
+    res.status(200).json({ status: true });
+  } catch (error) {
+    return res.status(400).json({ status: false, error });
+  }
+};
+
 cursos.edit = async (req, res) => {
   try {
     if (!req.body.id) throw "EMPTY_ID";
@@ -241,7 +282,6 @@ cursos.matricula = async (req, res) => {
   if (!req.body.participante || !req.body.empresa || !req.body.curso)
     return res.status(400).json({ status: false, error: "empty_data" });
   const data = [req.body.participante, req.body.curso, req.body.empresa];
-  console.log(data);
   try {
     await pool.query(
       "INSERT INTO union_matricula( id_participante ,id_curso , id_empresa)  VALUES(?,?, ? )",
@@ -277,6 +317,42 @@ cursos.ChangeMatriculaCurso = async (req, res) => {
       );
     }
     res.status(200).json({ status: true });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ status: false, error });
+  }
+};
+
+cursos.MigrarTodo = async (req, res) => {
+  const { curso, empresa, tocurso } = req.body;
+  if (!curso || !empresa || !tocurso)
+    return res.status(400).json({ status: false, error: "VALUES_NOT_EXIST" });
+  try {
+    let queries = [];
+    data = [tocurso, curso, empresa];
+    //curso empresa
+    queries.push(
+      pool.query(
+        "UPDATE union_curso_empresa SET id_curso = ?  WHERE id_curso = ? AND id_empresa=?  ",
+        data
+      )
+    );
+    //union matricula
+    queries.push(
+      pool.query(
+        "UPDATE union_matricula SET id_curso = ? WHERE  id_curso = ? AND id_empresa= ?  ",
+        data
+      )
+    );
+    //archivos
+    queries.push(
+      pool.query(
+        "UPDATE archivo_empresa_curso SET id_curso = ? WHERE  id_curso = ? AND id_empresa= ?  ",
+        data
+      )
+    );
+    const query = await Promise.all(queries);
+    res.status(200).json({ status: true, query });
   } catch (error) {
     console.log(error);
     res.status(400).json({ status: false, error });
@@ -342,6 +418,7 @@ cursos.GestorDeDocumentos = async (req, res) => {
     curso: req.params.curso,
     programa: req.params.programa,
     empresa: req.params.empresa,
+    tipo: req.params.tipo,
   });
 };
 
@@ -399,7 +476,11 @@ cursos.archivos = async (req, res) => {
     );
     correos.forEach((element) => {
       let html = `<h1>Notificación automática de sistema Razón: EDICIÓN DE ARCHIVO EN CURSO : ${curso}</h1> <p> Nombre: ${data[0][0].Nombre}  Horario: ${data[0][0].Horario} </p>  <p> Empresa: ${data[1][0].Nombre}  </p>`;
-      sendEmail(element.Email, `EDICIÓN DE ARCHIVO REALIZADA EN CURSO: ${curso }`, html );
+      sendEmail(
+        element.Email,
+        `EDICIÓN DE ARCHIVO REALIZADA EN CURSO: ${curso}`,
+        html
+      );
     });
   } catch (error) {
     res.status(400).json({ status: false, error });
