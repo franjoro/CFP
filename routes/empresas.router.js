@@ -10,6 +10,10 @@ const router = express.Router();
 
 // Mandar a traer la info de la tabla
 router.get("/table/:estado*?", authcheck ,  empresas.table);
+// Solicitudes
+router.get("/solicitudes", authcheck ,  empresas.solicitudes);
+// Aprobar solicitudes
+router.post("/solicitudes", authcheck ,  empresas.Aprobarsolicitudes);
 // Mandar a traer la info del contacto según empresa
 router.get("/contacto/:empresa*?",  authcheck ,  empresas.renderContacto);
 // AGregar nueva empres

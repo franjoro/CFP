@@ -8,14 +8,10 @@ const GenerarPdf = (data) => {
     let empresa = data.data[0][0];
     let nit = data.data[0][0].NIT.split("-");
     const d = new Date();
-    let nombres = "",
-      horarios = "";
-    data.data.forEach((element, index) => {
-      if (index > 0) {
-        horarios += ` ${element[0].Horario} `;
-        nombres += `  ${element[0].Nombre} `;
-      }
-    });
+
+    const {Horario, Nombre, programa} = data.data[1][0] 
+    const {NombreContacto,  EmailContacto} = data.data[2][0] 
+
 
     itineracion = "";
     data.alumnos.forEach((element, index) => {
@@ -90,7 +86,7 @@ const GenerarPdf = (data) => {
                         class="img-fluid float-right" />
                     <div class="text-center">
                         <h5><b>SOLICITUD DE CAPACITACIÓN </b></h5>
-                        <h5><b>PROGRAMA NACIONAL DE FORMACION CONTINUA OFIMÁTICA </b></h5>
+                        <h5><b>${programa}</b></h5>
                     </div>
                     <div class="container">
                         <p><b>ANEXO 6</b></p>
@@ -108,22 +104,19 @@ const GenerarPdf = (data) => {
         }" />&nbsp; &nbsp; &nbsp;
                             &nbsp; <b>Ext:</b><input type="text" class="" value="" /></p>
                         <p><b>APORTACIÓN MENSUAL AL INSAFORP:</b>&nbsp; <input type="text" value="${empresa.Aportacion_insaforp
-        }"
-                                style="width:15%;" /><span style="font-size:10px;">(Según Ultimo recibo ISSS) </span>&nbsp; &nbsp;
-                            &nbsp; <b>NUMERO PATRONA
-                            L:</b><input type="text" value="${empresa.Num_Patronal
+        }"style="width:15%;" /><span style="font-size:10px;">(Según Ultimo recibo ISSS) </span>
+                             <b>NUMERO PATRONAL:</b><input type="text" value="${empresa.Num_Patronal
         }" style="width:15%;" /></p>
                         <p style="float:right; margin-right:50px"><b>NUMERO DE EMPLEADOS:</b>&nbsp; <br /><input type="text"
                                 value="${empresa.Num_Empleados
         }" /></p><br /><br />
                         <p><b>ACTIVIDAD ECONÓMICA:(De acuerdo a Clasificacion ISSS)</b>&nbsp; </p><input class="complete"
-                            type="text" /><br /><br />
-                        <p style="float:left"><b>NOMBRE DEL RESPONSABLE DE <br />CAPACITACION EN LA EMPRESA:</b></p><input
-                            type="text" style="float:right; width:70%; margin-top:10px" value="" /><br /><br /><br />
+                            type="text"  value="${empresa.Actividad_eco}" /><br /><br />
+                        <p style="float:left"><b>NOMBRE DEL RESPONSABLE DE <br />CAPACITACION EN LA EMPRESA:</b></p><input type="text" style="float:right; width:70%; margin-top:10px" value="${NombreContacto.trim()}" /><br /><br /><br />
                         <p style="float:left"><b>CORREO ELECTRÓNICO:</b></p><input type="text"
-                            style="float:right; width:70%; margin-top:10px" value="" /><br /><br />
+                            style="float:right; width:70%; margin-top:10px" value="${EmailContacto.trim()}" /><br /><br />
                         <p><b>NOMBRE DE LA CAPACITACION:</b></p><input type="text" style="width:100%"
-                            value="${nombres}" /><br /><br />
+                            value="${Nombre}" /><br /><br />
                         <div class="encabezado">
                             <p><b>RAZON SOCIAL DEL ORGANIZADOR :</b></p>
                             <p><b>COSTE POR PERSONA :</b></p>
@@ -139,7 +132,7 @@ const GenerarPdf = (data) => {
                         </div>
                         <div class="encabezado">
                         <input type="text" style="width:8%" value="20 Horas"/>
-                        <input type="text" style="width:90%" value="${horarios} " /></div>
+                        <input type="text" style="width:90%" value="${Horario} " /></div>
                     </div><br />
                     <div class="container">
                         <p><b>NOMBRE DE LOS PARTICIPANTES PROPUESTOS:</b></p>

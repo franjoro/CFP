@@ -29,28 +29,33 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="card2 card border-0 px-4 py-5">
+                        <label>Inicia sesión o crea un nuevo usuario empresarial</label>
                         <div class="row px-3 mb-4">
                             <div class="line"></div>
                         </div>
                         <form id="loginForm">
                             <div class="row px-3"> <label class="mb-1">
                                     <h6 class="mb-0 text-sm">Correo eletrónico o usuario</h6>
-                                </label> <input class="mb-4" type="text" name="username"
+                                </label> <input class="mb-4" type="text" name="username" autocomplete="username"
                                     placeholder="Ingrese un usuario valido"> </div>
                             <div class="row px-3"> <label class="mb-1">
                                     <h6 class="mb-0 text-sm">Contraseña</h6>
-                                </label> <input type="password" name="password" placeholder="Ingrese la contraseña">
+                                </label> <input type="password" autocomplete="current-password" name="password"
+                                    placeholder="Ingrese la contraseña">
                             </div>
                             <div class="row px-3 mb-4"></div>
-                            <div class="row mb-3 px-3"> <button type="submit" class="btn btn-blue text-center">Iniciar
+                            <div class="row mb-3 px-3"> <button type="submit"
+                                    class="btn btn-block btn-blue text-center ">Iniciar
                                     sesión</button> </div>
                         </form>
+                        <div class="row mb-3 px-3"> <a href="/public/register" class="btn btn-block btn-primary text-center ">Registrar
+                                nuevo usuario empresarial</a> </div>
                     </div>
                 </div>
             </div>
             <div class="bg-blue py-4">
-                <div class="row px-3"> <a href="/public"> <small class="ml-4 ml-sm-5 mb-2">¿Eres una empresa? , haz clic
-                            aquí para ir al formulario de inscripción</small></a>
+                <div class="row px-3"> <a href="/public"> <small class="ml-4 ml-sm-5 mb-2">¿Necesitas ayuda? , haz clic
+                            aquí para buscar asistencia</small></a>
                     <div class="social-contact ml-4 ml-sm-auto"> <span class="fa fa-facebook mr-4 text-sm"></span> <span
                             class="fa fa-google-plus mr-4 text-sm"></span> <span
                             class="fa fa-linkedin mr-4 text-sm"></span> <span
@@ -62,6 +67,6 @@
 </body>
 <script src="/static/vendor/jquery/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-<script src="static/js/auth.js"></script>
+<script src="static/js/auth/auth.js"></script>
 
 </html>

@@ -1,8 +1,9 @@
+/* eslint-disable no-console */
 // declarar variable a exportar
 const admin = {};
-// const mailer = require ('../utils/mailer');
 const { getUserDataByToken } = require("../middlewares/auth");
 const pool = require("../models/db");
+
 admin.main = async (req, res) => {
   const usuario = getUserDataByToken(req.cookies.token);
   const query = await pool.query(
@@ -17,7 +18,7 @@ admin.main = async (req, res) => {
 };
 
 // Render programa
-admin.renderPrograma = (req, res, next) => {
+admin.renderPrograma = (req, res) => {
   const usuario = getUserDataByToken(req.cookies.token);
   res.render("./admin/programa", usuario);
 };
@@ -49,11 +50,11 @@ admin.renderCursos = async (req, res) => {
   const usuario = getUserDataByToken(req.cookies.token);
   try {
     let query;
-    if (usuario.data.Role != 1) {
-      let text = `SELECT  tb_programa.id_programa AS id, tb_programa.Nombre , tb_programa.ImgPortada, (SELECT COUNT(*) FROM tb_cursos WHERE id_programa = tb_programa.id_programa ) AS cantidad FROM tb_programa INNER JOIN union_programa_usuario ON tb_programa.id_programa = union_programa_usuario.id_programa WHERE tb_programa.Estado = 1 AND union_programa_usuario.id_usuario = ?`;
+    if (usuario.data.Role !== 1) {
+      const text = `SELECT  tb_programa.id_programa AS id, tb_programa.Nombre , tb_programa.ImgPortada, (SELECT COUNT(*) FROM tb_cursos WHERE id_programa = tb_programa.id_programa ) AS cantidad FROM tb_programa INNER JOIN union_programa_usuario ON tb_programa.id_programa = union_programa_usuario.id_programa WHERE tb_programa.Estado = 1 AND union_programa_usuario.id_usuario = ?`;
       query = await pool.query(text, [usuario.data.usuario]);
     } else {
-      let text = `SELECT  tb_programa.id_programa AS id, tb_programa.Nombre , tb_programa.ImgPortada, (SELECT COUNT(*) FROM tb_cursos WHERE id_programa = tb_programa.id_programa ) AS cantidad FROM tb_programa WHERE tb_programa.Estado = 1 `;
+      const text = `SELECT  tb_programa.id_programa AS id, tb_programa.Nombre , tb_programa.ImgPortada, (SELECT COUNT(*) FROM tb_cursos WHERE id_programa = tb_programa.id_programa ) AS cantidad FROM tb_programa WHERE tb_programa.Estado = 1 `;
       query = await pool.query(text);
     }
     res.render("./admin/programas.cursos.ejs", { query, data: usuario.data });

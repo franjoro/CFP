@@ -16,12 +16,15 @@
 
 <body class="d-flex flex-column min-vh-100 bg-gradient-light" style="color: black">
   <header class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-    <a href="/"><b>Volver al inicio</b></a>
+    <a href="/"><b>Cerrar sesión</b></a>
   </header>
   <main class="container">
+    <p><b>Empresa:</b>  <%=usuario.Nombre%>   - <b>NIT: </b> <%=usuario.usuario%> </p>
+
     <h3 class="text-primary d-inline">
       Centro de Formación Profesional, proceso de inscripción para empresas
     </h3>
+    
     <img src="/static/img/logo.png" style="width: 125px;" class="d-inline" />
     <hr />
     <p>

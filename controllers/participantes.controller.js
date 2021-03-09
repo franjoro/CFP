@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 // declarar variable a exportar
 const participantes = {};
 
@@ -21,7 +22,7 @@ participantes.add = async (req, res) => {
       isEmpty(req.body.name) ||
       isEmpty(req.body.email)
     )
-      throw "Empty";
+      throw new Error("Empty");
     const data = [
       req.body.dui,
       req.body.name,
@@ -31,39 +32,36 @@ participantes.add = async (req, res) => {
       req.body.isss,
       req.body.cargo,
     ];
-    statment =
+    const statment =
       "INSERT INTO tb_participante(DUI,Nombre,Telefono,Email,Genero, ISSS, Cargo) VALUES(?,?,?,?,?,?,?)";
-    query = await pool.query(statment, data);
-    res.status(200).json({ status: true, data: query });
+    const query = await pool.query(statment, data);
+    return res.status(200).json({ status: true, data: query });
   } catch (err) {
-    console.log(err)
+    console.log(err);
     return res.status(400).json({ status: 400, err });
   }
 };
 
 participantes.edit = async (req, res) => {
   try {
-    if (isEmpty(req.body.duiEdit)) throw "Empty";
+    if (isEmpty(req.body.duiEdit)) throw new Error("Empty");
     const data = [
       req.body.nameEdit,
       req.body.emailEdit,
       req.body.telEdit,
       req.body.duiEdit,
     ];
-    statment =
+    const statment =
       "UPDATE tb_participante SET Nombre = ? , Email = ?, Telefono = ?  WHERE DUI= ? ";
     const query = await pool.query(statment, data);
-    res.json(query);
+    return res.json(query);
   } catch (err) {
-    if (err.sqlState)
-      return res.status(400).json({ error: "SQL ERROR", data: err.sqlMessage });
-    res.status(400).json(err);
+    return res.status(400).json(err);
   }
 };
 
 participantes.getByDUI = async (req, res) => {
-  const {dui} = req.params;
-  console.log(dui);
+  const { dui } = req.params;
   if (!dui) return res.status(400).json({ status: false, error: "EMPTY_DUI" });
   try {
     const query = await pool.query(
@@ -73,12 +71,10 @@ participantes.getByDUI = async (req, res) => {
     if (query.length) {
       return res.status(200).json({ status: true, data: query });
     }
-    {
-      return res.status(404).json({ status: "NOT_EXIST" });
-    }
+    return res.status(404).json({ status: "NOT_EXIST" });
   } catch (error) {
     console.log(error);
-    res.status(400).json(error);
+    return res.status(400).json(error);
   }
 };
 

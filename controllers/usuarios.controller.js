@@ -1,7 +1,6 @@
 // declarar variable a exportar
 const usuarios = {};
 const { isEmail, isEmpty } = require("validator");
-const { query } = require("../models/db");
 // Requerimos pool de base de datos si es necesario
 const pool = require("../models/db");
 // Requremimos utils encriptador
@@ -18,7 +17,7 @@ usuarios.addUsuario = async (req, res) => {
         isEmpty(req.body.role)
       )
     )
-      throw "Empty";
+      throw new Error("Empty");
     const data = [
       req.body.user,
       req.body.name,
@@ -26,14 +25,14 @@ usuarios.addUsuario = async (req, res) => {
       await encriptador.encriptar("Ricaldone_21"),
       req.body.role,
     ];
-    statment =
+    const statment =
       "INSERT INTO tb_usuarios(id_usuario,Nombre,Email,Password,Role,Estado) VALUES(?,?,?,?,?,1)";
-    query = await pool.query(statment, data);
-    res.json(query.insertId);
+    const query = await pool.query(statment, data);
+    return res.json(query.insertId);
   } catch (err) {
     if (err.sqlState)
       return res.status(400).json({ error: "SQL ERROR", data: err.sqlMessage });
-    res.json(err);
+    return res.json(err);
   }
 };
 
@@ -46,7 +45,7 @@ usuarios.editUsuario = async (req, res) => {
         isEmpty(req.body.RoleEdit)
       )
     )
-      throw "Empty";
+      throw new Error("Empty" );
     const data = [
       req.body.nameEdit,
       req.body.emailEdit,
@@ -55,14 +54,14 @@ usuarios.editUsuario = async (req, res) => {
       req.body.EstadoEdit,
       req.body.userEdit,
     ];
-    statment =
+  const statment =
       "UPDATE tb_usuarios SET Nombre = ? , Email = ?, Password = ?,  Role= ?, Estado = ? WHERE id_usuario= ? ";
     const query = await pool.query(statment, data);
-    res.json(query);
+    return res.json(query);
   } catch (err) {
     if (err.sqlState)
       return res.status(400).json({ error: "SQL ERROR", data: err.sqlMessage });
-    res.status(400).json(err);
+   return res.status(400).json(err);
   }
 };
 

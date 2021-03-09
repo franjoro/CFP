@@ -16,30 +16,30 @@ instructor.table = async (req, res) => {
       const data = await pool.query("SELECT tb_instructor.* , tb_categoria_instructores.Categoria AS Nombre_categoria FROM tb_instructor INNER JOIN tb_categoria_instructores  ON tb_instructor.Categoria = tb_categoria_instructores.id WHERE Estado = ? ", [
         status,
       ]);
-      res.json({ data });
+      return res.json({ data });
     } catch (error) {
-      res.status(400).json({ error });
+      return res.status(400).json({ error });
     }
 }
 // Cambiar estado de activo a inactivo
 instructor.changeEstado = async (req, res) => {
     // validar codigo y estado
     let estadoCambio = 1;
-    if (req.body.estado == 1) estadoCambio = 0;
+    if (req.body.estado === 1) estadoCambio = 0;
     const data = [estadoCambio, req.body.dui];
     try {
-      const query = await pool.query(
+     await pool.query(
         "UPDATE tb_instructor SET Estado= ? WHERE DUI = ? ",
         data
       );
-      res.json({ status: true });
+      return  res.json({ status: true });
     } catch (error) {
-      res.status(400).json({ status: false, error });
+      return res.status(400).json({ status: false, error });
     }
   };
 
 // agregar nueva empresa
-instructor.add = async (req, res, next) => {
+instructor.add = async (req, res) => {
     if (!req.body.name || ! req.body.DUI)
       return res.status(400).json({ status: false, error: "empty_name" });
     const data = [
@@ -55,13 +55,13 @@ instructor.add = async (req, res, next) => {
         "INSERT INTO tb_instructor(DUI,NIT,Nombre,Email,Telefono,Estado,Categoria) VALUES(?,?,?,?,?,1,?)",
         data
       );
-      res.json({ status: true });
+      return res.json({ status: true });
     } catch (error) {
       return res.status(400).json({ status: false, error });
     }
   };
 
-  instructor.editar = async (req, res, next) => {
+  instructor.editar = async (req, res) => {
     if (!req.body.name_editar  || !req.body.DUI_editar)
       return res.status(400).json({ status: false, error: "empty_name" });
     const data = [
@@ -75,9 +75,9 @@ instructor.add = async (req, res, next) => {
         "UPDATE tb_instructor SET Nombre = ?, Email = ? , Telefono = ? WHERE DUI = ?",
         data
       );
-      res.json({ status: true });
+      return res.json({ status: true });
     } catch (error) {
-      if (!req.body.name) return res.status(400).json({ status: false, error });
+       return res.status(400).json({ status: false, error });
     }
   };
 

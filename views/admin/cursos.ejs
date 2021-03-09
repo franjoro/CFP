@@ -43,7 +43,12 @@
                             <%= oferta[i].Nombre %>
                           </h5>
                         </a>
-                        <button class="btn btn-danger btn-sm float-right d-inline" onclick="deleteOferta('<%= oferta[i].Codigo_curso %>')"> <i
+                        <p> 
+                          <b>Participantes:</b> <%= oferta[i].cantidadAlumnos %> -
+                          <b>Empresas:</b> <%= oferta[i].cantidadEmpresas %>
+                        </p>
+                        <button class="btn btn-danger btn-sm float-right d-inline"
+                          onclick="deleteOferta('<%= oferta[i].Codigo_curso %>')"> <i
                             class="fas fa-trash-alt"></i></button>
                       </div>
                     </div>

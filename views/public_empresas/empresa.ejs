@@ -29,32 +29,19 @@
         <div class="bs-stepper-content">
           <div id="test-l-1" class="content">
             <p class="text-dark">
-              <b>Instrucciones: </b>Buscar nombre de empresa y asegurese que la
-              información sea la correcta
-            </p>
-            <select class="custom-select" id="select_empresa">
-              <option value="0">- Buscar empresa -</option>
-            </select>
+              <b>Instrucciones: </b>Verifique la información y actualizar de ser necesario</p>
             <hr />
-            <form id="update_form" style="display: none">
+              <form id="update_form">
+                <input type="hidden" id="id_empresa" value="<%=  update.id_empresa %>" >
               <h5>Actualización de información empresarial</h5>
               <div class="form-row">
                 <div class="col">
-                  <label for="nit">NIT</label>
-                  <input type="text" id="nit" name="nit" required class="form-control form-control-sm"
-                    placeholder="0000-000000-0000" />
-                </div>
-                <div class="col">
-                  <label for="patronal">Número Patronal</label>
-                  <input type="text" id="patronal" name="patronal" class="form-control form-control-sm" />
-                </div>
-                <div class="col">
                   <label for="num_empleados">Número de empleados</label>
-                  <input type="number" id="num_empleados" name="num_empleados" class="form-control form-control-sm" />
+                  <input type="number" id="num_empleados" name="num_empleados" value="<%=  update.Num_Empleados %>"  class="form-control form-control-sm" />
                 </div>
                 <div class="col">
                   <label for="aportacion">Aportación mensual INSAFORP</label>
-                  <input type="text" id="aportacion" name="aportacion" placeholder="$0.00"
+                  <input type="text" id="aportacion" name="aportacion" value="<%=  update.Aportacion_insaforp %>" 
                     class="form-control form-control-sm" />
                 </div>
               </div>

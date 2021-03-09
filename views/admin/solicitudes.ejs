@@ -1,0 +1,62 @@
+<link rel="stylesheet" href="/static/vendor/datatables/datatables.min.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"
+    type="text/css" />
+
+<%- include('../partials/header.admin.ejs'); %>
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 d-inline text-gray-800">Solicitudes de empresas pendientes de aprobación</h1>
+        <p class="mb-4 ">Empresas solicitando activación de usuario</a></p>
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Tabla de empresas pendientes a aprobación</h6>
+            </div>
+            <div class="card-body">
+                <% query.forEach(element =>{ %>
+                <div class="card shadow mb-4">
+                    <div class="card-body table-responsive">
+                        <h5> <%=element.Nombre%> -  <b>NIT:</b> <%=element.NIT%> </h5> 
+                        <p><b>Dirección:</b> <%=element.Direccion%></p>
+                        <hr>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Actividad Económica</th>
+                                    <th>Teléfono</th>
+                                    <th>Aportación Insaforp</th>
+                                    <th>Número Patronal</th>
+                                    <th>Número de empleados</th>
+                                    <th>Email</th>
+                                    <th>Imagen</th>
+                                    <th>Aprobación</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><%=element.Actividad_eco %> </td>
+                                    <td><%=element.Tel %></td>
+                                    <td>$<%=element.Aportacion_insaforp %></td>
+                                    <td><%=element.Num_Patronal %></td>
+                                    <td><%=element.Num_Empleados %></td>
+                                    <td><%=element.email %></td>
+                                    <td><button class="btn btn-warning btn-sm" onclick="DowloadS3File('<%=element.nitkey %>')" ><i class="fas fa-external-link-alt"></i></button></td>
+                                    <td><button class="btn btn-success btn-sm" onclick="Aprobar('<%=element.id_empresa %>' ,'<%=element.NIT %>','<%=element.email %>')" ><i class="fas fa-check"></i></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <% })   %>
+            </div>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+    <%- include('../partials/footer'); %>
+
+        <script src="/static/vendor/datatables/datatables.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+        <!-- Page level custom scripts -->
+        <script src="/static/js/empresas/solicitudes.js"></script>

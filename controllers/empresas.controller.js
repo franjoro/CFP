@@ -1,11 +1,15 @@
+/* eslint-disable no-console */
 // declarar variable a exportar
 const empresas = {};
 
 // Requerimos pool de base de datos si es necesario
 const pool = require("../models/db");
 
+const { getUserDataByToken } = require("../middlewares/auth");
+const { sendEmail } = require("../utils/mailer");
+
 // agregar nueva empresa
-empresas.add = async (req, res, next) => {
+empresas.add = async (req, res) => {
   if (!req.body.name)
     return res.status(400).json({ status: false, error: "empty_name" });
   const data = [
@@ -19,14 +23,14 @@ empresas.add = async (req, res, next) => {
       "INSERT INTO tb_empresa(Nombre,Direccion,Actividad_eco,Tel,Estado) VALUES(?,?,?,?,1)",
       data
     );
-    res.json({ status: true });
+    return res.json({ status: true });
   } catch (error) {
-    if (!req.body.name) return res.status(400).json({ status: false, error });
+    return res.status(400).json({ status: false, error });
   }
 };
 
 // Editar empresa
-empresas.editar_empresa = async (req, res, next) => {
+empresas.editar_empresa = async (req, res) => {
   if (!req.body.name_edit)
     return res.status(400).json({ status: false, error: "empty_name" });
   const data = [
@@ -41,9 +45,9 @@ empresas.editar_empresa = async (req, res, next) => {
       "UPDATE tb_empresa SET Nombre = ?, Direccion = ? , Actividad_eco= ? , Tel = ? WHERE id_empresa = ?",
       data
     );
-    res.json({ status: true });
+    return res.json({ status: true });
   } catch (error) {
-    if (!req.body.name) return res.status(400).json({ status: false, error });
+    return res.status(400).json({ status: false, error });
   }
 };
 
@@ -54,12 +58,13 @@ empresas.table = async (req, res) => {
   if (!status) return res.status(400).json({ error: "Not_status" });
   // Hacemos consulta y devolvemos data
   try {
-    const data = await pool.query("SELECT Nombre, Direccion, Tel, Estado, id_empresa FROM tb_empresa WHERE Estado = ? ", [
-      status,
-    ]);
-    res.json({ data });
+    const data = await pool.query(
+      "SELECT Nombre, Direccion, Tel, Estado, id_empresa FROM tb_empresa WHERE Estado = ? ",
+      [status]
+    );
+    return res.json({ data });
   } catch (error) {
-    res.status(400).json({ error });
+    return res.status(400).json({ error });
   }
 };
 
@@ -67,48 +72,51 @@ empresas.table = async (req, res) => {
 empresas.putEstado = async (req, res) => {
   // validar codigo y estado
   let estadoCambio = 1;
-  if (req.body.estado == 1) estadoCambio = 0;
+  if (req.body.estado === 1) estadoCambio = 0;
   const data = [estadoCambio, req.body.id];
   try {
-    const query = await pool.query(
+    await pool.query(
       "UPDATE tb_empresa SET Estado= ? WHERE id_empresa = ? ",
       data
     );
-    res.json({ status: true });
+    return res.json({ status: true });
   } catch (error) {
-    res.status(400).json({ status: false, error });
+    return res.status(400).json({ status: false, error });
   }
 };
 
 // Cargar y mandar informacion de contacto de cada empresa
 empresas.renderContacto = async (req, res) => {
-  const { getUserDataByToken } = require("../middlewares/auth"); 
   const usuario = getUserDataByToken(req.cookies.token);
-  const empresa_id = req.params.empresa;
-  if (!empresa_id) return res.status(400).json({ error: "EMPRESA_NOT_EXIST" });
+  const EmpresaID = req.params.empresa;
+  if (!EmpresaID) return res.status(400).json({ error: "EMPRESA_NOT_EXIST" });
   try {
     const query = await pool.query(
-      `SELECT * FROM tb_empresa_contact WHERE id_empresa  = ?; SELECT Nombre,id_empresa AS id FROM tb_empresa WHERE id_empresa = ${empresa_id}`,
-      [empresa_id]
+      `SELECT * FROM tb_empresa_contact WHERE id_empresa  = ?; SELECT Nombre,id_empresa AS id FROM tb_empresa WHERE id_empresa = ${EmpresaID}`,
+      [EmpresaID]
     );
-    const data = { empresa: query[1][0], contactos: query[0]    ,  data: usuario.data };
-    res.render("admin/union_empresa_contacto", data);
+    const data = {
+      empresa: query[1][0],
+      contactos: query[0],
+      data: usuario.data,
+    };
+    return res.render("admin/union_empresa_contacto", data);
   } catch (error) {
-    res.status(400).json({ error });
+    return res.status(400).json({ error });
   }
 };
 
 // Desvincular contacto y empresa
 empresas.deleteContacto = async (req, res) => {
-  data = [req.body.contacto, req.body.empresa];
+  const data = [req.body.contacto, req.body.empresa];
   try {
     await pool.query(
       "DELETE FROM tb_empresa_contact WHERE id_contacto  = ? AND id_empresa  = ?",
       data
     );
-    res.status(200);
+    return res.status(200);
   } catch (error) {
-    res.status(400).send(error);
+    return res.status(400).send(error);
   }
 };
 
@@ -116,7 +124,7 @@ empresas.deleteContacto = async (req, res) => {
 empresas.contactoAdd = async (req, res) => {
   try {
     // Formatear data
-    data = [
+    const data = [
       req.body.name,
       req.body.tel,
       req.body.cel,
@@ -143,7 +151,7 @@ empresas.contactoAdd = async (req, res) => {
 empresas.contactoEditar = async (req, res) => {
   try {
     // Formatear data
-    data = [
+    const data = [
       req.body.name_editar,
       req.body.tel_editar,
       req.body.cel_editar,
@@ -153,12 +161,10 @@ empresas.contactoEditar = async (req, res) => {
     ];
 
     // Ingresar si no existe
-    const querry = await pool.query(
+    await pool.query(
       "UPDATE tb_empresa_contact SET Nombre = ?, Telefono = ?, Celular = ?, Puesto = ? , Email = ? WHERE id_contacto = ?",
       data
     );
-    // Retornar
-
     return res.redirect(`/admin/empresas/contacto/${req.body.id_empresa}`);
   } catch (error) {
     console.log(error);
@@ -167,19 +173,48 @@ empresas.contactoEditar = async (req, res) => {
   }
 };
 
-
-empresas.actividades = async (req,res ) =>{
-  const post_var = req.body.searchTerm;
-    let query = `SELECT id , Nombre AS text FROM tb_actividad_economica order By Nombre LIMIT 25`;
-  if (post_var)
-    query = `SELECT id , Nombre AS text FROM tb_actividad_economica WHERE Nombre like '%${post_var}%' order By Nombre LIMIT 25`;
+empresas.actividades = async (req, res) => {
+  const PostData = req.body.searchTerm;
+  let query = `SELECT id , Nombre AS text FROM tb_actividad_economica order By Nombre LIMIT 25`;
+  if (PostData)
+    query = `SELECT id , Nombre AS text FROM tb_actividad_economica WHERE Nombre like '%${PostData}%' order By Nombre LIMIT 25`;
   try {
-    data = await pool.query(query);
-    res.json({ results: data });
+    const data = await pool.query(query);
+    return res.json({ results: data });
   } catch (error) {
-    res.status(400).json({ error });
+    return res.status(400).json({ error });
   }
-}
+};
 
+empresas.solicitudes = async (req, res) => {
+  const usuario = getUserDataByToken(req.cookies.token);
+  try {
+    const query = await pool.query("SELECT * FROM tb_empresa WHERE Estado=3");
+    return res.render("admin/solicitudes", { query, data: usuario.data });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ error });
+  }
+};
+
+empresas.Aprobarsolicitudes = async (req, res) => {
+  const { id, nit, email } = req.body;
+  if (!id || !nit)
+    return res.status(400).json({ status: false, error: "PARAMS_NOT_VALID" });
+  try {
+    pool.query(
+      "UPDATE tb_empresa SET Estado=1 WHERE id_empresa=?; UPDATE tb_usuarios SET Role=4 WHERE id_usuario=? ",
+      [id, nit]
+    );
+    const html = `<h3>EMPRESA APROBADA</h3> <p>Hemos revisado tu información y se ha aprobado la solicitud de ingreso, ya puedes registrar tus cursos con las credenciales de acceso enviadas anteriormente. </p>
+    <p>Puedes solicitar ayuda respondiendo este correo.</p>
+    `;
+    sendEmail(email, "SOLICITUD DE EMPRESA APROBADA", html);
+    return res.status(200).json({ status: true });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ error });
+  }
+};
 
 module.exports = empresas;

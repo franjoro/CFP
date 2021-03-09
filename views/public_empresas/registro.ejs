@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Formulario de inscripción</title>
+    <link rel="icon" type="image/png" href="/static/img/logo.ico">
+
+    <link href="/static/css/sb-admin-2.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"
+        type="text/css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.23/datatables.min.css" />
+    <link href="/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body class="d-flex flex-column min-vh-100 bg-gradient-light" style="color: black">
+    <header class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+        <a href="/"><b>Volver al inicio de sesión</b></a>
+    </header>
+    <main class="container">
+        <div class="navbar">
+
+            <h3 class="text-primary d-inline">
+                Centro de Formación Profesional Ricaldone: <b> Registro de empresas </b>
+            </h3>
+            <img src="/static/img/logo.png" style="width: 125px;" class="d-inline float-right" />
+        </div>
+        <hr>
+        <p>
+            <b>Instrucciónes : </b> Rellenar correctamente los siguientes campos
+        </p>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5> <b>PASO 1 : Información empresarial</b> </h5>
+                        <form id="Register">
+                            <div class="form-row">
+                                <div class="col-md-8">
+                                    <label>Nombre o Razón Social (según NIT)*: </label>
+                                    <input type="text" name="Nombre" id="Nombre" class="form-control">
+                                </div>
+                                <div class="col-md-4">
+                                    <label>NIT*:</label>
+                                    <input type="text" name="Nit" id="Nit" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-10">
+                                    <label>Dirección: </label>
+                                    <input type="text" name="Direccion" id="Direccion" class="form-control">
+                                </div>
+                                <div class="col-md-2">
+                                    <label>Teléfono fijo:</label>
+                                    <input type="text" name="Tel" id="Tel" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md">
+                                    <label>Actividad Económica: </label>
+                                    <input type="text" name="Actividad" id="Actividad" class="form-control">
+                                </div>
+                                <div class="col-md">
+                                    <label>Correo Electrónico:</label>
+                                    <input type="email" name="Email" id="Email" class="form-control">
+                                </div>
+                                <div class="col-md">
+                                    <label>Confirmar Correo Electrónico:</label>
+                                    <input type="email" id="EmailConfirmacion" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md">
+                                    <label>Número Patronal: </label>
+                                    <input type="text" name="Patronal" id="Patronal" class="form-control">
+                                </div>
+                                <div class="col-md">
+                                    <label>Aportación mensual al INSAFORP</label>
+                                    <input type="text" name="Aportacion" id="Aportacion" class="form-control">
+                                </div>
+                                <div class="col-md">
+                                    <label>Cantidad de empleados laborando</label>
+                                    <input type="number" name="Empleados" id="Empleados" class="form-control">
+                                </div>
+                            </div>
+                            <hr>
+                            <h5> <b>PASO 2: Datos de contacto (RESPONSABLE DE
+                                    CAPACITACIÓN)</b> </h5>
+                            <div class="form-row">
+                                <div class="col-md">
+                                    <label>Nombre: </label>
+                                    <input type="text" name="Responsable" id="Responsable" class="form-control">
+                                </div>
+                                <div class="col-md">
+                                    <label>Correo Electrónico:</label>
+                                    <input type="email" name="EmailR" id="EmailR" class="form-control">
+                                </div>
+                                <div class="col-md">
+                                    <label>Teléfono:</label>
+                                    <input type="text" name="TelR" id="TelR" class="form-control">
+                                </div>
+                            </div>
+                            <hr>
+                            <h5> <b>PASO 3: Documentación adjunta</b> </h5>
+                            <div class="form-row">
+                                <div class="col-md">
+                                    <small> <b>Instrucciones:</b> Por favor adjunte los siguientes documentos (Utilice
+                                        archivos en formato Word PDF o JPG) </small>
+                                    <hr>
+                                    <p>Adjunte NIT de la empresa: </p>
+                                    <input type="file" name="file" id="file">
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <small>Al dar clic en "aceptar y enviar" acepta que la información ingresada es correcta y permite la
+            verificación por un colaborador del Centro de Formación Profesional Ricaldone. Posteriormente sera
+            notificado vía correo Electrónico</small>
+        <button class="btn btn-info float-right" type="submit">
+            Aceptar y enviar
+            <i class="fas fa-arrow-right"></i>
+        </button>
+        </form>
+
+
+        <div class="modal fade" id="modalSuccess" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                    <div class="modal-body">
+                        <div class="container text-center">
+                            <h4>¡Gracias!</h4>
+                            <h5>Hemos ingresado tu información correctamente</h5>
+                            <p>Uno de nuestros colaboradores verificara la información ingresada y te notificaremos vía correo electrónico cuando puedas ingresar tu solicitud de curso</p>
+                            <p> <b>¿Necesitas más información?</b> Te dejamos nuestros contactos</p>
+                            <p> <b>Ofimática: </b> ofimatica@ricaldone.edu.sv / Tel. 2234-6055
+                              - <b>Inglés para el trabajo: </b> pnit@ricaldone.edu.sv / Tel.2234-6077 </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <%- include('../partials/footer.public.ejs'); %>
+            <script src="/static/js/PublicJS/register.js"></script>

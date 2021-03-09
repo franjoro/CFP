@@ -3,10 +3,11 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const compression = require('compression');
+const compression = require("compression");
 // Llamamos a express para poder crear el servidor
 const app = express();
-var cookieParser = require("cookie-parser");
+const cookieParser = require("cookie-parser");
+
 app.use(cookieParser());
 app.use(compression());
 // Llamamos cors
@@ -41,14 +42,14 @@ app.get("/prueba", (req, res) => {
   res.render("public_empresas/prueba");
 });
 
-//Mailer
+// Mailer
 app.post("/sendMail", async (req, res) => {
   const { sendEmail } = require("./utils/mailer");
-  const to = req.body.email,
-    text = req.body.text,
-    enlace = req.body.enlace,
-    asunto = `EDICIÓN DE ARCHIVOS`;
-  let html = `<h5>Reciba un cordial saludo de parte del Centro de Formación Profesional Don Pedro Ricaldone<h5> <p> por este medio solicitamos la verificación de archivos para la continuación satisfactoria de la solicitud </p><br>
+  const to = req.body.email;
+  const { text } = req.body;
+  const { enlace } = req.body;
+  const asunto = `EDICIÓN DE ARCHIVOS`;
+  const html = `<h5>Reciba un cordial saludo de parte del Centro de Formación Profesional Don Pedro Ricaldone<h5> <p> por este medio solicitamos la verificación de archivos para la continuación satisfactoria de la solicitud </p><br>
   <b>Puede editar los archivos adjuntos en el siguiente enlace:</b>
   <a href="${enlace}">${enlace}</a> <br>
   <p>Mensaje adjunto: ${text}</p>
@@ -62,7 +63,7 @@ app.post("/sendMail", async (req, res) => {
   }
 });
 
-app.get('*', function(req, res){
+app.get("*", (req, res) => {
   res.status(200).send("Page Not Found");
 });
 

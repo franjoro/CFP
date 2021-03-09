@@ -73,10 +73,8 @@ let global_data_cursos;
 
 const AsginarGlobalEmpresa = () => {
   global_data_actualizacionEmpresa = {
-    nit: $("#nit").val(),
-    aportacion: $("#patronal").val(),
+    aportacion: $("#aportacion").val(),
     num_empleados: $("#num_empleados").val(),
-    patronal: $("#aportacion").val(),
     id: global_empresa_seleccionada,
   };
   $.ajax({
@@ -237,28 +235,7 @@ const GenerarPdf = async (curso) => {
 };
 
 $(document).ready(() => {
-  $("#select_empresa").on("select2:select", async (e) => {
-    $("#update_form").css("display", "block");
-    const param = e.params.data.id;
-    global_empresa_seleccionada = e.params.data.id;
-    try {
-      loader();
-      data = await $.ajax({
-        url: "/public/getDataEmpresas",
-        type: "POST",
-        data: { param },
-      });
-      $("#nit").val(data.data.NIT);
-      $("#patronal").val(data.data.Num_Patronal);
-      $("#num_empleados").val(data.data.Num_Empleados);
-      $("#num_empleados").val(data.data.Num_Empleados);
-      $("#aportacion").val(data.data.Aportacion_insaforp);
-      swal.close();
-    } catch (error) {
-      console.log(error);
-      errorMessage();
-    }
-  });
+    global_empresa_seleccionada = $("#id_empresa").val()
 
   // Mascaras para dui y telefono
   $("#dui").mask("00000000-0");
@@ -266,28 +243,6 @@ $(document).ready(() => {
   $("#nit").mask("0000-000000-000-0");
   $("#aportacion").mask("000,000,000,000,000.00", { reverse: true });
 
-  // Select de empresas
-  $("#select_empresa").select2({
-    width: "100%",
-    ajax: {
-      url: "/public/getEmpresas",
-      type: "post",
-      dataType: "json",
-      delay: 250,
-      data(params) {
-        return {
-          searchTerm: params.term, // search term
-        };
-      },
-      results(response) {
-        $.map(response, (item) => ({
-          id: item.id,
-          text: item.text,
-        }));
-      },
-      cache: true,
-    },
-  });
 
   // Cargar tabla
   $("#tablaParticipantes").DataTable({

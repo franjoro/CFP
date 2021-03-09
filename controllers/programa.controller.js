@@ -1,7 +1,7 @@
+/* eslint-disable no-console */
 // declarar variable a exportar
 const programa = {};
 
-const { query } = require("../models/db");
 // Requerimos pool de base de datos si es necesario
 const pool = require("../models/db");
 
@@ -11,27 +11,26 @@ programa.addPrograma = async (req, res) => {
   try {
     // Validar que la imagen exista
     if (!req.files) {
-      res.send({
+      return res.send({
         status: false,
         message: "No file uploaded",
       });
-    } else {
-      // Cambiar nombre con fecha
-      const {file} = req.files;
-      const file_name = `${new Date().getTime()  }_${  file.name}`;
-      // Mover el archivo
-      file.mv(`./public/img/uploads/${  file_name}`);
-      const data = [req.body.nombre, file_name];
-      // Hacer Insert
-      const query = await pool.query(
-        "INSERT INTO tb_programa(Nombre,ImgPortada,Estado) VALUES(?,?,1)",
-        data
-      );
-      // send response
-      res.redirect("/admin/programa");
     }
+    // Cambiar nombre con fecha
+    const { file } = req.files;
+    const FileName = `${new Date().getTime()}_${file.name}`;
+    // Mover el archivo
+    file.mv(`./public/img/uploads/${FileName}`);
+    const data = [req.body.nombre, FileName];
+    // Hacer Insert
+    await pool.query(
+      "INSERT INTO tb_programa(Nombre,ImgPortada,Estado) VALUES(?,?,1)",
+      data
+    );
+    // send response
+    return res.redirect("/admin/programa");
   } catch (err) {
-    res.status(500).send(err);
+    return res.status(500).send(err);
   }
 };
 
@@ -48,7 +47,7 @@ programa.loadTable = async (req, res) => {
 programa.renderTablaUnion = async (req, res) => {
   try {
     // Requerir id de parametro
-    const {id} = req.params;
+    const { id } = req.params;
     // Hacer consultas para validar si el programa existe; para llamar a los encargados existentes; llamar a los que no son encargados
     const c = await pool.query(
       `SELECT COUNT(*) AS c, Nombre FROM tb_programa WHERE id_programa = ?;
@@ -59,7 +58,7 @@ programa.renderTablaUnion = async (req, res) => {
     // formatear la respuesta
     const flag = { exist: c[0][0].c, name: c[0][0].Nombre };
     // Renderizar y mandar respuesta
-    res.render("admin/union_programa_encargado", {
+    return res.render("admin/union_programa_encargado", {
       data: flag,
       e: c[1],
       t: c[2],
@@ -76,7 +75,7 @@ programa.renderTablaUnion = async (req, res) => {
 programa.addEncargado = async (req, res) => {
   try {
     // Formatear data
-    data = [req.body.name, req.body.id];
+    const data = [req.body.name, req.body.id];
 
     // Verificar si existe ya la union
     const exist = await pool.query(
@@ -101,35 +100,34 @@ programa.addEncargado = async (req, res) => {
 
 // Desvincular programa e instructor
 programa.deleteinstructor = async (req, res) => {
-  data = [req.body.usuario, req.body.programa];
+  const data = [req.body.usuario, req.body.programa];
   try {
     await pool.query(
       "DELETE FROM union_programa_usuario WHERE id_usuario = ? AND id_programa = ?",
       data
     );
-    res.status(200);
-  } catch (error) {
-    res.status(400).send(error);
-  }
-};
-
-
-// Actualizar info del programa
-programa.updatePrograma = async (req, res) => {
-  data = [
-    req.body.nombreUpdate,
-    req.body.estadoUpdate,
-    req.body.idUpdate
-  ]
-  try {
-    const query = await pool.query("UPDATE tb_programa SET Nombre = ? , Estado = ?  WHERE id_programa = ?", data);
-    
-    if(query) return res.status(200).send("ok");
+    return res.status(200);
   } catch (error) {
     return res.status(400).send(error);
   }
+};
 
-
+// Actualizar info del programa
+programa.updatePrograma = async (req, res) => {
+  const data = [
+    req.body.nombreUpdate,
+    req.body.estadoUpdate,
+    req.body.idUpdate,
+  ];
+  try {
+    await pool.query(
+      "UPDATE tb_programa SET Nombre = ? , Estado = ?  WHERE id_programa = ?",
+      data
+    );
+    return res.status(200).send("ok");
+  } catch (error) {
+    return res.status(400).send(error);
+  }
 };
 
 module.exports = programa;
