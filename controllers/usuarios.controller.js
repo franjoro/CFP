@@ -67,7 +67,7 @@ usuarios.editUsuario = async (req, res) => {
 
 usuarios.loadTable = async (req, res) => {
   const data = await pool.query(
-    "SELECT id_usuario,Nombre,Email,Role,Estado FROM tb_usuarios"
+    "SELECT id_usuario,Nombre,Email,Role,Estado FROM tb_usuarios WHERE id_usuario !=  'god' AND (Role = 1 OR Role = 0) "
   );
   res.json({ data });
 };

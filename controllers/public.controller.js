@@ -74,11 +74,7 @@ PublicFunctions.getDataEmpresas = async (req, res) => {
 };
 
 PublicFunctions.UpdateDataEmpresa = async (req, res) => {
-  const data = [
-    req.body.aportacion,
-    req.body.num_empleados,
-    req.body.id,
-  ];
+  const data = [req.body.aportacion, req.body.num_empleados, req.body.id];
   try {
     pool.query(
       "UPDATE tb_empresa SET   Aportacion_insaforp = ? , Num_Empleados = ? WHERE id_empresa = ?  ",
@@ -101,6 +97,26 @@ PublicFunctions.CreateSolicitud = async (req, res) => {
     if (!empresa) throw new Error("EMPRESA_NOT_EXIST");
     if (!cursos) throw new Error("CURSOS_NOT_EXIST");
     if (!participantes) throw new Error("PARTICIPANTES_NOT_EXIST");
+
+    // VALIDAR SI EMPRESA YA TIENE SOLICITUD EN ESTA OFERTA
+    const ExisteSolicitud = [];
+
+    cursos.forEach(curso => {
+      ExisteSolicitud.push(
+        pool.query(
+          "SELECT COUNT(*) AS Cantidad FROM union_matricula WHERE id_curso  = ? AND id_empresa = ? ",
+          [curso, empresa]
+        )
+      );
+    })
+  
+    const ExisteSolicitudPromesa = await Promise.all(ExisteSolicitud);
+
+    ExisteSolicitudPromesa.forEach((element) => {
+      if(element[0].Cantidad > 0 ){
+        throw new Error("CURSO_EXISTENTE");
+      }
+    })
 
     // Hacer consultas en arreglos para hacer promesas
     const EmpresaCursos = [];
@@ -301,11 +317,14 @@ PublicFunctions.archivos = async (req, res) => {
     });
 
     await Promise.all(inserts);
-    const {Email} = pool.query("SELECT email AS Email FROM tb_empresa WHERE id_empresa = ?",[empresa]);
+    const {
+      Email,
+    } = pool.query(
+      "SELECT email AS Email FROM tb_empresa WHERE id_empresa = ?",
+      [empresa]
+    );
     const html = `<h3>Solicitud de curso creada</h3> 
-    <p>Gracias por solicitar la inscripción de cursos en el Centro de Formación Profesional Ricaldone, uno de nuestros colaboradores revisara la solicitud y te contactaremos a la mayor brevedad posible</p>`
-
-
+    <p>Gracias por solicitar la inscripción de cursos en el Centro de Formación Profesional Ricaldone, uno de nuestros colaboradores revisara la solicitud y te contactaremos a la mayor brevedad posible</p>`;
 
     return res.status(200).json({ status: true });
   } catch (error) {

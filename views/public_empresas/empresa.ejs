@@ -1,201 +1,333 @@
 <%- include('../partials/header.public.ejs'); %>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css" />
-  <div class="container-fluid">
-    <div class="mb-5 p-4 bg-white shadow-sm">
-      <div id="stepper1" class="bs-stepper">
-        <div class="bs-stepper-header">
-          <div class="step" data-target="#test-l-1">
-            <button type="button" class="btn step-trigger">
-              <span class="bs-stepper-circle">1</span>
-              <br>
-              <span class="bs-stepper-label">Información empresarial</span>
-            </button>
-          </div>
-          <div class="line"></div>
-          <div class="step" data-target="#test-l-2">
-            <button type="button" class="btn step-trigger">
-              <span class="bs-stepper-circle">2</span>
-              <span class="bs-stepper-label">Administración de participantes</span>
-            </button>
-          </div>
-          <div class="line"></div>
-          <div class="step" data-target="#test-l-3">
-            <button type="button" class="btn step-trigger" aria-selected="true">
-              <span class="bs-stepper-circle">3</span>
-              <span class="bs-stepper-label">Subida de documentación</span>
-            </button>
-          </div>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css"
+/>
+<div class="container-fluid">
+  <div class="mb-5 p-4 bg-white shadow-sm">
+    <div id="stepper1" class="bs-stepper">
+      <div class="bs-stepper-header">
+        <div class="step" data-target="#test-l-1">
+          <button type="button" class="btn step-trigger">
+            <span class="bs-stepper-circle">1</span>
+            <br />
+            <span class="bs-stepper-label">Información empresarial</span>
+          </button>
         </div>
-        <div class="bs-stepper-content">
-          <div id="test-l-1" class="content">
-            <p class="text-dark">
-              <b>Instrucciones: </b>Verifique la información y actualizar de ser necesario</p>
+        <div class="line"></div>
+        <div class="step" data-target="#test-l-2">
+          <button type="button" class="btn step-trigger">
+            <span class="bs-stepper-circle">2</span>
+            <span class="bs-stepper-label"
+              >Administración de participantes</span
+            >
+          </button>
+        </div>
+        <div class="line"></div>
+        <div class="step" data-target="#test-l-3">
+          <button type="button" class="btn step-trigger" aria-selected="true">
+            <span class="bs-stepper-circle">3</span>
+            <span class="bs-stepper-label">Subida de documentación</span>
+          </button>
+        </div>
+      </div>
+      <div class="bs-stepper-content">
+        <div id="test-l-1" class="content">
+          <p class="text-dark">
+            <b>Instrucciones: </b>Verifique la información y actualizar de ser
+            necesario
+          </p>
+          <form id="update_form">
+            <input
+              type="hidden"
+              id="id_empresa"
+              value="<%=  update.id_empresa %>"
+            />
+            <h5>Actualización de información empresarial</h5>
+            <small
+              >Esta información debe ser actualizada al momento de solicitar
+              inscripción a cursos
+            </small>
             <hr />
-              <form id="update_form">
-                <input type="hidden" id="id_empresa" value="<%=  update.id_empresa %>" >
-              <h5>Actualización de información empresarial</h5>
-              <div class="form-row">
-                <div class="col">
-                  <label for="num_empleados">Número de empleados</label>
-                  <input type="number" id="num_empleados" name="num_empleados" value="<%=  update.Num_Empleados %>"  class="form-control form-control-sm" />
+            <div class="form-row">
+              <div class="col">
+                <label for="num_empleados"
+                  >Número de empleados inscritos en planilla
+                </label>
+                <input
+                  type="number"
+                  id="num_empleados"
+                  name="num_empleados"
+                  value="<%=  update.Num_Empleados %>"
+                  class="form-control"
+                />
+              </div>
+              <div class="col">
+                <label for="aportacion"
+                  >Aportación monetaria mensual a INSAFORP</label
+                >
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">$</span>
+                  </div>
+                  <input
+                    type="text"
+                    id="aportacion"
+                    name="aportacion"
+                    value="<%=  update.Aportacion_insaforp %>"
+                    class="form-control"
+                  />
                 </div>
-                <div class="col">
-                  <label for="aportacion">Aportación mensual INSAFORP</label>
-                  <input type="text" id="aportacion" name="aportacion" value="<%=  update.Aportacion_insaforp %>" 
-                    class="form-control form-control-sm" />
+              </div>
+            </div>
+            <hr />
+          </form>
+          <small>Si la información es correcta por favor continue al siguiente paso </small>
+          <button
+            class="btn btn-primary float-right"
+            onclick=" VerificarEmpresa()"
+          >
+            Continuar al siguiente paso
+          </button>
+        </div>
+        <div id="test-l-2" class="content">
+          <p class="text-dark">
+            <b>Instrucciones: </b>Rellenar la información de los participantes
+            que desea inscribir y verificar la información de la tabla.
+            Posteriormente continuar al siguiente paso
+          </p>
+          <div class="form-row">
+            <div class="col">
+              <label for="name">DUI*</label>
+              <input
+                type="text"
+                id="dui"
+                name="dui"
+                class="form-control"
+                placeholder="0000000-0"
+              />
+            </div>
+            <div class="col">
+              <label for="tel">Nombre Completo*</label>
+              <input
+                type="text"
+                id="nombre"
+                name="nombre"
+                class="form-control"
+              />
+            </div>
+            <div class="col">
+              <label for="isss">N° ISSS</label>
+              <input type="text" id="isss" name="isss" class="form-control" />
+            </div>
+            <div class="col">
+              <label for="cargo">Cargo</label>
+              <input type="text" id="cargo" name="cargo" class="form-control" />
+            </div>
+            <div class="col">
+              <label for="tel">Teléfono</label>
+              <input
+                type="text"
+                id="tel"
+                class="form-control"
+                placeholder="0000-0000"
+              />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-3">
+              <label for="tel">Email</label>
+              <input type="text" id="email" class="form-control" />
+            </div>
+            <div class="col-3">
+              <label for="genero">Sexo</label>
+              <select class="custom-select" required id="genero">
+                <option disabled selected>Seleccionar Sexo</option>
+                <option value="Hombre">Hombre</option>
+                <option value="Mujer">Mujer</option>
+              </select>
+            </div>
+            <div class="col-6">
+              <label for="tel">Curso que desea tomar:</label>
+              <select class="custom-select" id="curso">
+                <% cursos.forEach(element=> { %>
+                <option value="<%= element.Codigo_curso %>">
+                  <%= element.Nombre.trim() + ' ' + element.Horario.trim() %>
+                </option>
+                <% }) %>
+              </select>
+            </div>
+          </div>
+          <button class="btn btn-success float-right my-2" id="botonAdd">
+            Agregar participante
+          </button>
+          <br />
+          <br /><br />
+          <div class="table-responsive">
+            <table
+              class="table table-bordered"
+              id="tablaParticipantes"
+              width="100%"
+              cellspacing="0"
+            >
+              <thead>
+                <tr>
+                  <th>DUI</th>
+                  <th>Nombre</th>
+                  <th>Teléfono</th>
+                  <th>ISSS</th>
+                  <th>Cargo</th>
+                  <th>Email</th>
+                  <th>Curso</th>
+                  <th>Código de curso</th>
+                  <th>Género</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <button
+            class="btn btn-danger btn-small float-left"
+            onclick="deleteTableAndLocal()"
+          >
+            Borrar Tabla
+          </button>
+          <button
+            class="btn btn-primary float-right"
+            onclick="AsginarGlobalCursos(); "
+          >
+            Continuar al siguiente paso
+          </button>
+        </div>
+        <div id="test-l-3" class="content">
+          <h3>Cargue sus documentos</h3>
+          <p class="text-dark">
+            <b>Instrucciones: </b>Adjuntar los siguientes archivos:
+          </p>
+          <p><b>Tome en cuenta las siguientes recomendaciones: </b></p>
+          <ul>
+            <li>
+              Asegúrese que los archivos e imagenes cargadas sean legibles.
+            </li>
+            <li>Los documentos deben corresponder a los solicitados.</li>
+            <li>
+              Si escanea un documento que contiene varias páginas es
+              recomendable subirlo en un único archivo en formato PDF
+              configurando su escaner a 150 PPP o DPI.
+            </li>
+            <li>
+              Revise que sus documentos se han escaneado correctamente antes de
+              enviar su solicitud.
+            </li>
+          </ul>
+          <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+              <p>1. Solicitud de capacitación firmada y sellada.</p>
+              <div id="cursos_files"></div>
+            </div>
+          </div>
+          <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+              <p>
+                2. Recibo de ingresos por cotización (Recibo de aportación) del último mes cancelado -
+                <i class="fas fa-arrow-right"></i>
+                <a
+                  target="_blank"
+                  href="/static/files/recibo.pdf"
+                  class="text-danger"
+                >
+                  VER EJEMPLO
+                </a>
+              </p>
+              <div class="input-group">
+                <div class="custom-file">
+                  <input
+                    type="file"
+                    class="custom-file-input"
+                    id="recibo"
+                    aria-describedby="inputGroupFileAddon02"
+                  />
+                  <label class="custom-file-label" id="recibo1"
+                    >Choose file</label
+                  >
                 </div>
               </div>
               <hr />
-            </form>
-            <button class="btn btn-primary float-right" onclick=" VerificarEmpresa()">
-              Continuar al siguiente paso
-            </button>
-          </div>
-          <div id="test-l-2" class="content">
-            <p class="text-dark">
-              <b>Instrucciones: </b>Rellenar la información de los participantes
-              que desea inscribir y verificar la información de la tabla
-            </p>
-            <div class="form-row">
-              <div class="col">
-                <label for="name">DUI*</label>
-                <input type="text" id="dui" name="dui" class="form-control" placeholder="0000000-0" />
-              </div>
-              <div class="col">
-                <label for="tel">Nombre Completo*</label>
-                <input type="text" id="nombre" name="nombre" class="form-control" />
-              </div>
-              <div class="col">
-                <label for="isss">N° ISSS</label>
-                <input type="text" id="isss" name="isss" class="form-control" />
-              </div>
-              <div class="col">
-                <label for="cargo">Cargo</label>
-                <input type="text" id="cargo" name="cargo" class="form-control" />
-              </div>
-              <div class="col">
-                <label for="tel">Teléfono</label>
-                <input type="text" id="tel" class="form-control" placeholder="0000-0000" />
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="col-3">
-                <label for="tel">Email</label>
-                <input type="text" id="email" class="form-control" />
-              </div>
-              <div class="col-3">
-                <label for="genero">Sexo</label>
-                <select class="custom-select" required id="genero">
-                  <option disabled selected>Seleccionar Sexo</option>
-                  <option value="Hombre">Hombre</option>
-                  <option value="Mujer">Mujer</option>
-                </select>
-              </div>
-              <div class="col-6">
-                <label for="tel">Curso que desea tomar:</label>
-                <select class="custom-select" id="curso">
-                  <% cursos.forEach(element=> { %>
-                    <option value="<%= element.Codigo_curso %>">
-                      <%= element.Nombre.trim() + ' ' + element.Horario.trim() %>
-                    </option>
-                    <% }) %>
-                </select>
-              </div>
-            </div>
-            <button class="btn btn-success float-right my-2" id="botonAdd">
-              Agregar
-            </button>
-            <br />
-            <br /><br />
-            <div class="table-responsive">
-              <table class="table table-bordered" id="tablaParticipantes" width="100%" cellspacing="0">
-                <thead>
-                  <tr>
-                    <th>DUI</th>
-                    <th>Nombre</th>
-                    <th>Teléfono</th>
-                    <th>ISSS</th>
-                    <th>Cargo</th>
-                    <th>Email</th>
-                    <th>Curso</th>
-                    <th>Código de curso</th>
-                    <th>Género</th>
-                  </tr>
-                </thead>
-                <tbody></tbody>
-              </table>
-            </div>
-            <button class="btn btn-danger btn-small float-left" onclick="deleteTableAndLocal()">
-              Borrar Tabla
-            </button>
-            <button class="btn btn-primary float-right" onclick="AsginarGlobalCursos(); ">
-              Continuar al siguiente paso
-            </button>
-          </div>
-          <div id="test-l-3" class="content">
-            <p class="text-dark">
-              <b>Instrucciones: </b>Adjuntar los siguientes archivos:
-            </p>
-            <div class="card mb-4 shadow-sm">
-              <div class="card-body">
-                <p>
-                  1. Solicitud de capacitación firmada y sellada.
-                </p>
-                <div id="cursos_files"></div>
-              </div>
-            </div>
-            <div class="card mb-4 shadow-sm">
-              <div class="card-body">
-                <p>2. Recibo de ingresos por cotización (Recibo de aportación) - <a target="_blank"
-                    href="/static/files/recibo.pdf" class="text-danger"> VER EJEMPLO </a></p>
-                <div class="input-group">
-                  <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="recibo" aria-describedby="inputGroupFileAddon02">
-                    <label class="custom-file-label" id="recibo1">Choose file</label>
-                  </div>
-                </div>
-                <hr>
-                <p> Comprobante de pago en línea (Opcional) - <a target="_blank" href="/static/files/cancelacion.pdf"
-                    class="text-danger"> VER
-                    EJEMPLO </a>
-                </p>
-                <div class="input-group">
-                  <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="cancelacion" aria-describedby="inputGroupFileAddon02">
-                    <label class="custom-file-label" id="cancelacion1">Choose file</label>
-                  </div>
+              <p>
+                Comprobante de pago en línea (Opcional) del último mes cancelado -
+                <i class="fas fa-arrow-right"></i>
+                <a
+                  target="_blank"
+                  href="/static/files/cancelacion.pdf"
+                  class="text-danger"
+                >
+                  VER EJEMPLO
+                </a>
+              </p>
+              <div class="input-group">
+                <div class="custom-file">
+                  <input
+                    type="file"
+                    class="custom-file-input"
+                    id="cancelacion"
+                    aria-describedby="inputGroupFileAddon02"
+                  />
+                  <label class="custom-file-label" id="cancelacion1"
+                    >Choose file</label
+                  >
                 </div>
               </div>
             </div>
-            <div class="card mb-4 shadow-sm">
-              <div class="card-body">
-                <p>3. Planilla ISSS (Resañtar colaboradores a inscribir) <a target="_blank"
-                    href="/static/files/planilla.pdf" class="text-danger"> VER EJEMPLO </a></p>
-                <div class="input-group">
-                  <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="planilla" aria-describedby="inputGroupFileAddon02">
-                    <label class="custom-file-label" id="planilla1">Choose file</label>
-                  </div>
+          </div>
+          <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+              <p>
+                3. Planilla ISSS (Resaltar colaboradores a inscribir)
+                <i class="fas fa-arrow-right"></i>
+                <a
+                  target="_blank"
+                  href="/static/files/planilla.pdf"
+                  class="text-danger"
+                >
+                  VER EJEMPLO
+                </a>
+              </p>
+              <div class="input-group">
+                <div class="custom-file">
+                  <input
+                    type="file"
+                    class="custom-file-input"
+                    id="planilla"
+                    aria-describedby="inputGroupFileAddon02"
+                  />
+                  <label class="custom-file-label" id="planilla1"
+                    >Choose file</label
+                  >
                 </div>
               </div>
             </div>
-            <button class="btn btn-primary float-left" onclick="ReiniciarInputs(); stepper1.previous()">
-              Anterior
-            </button>
-            <button class="btn btn-primary float-right" onclick="VerificarArchivos(); stepper1.next()">
-              Enviar y finalizar solicitud
-            </button>
           </div>
+          <button
+            class="btn btn-primary float-left"
+            onclick="ReiniciarInputs(); stepper1.previous()"
+          >
+            Anterior
+          </button>
+          <button
+            class="btn btn-primary float-right"
+            onclick="VerificarArchivos(); stepper1.next()"
+          >
+            Enviar y finalizar solicitud
+          </button>
         </div>
       </div>
     </div>
   </div>
+</div>
 
-
-  <%- include('../partials/footer.public.ejs'); %>
-    <script src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>
-    <script>
-      var stepper1Node = document.querySelector("#stepper1");
-      var stepper1 = new Stepper(document.querySelector("#stepper1"));
-
-    </script>
+<%- include('../partials/footer.public.ejs'); %>
+<script src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>
+<script>
+  var stepper1Node = document.querySelector("#stepper1");
+  var stepper1 = new Stepper(document.querySelector("#stepper1"));
+</script>

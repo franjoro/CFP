@@ -7,7 +7,7 @@ const compression = require("compression");
 // Llamamos a express para poder crear el servidor
 const app = express();
 const cookieParser = require("cookie-parser");
-
+// const setCache = require("./middlewares/cache");
 app.use(cookieParser());
 app.use(compression());
 // Llamamos cors
@@ -18,6 +18,7 @@ app.set("view engine", "ejs");
 app.use("/static", express.static(`${__dirname}/public`));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+// app.use(setCache);
 // Cargamos las rutas
 
 // Router principal de admin y sus controladores

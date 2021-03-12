@@ -7,6 +7,7 @@ const pool = require("../models/db");
 
 const { getUserDataByToken } = require("../middlewares/auth");
 const { sendEmail } = require("../utils/mailer");
+const encriptador = require("../utils/decrypt");
 
 // agregar nueva empresa
 empresas.add = async (req, res) => {
@@ -35,14 +36,17 @@ empresas.editar_empresa = async (req, res) => {
     return res.status(400).json({ status: false, error: "empty_name" });
   const data = [
     req.body.name_edit,
-    req.body.direccion_edit,
     req.body.actividad_edit,
     req.body.tel_edit,
+    req.body.email_edit,
+    req.body.nempleado_edit,
+    req.body.aportacion_edit,
+    req.body.direccion_edit,
     req.body.id_empresa,
   ];
   try {
     await pool.query(
-      "UPDATE tb_empresa SET Nombre = ?, Direccion = ? , Actividad_eco= ? , Tel = ? WHERE id_empresa = ?",
+      "UPDATE tb_empresa SET Nombre = ? , Actividad_eco= ? , Tel = ?  , email = ? , Num_Empleados = ? , Aportacion_insaforp = ? , Direccion = ? WHERE id_empresa = ?",
       data
     );
     return res.json({ status: true });
@@ -59,7 +63,7 @@ empresas.table = async (req, res) => {
   // Hacemos consulta y devolvemos data
   try {
     const data = await pool.query(
-      "SELECT Nombre, Direccion, Tel, Estado, id_empresa FROM tb_empresa WHERE Estado = ? ",
+      "SELECT * FROM tb_empresa WHERE Estado = ? ",
       [status]
     );
     return res.json({ data });
@@ -72,7 +76,7 @@ empresas.table = async (req, res) => {
 empresas.putEstado = async (req, res) => {
   // validar codigo y estado
   let estadoCambio = 1;
-  if (req.body.estado === 1) estadoCambio = 0;
+  if (req.body.estado == 1) estadoCambio = 0;
   const data = [estadoCambio, req.body.id];
   try {
     await pool.query(
@@ -181,6 +185,18 @@ empresas.actividades = async (req, res) => {
   try {
     const data = await pool.query(query);
     return res.json({ results: data });
+  } catch (error) {
+    return res.status(400).json({ error });
+  }
+};
+
+
+empresas.ChangePassword = async (req, res) => {
+  const {pass_new, nit_change} = req.body;
+  const newPassword = await encriptador.encriptar(pass_new);
+  try {
+    const data = await pool.query("UPDATE tb_usuarios SET Password=? WHERE id_usuario = ? " , [newPassword, nit_change]);
+    return res.status(200).json({ status: true, results: data });
   } catch (error) {
     return res.status(400).json({ error });
   }

@@ -2,7 +2,7 @@ const errorMessage = () => {
   Swal.fire({
     icon: "error",
     title: "Oops...",
-    text: "No se pudo realizar la operación, verifica la información",
+    text: "No se pudo realizar la operación, verifica la información o comuniquese con el encargado del programa o soporte ",
   });
 };
 const errorMessageEmpresa = () => {
@@ -12,6 +12,15 @@ const errorMessageEmpresa = () => {
     text: "Debe seleccionar su empresa para continuar",
   });
 };
+const errorMessageCursoExistente = () => {
+  Swal.fire({
+    icon: "error",
+    title: "Oops...",
+    text: "Su empresa ya cuenta con una solicitud pendiente en un curso seleccionado , por favor comuniquese con el encargado del programa o soporte técnico",
+  });
+};
+
+
 const errorMessageParticipante = () => {
   Swal.fire({
     icon: "error",
@@ -95,7 +104,7 @@ const AsginarGlobalCursos = () => {
       data.push(element[7]);
       let select = $(`#curso option[value='${element[7]}'] `).text().trim();
       ContentHtml += `
-      <label>Curso: <b> ${select}</b> Puede descargar la ficha aquí: <a href="#" onclick="GenerarPdf('${
+      <label>Curso: <b> ${select}</b> Puede descargar la ficha aquí: <i class="fas fa-arrow-right"></i> <a href="#" onclick="GenerarPdf('${
         element[7]
       }')">DESCARGAR PLANTILLA</a></label>
 <div class="input-group">
@@ -107,6 +116,7 @@ const AsginarGlobalCursos = () => {
 </div>
 </div>
 <hr>
+<small>Nota: Descargue, imprima y firme la ficha </small>
       `;
     }
   });
@@ -126,24 +136,38 @@ const registrarSolicitud = async () => {
       "Algo salio mal, contacta con el equipo de soporte técnico soporte_cfp@ricaldone.edu.sv código de error: DATA_NOT_COMPLETE"
     );
   try {
-    loaderEnviar();
-    let query = await $.ajax({
-      url: "/public/CreateSolicitud",
-      type: "POST",
-      data: {
-        cursos,
-        empresa,
-        participantes,
-        programa: $("#id_programa").text(),
-      },
+    const alerta = await Swal.fire({
+      title: "¿Deseá enviar la solicitud?",
+      text: "Por favor verificar que la información ingresada sea correcta antés de enviar.",
+      icon: "info",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, enviar",
     });
-    if (query.status) {
-      swal.close();
-      SendFiles();
-      localStorage.removeItem("storage");
+
+    if (alerta.isConfirmed) {
+      loaderEnviar();
+      let query = await $.ajax({
+        url: "/public/CreateSolicitud",
+        type: "POST",
+        data: {
+          cursos,
+          empresa,
+          participantes,
+          programa: $("#id_programa").text(),
+        },
+      });
+      if (query.status) {
+        swal.close();
+        SendFiles();
+        localStorage.removeItem("storage");
+      }
     }
   } catch (error) {
     console.log(error);
+
+    if(error == 'CURSO_EXISTENTE') return errorMessageCursoExistente;
     errorMessage();
   }
 };
@@ -181,7 +205,8 @@ const SendFiles = async () => {
       title: "Solicitud enviada correctamente",
       showConfirmButton: false,
     });
-    window.location.href ="/public/gracias"
+    console.log(datos)
+    // window.location.href = "/public/gracias";
   } catch (error) {
     console.log(error);
     errorMessage();
@@ -235,14 +260,13 @@ const GenerarPdf = async (curso) => {
 };
 
 $(document).ready(() => {
-    global_empresa_seleccionada = $("#id_empresa").val()
+  global_empresa_seleccionada = $("#id_empresa").val();
 
   // Mascaras para dui y telefono
   $("#dui").mask("00000000-0");
   $("#tel").mask("0000-0000");
   $("#nit").mask("0000-000000-000-0");
   $("#aportacion").mask("000,000,000,000,000.00", { reverse: true });
-
 
   // Cargar tabla
   $("#tablaParticipantes").DataTable({
@@ -363,7 +387,8 @@ const VerificarEmpresa = () => {
 const VerificarArchivos = () => {
   const recibo = $("#recibo")[0];
   const planilla = $("#planilla")[0];
-  if (recibo.files.length == 0 || planilla.files.length == 0) {
+  const ficha = $(".ficha")[0];
+  if (recibo.files.length == 0 || planilla.files.length == 0 || ficha.files.length == 0) {
     errorMessageArchivo();
   } else {
     registrarSolicitud();

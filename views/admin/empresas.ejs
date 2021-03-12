@@ -1,11 +1,12 @@
 <link rel="stylesheet" href="/static/vendor/datatables/datatables.min.css">
-<link
-href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css"
-rel="stylesheet"
-type="text/css"
-/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"
+    type="text/css" />
 <style>
-    .imgTabla{width: 100px;};
+    .imgTabla {
+        width: 100px;
+    }
+
+    ;
 </style>
 <%- include('../partials/header.admin.ejs'); %>
     <!-- Begin Page Content -->
@@ -15,12 +16,12 @@ type="text/css"
         <button type="button" class="btn btn-primary float-right d-inline" data-toggle="modal"
             data-target="#exampleModal">+ Agregar nueva empresa</button>
 
-            <p class="mb-4 ">Directorio principal de empresas</a></p>
-            
+        <p class="mb-4 ">Directorio principal de empresas</a></p>
+
         <select class="custom-select mb-3" id="selector">
-                    <option value="1">Empresas activas</option>
-                    <option value="0">Empresas inactivas</option>
-        </select>        
+            <option value="1">Empresas activas</option>
+            <option value="0">Empresas inactivas</option>
+        </select>
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
@@ -33,11 +34,19 @@ type="text/css"
                         <thead>
                             <tr>
                                 <th>Nombre</th>
-                                <th>Dirección</th>
+                                <th>NIT</th>
                                 <th>Telefóno</th>
+                                <th>Email</th>
+
                                 <th>Estado</th>
-                                <th></th>
                                 <th>Opciones</th>
+
+
+                                <th>ID</th>
+                                <th>Dirección</th>
+                                <th>Aportación Insaforp</th>
+                                <th>Número Patronal</th>
+                                <th>Número de empleados</th>
                             </tr>
                         </thead>
                     </table>
@@ -67,72 +76,116 @@ type="text/css"
                             </div>
                             <div class="col">
                                 <label for="tel">Teléfono</label>
-                                <input type="text" id="tel" name="tel"  class="form-control">
+                                <input type="text" id="tel" name="tel" class="form-control">
                             </div>
-                        </div>  
+                        </div>
                         <div class="form-group">
-                            <label >Actividad Económica</label>
+                            <label>Actividad Económica</label>
                             <select class="custom-select mb-3" id="actividad" name="actividad">
-                            </select>      
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="direccion">Dirección</label>
                             <textarea class="form-control" id="direccion" name="direccion" rows="2"></textarea>
-                        </div>              
+                        </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <input type="submit" class="btn btn-primary">
                 </div>
-            </form>
+                </form>
             </div>
         </div>
     </div>
 
- <!-- Modal -->
- <div class="modal " id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
- aria-hidden="true">
- <div class="modal-dialog modal-lg" role="document">
-     <div class="modal-content">
-         <div class="modal-header">
-             <h5 class="modal-title" id="exampleModalLabel">EDITAR empresa</h5>
-             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                 <span aria-hidden="true">&times;</span>
-             </button>
-         </div>
-         <div class="modal-body">
-             <form id="formEmpresasEditar">
-                 <div class="form-row">
-                     <div class="col">
-                         <label for="name">Nombre *requerido*</label>
-                         <input type="text" id="name_edit" name="name_edit" required class="form-control"
-                             placeholder="Nombre de empresa">
-                     </div>
-                     <div class="col">
-                         <label for="tel">Teléfono</label>
-                         <input type="text" id="tel_edit" name="tel_edit"  class="form-control">
-                     </div>
-                 </div>  
-                 <div class="form-group">
-                     <label for="actividad">Actvidad Económica</label>
-                        <select class="custom-select mb-3" id="actividad_edit" name="actividad_edit">
-                        </select>  
-                 </div>
-                 <div class="form-group">
-                     <label for="direccion">Dirección</label>
-                     <textarea class="form-control" id="direccion_edit" name="direccion_edit" rows="2"></textarea>
-                 </div>               
-                 <input type="hidden" name="id_empresa" id="id_empresa">
-         </div>
-         <div class="modal-footer">
-             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-             <input type="submit" class="btn btn-primary">
-         </div>
-     </form>
-     </div>
- </div>
-</div>
+    <!-- Modal -->
+    <div class="modal " id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">EDITAR empresa</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formEmpresasEditar">
+                        <div class="form-row">
+                            <div class="col">
+                                <label for="name">Nombre *requerido*</label>
+                                <input type="text" id="name_edit" name="name_edit" required class="form-control"
+                                    placeholder="Nombre de empresa">
+                            </div>
+                            <div class="col">
+                                <label for="actividad">Actvidad Económica</label>
+                                <input type="text" id="actividad_edit" name="actividad_edit" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col">
+                                <label for="tel">Teléfono</label>
+                                <input type="text" id="tel_edit" name="tel_edit" class="form-control">
+                            </div>
+                            <div class="col">
+                                <label for="tel">Correo Electrónico</label>
+                                <input type="email" id="email_edit" name="email_edit" class="form-control">
+                            </div>
+                            <div class="col">
+                                <label for="tel">N° Empleados</label>
+                                <input type="number" id="nempleado_edit" name="nempleado_edit" class="form-control">
+                            </div>
+                            <div class="col">
+                                <label for="tel">Aportación INSAFORP</label>
+                                <input type="text" id="aportacion_edit" name="aportacion_edit" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="direccion">Dirección</label>
+                            <textarea class="form-control" id="direccion_edit" name="direccion_edit"
+                                rows="2"></textarea>
+                        </div>
+                        <input type="hidden" name="id_empresa" id="id_empresa">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary">
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
+    <!-- Modal -->
+    <div class="modal " id="Password_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog " role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Cambiar contraseña a empresa</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formEditPassword">
+                        <div class="form-row">
+                            <div class="col">
+                                <label for="name">Contraseña nueva</label>
+                                <input type="password" id="pass_new" name="pass_new" required class="form-control"
+                                    placeholder="Nombre de empresa">
+                            </div>
+                        </div>
+                        <input type="hidden" name="nit_change" id="nit_change">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary">
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 
 
@@ -143,6 +196,5 @@ type="text/css"
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
         <!-- Page level custom scripts -->
+        <script src="/static/js/jquery.mask.min.js"></script>
         <script src="/static/js/empresas/empresas.js"></script>
-
-        
