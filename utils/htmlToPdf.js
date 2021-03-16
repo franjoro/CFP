@@ -9,10 +9,8 @@ const GenerarPdf = (data) => {
     let nit = data.data[0][0].NIT.split("-");
     const d = new Date();
 
-    const {Horario, Nombre, programa} = data.data[1][0] 
+    const {Horario, Nombre, programa, Fechas} = data.data[1][0] 
     const {NombreContacto,  EmailContacto} = data.data[2][0] 
-
-
     itineracion = "";
     data.alumnos.forEach((element, index) => {
       let h = "", m = "";
@@ -39,6 +37,7 @@ const GenerarPdf = (data) => {
             </td>
           </tr>
            `;
+           
     });
 
     const options = {
@@ -64,9 +63,16 @@ const GenerarPdf = (data) => {
           <title>Hello, world!</title>
         </head>
       
-        <body>
+        <body style="font-size: 15px; font-family: Arial">
           <style>
             .encabezado {
+              margin-top: 20px;
+              display: flex;
+              justify-content: space-between;
+            }
+      
+            .cuerpo {
+              margin-top: -18px;
               display: flex;
               justify-content: space-between;
             }
@@ -85,7 +91,6 @@ const GenerarPdf = (data) => {
             th {
               border: 1px solid #dddddd;
               text-align: left;
-              padding: 8px;
             }
       
             .date {
@@ -116,7 +121,8 @@ const GenerarPdf = (data) => {
             <div class="container">
               <p><b>ANEXO 6</b></p>
               <div class="divisor">
-                <p class="d-inline"><b>FECHA :</b></p>
+                <p class="d-inline">FECHA :</p>
+                <br />
                 <input type="text" class="date d-inline" value="${d.getDate()} " /> -
                 <input
                   type="text"
@@ -125,13 +131,14 @@ const GenerarPdf = (data) => {
                 />-
                 <input
                   type="text"
-                  class="date d-inline"
+                  class="d-inline"
                   value=" ${d.getFullYear()}"
+                  style="width: 5%"
                 />
               </div>
               <div class="divisor">
                 <p class="d-inline" style="margin-bottom: -10px">
-                  <b>NOMBRE DE LA EMPRESA:</b>
+                  NOMBRE DE LA EMPRESA:
                 </p>
                 <input
                   type="text"
@@ -142,11 +149,8 @@ const GenerarPdf = (data) => {
                 <br />
                 <small style="margin-left: 60px">(Razón social)</small>
               </div>
-      
               <div class="divisor" style="margin-top: -15px">
-                <p class="d-inline">
-                  <b>NIT DE LA EMPRESA:</b>
-                </p>
+                <p class="d-inline">NIT DE LA EMPRESA:</p>
                 <input
                   type="text"
                   style="width: 7%; margin-left: 80px"
@@ -171,32 +175,31 @@ const GenerarPdf = (data) => {
                   style="width: 4%"
                 />
               </div>
-      
               <div class="divisor">
-                <p class="d-inline"><b>TELEFONO:</b></p>
+                <p class="d-inline">TELEFONO:</p>
                 <input
                   type="text"
                   class="d-inline"
                   value="${empresa.Tel}"
                   style="margin-left: 50px"
                 />
-                <b style="margin-left: 30px">Ext:</b>
+                Ext:
                 <input type="text" style="margin-left: 30px" />
               </div>
       
               <div class="encabezado">
-                <p><b>APORTACIÓN MENSUAL AL INSAFORP:</b></p>
-                <p style="margin-right: 200px"><b>NUMERO PATRONAL:</b></p>
+                <p>APORTACIÓN MENSUAL AL INSAFORP:</p>
+                <p style="margin-right: 200px">NUMERO PATRONAL:</p>
               </div>
       
-              <div class="encabezado" style="margin-top: -10px">
+              <div class="cuerpo" style="margin-top: -10px">
                 <div class="col">
                   <input
                     type="text"
                     value="${empresa.Aportacion_insaforp}"
-                    style="width: 65%"
+                    style="width: 50%"
                   />
-                  <small>(Según Ultimo recibo ISSS) </small>
+                  <small><b> (Según Ultimo recibo ISSS) </b> </small>
                 </div>
                 <div class="col">
                   <input
@@ -208,14 +211,14 @@ const GenerarPdf = (data) => {
               </div>
       
               <p style="float: right; margin-right: 50px">
-                <b>NUMERO DE EMPLEADOS:</b>&nbsp; <br /><input
+                NUMERO DE EMPLEADOS:&nbsp; <br /><input
                   type="text"
                   value="${empresa.Num_Empleados}"
                 />
               </p>
               <br /><br />
               <p>
-                <b>ACTIVIDAD ECONÓMICA:(De acuerdo a Clasificacion ISSS)</b>&nbsp;
+                ACTIVIDAD ECONÓMICA: <b>(De acuerdo a Clasificacion ISSS)</b>&nbsp;
               </p>
               <input
                 class="complete"
@@ -224,8 +227,8 @@ const GenerarPdf = (data) => {
               /><br /><br />
       
               <div class="row mb-3">
-                <div class="col-3">
-                  <b>NOMBRE DEL RESPONSABLE DE CAPACITACION EN LA EMPRESA:</b>
+                <div class="col-3 text-justify">
+                  NOMBRE DEL RESPONSABLE DE CAPACITACION EN LA EMPRESA:
                 </div>
                 <div class="col-9">
                   <input
@@ -237,7 +240,7 @@ const GenerarPdf = (data) => {
               </div>
               <div class="row mb-3">
                 <div class="col-3">
-                  <p><b>CORREO ELECTRÓNICO:</b></p>
+                  <p>CORREO ELECTRÓNICO:</p>
                 </div>
                 <div class="col-9">
                   <input
@@ -248,7 +251,7 @@ const GenerarPdf = (data) => {
                 </div>
               </div>
               <div>
-                <p><b>NOMBRE DE LA CAPACITACION:</b></p>
+                <p style="margin-bottom: 0px">NOMBRE DE LA CAPACITACION:</p>
                 <input
                   type="text"
                   style="width: 100%; margin-top: -50px"
@@ -257,11 +260,11 @@ const GenerarPdf = (data) => {
               </div>
       
               <div class="encabezado">
-                <p><b>RAZON SOCIAL DEL ORGANIZADOR :</b></p>
-                <p><b>COSTO POR PERSONA :</b></p>
-                <p><b>LUGAR DE EJECUCIÓN:</b></p>
+                <p>RAZON SOCIAL DEL ORGANIZADOR :</p>
+                <p>COSTO POR PERSONA :</p>
+                <p>LUGAR DE EJECUCIÓN:</p>
               </div>
-              <div class="encabezado">
+              <div class="cuerpo">
                 <input
                   type="text"
                   value="Asociación Institución Salesiana/ITR"
@@ -271,24 +274,26 @@ const GenerarPdf = (data) => {
                   value="ONLINE"
                 />
               </div>
-              <p><b>DEPARTAMENTO Y MUNICIPIO DE EJECUCIÓN:</b></p>
+              <p style="margin-bottom: 0px">DEPARTAMENTO Y MUNICIPIO DE EJECUCIÓN:</p>
               <input
                 type="text"
                 style="width: 100%"
                 value="San Salvador, San Salvador"
               />
               <div class="encabezado">
-                <p style="width: 15%"><b>No. HORAS :</b></p>
-                <p style="margin-right: 500px;"><b>DETALLE DE FECHAS DE EJECUCION - HORARIO (S):</b></p>
+                <p style="width: 13%">No. HORAS :</p>
+                <p style="margin-left: -420px;">DETALLE DE FECHAS DE EJECUCION</p>
+                <p style="margin-left: -20px;">HORARIO (S):</p>
               </div>
-              <div class="encabezado">
+              <div class="cuerpo">
                 <input type="text" style="width: 8%" value="20 Horas" />
-                <input type="text" style="width: 90%" value="${Horario} " />
+                <input type="text" style="width: 60%" value="${Fechas} " />
+                <input type="text" style="width: 20%" value="${Horario} " />
               </div>
             </div>
             <br />
             <div class="container">
-              <p><b>NOMBRE DE LOS PARTICIPANTES PROPUESTOS:</b></p>
+              <p>NOMBRE DE LOS PARTICIPANTES PROPUESTOS:</p>
               <table class="table-sm">
                 <thead>
                   <tr>
@@ -306,11 +311,13 @@ const GenerarPdf = (data) => {
                 </tbody>
               </table>
             </div>
-            <br /><br />
+            <br />
             <div class="container">
-              <p><b>NOMBRE DEL GERENTE GENERAL O RESPONSABLE DE CAPACITACIÓN</b></p>
               <div class="row">
                 <div class="col-10">
+                  <p style="margin-bottom: -10px">
+                    NOMBRE DEL GERENTE GENERAL O RESPONSABLE DE CAPACITACIÓN
+                  </p>
                   <div class="encabezado">
                     <div class="group" style="width: 25%">
                       <input style="width: 100%" type="text" /><label
@@ -337,7 +344,7 @@ const GenerarPdf = (data) => {
               </div>
               <div class="row">
                 <div class="col-10">
-                  <div class="encabezado">
+                  <div class="cuerpo" style="margin-top: 3px">
                     <div class="group" style="width: 50%">
                       <label>Cargo</label>
                       <input style="width: 90%" type="text" />
@@ -351,13 +358,13 @@ const GenerarPdf = (data) => {
                   </div>
                 </div>
               </div>
-              <br>
+              <br />
               <p>Favor anexar fotocopia de último recibo pagado del ISSS</p>
             </div>
           </div>
         </body>
-      </html>    
-`,
+      </html>       
+   `,
     };
 
     html_to_pdf.generatePdf(file, options).then((pdfBuffer) => {

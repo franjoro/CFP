@@ -153,6 +153,7 @@ cursos.add = async (req, res) => {
     req.body.agrupacion,
     req.body.orden,
     req.body.horario,
+    req.body.fechas,
     req.body.costo,
     req.body.factura,
     req.body.instructor,
@@ -164,7 +165,7 @@ cursos.add = async (req, res) => {
   ];
   try {
     await pool.query(
-      "INSERT INTO tb_cursos(Codigo_curso, Nombre, Date_inicio, Date_fin, Agrupacion, Orden, Horario, CostoAlumno, Factura, id_instructor, id_programa,   Modalidad , id_modalidad , Documento, id_documento,    Estado)  VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,1)",
+      "INSERT INTO tb_cursos(Codigo_curso, Nombre, Date_inicio, Date_fin, Agrupacion, Orden, Horario, Fechas, CostoAlumno, Factura, id_instructor, id_programa,   Modalidad , id_modalidad , Documento, id_documento,    Estado)  VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,1)",
       data
     );
     return res.json({ status: true });
@@ -181,13 +182,14 @@ cursos.oferta = async (req, res) => {
     req.body.codigo_curso,
     req.body.nombre,
     req.body.horario,
+    req.body.fechas,
     req.body.costo,
     req.body.programa,
     req.body.role,
   ];
   try {
     await pool.query(
-      "INSERT INTO tb_cursos(Codigo_curso, Nombre,Horario, CostoAlumno, id_programa, Estado)  VALUES(?,?,?,?,?,?)",
+      "INSERT INTO tb_cursos(Codigo_curso, Nombre,Horario, Fechas ,  CostoAlumno, id_programa, Estado)  VALUES(?,?,?,?,?,?,?)",
       data
     );
     return res.json({ status: true });
@@ -274,7 +276,7 @@ cursos.edit = async (req, res) => {
     return res.status(200).json({ status: true });
   } catch (err) {
     if (err) console.log(err);
-   return res.status(400).json({ status: false, error: err });
+    return res.status(400).json({ status: false, error: err });
   }
 };
 

@@ -43,9 +43,11 @@
                             <%= oferta[i].Nombre %>
                           </h5>
                         </a>
-                        <p> 
-                          <b>Participantes:</b> <%= oferta[i].cantidadAlumnos %> -
-                          <b>Empresas:</b> <%= oferta[i].cantidadEmpresas %>
+                        <p>
+                          <b>Participantes:</b>
+                          <%= oferta[i].cantidadAlumnos %> -
+                            <b>Empresas:</b>
+                            <%= oferta[i].cantidadEmpresas %>
                         </p>
                         <button class="btn btn-danger btn-sm float-right d-inline"
                           onclick="deleteOferta('<%= oferta[i].Codigo_curso %>')"> <i
@@ -159,9 +161,15 @@
                 <input type="text" class="form-control" name="documento_id" id="documento_id">
               </div>
             </div>
-            <div class="form-group">
-              <label for="horario">Horario</label>
-              <input type="text" class="form-control" name="horario" id="horario" placeholder="Sábado de 0:00 a 0:00">
+            <div class="form-row">
+              <div class="form-group col-md-8">
+                <label for="fechas">Fechas</label>
+                <input type="text" class="form-control" name="fechas" id="fechas" placeholder="Sábados...">
+              </div>
+              <div class="form-group col-md-4">
+                <label for="horario">Horario</label>
+                <input type="text" class="form-control" name="horario" id="horario" placeholder="De 0:00 a 0:00">
+              </div>
             </div>
             <div class="form-row">
               <div class="form-group col-md-4">
@@ -207,15 +215,20 @@
             <input type="hidden" name="programa" id="programa_oferta" required value="<%= programa%>">
             <div class="form-row">
               <div class="form-group col-md-12">
-                <label for="nombre">Nombre del curso*</label>
+                <label for="nombre">Nombre de la oferta</label>
                 <input type="text" class="form-control" required name="nombre" id="nombre_oferta">
               </div>
             </div>
             <div class="form-row">
+              <div class="form-group col-md-12">
+                <label for="horario">Fechas</label>
+                <input type="text" class="form-control" name="fecha" required id="horario_fecha"
+                  placeholder="Sábado...">
+              </div>
               <div class="form-group col-md-8">
                 <label for="horario">Horario</label>
                 <input type="text" class="form-control" name="horario" required id="horario_oferta"
-                  placeholder="Sábado de 0:00 a 0:00">
+                  placeholder="De 0:00 a 0:00">
               </div>
               <div class="form-group col-md-4">
                 <label for="costo">Costo Por alumno</label>

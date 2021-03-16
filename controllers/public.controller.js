@@ -214,7 +214,7 @@ PublicFunctions.FichaRegistro = async (req, res) => {
 
     queries.push(
       pool.query(
-        "SELECT Horario, Nombre, (SELECT Nombre FROM tb_programa WHERE id_programa = tb_cursos.id_programa ) AS programa  FROM tb_cursos WHERE Codigo_curso = ? ",
+        "SELECT Horario, Nombre, Fechas, (SELECT Nombre FROM tb_programa WHERE id_programa = tb_cursos.id_programa ) AS programa  FROM tb_cursos WHERE Codigo_curso = ? ",
         [cursos]
       )
     );

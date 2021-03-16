@@ -79,6 +79,7 @@ $(document).ready(() => {
       horario: $("#horario_oferta").val(),
       costo: $("#costo_oferta").val(),
       programa: $("#programa_oferta").val(),
+      fechas: $("#horario_fecha").val(),
     };
     try {
       const query = await $.ajax({
