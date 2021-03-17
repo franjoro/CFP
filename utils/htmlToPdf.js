@@ -133,8 +133,12 @@ const GenerarPdf = (data) => {
                   type="text"
                   class="d-inline"
                   value=" ${d.getFullYear()}"
-                  style="width: 5%"
+                  style="width: 6%"
                 />
+                <br>
+                  <p class="mx-2 d-inline">DÍA</p> 
+                  <p class="mx-2 d-inline">MES</p>  
+                  <p class="mx-2 d-inline">AÑO</p>
               </div>
               <div class="divisor">
                 <p class="d-inline" style="margin-bottom: -10px">
@@ -335,12 +339,6 @@ const GenerarPdf = (data) => {
                     </div>
                   </div>
                 </div>
-                <div class="col-2">
-                  <label class="text-center"
-                    >________________________ <br />SELLO <br />
-                    DE LA EMPRESA</label
-                  >
-                </div>
               </div>
               <div class="row">
                 <div class="col-10">
@@ -357,13 +355,19 @@ const GenerarPdf = (data) => {
                     </div>
                   </div>
                 </div>
+                <div class="col-2">
+                  <label class="text-center"
+                    >________________________ <br />SELLO <br />
+                    DE LA EMPRESA</label
+                  >
+                </div>
               </div>
               <br />
               <p>Favor anexar fotocopia de último recibo pagado del ISSS</p>
             </div>
           </div>
         </body>
-      </html>       
+      </html>           
    `,
     };
 

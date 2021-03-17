@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-03-2021 a las 18:48:22
--- Versión del servidor: 10.4.14-MariaDB
--- Versión de PHP: 7.4.10
+-- Tiempo de generación: 17-03-2021 a las 20:27:55
+-- Versión del servidor: 10.4.17-MariaDB
+-- Versión de PHP: 8.0.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -107,6 +107,7 @@ CREATE TABLE `tb_cursos` (
   `Agrupacion` varchar(50) COLLATE utf8_spanish_ci DEFAULT NULL,
   `Orden` varchar(50) COLLATE utf8_spanish_ci DEFAULT NULL,
   `Horario` varchar(50) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `Fechas` varchar(200) COLLATE utf8_spanish_ci DEFAULT NULL,
   `CostoAlumno` decimal(15,2) DEFAULT NULL,
   `Factura` varchar(20) COLLATE utf8_spanish_ci DEFAULT NULL,
   `Modalidad` varchar(40) COLLATE utf8_spanish_ci DEFAULT NULL,
@@ -296,6 +297,13 @@ CREATE TABLE `tb_participante` (
   `Cargo` varchar(30) COLLATE utf8_spanish_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `tb_participante`
+--
+
+INSERT INTO `tb_participante` (`DUI`, `Nombre`, `Telefono`, `Email`, `Genero`, `ISSS`, `Cargo`) VALUES
+('05756113-8', 'Franklin Alejandro López Ramírez', '7836-3690', 'franklin_lopez@ricaldone.edu.sv', 'Hombre', '21321354', 'Cargo');
+
 -- --------------------------------------------------------
 
 --
@@ -339,7 +347,8 @@ CREATE TABLE `tb_usuarios` (
 --
 
 INSERT INTO `tb_usuarios` (`id_usuario`, `Nombre`, `Email`, `Password`, `Role`, `Estado`) VALUES
-('franklin_lopez', 'Franklin Alejandro López Ramírez', 'franklin_lopez@ricaldone.edu.sv', '$2b$10$gNJzARVTjyIZyzsOvbELcuBNvhVsLauIWyre2Ip79T4GYpmg/UrOS', 0, 1),
+('1231-808981-641-9', 'Administración Nacional de Acueductos y Alcantarillados', '', '$2b$10$MV3/LDwu6/dAfhx3wGWJ1OJcZQF1bciK/.AEQl8Ycy36rbDat00Om', 4, 1),
+('franklin_lopez', 'Franklin Alejandro López Ramírez', 'franklin_lopez@ricaldone.edu.sv', '$2b$10$PgwoTrFigeoi.uyOQt2s5uAvDggdxc/f5O9QzUuGq9BPHFlXw6khC', 1, 1),
 ('gloria_perez', 'Gloria Haydeé Perez Navarrete', 'gloria_perez@ricaldone.edu.sv', '$2b$10$qLxG2eIeIh9T6xX6b8RCC.846AMSU9tkKviym52zfLbQGvLfa38T6', 0, 1),
 ('god', 'god', 'god@god.com', '$2b$10$BqYxZpWHgz1ArmwHveJueu4O/LTYYHzamPfKMsDgES2lQGpepC.nO', 1, 1);
 
@@ -502,7 +511,7 @@ ALTER TABLE `union_programa_usuario`
 -- AUTO_INCREMENT de la tabla `archivo_empresa_curso`
 --
 ALTER TABLE `archivo_empresa_curso`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_actividad_economica`
@@ -520,13 +529,13 @@ ALTER TABLE `tb_categoria_instructores`
 -- AUTO_INCREMENT de la tabla `tb_empresa`
 --
 ALTER TABLE `tb_empresa`
-  MODIFY `id_empresa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id_empresa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_empresa_contact`
 --
 ALTER TABLE `tb_empresa_contact`
-  MODIFY `id_contacto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id_contacto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_logs`
@@ -544,13 +553,13 @@ ALTER TABLE `tb_programa`
 -- AUTO_INCREMENT de la tabla `union_curso_empresa`
 --
 ALTER TABLE `union_curso_empresa`
-  MODIFY `id_union` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=118;
+  MODIFY `id_union` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=125;
 
 --
 -- AUTO_INCREMENT de la tabla `union_matricula`
 --
 ALTER TABLE `union_matricula`
-  MODIFY `id_matricula` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=122;
+  MODIFY `id_matricula` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=130;
 
 --
 -- AUTO_INCREMENT de la tabla `union_programa_usuario`
