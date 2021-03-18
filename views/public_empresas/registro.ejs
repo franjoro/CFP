@@ -39,7 +39,7 @@
                             <div class="form-row">
                                 <div class="col-md-8">
                                     <label>Nombre o Razón Social (según NIT)*: </label>
-                                    <input type="text" name="Nombre" id="Nombre" class="form-control">
+                                    <input type="text" name="Nombre" id="Nombre" class="form-control text-uppercase">
                                 </div>
                                 <div class="col-md-4">
                                     <label>NIT*:</label>
@@ -90,7 +90,7 @@
                             <div class="form-row">
                                 <div class="col-md">
                                     <label>Nombre: </label>
-                                    <input type="text" name="Responsable" id="Responsable" class="form-control">
+                                    <input type="text" name="Responsable" id="Responsable" class="form-control text-uppercase">
                                 </div>
                                 <div class="col-md">
                                     <label>Correo Electrónico:</label>
@@ -106,7 +106,7 @@
                             <div class="form-row">
                                 <div class="col-md">
                                     <small> <b>Instrucciones:</b> Por favor adjunte los siguientes documentos (Utilice
-                                        archivos en formato Word PDF o JPG) </small>
+                                        archivos en formato PDF, PNG, JPEG, WORD) </small>
                                     <hr>
                                     <p>Adjunte NIT de la empresa: </p>
                                     <input type="file" name="file" id="file">
@@ -133,17 +133,18 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
+                            <span aria-hidden="true">&times;</span>
                         </button>
-                      </div>
+                    </div>
                     <div class="modal-body">
                         <div class="container text-center">
                             <h4>¡Gracias!</h4>
                             <h5>Hemos ingresado tu información correctamente</h5>
-                            <p>Uno de nuestros colaboradores verificara la información ingresada y te notificaremos vía correo electrónico cuando puedas ingresar tu solicitud de curso</p>
+                            <p>Uno de nuestros colaboradores verificara la información ingresada y te notificaremos vía
+                                correo electrónico cuando puedas ingresar tu solicitud de curso</p>
                             <p> <b>¿Necesitas más información?</b> Te dejamos nuestros contactos</p>
                             <p> <b>Ofimática: </b> ofimatica@ricaldone.edu.sv / Tel. 2234-6055
-                              - <b>Inglés para el trabajo: </b> pnit@ricaldone.edu.sv / Tel.2234-6077 </p>
+                                - <b>Inglés para el trabajo: </b> pnit@ricaldone.edu.sv / Tel.2234-6077 </p>
                         </div>
                     </div>
                 </div>
@@ -152,4 +153,4 @@
 
 
         <%- include('../partials/footer.public.ejs'); %>
-            <script src="/static/js/PublicJS/register.js"></script>
+        <script src="/static/js/PublicJS/register.js"></script>

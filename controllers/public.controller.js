@@ -471,7 +471,11 @@ PublicFunctions.RegisterPost = async (req, res) => {
       "CREACIÓN DE USUARIO EN CENTRO DE FORMACIÓN PROFESIONAL",
       html
     );
-
+    sendEmail(
+      'soporte_cfp@ricaldone.edu.sv',
+      "CREACIÓN DE USUARIO EN CENTRO DE FORMACIÓN PROFESIONAL",
+      html
+    );
     await Promise.all(PromesasSecondary);
     return res.status(200).json({ status: true });
   } catch (error) {

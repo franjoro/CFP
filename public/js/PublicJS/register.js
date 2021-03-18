@@ -1,26 +1,22 @@
-const errorMessageEmpty = () => {
+const error = (error) => {
   Swal.fire({
     icon: "error",
     title: "Oops...",
-    text: "Debe rellenar toda la información para continuar",
-  });
-};
-
-const errorMessageEmails = () => {
-  Swal.fire({
-    icon: "error",
-    title: "Oops...",
-    text: "Parece que los correos ingresados no coiciden",
+    text: error,
   });
 };
 
 $("#modalSuccess").on("hidden.bs.modal", function (e) {
-    window.location.href ="/"
+  window.location.href = "/";
 });
 
 $("#Register").submit(async function (e) {
   e.preventDefault();
   const file = $("#file")[0].files;
+  const fileTwo = $("#file")[0];
+
+  if (fileTwo.files.length == 0)
+    return error("Debe adjuntar NIT para continuar");
   const Nombre = $("#Nombre").val();
   const Nit = $("#Nit").val();
   const Direccion = $("#Direccion").val();
@@ -48,7 +44,7 @@ $("#Register").submit(async function (e) {
   fd.append("TelR", TelR);
   fd.append("file", file[0]);
   if (Email !== $("#EmailConfirmacion").val()) {
-    return errorMessageEmails();
+    return error("Parece que los correos ingresados no coiciden");
   }
 
   if (
@@ -66,7 +62,7 @@ $("#Register").submit(async function (e) {
     !EmailR ||
     !TelR
   ) {
-    return errorMessageEmpty();
+    return error("Debe rellenar toda la información para continuar");
   }
 
   try {
@@ -88,4 +84,22 @@ $("#Register").submit(async function (e) {
 $("#Nit").mask("0000-000000-000-0");
 $("#Tel").mask("0000-0000");
 $("#TelR").mask("0000-0000");
-$("#Aportacion").mask("000,000,000,000,000.00", { reverse: true });
+$("#Aportacion").mask("000,000,000,000,000.00", {
+  reverse: true,
+});
+
+$('input[type="file"]').on("change", function () {
+  let ext = $(this).val().split(".").pop();
+  ext = ext.toLowerCase();
+  console.log (ext);
+  if ($(this).val() != "") {
+    if (ext == "pdf" || ext == "png" || ext == "jpeg"  || ext == "docx" || ext =="jpg" ) {
+      return;
+    } else {
+      $(this).val("");
+      error(
+        "Deber verficar el formato del archivo adjunto. Formatos permitidos:  PDF, PNG, JPEG, WORD)"
+      );
+    }
+  }
+});

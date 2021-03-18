@@ -2,7 +2,8 @@ const errorMessage = () => {
   Swal.fire({
     icon: "error",
     title: "Oops...",
-    text: "No se pudo realizar la operación, verifica la información o comuniquese con el encargado del programa o soporte ",
+    text:
+      "No se pudo realizar la operación, verifica la información o comuniquese con el encargado del programa o soporte ",
   });
 };
 const errorMessageEmpresa = () => {
@@ -16,10 +17,10 @@ const errorMessageCursoExistente = () => {
   Swal.fire({
     icon: "error",
     title: "Oops...",
-    text: "Su empresa ya cuenta con una solicitud pendiente en un curso seleccionado , por favor comuniquese con el encargado del programa o soporte técnico",
+    text:
+      "Su empresa ya cuenta con una solicitud pendiente en un curso seleccionado , por favor comuniquese con el encargado del programa o soporte técnico",
   });
 };
-
 
 const errorMessageParticipante = () => {
   Swal.fire({
@@ -35,6 +36,20 @@ const errorMessageArchivo = () => {
     text: "Debe subir los archivos obligatorios",
   });
 };
+
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 1000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+})
+
+
 
 const loaderEnviar = () => {
   Swal.fire({
@@ -102,21 +117,8 @@ const AsginarGlobalCursos = () => {
   local.forEach((element, index) => {
     if (!data.includes(element[7])) {
       data.push(element[7]);
-      let select = $(`#curso option[value='${element[7]}'] `).text().trim();
       ContentHtml += `
-      <label>Curso: <b> ${select}</b> Puede descargar la ficha aquí: <i class="fas fa-arrow-right"></i> <a href="#" onclick="GenerarPdf('${
-        element[7]
-      }')">DESCARGAR PLANTILLA</a></label>
-<div class="input-group">
-<div class="custom-file">
-  <input type="file" class="custom-file-input ficha" data-next="fichass${
-    index + 1
-  }" id="ficha${index}" name="ficha${index}" >
-  <label class="custom-file-label" id="fichass${index + 1}">Choose file</label>
-</div>
-</div>
-<hr>
-<small>Nota: Descargue, imprima y firme la ficha </small>
+      <hr><div class="card"><h5 class="card-header"><i class="fas fa-arrow-right"></i>${element[6]}</h5><div class="card-body"><h5 class="card-title">Adjunte los siguientes documentos:</h5><div class="row"><div class="col-md-3"><p class="text-justify">1. Solicitud de capacitación firmada y sellada. Puede descargar la ficha aquí: <i class="fas fa-arrow-right"></i> <a onclick="GenerarPdf('${element[7]}')" href="#">DESCARGAR PLANTILLA</a></p></div><div class="col-md-3"><p class="text-justify">2. Recibo de ingresos por cotización (Recibo de aportación) del último mes cancelado - <i class="fas fa-arrow-right"></i> <a target="_blank" href="/static/files/recibo.pdf" class="text-danger">VER EJEMPLO</a></p></div><div class="col-md-3"><p class="text-justify">Comprobante de pago en línea (Opcional) del último mes cancelado - <i class="fas fa-arrow-right"></i> <a target="_blank" href="/static/files/cancelacion.pdf" class="text-danger">VER EJEMPLO</a></p></div><div class="col-md-3"><p class="text-justify">3. Planilla ISSS (Resaltar colaboradores a inscribir) <i class="fas fa-arrow-right"></i> <a target="_blank" href="/static/files/planilla.pdf" class="text-danger">VER EJEMPLO</a></p></div></div><div class="row"><div class="col-md-3"><div class="custom-file"><input type="file" class="custom-file-input" id="customFile"> <label class="custom-file-label" for="customFile">Choose file</label></div></div><div class="col-md-3"><div class="custom-file"><input type="file" class="custom-file-input" id="customFile"> <label class="custom-file-label" for="customFile">Choose file</label></div></div><div class="col-md-3"><div class="custom-file"><input type="file" class="custom-file-input" id="customFile"> <label class="custom-file-label" for="customFile">Choose file</label></div></div><div class="col-md-3"><div class="custom-file"><input type="file" class="custom-file-input" id="customFile"> <label class="custom-file-label" for="customFile">Choose file</label></div></div></div></div></div><hr>
       `;
     }
   });
@@ -138,7 +140,8 @@ const registrarSolicitud = async () => {
   try {
     const alerta = await Swal.fire({
       title: "¿Deseá enviar la solicitud?",
-      text: "Por favor verificar que la información ingresada sea correcta antés de enviar.",
+      text:
+        "Por favor verificar que la información ingresada sea correcta antés de enviar.",
       icon: "info",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -167,7 +170,7 @@ const registrarSolicitud = async () => {
   } catch (error) {
     console.log(error);
 
-    if(error == 'CURSO_EXISTENTE') return errorMessageCursoExistente;
+    if (error == "CURSO_EXISTENTE") return errorMessageCursoExistente;
     errorMessage();
   }
 };
@@ -269,6 +272,17 @@ $(document).ready(() => {
 
   // Cargar tabla
   $("#tablaParticipantes").DataTable({
+    columnDefs: [
+      {
+        targets: [7],
+        visible: false,
+      },
+      {
+        targets: [9],
+        data: null,
+        defaultContent: `<button class='btn btn-sm btn-danger'><i class="far fa-trash-alt"></i></button>`,
+      },
+    ],
     searching: false,
     paging: false,
     bInfo: false,
@@ -306,6 +320,10 @@ $(document).ready(() => {
     ];
     populateTable(data);
     CreateOrStorage(data);
+    Toast.fire({
+      icon: 'success',
+      title: 'Agregado correctamente'
+    })
     $('input[type="text"]').val("");
     if (!global_estado_participante) {
       data = { dui, name: nombre, tel, email, genero, tel, isss, cargo };
@@ -353,6 +371,22 @@ $(document).ready(() => {
     return 1;
   };
 });
+//Borrar row de la tabla
+$("#tablaParticipantes tbody").on("click", "button", function () {
+  const table = $("#tablaParticipantes").DataTable().row();
+  let dui = table.data()[0];
+  let storage = localStorage.getItem("storage");
+  storage = JSON.parse(storage);
+  for (var i = 0; i < storage.length; i++) {
+    if (storage[i][0] == dui) {
+      storage.splice(i, 1);
+    }
+  }
+  storage = JSON.stringify(storage);
+  localStorage.clear();
+  localStorage.setItem("storage", storage);
+  table.remove().draw();
+});
 
 $(document).on("change", ".ficha", function (e) {
   var fileName = e.target.files[0].name;
@@ -387,7 +421,11 @@ const VerificarArchivos = () => {
   const recibo = $("#recibo")[0];
   const planilla = $("#planilla")[0];
   const ficha = $(".ficha")[0];
-  if (recibo.files.length == 0 || planilla.files.length == 0 || ficha.files.length == 0) {
+  if (
+    recibo.files.length == 0 ||
+    planilla.files.length == 0 ||
+    ficha.files.length == 0
+  ) {
     errorMessageArchivo();
   } else {
     registrarSolicitud();
