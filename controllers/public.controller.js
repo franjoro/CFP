@@ -101,22 +101,22 @@ PublicFunctions.CreateSolicitud = async (req, res) => {
     // VALIDAR SI EMPRESA YA TIENE SOLICITUD EN ESTA OFERTA
     const ExisteSolicitud = [];
 
-    cursos.forEach(curso => {
+    cursos.forEach((curso) => {
       ExisteSolicitud.push(
         pool.query(
           "SELECT COUNT(*) AS Cantidad FROM union_matricula WHERE id_curso  = ? AND id_empresa = ? ",
           [curso, empresa]
         )
       );
-    })
-  
+    });
+
     const ExisteSolicitudPromesa = await Promise.all(ExisteSolicitud);
 
     ExisteSolicitudPromesa.forEach((element) => {
-      if(element[0].Cantidad > 0 ){
+      if (element[0].Cantidad > 0) {
         throw new Error("CURSO_EXISTENTE");
       }
-    })
+    });
 
     // Hacer consultas en arreglos para hacer promesas
     const EmpresaCursos = [];
@@ -172,7 +172,6 @@ PublicFunctions.CreateSolicitud = async (req, res) => {
         "SELECT Nombre, Horario FROM tb_cursos WHERE Codigo_curso = ? ; SELECT Nombre FROM tb_empresa WHERE id_empresa = ? ",
         [curso, empresa]
       );
-      console.log(correos);
       correos.forEach((element) => {
         const html = `<h1>Notificación automática de sistema Razón: Solicitud de empresa creada en el curso : ${data[0][0].Nombre}</h1> <p> Nombre: ${data[0][0].Nombre} </p>  <p> Horario: ${data[0][0].Horario} </p>   <p> Cantidad de participantes: ${participantes.length}   </p>  <p> Empresa: ${data[1][0].Nombre}  </p>`;
         sendEmail(
@@ -253,29 +252,31 @@ PublicFunctions.archivos = async (req, res) => {
       promesas.push(
         upload(fileContent, Date.now(), ext, empresa, `ficha${index}`)
       );
+      ext = req.files[`recibo${index}`].name.split(".")[1];
+      fileContent = Buffer.from(req.files[`recibo${index}`].data, "binary");
+      promesas.push(upload(fileContent, Date.now(), ext, empresa, `recibo${index}` ));
+
+      if (req.files[`cancelacion${index}`]) {
+        ext = req.files[`cancelacion${index}`].name.split(".")[1];
+        fileContent = Buffer.from(
+          req.files[`cancelacion${index}`].data,
+          "binary"
+        );
+        promesas.push(
+          upload(fileContent, Date.now(), ext, empresa, `cancelacion${index}` )
+        );
+      }
+
+      ext = req.files[`planilla${index}`].name.split(".")[1];
+      fileContent = Buffer.from(req.files[`planilla${index}`].data, "binary");
+      promesas.push(upload(fileContent, Date.now(), ext, empresa, `planilla${index}` ));
     });
-
-    ext = req.files.recibo.name.split(".")[1];
-    fileContent = Buffer.from(req.files.recibo.data, "binary");
-    promesas.push(upload(fileContent, Date.now(), ext, empresa, "recibo"));
-
-    if (req.files.cancelacion) {
-      ext = req.files.cancelacion.name.split(".")[1];
-      fileContent = Buffer.from(req.files.recibo.data, "binary");
-      promesas.push(
-        upload(fileContent, Date.now(), ext, empresa, "cancelacion")
-      );
-    }
-
-    ext = req.files.planilla.name.split(".")[1];
-    fileContent = Buffer.from(req.files.recibo.data, "binary");
-    promesas.push(upload(fileContent, Date.now(), ext, empresa, "planilla"));
 
     const datos = await Promise.all(promesas);
     cursos.forEach((curso, index) => {
       let key;
       datos.forEach((element) => {
-        if (element.posicion === `ficha${index}`) {
+        if (element.posicion == `ficha${index}`) {
           key = element.key;
           inserts.push(
             pool.query(
@@ -284,7 +285,7 @@ PublicFunctions.archivos = async (req, res) => {
             )
           );
         }
-        if (element.posicion === `recibo`) {
+        if (element.posicion == `recibo${index}` ) {
           key = element.key;
           inserts.push(
             pool.query(
@@ -293,8 +294,8 @@ PublicFunctions.archivos = async (req, res) => {
             )
           );
         }
-        if (req.files.cancelacion) {
-          if (element.posicion === `cancelacion`) {
+        if (req.files[`cancelacion${index}`]) {
+          if (element.posicion == `cancelacion${index}`) {
             key = element.key;
             inserts.push(
               pool.query(
@@ -304,7 +305,7 @@ PublicFunctions.archivos = async (req, res) => {
             );
           }
         }
-        if (element.posicion === `planilla`) {
+        if (element.posicion == `planilla${index}`) {
           key = element.key;
           inserts.push(
             pool.query(
@@ -472,7 +473,7 @@ PublicFunctions.RegisterPost = async (req, res) => {
       html
     );
     sendEmail(
-      'soporte_cfp@ricaldone.edu.sv',
+      "soporte_cfp@ricaldone.edu.sv",
       "CREACIÓN DE USUARIO EN CENTRO DE FORMACIÓN PROFESIONAL",
       html
     );
