@@ -2,71 +2,151 @@
 <html lang="en">
 
 <head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" type="image/png" href="/static/img/logo.ico">
-    <title>App - CFP</title>
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
-    <link href="static/css/sb-admin-2.min.css" rel="stylesheet">
-    <link href="static/css/login.css" rel="stylesheet">
-
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <link rel="icon" type="image/png" href="/static/img/logo.ico" />
+  <title>App - CFP</title>
+  <link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet" />
+  <link href="/static/css/sb-admin-2.min.css" rel="stylesheet" />
+  <link href="/static/css/login.css" rel="stylesheet" />
 </head>
 
 <body class="bg-gradient-primary">
-    <div class="container-fluid px-1 px-md-5 px-lg-1 px-xl-5 py-5 mx-auto">
-        <div class="card card0 border-0">
-            <div class="row d-flex">
-                <div class="col-lg-6">
-                    <div class="card1 pb-5">
-                        <div class="row"> <img src="/static/img/logoi.png" class="logo"> </div>
-                        <div class="row px-3 justify-content-center mt-4 mb-5 border-line"> <img
-                                src="/static/img/logo.png" class="image"> </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="card2 card border-0 px-4 py-5">
-                        <label>Inicia sesión o crea un nuevo usuario empresarial</label>
-                        <div class="row px-3 mb-4">
-                            <div class="line"></div>
-                        </div>
-                        <form id="loginForm">
-                            <div class="row px-3"> <label class="mb-1">
-                                    <h6 class="mb-0 text-sm">Correo eletrónico o usuario</h6>
-                                </label> <input class="mb-4" type="text" name="username" autocomplete="username"
-                                    placeholder="Ingrese un usuario valido"> </div>
-                            <div class="row px-3"> <label class="mb-1">
-                                    <h6 class="mb-0 text-sm">Contraseña</h6>
-                                </label> <input type="password" autocomplete="current-password" name="password"
-                                    placeholder="Ingrese la contraseña">
-                            </div>
-                            <div class="row px-3 mb-4"></div>
-                            <div class="row mb-3 px-3"> <button type="submit"
-                                    class="btn btn-block btn-blue text-center ">Iniciar
-                                    sesión</button> </div>
-                        </form>
-                        <div class="row mb-3 px-3"> <a href="/public/register" class="btn btn-block btn-primary text-center ">Registrar
-                                nuevo usuario empresarial</a> </div>
-                    </div>
-                </div>
+  <div class="container-fluid px-1 px-md-5 px-lg-1 px-xl-5 py-5 mx-auto">
+    <div class="card card0 border-0">
+      <div class="row d-flex">
+        <div class="col-lg-6">
+          <div class="card1 pb-5">
+            <div class="row">
+              <img src="/static/img/logoi.png" class="logo" />
             </div>
-            <div class="bg-blue py-4">
-                <div class="row px-3"> <a href="/public"> <small class="ml-4 ml-sm-5 mb-2">¿Necesitas ayuda? , haz clic
-                            aquí para buscar asistencia</small></a>
-                    <div class="social-contact ml-4 ml-sm-auto"> <span class="fa fa-facebook mr-4 text-sm"></span> <span
-                            class="fa fa-google-plus mr-4 text-sm"></span> <span
-                            class="fa fa-linkedin mr-4 text-sm"></span> <span
-                            class="fa fa-twitter mr-4 mr-sm-5 text-sm"></span> </div>
-                </div>
+            <div class="row px-3 justify-content-center mt-4 mb-5 border-line">
+              <img src="/static/img/logo.png" class="image" />
             </div>
+          </div>
         </div>
+        <div class="col-lg-6">
+          <div class="card2 card border-0 px-4 py-5">
+            <label>Inicia sesión o crea un nuevo usuario empresarial</label>
+            <div class="row px-3 mb-4">
+              <div class="line"></div>
+            </div>
+            <form id="loginForm">
+              <div class="row px-3">
+                <label class="mb-1">
+                  <h6 class="mb-0 text-sm">Correo eletrónico o usuario</h6>
+                </label>
+                <input class="mb-4" type="text" name="username" autocomplete="username"
+                  placeholder="Ingrese un usuario valido" />
+              </div>
+              <div class="row px-3">
+                <label class="mb-1">
+                  <h6 class="mb-0 text-sm">Contraseña</h6>
+                </label>
+                <input type="password" autocomplete="current-password" name="password"
+                  placeholder="Ingrese la contraseña" />
+              </div>
+              <div class="row px-3 mb-4"></div>
+              <div class="row mb-3 px-3">
+                <button type="submit" class="btn btn-block btn-blue text-center">
+                  Iniciar sesión
+                </button>
+              </div>
+            </form>
+            <div class="row mb-3 px-3">
+              <a href="/public/register" class="btn btn-block btn-primary text-center">Registrar nuevo usuario
+                empresarial</a>
+
+              <a data-toggle="modal" data-target="#exampleModal">
+                <small>¿No recuerda la contraseña? , haz clic aquí para
+                  restaurarla</small></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bg-blue py-4">
+        <div class="row px-3">
+          <a>
+            <small class="ml-4 ml-sm-5 mb-2">¿Necesitas ayuda? , haz clic aquí para buscar asistencia</small></a>
+        </div>
+      </div>
     </div>
+  </div>
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">
+            Restauración de contraseña
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Por favor digite el NIT de la empresa que desea restaurar,
+          enviaremos un correo eletrónico con instrucciones.
+        </div>
+        <form id="restaurar">
+          <div class="row px-3">
+            <input type="text" placeholder="NIT" name="nit" id="nit" />
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+              Cancelar
+            </button>
+            <button type="submit" class="btn btn-primary">Enviar correo</button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+  </div>
 </body>
 <script src="/static/vendor/jquery/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script src="static/js/auth/auth.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+<script src="/static/js/jquery.mask.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<script>
+  const NotFoundM = () => {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "No hemos encontrado un usuario con ese NIT , por favor intenta de nuevo o contacta con soporte Técnico",
+    });
+  };
+
+  const FoundedEmailM = (email) => {
+    Swal.fire({
+      icon: "success",
+      title: "Correo enviado",
+      text: `Hemos enviado un correo electrónico a : ${email} con las instrucciones, por favor verifia la carpeta SPAM`,
+    });
+  };
+
+
+
+  $("#nit").mask("0000-000000-000-0");
+
+
+  $("#restaurar").submit(async e => {
+    e.preventDefault();
+    const nit = $("#nit").val();
+    loader();
+    const data = await $.ajax({ url: `/public/passwordSender?nit=${nit}`, type: "GET" })
+    if (data.error == "USER_NOT_EXIST") return NotFoundM();
+    FoundedEmailM(data.email)
+    $("#exampleModal").modal('hide')
+
+  })
+</script>
 
 </html>

@@ -18,6 +18,80 @@ PublicFunctions.home = (req, res) => {
 PublicFunctions.thanks = (req, res) => {
   res.render("./public_empresas/gracias");
 };
+PublicFunctions.profile = async (req, res) => {
+  const { data } = getUserDataByToken(req.cookies.token);
+  let perfil = await pool.query(
+    "SELECT tb_empresa.Actividad_eco , tb_empresa.Direccion, tb_empresa.Aportacion_insaforp, tb_empresa.Num_Patronal, tb_empresa.Num_Empleados, tb_empresa_contact.Nombre ,  tb_empresa_contact.Email , tb_empresa_contact.Telefono FROM tb_empresa , tb_empresa_contact WHERE tb_empresa.NIT = ? LIMIT 1",
+    [data.usuario]
+  );
+  perfil = perfil[0];
+  res.render("./public_empresas/profile", { usuario: data, perfil });
+};
+PublicFunctions.remindSender = async (req, res) => {
+  const { nit } = req.query;
+  let c = await pool.query("SELECT COUNT(*) AS ca FROM tb_usuarios WHERE id_usuario = ? ", [nit]);
+  c = c[0].ca;
+
+  if(!c) return res.json({status: false, error: "USER_NOT_EXIST"});
+  const data = await pool.query(
+    "SELECT email, Nombre FROM tb_empresa WHERE tb_empresa.NIT = ? LIMIT 1 ; SELECT Password AS code FROM tb_usuarios WHERE id_usuario = ?",
+    [nit, nit]
+  );
+  const { email } = data[0][0];
+  const { Nombre } = data[0][0];
+  const { code } = data[1][0];
+  const enlace = `https://cfp.ricaldone.edu.sv/public/password?code=${code}`;
+  const html = `<h1>Cambio de contraseña usuario empresarial</h1><br><p>Ha solicitado el cambio de contraseña correspondiente al usuario empresarial, por favor de click en el siguiente enlace : <a href="${enlace}" >${enlace}</a>, de no haber solicitado el cambio por favor omita este correo. Cualquier consulta o solicitud de información puede hacerla respondiendo este correo.  </p><p><b>Empresa: </b>${Nombre}</p>`;
+  sendEmail(email, "CAMBIO DE CONTRASEÑA USUARIO CFP RICALDONE", html);
+  res.json({ email }).status(200);
+};
+PublicFunctions.remindPassword = async (req, res) => {
+  const { code } = req.query;
+  let check = await pool.query(
+    "SELECT COUNT(*) AS ca FROM tb_usuarios WHERE Password = ? ",
+    [code]
+  );
+  check = check[0].ca;
+  if (check) {
+    let nit = await pool.query(
+      "SELECT id_usuario AS user FROM tb_usuarios WHERE Password = ? ",
+      [code]
+    );
+    nit = nit[0].user;
+    res.render("./public_empresas/restarpassword", { nit  , code});
+  } else {
+    res
+      .send(
+        "Error: código no valido por favor comuniquese con el Centro de Formación"
+      )
+      .status(404);
+  }
+};
+PublicFunctions.ChangePasswordwithReminder = async (req, res) => {
+  const { nit, code , newpass } = req.body;
+  const encrip = await encriptar(newpass);
+  try {
+    await pool.query(
+      "UPDATE tb_usuarios SET Password = ? WHERE id_usuario = ? AND Password = ? ",
+      [encrip, nit, code]
+    );
+    const data = await pool.query("SELECT email FROM tb_empresa WHERE NIT = ? LIMIT 1 ;",[nit]);
+    console.log(data);
+    const { email } = data[0];
+    const html = `<h1>Cambio de contraseña usuario realizado</h1> <p>Se ha actualizado la contraseña del usuario empresarial , puede ingresar a la plataforma en el siguiente enlace : <a href="https://cfp.ricaldone.edu.sv">https:cfp.ricaldone.edu.sv</a> </p> <br> <p>Si usted no ha hecho este cambio por favor comuniquese respondiendo este correo. </p>`;
+    sendEmail(email, "CAMBIO DE CONTRASEÑA HECHO", html);
+    res.json({status: true}).status(200);
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ error });
+  }
+};
+
+PublicFunctions.changepassword = async (req, res) => {
+  const { data } = getUserDataByToken(req.cookies.token);
+
+  res.render("./public_empresas/profile", { usuario: data, perfil });
+};
 
 PublicFunctions.main = async (req, res) => {
   const programa = req.params.id;
@@ -254,7 +328,9 @@ PublicFunctions.archivos = async (req, res) => {
       );
       ext = req.files[`recibo${index}`].name.split(".")[1];
       fileContent = Buffer.from(req.files[`recibo${index}`].data, "binary");
-      promesas.push(upload(fileContent, Date.now(), ext, empresa, `recibo${index}` ));
+      promesas.push(
+        upload(fileContent, Date.now(), ext, empresa, `recibo${index}`)
+      );
 
       if (req.files[`cancelacion${index}`]) {
         ext = req.files[`cancelacion${index}`].name.split(".")[1];
@@ -263,13 +339,15 @@ PublicFunctions.archivos = async (req, res) => {
           "binary"
         );
         promesas.push(
-          upload(fileContent, Date.now(), ext, empresa, `cancelacion${index}` )
+          upload(fileContent, Date.now(), ext, empresa, `cancelacion${index}`)
         );
       }
 
       ext = req.files[`planilla${index}`].name.split(".")[1];
       fileContent = Buffer.from(req.files[`planilla${index}`].data, "binary");
-      promesas.push(upload(fileContent, Date.now(), ext, empresa, `planilla${index}` ));
+      promesas.push(
+        upload(fileContent, Date.now(), ext, empresa, `planilla${index}`)
+      );
     });
 
     const datos = await Promise.all(promesas);
@@ -285,7 +363,7 @@ PublicFunctions.archivos = async (req, res) => {
             )
           );
         }
-        if (element.posicion == `recibo${index}` ) {
+        if (element.posicion == `recibo${index}`) {
           key = element.key;
           inserts.push(
             pool.query(

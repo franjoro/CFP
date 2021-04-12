@@ -1,8 +1,8 @@
-const error = (error) => {
+const errorM = (err) => {
   Swal.fire({
     icon: "error",
     title: "Oops...",
-    text: error,
+    text: err,
   });
 };
 
@@ -16,7 +16,7 @@ $("#Register").submit(async function (e) {
   const fileTwo = $("#file")[0];
 
   if (fileTwo.files.length == 0)
-    return error("Debe adjuntar NIT para continuar");
+    return errorM("Debe adjuntar NIT para continuar");
   const Nombre = $("#Nombre").val();
   const Nit = $("#Nit").val();
   const Direccion = $("#Direccion").val();
@@ -44,7 +44,7 @@ $("#Register").submit(async function (e) {
   fd.append("TelR", TelR);
   fd.append("file", file[0]);
   if (Email !== $("#EmailConfirmacion").val()) {
-    return error("Parece que los correos ingresados no coiciden");
+    return errorM("Parece que los correos ingresados no coiciden");
   }
 
   if (
@@ -62,7 +62,7 @@ $("#Register").submit(async function (e) {
     !EmailR ||
     !TelR
   ) {
-    return error("Debe rellenar toda la información para continuar");
+    return errorM("Debe rellenar toda la información para continuar");
   }
 
   try {
@@ -97,7 +97,7 @@ $('input[type="file"]').on("change", function () {
       return;
     } else {
       $(this).val("");
-      error(
+      errorM(
         "Deber verficar el formato del archivo adjunto. Formatos permitidos:  PDF, PNG, JPEG, WORD)"
       );
     }

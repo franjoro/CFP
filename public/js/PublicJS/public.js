@@ -333,7 +333,6 @@ $("#tablaParticipantes tbody").on("click", "button", function () {
 });
 $(document).on("change", ".custom-file-input", function (e) {
   const { i } = $(this).data();
-
   let ext = $(this).val().split(".").pop();
   ext = ext.toLowerCase();
   console.log (ext);
@@ -360,13 +359,6 @@ const VerificarEmpresa = () => {
     stepper1.next();
   }
 };
-$('input[type="file"]').on("change", function () {
-
-
-
-
-
-});
 const VerificarArchivos = () => {
   const cursos = JSON.parse(global_data_cursos);
   try {

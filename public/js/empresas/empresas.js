@@ -239,3 +239,4 @@ $(document).ready(() => {
 
 $("#tel_edit").mask("0000-0000");
 $("#aportacion_edit").mask("000,000,000,000,000.00", { reverse: true });
+

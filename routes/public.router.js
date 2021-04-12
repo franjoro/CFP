@@ -15,6 +15,12 @@ router.get("/archivo/:file?", public_.archivo);
 // Carga el formulario principal con la información del programa
 router.get("/editar/:curso/:empresa/:programa", public_.editar);
 
+//Reenviar contraseña al correo
+router.get("/passwordSender",  public_.remindSender);
+//Cambio de contraseña get
+router.get("/password",  public_.remindPassword);
+router.post("/passwordChange",  public_.ChangePasswordwithReminder);
+
 
 //Crea el file con la información pero no lo envia
 router.post("/ficha/:empresa?/:data?", public_.FichaRegistro);
@@ -53,9 +59,15 @@ router.get("/", authcheckEmpresas, public_.home);
 router.get("/form/:id?", authcheckEmpresas, public_.main);
 //Página de agradecimiento
 router.get("/gracias", CloseSession, public_.thanks);
+//Perfil empresarial
+router.get("/profile", authcheckEmpresas, public_.profile);
+//Ofertas inscritas
+router.get("/inscritos", authcheckEmpresas, public_.thanks);
+router.put("/changepassword", authcheckEmpresas , public_.changepassword);
+
+
 // Actualizar la información de la empresa
 router.put("/updateEmpresaData",authcheckEmpresas ,public_.UpdateDataEmpresa);
-
 // Crear solicitud y matriculas
 router.post("/CreateSolicitud", authcheckEmpresas, public_.CreateSolicitud);
 //Enviar documentos para guardar en AWS

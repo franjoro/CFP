@@ -1,143 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Formulario de inscripción</title>
+    <link rel="icon" type="image/png" href="/static/img/logo.ico" />
 
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <title>Formulario de inscripción</title>
-  <link rel="icon" type="image/png" href="/static/img/logo.ico">
+    <link href="/static/css/sb-admin-2.min.css" rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.datatables.net/v/bs4/dt-1.10.23/datatables.min.css"
+    />
+    <link
+      href="/static/vendor/fontawesome-free/css/all.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+  </head>
 
-  <link href="/static/css/sb-admin-2.min.css" rel="stylesheet" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"
-    type="text/css" />
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.23/datatables.min.css" />
-  <link href="/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
-</head>
+  <body
+    class="d-flex flex-column min-vh-100 bg-gradient-light"
+    style="color: black"
+  >
+    <header
+      class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm"
+    >
+      <nav class="my-2 my-md-0 mr-md-3">
+        <a class="p-2 text-primary" href="/public">Formulario de inscripción</a>
+        <a class="p-2 text-secondary" href="/public/profile">Perfil empresarial</a>
+        <a class="p-2 text-secondary" href="/">Cerrar Sesión</a>
+      </nav>
+    </header>
+    <main class="container">
+      <p>
+        <b>Empresa:</b>
+        <%=usuario.Nombre%> - <b>NIT: </b>
+        <%=usuario.usuario%>
+      </p>
 
-<body class="d-flex flex-column min-vh-100 bg-gradient-light" style="color: black">
-  <header class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-    <a href="/"><b>Cerrar sesión</b></a>
-  </header>
-  <main class="container">
-    <p><b>Empresa:</b>  <%=usuario.Nombre%>   - <b>NIT: </b> <%=usuario.usuario%> </p>
+      <div class="container-fluid row">
+        <div class="col-md-10 col-sm-6">
+          <p class="display-4">
+            Centro de Formación Profesional, formulario de inscripción a cursos
+          </p>
+        </div>
+        <div class="col-md-2 col-sm-6">
+          <img src="/static/img/logo.png" class="img-fluid mx-auto d-block" />
+        </div>
+      </div>
 
-    <h3 class="text-primary d-inline">
-      Centro de Formación Profesional, proceso de inscripción para empresas
-    </h3>
-    
-    <img src="/static/img/logo.png" style="width: 125px;" class="d-inline" />
-    <hr />
-    <p>
-      <b>Instrucción #1 : </b> Leer las indicaciones y requisitos previos
-      antes de empezar el formulario de inscripción
-    </p>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-body">
-            <h6><b>Requisitos del participante:</b></h6>
-            <ol>
-              <li>
-                Cada participante debe
-                <b> contar con Laptop o computadora de escritorio </b>.
-              </li>
-              <li>Contar con <b> acceso a Internet </b>.</li>
-              <li>
-                Contar con acceso a las plataformas Moodle y Zoom (de
-                preferencia esta última instalada en la computadora). Si se
-                utilizará equipo de la empresa/institución, se debe gestionar
-                los permisos de acceso, previo al inicio de la capacitación.
-              </li>
-              <li>
-                <b>Compromiso</b> por parte del/la participante a ASISTIR A
-                LAS JORNADAS COMPLETAS DE CAPACITACIÓN. La asistencia
-                requerida para esta modalidad es del 100%.
-              </li>
-            </ol>
+      <hr />
+      <p>
+        <b>Instrucción #1 : </b> Leer las indicaciones y requisitos previos
+        antes de empezar el formulario de inscripción
+      </p>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <h6><b>Requisitos del participante:</b></h6>
+              <ol>
+                <li>
+                  Cada participante debe
+                  <b> contar con Laptop o computadora de escritorio </b>.
+                </li>
+                <li>Contar con <b> acceso a Internet </b>.</li>
+                <li>
+                  Contar con acceso a las plataformas Moodle y Zoom (de
+                  preferencia esta última instalada en la computadora). Si se
+                  utilizará equipo de la empresa/institución, se debe gestionar
+                  los permisos de acceso, previo al inicio de la capacitación.
+                </li>
+                <li>
+                  <b>Compromiso</b> por parte del/la participante a ASISTIR A
+                  LAS JORNADAS COMPLETAS DE CAPACITACIÓN. La asistencia
+                  requerida para esta modalidad es del 100%.
+                </li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <h6><b>Contar con los siguientes documentos:</b></h6>
+              <ol>
+                <li>
+                  Recibo de aportación: Con su respectiva cancelación
+                  (correspondiente al último mes pagado). Si se canceló de forma
+                  electrónica, debe contar con el comprobante.
+                </li>
+                <li>
+                  Planilla del ISSS: Donde aparecen las personas a inscribir
+                </li>
+              </ol>
+            </div>
           </div>
         </div>
       </div>
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-body">
-            <h6><b>Contar con los siguientes documentos:</b></h6>
-            <ol>
-              <li>
-                Recibo de aportación: Con su respectiva cancelación
-                (correspondiente al último mes pagado). Si se canceló de forma
-                electrónica, debe contar con el comprobante.
-              </li>
-              <li>
-                Planilla del ISSS: Donde aparecen las personas a inscribir
-              </li>
-            </ol>
-          </div>
-        </div>
-      </div>
-    </div>
-    <hr />
-    <p>
-      <b>Instrucción #2 : </b> Seleccionar el programa al que desea inscribir
-      a los participantes
-    </p>
-    <div class="row">
-      <div class="col-12">
-        <div class="card">
-          <div class="card-body">
-            <ul>
-              <li>
-                <img style="width: 150px"
-                  src="/static/img/uploads/1611934886035_INGLÉS PARA EL TRABAJO_TRANSPARENTE.png" />
-                <h6><b>Inglés para el trabajo: </b></h6>
+      <hr />
+      <p>
+        <b>Instrucción #2 : </b> Seleccionar el programa al que desea inscribir
+        a los participantes
+      </p>
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body">
+              <ul>
+                <li>
+                  <img
+                    style="width: 150px"
+                    src="/static/img/uploads/1611934886035_INGLÉS PARA EL TRABAJO_TRANSPARENTE.png"
+                  />
+                  <h6><b>Inglés para el trabajo: </b></h6>
 
-                <p>
-                  Contribuir al desarrollo socio económico del país, mediante
-                  el fortalecimiento de las competencias laborales de
-                  trabajadores en el idioma inglés, a través de un programa
-                  estandarizado y modular.
-                </p>
-              </li>
-              <hr />
-              <li>
-                <img style="width: 150px" src="/static/img/uploads/1611934877770_LOGO AT - resplandor.png" />
-                <h6><b>AT- Ofimática: </b></h6>
-                <p>
-                  El programa es una oferta proactiva del INSAFORP, que surge
-                  a partir de estudios y análisis de necesidades de
-                  capacitación técnica en las empresas y consiste en poner a
-                  disposición de los trabajadores una oferta abierta de cursos
-                  técnicos en la Modalidad de Centro fijo.
-                </p>
-              </li>
-            </ul>
-            <select id="select" style="color: black" class="custom-select">
-              <option value="0" selected disabled>
-                SELECCIONAR PROGRAMA
-              </option>
-              <option value="1">Inglés para el trabajo</option>
-              <option value="2">AT- Ofimática</option>
-            </select>
+                  <p>
+                    Contribuir al desarrollo socio económico del país, mediante
+                    el fortalecimiento de las competencias laborales de
+                    trabajadores en el idioma inglés, a través de un programa
+                    estandarizado y modular.
+                  </p>
+                </li>
+                <hr />
+                <li>
+                  <img
+                    style="width: 150px"
+                    src="/static/img/uploads/1611934877770_LOGO AT - resplandor.png"
+                  />
+                  <h6><b>AT- Ofimática: </b></h6>
+                  <p>
+                    El programa es una oferta proactiva del INSAFORP, que surge
+                    a partir de estudios y análisis de necesidades de
+                    capacitación técnica en las empresas y consiste en poner a
+                    disposición de los trabajadores una oferta abierta de cursos
+                    técnicos en la Modalidad de Centro fijo.
+                  </p>
+                </li>
+              </ul>
+              <select id="select" style="color: black" class="custom-select">
+                <option value="0" selected disabled>
+                  SELECCIONAR PROGRAMA
+                </option>
+                <option value="1">Inglés para el trabajo</option>
+                <option value="2">AT- Ofimática</option>
+              </select>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <br />
-    <button class="btn btn-info float-right" id="BtnStart">
-      Empezar con el formulario de inscripción
-      <i class="fas fa-arrow-right"></i>
-    </button>
-    <br />
-    <%- include('../partials/footer.public.ejs'); %>
+      <br />
+      <button class="btn btn-info float-right" id="BtnStart">
+        Empezar con el formulario de inscripción
+        <i class="fas fa-arrow-right"></i>
+      </button>
+      <br />
+      <%- include('../partials/footer.public.ejs'); %>
 
       <script>
         $("#BtnStart").click(() => {
           const option = $("#select").children("option:selected").val();
-          if (option == 0) return alert("Atención, debe seleccionar un programa para continuar");
+          if (option == 0)
+            return alert(
+              "Atención, debe seleccionar un programa para continuar"
+            );
           if (option == 1) return location.replace("/public/form/30");
           if (option == 2) return location.replace("/public/form/29");
         });
       </script>
-  </main>
-</body>
-
+    </main>
+  </body>
 </html>
