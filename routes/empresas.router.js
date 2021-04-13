@@ -31,7 +31,7 @@ router.delete("/DeleteContacto",authcheck,  empresas.deleteContacto);
 // Traer actividades economicas
 router.post("/actividades", authcheck, empresas.actividades);
 // Cambiar contraseña a empresa
-router.put("/Password", authcheck, empresas.ChangePassword);
+router.put("/Password",  empresas.ChangePassword);
 
 
 

@@ -1,103 +1,191 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <title>Formulario de inscripción</title>
-    <link rel="icon" type="image/png" href="/static/img/logo.ico" />
 
-    <link href="/static/css/sb-admin-2.min.css" rel="stylesheet" />
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <title>Formulario de inscripción</title>
+  <link rel="icon" type="image/png" href="/static/img/logo.ico" />
+  <link href="/static/css/sb-admin-2.min.css" rel="stylesheet" />
+</head>
 
-  </head>
-
-  <body
-    class="d-flex flex-column min-vh-100 bg-gradient-light"
-    style="color: black"
-  >
-    <header
-      class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm"
-    >
-      <nav class="my-2 my-md-0 mr-md-3">
-        <a class="p-2 text-secondary" href="/public"
-          >Formulario de inscripción</a
-        >
-        <a class="p-2 text-primary" href="/public/profile"
-          >Perfil empresarial</a
-        >
-        <a class="p-2 text-secondary" href="/">Cerrar Sesión</a>
-      </nav>
-    </header>
-    <main class="container">
-      <div class="container-fluid row">
-          <p class="display-4"><%=usuario.Nombre%></p>
-        <button class="btn btn-info btn-sm float-right" >
-          Cambiar contraseña <i class="fas fa-key"></i>
-        </button>
-      </div>
-      <hr />
-      <p>
-        <b>Información: </b> Los siguientes son los datos empresariales que almacenamos para gestión de solicitudes.
+<body class="d-flex flex-column min-vh-100 bg-gradient-light" style="color: black">
+  <header class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+    <nav class="my-2 my-md-0 mr-md-3">
+      <a class="p-2 text-secondary" href="/public">Formulario de inscripción</a>
+      <a class="p-2 text-primary" href="/public/profile">Perfil empresarial</a>
+      <a class="p-2 text-secondary" href="/">Cerrar Sesión</a>
+    </nav>
+  </header>
+  <main class="container">
+    <div class="container-fluid row">
+      <p class="display-4">
+        <%=usuario.Nombre%>
       </p>
-      <div class="card">
-        <div class="card-body">
-            <div class="form-row">
-              <div class="col-md-2 col-sm-12">
-                <label><b>NIT:</b></label>
-                <p>   <%= usuario.usuario  %>  </p>
-              </div>
-              <div class="col-md-5 col-sm-12">
-                <label><b>Actividad Económica:</b></label>
-                <p><%= perfil.Actividad_eco %></p>
-              </div>
-              <div class="col-md-5 col-sm-12">
-                <label><b>Dirección:</b></label>
-                <p><%= perfil.Direccion %></p>
-              </div>
-            </div>
-            <hr>
-            <div class="form-row">
-              <div class="col-md-3 col-sm-12">
-                <label><b>Aportación a INSAFORP:</b></label>
-                <p>$<%= perfil.Aportacion_insaforp %></p>
-              </div>
-              <div class="col-md-4 col-sm-12">
-                <label><b>Número Patronal:</b></label>
-                <p><%= perfil.Num_Patronal %></p>
-              </div>
-              <div class="col-md-5 col-sm-12">
-                <label><b>Número de empleados:</b></label>
-                <p><%= perfil.Num_Empleados %></p>
-              </div>
-            </div>
+      <button class="btn btn-info btn-sm float-right" data-toggle="modal" data-target="#exampleModal">
+        Cambiar contraseña <i class="fas fa-key"></i>
+      </button>
+    </div>
+    <hr />
+    <p>
+      <b>Información: </b> Los siguientes son los datos empresariales que
+      almacenamos para gestión de solicitudes.
+    </p>
+    <div class="card">
+      <div class="card-body">
+        <div class="form-row">
+          <div class="col-md-2 col-sm-12">
+            <label><b>NIT:</b></label>
+            <p>
+              <%= usuario.usuario %>
+            </p>
+          </div>
+          <div class="col-md-5 col-sm-12">
+            <label><b>Actividad Económica:</b></label>
+            <p>
+              <%= perfil.Actividad_eco %>
+            </p>
+          </div>
+          <div class="col-md-5 col-sm-12">
+            <label><b>Dirección:</b></label>
+            <p>
+              <%= perfil.Direccion %>
+            </p>
+          </div>
+        </div>
+        <hr />
+        <div class="form-row">
+          <div class="col-md-3 col-sm-12">
+            <label><b>Aportación a INSAFORP:</b></label>
+            <p>$<%= perfil.Aportacion_insaforp %>
+            </p>
+          </div>
+          <div class="col-md-4 col-sm-12">
+            <label><b>Número Patronal:</b></label>
+            <p>
+              <%= perfil.Num_Patronal %>
+            </p>
+          </div>
+          <div class="col-md-5 col-sm-12">
+            <label><b>Número de empleados:</b></label>
+            <p>
+              <%= perfil.Num_Empleados %>
+            </p>
+          </div>
         </div>
       </div>
-      <hr>
-      <p>
-        <b>Información: </b> Los siguientes son los datos del contacto empresarial.
-      </p>
-      <div class="card">
-        <div class="card-body">
-            <div class="form-row">
-              <div class="col-md-2 col-sm-12">
-                <label><b>Nombre :</b></label>
-                <p><%= perfil.Nombre %></p>
-              </div>
-              <div class="col-md-5 col-sm-12">
-                <label><b>Correo Electrónico:</b></label>
-                <p><%= perfil.Email %></p>
-              </div>
-              <div class="col-md-5 col-sm-12">
-                <label><b>Teléfono:</b></label>
-                <p><%= perfil.Telefono %></p>
-              </div>
+    </div>
+    <hr />
+    <p>
+      <b>Información: </b> Los siguientes son los datos del contacto
+      empresarial.
+    </p>
+    <div class="card">
+      <div class="card-body">
+        <div class="form-row">
+          <div class="col-md-2 col-sm-12">
+            <label><b>Nombre :</b></label>
+            <p>
+              <%= perfil.Nombre %>
+            </p>
+          </div>
+          <div class="col-md-5 col-sm-12">
+            <label><b>Correo Electrónico:</b></label>
+            <p>
+              <%= perfil.Email %>
+            </p>
+          </div>
+          <div class="col-md-5 col-sm-12">
+            <label><b>Teléfono:</b></label>
+            <p>
+              <%= perfil.Telefono %>
+            </p>
+          </div>
+        </div>
+        <hr />
+      </div>
+    </div>
+    <%- include('../partials/footer.public.ejs'); %>
+  </main>
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-l" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">
+            Cambio de contraseña
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body container">
+          <form id="loginForm">
+            <div class="row">
+              <label class="mb-1">
+                <h6 class="mb-0 text-sm">Nueva contraseña</h6>
+              </label>
+              <input class="form-control" type="password" id="password" name="pass_new"
+                placeholder="Ingrese contraseña" />
             </div>
-            <hr>
+            <hr />
+            <div class="row">
+              <label class="mb-1">
+                <h6 class="mb-0 text-sm">Repetir nueva contraseña</h6>
+              </label>
+              <input class="form-control" type="password" autocomplete="current-password" id="password2"
+                name="password2" placeholder="Repetir contraseña" />
+            </div>
+            <input type="hidden" name="nit_change" value="<%= usuario.usuario %>" />
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Cancelar
+          </button>
+          <button type="submit" class="btn btn-primary">
+            Cambiar contraseña
+          </button>
+        </form>
+
         </div>
       </div>
-      <%- include('../partials/footer.public.ejs'); %>
-    </main>
-  </body>
+    </div>
+  </div>
+  <script>
+    const errorMessage = () => {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Las contraseñas no coinciden, por favor verifica",
+      });
+    };
+    $("#loginForm").submit( async e => {
+      e.preventDefault();
+      const t = $("#loginForm").serialize();
+      if ($("#password").val() != $("#password2").val()) {
+        errorMessage();
+      } else {
+        try {
+          loader();
+          await $.ajax({
+            url: "/admin/empresas/Password",
+            type: "PUT",
+            data: t,
+          });
+          Swal.close();
+          Swal.fire(
+            'Perfecto!',
+            'Se ha cambiado tu contraseña correctamente.',
+            'success'
+          )
+          $("#exampleModal").modal('hide')
+        } catch (error) {
+          console.log(error);
+        }
+      }
+
+    })
+  </script>
+</body>
+
 </html>

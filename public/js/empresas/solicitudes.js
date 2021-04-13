@@ -61,13 +61,13 @@ const Aprobar = async (id, nit, mail) => {
   if (alerta.isConfirmed) {
     try {
       loader();
-      $.ajax({
+      await $.ajax({
         url: "/admin/empresas/solicitudes",
         type: "POST",
         data: { id, nit, mail },
       });
       swal.close();
-      location.reload();
+      window.location.replace('/admin/empresas');
     } catch (error) {
       errorMessage();
       return console.log(error);

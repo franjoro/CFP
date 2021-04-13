@@ -29,6 +29,8 @@ $("#Register").submit(async function (e) {
   const Responsable = $("#Responsable").val();
   const EmailR = $("#EmailR").val();
   const TelR = $("#TelR").val();
+  const password = $("#password").val();
+
   const fd = new FormData();
   fd.append("Nombre", Nombre);
   fd.append("Nit", Nit);
@@ -42,7 +44,9 @@ $("#Register").submit(async function (e) {
   fd.append("Responsable", Responsable);
   fd.append("EmailR", EmailR);
   fd.append("TelR", TelR);
+  fd.append("password", password);
   fd.append("file", file[0]);
+
   if (Email !== $("#EmailConfirmacion").val()) {
     return errorM("Parece que los correos ingresados no coiciden");
   }
@@ -60,7 +64,8 @@ $("#Register").submit(async function (e) {
     !Empleados ||
     !Responsable ||
     !EmailR ||
-    !TelR
+    !TelR ||
+    !password
   ) {
     return errorM("Debe rellenar toda la información para continuar");
   }

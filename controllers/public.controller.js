@@ -5,8 +5,6 @@ const fs = require("fs");
 const pool = require("../models/db");
 const { sendEmail } = require("../utils/mailer");
 const { GenerarPdf } = require("../utils/htmlToPdf");
-const { GenerarPassword } = require("../utils/PasswordGenerator");
-
 const { upload, getFiles } = require("../utils/s3");
 const { encriptar } = require("../utils/decrypt");
 const { getUserDataByToken } = require("../middlewares/auth");
@@ -495,6 +493,7 @@ PublicFunctions.RegisterPost = async (req, res) => {
     Responsable,
     EmailR,
     TelR,
+    password,
   } = req.body;
   try {
     const {
@@ -526,8 +525,8 @@ PublicFunctions.RegisterPost = async (req, res) => {
     const QueryResults = await Promise.all(FirstPromesas);
     const { key } = QueryResults[1];
 
-    const plainPassword = await GenerarPassword();
-    const password = await encriptar(plainPassword);
+   // const plainPassword = await GenerarPassword();
+    const encripted = await encriptar(password);
     const PromesasSecondary = [];
     PromesasSecondary.push(
       pool.query("UPDATE tb_empresa SET nitkey= ? WHERE id_empresa = ? ", [
@@ -539,11 +538,11 @@ PublicFunctions.RegisterPost = async (req, res) => {
     PromesasSecondary.push(
       pool.query(
         "INSERT INTO tb_usuarios(id_usuario, Nombre,Email,Password, Role, Estado ) VALUES(?,?,?,?,?, 1) ",
-        [Nit, Nombre, Email, password, "3"]
+        [Nit, Nombre, Email, encripted, "3"]
       )
     );
 
-    const html = `<h3>Creación de usuario para empresas</h3>  Empresa: ${Nombre}, <p>Gracias por rellenar la información empresarial, uno de nuestros colaboradores revisara la información adjunta. Por favor espera la confirmación para poder hacer las solicitudes de tu curso.</p>  <br> <p>Por este medio informamos las credenciales de acceso, </p>  <b> Usuario: <b/> ${Nit}  <br> <b>Contraseña: </b> ${plainPassword}`;
+    const html = `<h3>Creación de usuario para empresas</h3>  Empresa: ${Nombre}, <p>Gracias por rellenar la información empresarial, uno de nuestros colaboradores revisara la información adjunta. Por favor espera la confirmación para poder hacer las solicitudes de tu curso.</p>  <br> <p>Por este medio informamos las credenciales de acceso, </p>  <b> Usuario: <b/> ${Nit}  <br> <b>Contraseña: </b> ${password}`;
 
     sendEmail(
       Email,
