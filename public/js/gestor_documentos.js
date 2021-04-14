@@ -73,6 +73,23 @@ const DowloadS3File = async (key) => {
   } catch (error) {}
 };
 
+const SeeS3File = async (key) => {
+  try {
+    loaderFile();
+    const query = await $.ajax({
+      url: "/public/getFiles",
+      type: "POST",
+      data: { key },
+    });
+    if (query.status) {
+      const html = ` <iframe src="https:${document.domain}/public/archivo/pdf?date=${Date.now()}" width="100%" height="100%"></iframe>`;
+      $("#framediv").html(html);
+      $("#viewer").modal("show")
+      Swal.close();
+    }
+  } catch (error) {}
+};
+
 const SustituirArchivo = async (curso, empresa, id, archivo) => {
   try {
     const { value: file } = await Swal.fire({
