@@ -27,10 +27,13 @@ PublicFunctions.profile = async (req, res) => {
 };
 PublicFunctions.remindSender = async (req, res) => {
   const { nit } = req.query;
-  let c = await pool.query("SELECT COUNT(*) AS ca FROM tb_usuarios WHERE id_usuario = ? ", [nit]);
+  let c = await pool.query(
+    "SELECT COUNT(*) AS ca FROM tb_usuarios WHERE id_usuario = ? ",
+    [nit]
+  );
   c = c[0].ca;
 
-  if(!c) return res.json({status: false, error: "USER_NOT_EXIST"});
+  if (!c) return res.json({ status: false, error: "USER_NOT_EXIST" });
   const data = await pool.query(
     "SELECT email, Nombre FROM tb_empresa WHERE tb_empresa.NIT = ? LIMIT 1 ; SELECT Password AS code FROM tb_usuarios WHERE id_usuario = ?",
     [nit, nit]
@@ -56,7 +59,7 @@ PublicFunctions.remindPassword = async (req, res) => {
       [code]
     );
     nit = nit[0].user;
-    res.render("./public_empresas/restarpassword", { nit  , code});
+    res.render("./public_empresas/restarpassword", { nit, code });
   } else {
     res
       .send(
@@ -66,19 +69,22 @@ PublicFunctions.remindPassword = async (req, res) => {
   }
 };
 PublicFunctions.ChangePasswordwithReminder = async (req, res) => {
-  const { nit, code , newpass } = req.body;
+  const { nit, code, newpass } = req.body;
   const encrip = await encriptar(newpass);
   try {
     await pool.query(
       "UPDATE tb_usuarios SET Password = ? WHERE id_usuario = ? AND Password = ? ",
       [encrip, nit, code]
     );
-    const data = await pool.query("SELECT email FROM tb_empresa WHERE NIT = ? LIMIT 1 ;",[nit]);
+    const data = await pool.query(
+      "SELECT email FROM tb_empresa WHERE NIT = ? LIMIT 1 ;",
+      [nit]
+    );
     console.log(data);
     const { email } = data[0];
     const html = `<h1>Cambio de contraseña usuario realizado</h1> <p>Se ha actualizado la contraseña del usuario empresarial , puede ingresar a la plataforma en el siguiente enlace : <a href="https://cfp.ricaldone.edu.sv">https:cfp.ricaldone.edu.sv</a> </p> <br> <p>Si usted no ha hecho este cambio por favor comuniquese respondiendo este correo. </p>`;
     sendEmail(email, "CAMBIO DE CONTRASEÑA HECHO", html);
-    res.json({status: true}).status(200);
+    res.json({ status: true }).status(200);
   } catch (error) {
     console.log(error);
     return res.status(400).json({ error });
@@ -91,6 +97,9 @@ PublicFunctions.changepassword = async (req, res) => {
   res.render("./public_empresas/profile", { usuario: data, perfil });
 };
 
+const moment = require("moment");
+moment().format();
+
 PublicFunctions.main = async (req, res) => {
   const programa = req.params.id;
   const { data } = getUserDataByToken(req.cookies.token);
@@ -98,15 +107,26 @@ PublicFunctions.main = async (req, res) => {
   try {
     const datos = await pool.query(
       `SELECT  tb_programa.Nombre, tb_programa.ImgPortada , tb_programa.id_programa  FROM tb_programa WHERE id_programa= ? ;  
-     SELECT Codigo_curso, Nombre, Horario FROM tb_cursos WHERE id_programa = ? AND Estado= 5;
+     SELECT Codigo_curso, Nombre, Horario, Date_inicio	 FROM tb_cursos WHERE id_programa = ? AND Estado= 5;
      SELECT id_empresa, Aportacion_insaforp, Num_Empleados FROM tb_empresa WHERE NIT =?
      `,
       [req.params.id, programa, data.usuario]
     );
     if (!datos.length) return res.redirect("/public/");
+    const cursos = [];
+    let today = new Date();
+    const dd = String(today.getDate()).padStart(2, "0");
+    const mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+    const yyyy = today.getFullYear();
+    today = `${yyyy}-${mm}-${dd}`;
+    datos[1].forEach((element) => {
+      if (moment(element.Date_inicio).isSameOrAfter(today)) {
+        cursos.push(element);
+      }
+    });
     const DatosFormat = {
       programa: datos[0][0],
-      cursos: datos[1],
+      cursos: cursos,
       update: datos[2][0],
     };
     return res.render("./public_empresas/empresa", DatosFormat);
@@ -437,9 +457,9 @@ PublicFunctions.archivo = (req, res) => {
 
 PublicFunctions.SeeFile = (req, res) => {
   const file = fs.readFileSync(`./public/files/tmp/tmpfile.${req.params.file}`);
-  if(req.params.file == 'png')res.contentType("image/png");
-  if(req.params.file == 'pdf')res.contentType("application/pdf");
-  if(req.params.file == 'jpeg')res.contentType("image/jpeg");
+  if (req.params.file == "png") res.contentType("image/png");
+  if (req.params.file == "pdf") res.contentType("application/pdf");
+  if (req.params.file == "jpeg") res.contentType("image/jpeg");
   res.send(file);
 };
 
@@ -533,7 +553,7 @@ PublicFunctions.RegisterPost = async (req, res) => {
     const QueryResults = await Promise.all(FirstPromesas);
     const { key } = QueryResults[1];
 
-   // const plainPassword = await GenerarPassword();
+    // const plainPassword = await GenerarPassword();
     const encripted = await encriptar(password);
     const PromesasSecondary = [];
     PromesasSecondary.push(

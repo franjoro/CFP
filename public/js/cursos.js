@@ -21,8 +21,10 @@ loader = () => {
 $(document).ready(() => {
   $("#costo").mask("000,000,000,000,000.00", { reverse: true });
   $("#costo_oferta").mask("000,000,000,000,000.00", { reverse: true });
-  $("#date_inicio").datepicker({ dateFormat: "dd-mm-yy" });
-  $("#date_fin").datepicker({ dateFormat: "dd-mm-yy" });
+  $("#date_inicio").datepicker({ dateFormat: "yy-mm-dd" });
+  $("#date_fin").datepicker({ dateFormat: "yy-mm-dd" });
+  $("#fecha_limite").datepicker({ dateFormat: "yy-mm-dd" });
+
   $("#instructor").select2({
     width: "100%",
     ajax: {
@@ -67,7 +69,7 @@ $(document).ready(() => {
     }
   });
 
-  // Agregar nuevo curso
+  // Agregar nueva oferta
   $("#form_oferta").submit(async function (e) {
     e.preventDefault();
     const t = $(this).serialize();
@@ -80,6 +82,7 @@ $(document).ready(() => {
       costo: $("#costo_oferta").val(),
       programa: $("#programa_oferta").val(),
       fechas: $("#horario_fecha").val(),
+      fechaL: $("#fecha_limite").val(),
     };
     try {
       const query = await $.ajax({

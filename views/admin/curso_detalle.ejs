@@ -32,9 +32,9 @@
                     <div class="col-6">
                       <p>
                         <b>Fecha inicio:</b>
-                        <%= curso.Date_inicio.toLocaleDateString() %> <br />
+                        <%= curso.Date_inicio %> <br />
                           <b>Fecha final:</b>
-                          <%= curso.Date_fin.toLocaleDateString() %> <br />
+                          <%= curso.Date_fin %> <br />
                             <b>Orden de inicio:</b>
                             <%= curso.Orden %> <br />
                               <b>Agrupación:</b>
@@ -64,7 +64,12 @@
                   <%} else{ %>
                     <h5> Oferta : <%= curso.Nombre %>
                     </h5>
-                    <p>Solicitud de empresas y participantes activos</p>
+                    <p> <b>Última fecha de recepción documentos:</b>
+                      <%= curso.Date_inicio %>
+                    </p>
+                    <hr>
+                    <button class="btn btn-info btn-sm d-inline" data-toggle="modal"                 data-target="#modificar_modal_oferta">Editar oferta</button>
+                    <button class="btn btn-primary btn-sm  d-inline"  data-toggle="modal"                 data-target="#insertar_modal"  >Crear curso de esta oferta</button>
                     <% } %>
               </div>
             </div>
@@ -198,7 +203,152 @@
     </div>
   </div>
 
+  <% if(tipo=='oferta' ) { %>
+        <!-- Modal Insertar curso en base a oferta -->
+        <div class="modal fade" id="insertar_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog  modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">AGREGAR NUEVO CURSO</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form id="form_curso">
+                <input type="hidden" name="programa" value="<%= programa%>">
+                <div class="form-row">
+                  <div class="form-group col-md-4">
+                    <label for="codigo_curso">Código de curso*</label>
+                    <input type="text" class="form-control" required name="codigo_curso" id="codigo_curso">
+                  </div>
+                  <div class="form-group col-md-8">
+                    <label for="nombre">Nombre del curso*</label>
+                    <input type="text" class="form-control" required name="nombre" id="nombre" value="<%= curso.CursoName %>">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="col-3">
+                    <label for="date_inicio">Fecha de inicio</label>
+                    <input type="text" class="form-control" name="date_inicio" id="date_inicio">
+                  </div>
+                  <div class="col-3">
+                    <label for="date_fin">Fecha de finalización</label>
+                    <input type="text" class="form-control" name="date_fin" id="date_fin">
+                  </div>
+                  <div class="col-3">
+                    <label for="orden">Orden de inicio</label>
+                    <input type="text" class="form-control" name="orden" id="orden">
+                  </div>
+                  <div class="col-3">
+                    <label for="agrupacion">Agrupación</label>
+                    <input type="text" class="form-control" name="agrupacion" id="agrupacion">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="col-3">
+                    <label for="modalidad">Modalidad de contratación</label>
+                    <select class="form-control" name="modalidad" id="modalidad">
+                      <option value="Licitación">Licitación</option>
+                      <option value="Bolpros">Bolpros</option>
+                    </select>
+                  </div>
+                  <div class="col-3">
+                    <label for="modadlidad_id">Identificador de modalidad</label>
+                    <input type="text" class="form-control" name="modadlidad_id" id="modadlidad_id">
+                  </div>
+                  <div class="col-3">
+                    <label for="documento">Documento de contratación</label>
+                    <select class="form-control" name="documento" id="documento">
+                      <option value="Contrato">Contrato</option>
+                      <option value="Orden">Orden de compra</option>
+                    </select>
+                  </div>
+                  <div class="col-3">
+                    <label for="documento_id">Identificador de documento</label>
+                    <input type="text" class="form-control" name="documento_id" id="documento_id">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-8">
+                    <label for="fechas">Fechas</label>
+                    <input type="text" class="form-control" name="fechas" id="fechas" value="<%= curso.Fechas %>">
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="horario">Horario</label>
+                    <input type="text" class="form-control" name="horario" id="horario" value="<%= curso.Horario %>">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-4">
+                    <label for="factura">Factura</label>
+                    <input type="text" class="form-control" name="factura" id="factura" placeholder="000000">
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="instructor">Instructor</label>
+                    <select id="instructor" name="instructor" class="form-control">
+                      <option selected>Seleccionar instructor</option>
+                      <option>...</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="costo">Costo Por alumno</label>
+                    <input type="text" class="form-control" name="costo" id="costo" value="<%= curso.costo %>"     >
+                  </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+              <button type="submit" class="btn btn-primary">Agregar curso</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+    <!-- Modal editar oferta -->
+    <div class="modal fade" id="modificar_modal_oferta" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog  modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">EDITAR OFERTA </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="form_editar_oferta">
+              <input type="hidden" name="id" value="<%= curso.Codigo_curso%>">
+              <div class="form-row">
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-12">
+                  <label for="costo">Fechas</label>
+                  <input type="text" class="form-control" name="fecha" value="<%= curso.Fechas %>" id="fecha">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="horario">Horario</label>
+                  <input type="text" class="form-control" name="horario" value="<%= curso.Horario %> " id="horario">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="date_inicio">Fecha de inicio</label>
+                  <input type="text" class="form-control" value="<%= curso.Date_inicio %>" name="date_inicio_oferta"
+                    id="date_inicio_oferta">
+                </div>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            <button type="submit" class="btn btn-primary">Editar oferta</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
 
+  <% }%>
 
 
   <% if(tipo=='curso' ) { %>
@@ -226,13 +376,12 @@
               <div class="form-row">
                 <div class="col-3">
                   <label for="date_inicio">Fecha de inicio</label>
-                  <input type="text" class="form-control" value="<%= curso.Date_inicio.toLocaleDateString() %>"
-                    name="date_inicio" id="date_inicio">
+                  <input type="text" class="form-control" value="<%= curso.Date_inicio %>" name="date_inicio"
+                    id="date_inicio">
                 </div>
                 <div class="col-3">
                   <label for="date_fin">Fecha de finalización</label>
-                  <input type="text" class="form-control" value="<%= curso.Date_fin.toLocaleDateString() %>"
-                    name="date_fin" id="date_fin">
+                  <input type="text" class="form-control" value="<%= curso.Date_fin %>" name="date_fin" id="date_fin">
                 </div>
                 <div class="col-3">
                   <label for="orden">Orden de inicio</label>
@@ -319,23 +468,7 @@
         </div>
       </div>
     </div>
-
-
-
-
-
     <% }%>
-
-
-
-
-
-
-
-
-
-
-
       <!-- Modal Ingresar participante-->
       <div class="modal " id="modal_participante" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
@@ -391,9 +524,6 @@
           </div>
         </div>
       </div>
-
-
-
       <div class="modal fade" id="modal_migrar_all" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -405,7 +535,8 @@
               </button>
             </div>
             <div class="modal-body">
-              <p>Migrar el bloque de solicitud, cambiara la asignación de participantes, empresa y documentos al nuevo curso seleccionado.</p>
+              <p>Migrar el bloque de solicitud, cambiara la asignación de participantes, empresa y documentos al nuevo
+                curso seleccionado.</p>
               <select class="custom-select selec_cursos" id="selec_cursos2" name="selec_cursos">
                 <option value="0">- Buscar curso -</option>
               </select>
@@ -419,9 +550,6 @@
           </div>
         </div>
       </div>
-
-
-
 
       <!-- /.container-fluid -->
       <%- include('../partials/footer'); %>

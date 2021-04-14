@@ -30,8 +30,10 @@ $(document).ready(() => {
   $("#dui").mask("00000000-0");
   $("#tel").mask("0000-0000");
   $("#costo").mask("000,000,000,000,000.00", { reverse: true });
-  $("#date_inicio").datepicker({ dateFormat: "dd-mm-yy" });
-  $("#date_fin").datepicker({ dateFormat: "dd-mm-yy" });
+  $("#date_inicio").datepicker({ dateFormat: "yy-mm-dd" });
+  $("#date_fin").datepicker({ dateFormat: "yy-mm-dd" });
+  $("#date_inicio_oferta").datepicker({ dateFormat: "yy-mm-dd" });
+
   $("#select_empresa").select2({
     width: "100%",
     ajax: {
@@ -85,6 +87,27 @@ $(document).ready(() => {
     try {
       const data = await $.ajax({
         url: "/admin/cursos/edit",
+        type: "PUT",
+        data: t,
+      });
+      if (data.status) {
+        swal.close();
+        location.reload();
+      }
+    } catch (error) {
+      swal.close();
+      console.log(error);
+      errorMessage();
+    }
+  });
+  // Editar Oferta
+  $("#form_editar_oferta").submit(async function (e) {
+    e.preventDefault();
+    const t = $(this).serialize();
+    loader();
+    try {
+      const data = await $.ajax({
+        url: "/admin/cursos/editOferta",
         type: "PUT",
         data: t,
       });
@@ -313,7 +336,6 @@ const SendFiles = async (key) => {
   }
 };
 
-
 const MigrarAll = async (empresa, curso, programa) => {
   $("#selec_cursos2").select2({
     width: "100%",
@@ -367,3 +389,46 @@ const MigrarAll = async (empresa, curso, programa) => {
     }
   });
 };
+
+// Agregar nuevo curso
+$("#form_curso").submit(async function (e) {
+  e.preventDefault();
+  const t = $(this).serialize();
+  loader();
+  try {
+    const data = await $.ajax({
+      url: "/admin/cursos/add",
+      type: "POST",
+      data: t,
+    });
+    if (data.status) {
+      swal.close();
+      Swal.fire("Curso creado correctamente", "Vuelva atrás para verificar", "success");
+    }
+  } catch (error) {
+    swal.close();
+    console.log(error);
+    errorMessage();
+  }
+});
+$("#instructor").select2({
+  width: "100%",
+  ajax: {
+    url: "/admin/cursos/getInstructores",
+    type: "post",
+    dataType: "json",
+    delay: 250,
+    data(params) {
+      return {
+        searchTerm: params.term, // search term
+      };
+    },
+    results(response) {
+      $.map(response, (item) => ({
+        id: item.id,
+        text: item.text,
+      }));
+    },
+    cache: true,
+  },
+});

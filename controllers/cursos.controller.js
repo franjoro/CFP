@@ -81,7 +81,7 @@ cursos.curso_detalle = async (req, res) => {
       typeQuery = `SELECT  tb_cursos . Codigo_curso ,  tb_cursos . Nombre ,  tb_cursos . Date_inicio ,  tb_cursos . Date_fin ,  tb_cursos . Orden ,  tb_cursos . Agrupacion ,  tb_cursos . Horario ,  tb_cursos . CostoAlumno ,  tb_cursos . Factura ,  tb_instructor . Nombre AS instructor , tb_cursos.Modalidad , tb_cursos.id_modalidad, tb_cursos.Documento , tb_cursos.id_documento   FROM  tb_instructor  INNER JOIN  tb_cursos  ON  tb_cursos . id_instructor  =  tb_instructor . DUI  WHERE tb_cursos . Codigo_curso  = ?  GROUP BY tb_cursos.Codigo_curso`;
     }
     if (tipo === "oferta") {
-      typeQuery = `SELECT CONCAT(Nombre,' - ',Horario) AS Nombre , Codigo_curso FROM tb_cursos WHERE Codigo_curso  = ?`;
+      typeQuery = `SELECT CONCAT(Nombre,' - ',Horario) AS Nombre , Codigo_curso  , Date_inicio , Horario, Fechas, Nombre AS CursoName , CostoAlumno AS costo FROM tb_cursos WHERE Codigo_curso  = ?`;
     }
     const statment = `SELECT tb_empresa.Nombre,tb_empresa.id_empresa AS codigo_empresa FROM tb_empresa INNER JOIN union_curso_empresa ON tb_empresa.id_empresa = union_curso_empresa.id_empresa WHERE union_curso_empresa.id_curso = ? ;SELECT tb_participante.DUI, tb_participante.Nombre, tb_participante.Telefono, tb_participante.Email, union_matricula.id_empresa FROM tb_participante  INNER JOIN union_matricula ON union_matricula.id_participante = tb_participante.DUI WHERE union_matricula.id_curso = ? ; ${typeQuery}`;
 
@@ -148,8 +148,8 @@ cursos.add = async (req, res) => {
   const data = [
     req.body.codigo_curso,
     req.body.nombre,
-    req.body.date_inicio.split("-").reverse().join("-"),
-    req.body.date_fin.split("-").reverse().join("-"),
+    req.body.date_inicio,
+    req.body.date_fin,
     req.body.agrupacion,
     req.body.orden,
     req.body.horario,
@@ -181,6 +181,7 @@ cursos.oferta = async (req, res) => {
   const data = [
     req.body.codigo_curso,
     req.body.nombre,
+    req.body.fechaL,
     req.body.horario,
     req.body.fechas,
     req.body.costo,
@@ -189,7 +190,7 @@ cursos.oferta = async (req, res) => {
   ];
   try {
     await pool.query(
-      "INSERT INTO tb_cursos(Codigo_curso, Nombre,Horario, Fechas ,  CostoAlumno, id_programa, Estado)  VALUES(?,?,?,?,?,?,?)",
+      "INSERT INTO tb_cursos(Codigo_curso, Nombre, Date_inicio,  Horario, Fechas ,  CostoAlumno, id_programa, Estado)  VALUES(?,?,?,?,?,?,?,?)",
       data
     );
     return res.json({ status: true });
@@ -249,6 +250,26 @@ cursos.delteCursoOferta = async (req, res) => {
     return res.status(200).json({ status: true });
   } catch (error) {
     return res.status(400).json({ status: false, error });
+  }
+};
+
+cursos.editOferta = async (req, res) => {
+  try {
+    if (!req.body.id) throw new Error("EMPTY_ID");
+    const data = [
+      req.body.fecha,
+      req.body.horario,
+      req.body.date_inicio_oferta,
+      req.body.id,
+    ];
+    await pool.query(
+      "UPDATE tb_cursos SET Fechas = ? , Horario = ? , Date_inicio= ? WHERE Codigo_curso = ?",
+      data
+    );
+    return res.status(200).json({ status: true });
+  } catch (error) {
+    if (err) console.log(err);
+    return res.status(400).json({ status: false, error: err });
   }
 };
 
