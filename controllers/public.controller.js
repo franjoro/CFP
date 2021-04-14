@@ -435,6 +435,14 @@ PublicFunctions.archivo = (req, res) => {
   res.download(path, `archivo.${req.params.file}`);
 };
 
+PublicFunctions.SeeFile = (req, res) => {
+  const file = fs.readFileSync(`./public/files/tmp/tmpfile.${req.params.file}`);
+  if(req.params.file == 'png')res.contentType("image/png");
+  if(req.params.file == 'pdf')res.contentType("application/pdf");
+  if(req.params.file == 'jpeg')res.contentType("image/jpeg");
+  res.send(file);
+};
+
 PublicFunctions.editar = async (req, res) => {
   const { curso, empresa, programa } = req.params;
 

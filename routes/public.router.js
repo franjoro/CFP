@@ -12,6 +12,8 @@ const { authcheckEmpresas, CloseSession } = require("../middlewares/auth");
 router.post("/getFiles", public_.GetFiles);
 //descargar archivo con documentos de AWS
 router.get("/archivo/:file?", public_.archivo);
+//Ver archivo para visualizador
+router.get("/seefile/:file?", public_.SeeFile);
 // Carga el formulario principal con la información del programa
 router.get("/editar/:curso/:empresa/:programa", public_.editar);
 

@@ -82,7 +82,8 @@ const SeeS3File = async (key) => {
       data: { key },
     });
     if (query.status) {
-      const html = ` <iframe src="https:${document.domain}/public/archivo/pdf?date=${Date.now()}" width="100%" height="100%"></iframe>`;
+      console.log(query);
+      const html = ` <iframe src="https://cfp.ricaldone.edu.sv/public/seefile/${query.ext}?date=${Date.now()}" width="100%" height="100%"></iframe>`;
       $("#framediv").html(html);
       $("#viewer").modal("show")
       Swal.close();
