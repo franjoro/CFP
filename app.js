@@ -20,6 +20,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 // app.use(setCache);
 // Cargamos las rutas
+const {CreateNewExcel} = require('./utils/excel');
 
 // Router principal de admin y sus controladores
 app.use("/admin", require("./routes/admin.router"));
@@ -39,8 +40,20 @@ app.use("/public", require("./routes/public.router"));
 // Router Formulario de Habil
 app.use("/habil", require("./routes/habil.router"));
 
-app.get("/prueba", (req, res) => {
-  res.render("public_empresas/prueba");
+// Router Formulario de Habil
+app.use("/reportes", require("./routes/reportes.router"));
+
+
+
+
+
+app.get("/prueba", async (req, res) => {
+  const titulos = ["String", "String", "String"];
+  const datos = [{key: 'value' } , {key: 'value' }  ]
+  await CreateNewExcel(titulos, datos);
+  const path = `./public/files/tmp/excel.xlsx`;
+  res.contentType("application/vnd.ms-excel ");
+  res.download(path, `reporte.xlsx`);
 });
 
 // Mailer

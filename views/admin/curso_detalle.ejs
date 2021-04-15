@@ -61,6 +61,8 @@
                       </p>
                     </div>
                   </div>
+                  <hr>
+                  <button class="btn btn-success btn-sm d-inline" onclick="ReporteAlumnos('<%=curso.Codigo_curso%>')"><i class="fas fa-file-excel"></i> Descargar participantes</button>
                   <%} else{ %>
                     <h5> Oferta : <%= curso.Nombre %>
                     </h5>
@@ -107,7 +109,8 @@
                         class="fas fa-trash-alt"></i></button>
                     <button class="btn  btn-success m-1"
                       onclick="MigrarAll('<%= element.id %>', '<%= curso.Codigo_curso %>' , '<%= programa %>')"><i
-                        class="fas fa-exchange-alt"></i></button>
+                        class="fas fa-exchange-alt"></i></button> <hr>
+                        <small>Cantidad de participantes :<%= element.Alumnos.length %></small>
                   </div>
                 </div>
               </div>

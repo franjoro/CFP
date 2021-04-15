@@ -403,7 +403,11 @@ $("#form_curso").submit(async function (e) {
     });
     if (data.status) {
       swal.close();
-      Swal.fire("Curso creado correctamente", "Vuelva atrás para verificar", "success");
+      Swal.fire(
+        "Curso creado correctamente",
+        "Vuelva atrás para verificar",
+        "success"
+      );
     }
   } catch (error) {
     swal.close();
@@ -432,3 +436,17 @@ $("#instructor").select2({
     cache: true,
   },
 });
+
+const ReporteAlumnos = async (id) => {
+  loader();
+  try {
+    const respuesta = await $.ajax(`/reportes/PartiCurso/${id}`);
+    if (respuesta.status) {
+      window.open("/reportes/download");
+    }
+    swal.close();
+  } catch (error) {
+    console.log(error);
+    errorMessage();
+  }
+};
