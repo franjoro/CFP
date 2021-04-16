@@ -69,13 +69,40 @@
       </div>
       <div class="bg-blue py-4">
         <div class="row px-3">
-          <a>
-            <small class="ml-4 ml-sm-5 mb-2">¿Necesitas ayuda? , haz clic aquí para buscar asistencia</small></a>
+          <a href="/terms"><small class="ml-4 ml-sm-5">Términos y condiciones de uso</small></a>
+          <a ><small data-toggle="modal" data-target="#ayuda" class="ml-4 ml-sm-5 ">¿Necesitas ayuda? , haz clic aquí para buscar asistencia</small></a>
         </div>
       </div>
     </div>
   </div>
 
+
+  <div class="modal fade" id="ayuda" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">
+            Contacta con soporte técnico
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p> <b>¿Necesitas más información?</b> Te dejamos nuestros contactos</p>
+          <p> <b>Soporte Técnico: </b> soporte_cfp@ricaldone.edu.sv - <b>Ofimática: </b> ofimatica@ricaldone.edu.sv (503) 2234-6055; (503) 7854-9460 </p>
+           <p><b>Inglés para el trabajo: </b> pnit@ricaldone.edu.sv (503) 2234-6077; (503) 2234-6054; (503) 7854-2514 </p>
+            <p>o bien encuentra ayuda en nuestros manuales de uso : </p>
+            <hr>
+         <a target="_blank" href="https://drive.google.com/file/d/19EP0oEmXJSBs-k5yd98nY2Tl6A2LV5jk/view?usp=sharing"><button class="d-inline btn-sm btn btn-info">Cómo registrarse como empresa</button></a> 
+          <button class="d-inline btn-sm btn btn-info">Cómo registrar una solicitud </button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -90,22 +117,24 @@
         <div class="modal-body">
           Por favor digite el NIT de la empresa que desea restaurar,
           enviaremos un correo eletrónico con instrucciones.
-        </div>
-        <form id="restaurar">
-          <div class="row px-3">
-            <input type="text" placeholder="NIT" name="nit" id="nit" />
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">
-              Cancelar
-            </button>
-            <button type="submit" class="btn btn-primary">Enviar correo</button>
-        </form>
 
+          <form id="restaurar">
+            <div class="row px-3">
+              <input type="text" placeholder="NIT" name="nit" id="nit" />
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                Cancelar
+              </button>
+              <button type="submit" class="btn btn-primary">Enviar correo</button>
+          </form>
+        </div>
       </div>
     </div>
   </div>
-  </div>
+
+
+
 </body>
 <script src="/static/vendor/jquery/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>

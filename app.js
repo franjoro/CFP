@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 // app.use(setCache);
 // Cargamos las rutas
-const {CreateNewExcel} = require('./utils/excel');
+const { CreateNewExcel } = require("./utils/excel");
 
 // Router principal de admin y sus controladores
 app.use("/admin", require("./routes/admin.router"));
@@ -43,13 +43,13 @@ app.use("/habil", require("./routes/habil.router"));
 // Router Formulario de Habil
 app.use("/reportes", require("./routes/reportes.router"));
 
-
-
-
+app.get("/terms", (req, res) => {
+  res.render("terms");
+});
 
 app.get("/prueba", async (req, res) => {
   const titulos = ["String", "String", "String"];
-  const datos = [{key: 'value' } , {key: 'value' }  ]
+  const datos = [{ key: "value" }, { key: "value" }];
   await CreateNewExcel(titulos, datos);
   const path = `./public/files/tmp/excel.xlsx`;
   res.contentType("application/vnd.ms-excel ");

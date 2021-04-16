@@ -408,6 +408,7 @@ $("#form_curso").submit(async function (e) {
         "Vuelva atrás para verificar",
         "success"
       );
+      $("#insertar_modal").modal('hide');
     }
   } catch (error) {
     swal.close();
