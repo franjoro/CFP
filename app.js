@@ -6,6 +6,15 @@ const cors = require("cors");
 const compression = require("compression");
 // Llamamos a express para poder crear el servidor
 const app = express();
+const helmet = require("helmet");
+const { directives } = require("./SecurityDirectives");
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: directives,
+    },
+  })
+);
 const cookieParser = require("cookie-parser");
 // const setCache = require("./middlewares/cache");
 app.use(cookieParser());
@@ -18,9 +27,8 @@ app.set("view engine", "ejs");
 app.use("/static", express.static(`${__dirname}/public`));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-// app.use(setCache);
+
 // Cargamos las rutas
-const { CreateNewExcel } = require("./utils/excel");
 
 // Router principal de admin y sus controladores
 app.use("/admin", require("./routes/admin.router"));
@@ -45,15 +53,6 @@ app.use("/reportes", require("./routes/reportes.router"));
 
 app.get("/terms", (req, res) => {
   res.render("terms");
-});
-
-app.get("/prueba", async (req, res) => {
-  const titulos = ["String", "String", "String"];
-  const datos = [{ key: "value" }, { key: "value" }];
-  await CreateNewExcel(titulos, datos);
-  const path = `./public/files/tmp/excel.xlsx`;
-  res.contentType("application/vnd.ms-excel ");
-  res.download(path, `reporte.xlsx`);
 });
 
 // Mailer
