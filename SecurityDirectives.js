@@ -12,6 +12,7 @@ const Directivas = {
             "http://cdnjs.cloudflare.com/ajax/libs/validate.js/0.13.1/validate.min.js",
             "https://cdn.datatables.net/v/bs4/dt-1.10.23/datatables.min.js",
             "https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js",
+            "https://www.googletagmanager.com/gtag/js"
         ],
         connectSrc: ["'self'"],
         styleSrc: [

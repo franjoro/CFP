@@ -1,218 +1,1139 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Pricing example · Bootstrap v5.0</title>
-
     <link href="/static/css/sb-admin-2.min.css" rel="stylesheet" />
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css"
-      rel="stylesheet"
-      type="text/css"
-    />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://cdn.datatables.net/v/bs4/dt-1.10.23/datatables.min.css"
-    />
   </head>
-  <body class="bg-gradient-light">
+
+  <body class="bg-gradient-light" style="font-family: Roboto">
     <header
       class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm"
-    >
-    <!-- <b>Programa:  </b>  <%=  //Nombre %> -->
-      <!-- <p class="h5 my-0 me-md-auto fw-normal">Company name</p>
-      <nav class="my-2 my-md-0 me-md-3">
-        <a class="p-2 text-dark" href="#">Features</a>
-        <a class="p-2 text-dark" href="#">Enterprise</a>
-        <a class="p-2 text-dark" href="#">Support</a>
-        <a class="p-2 text-dark" href="#">Pricing</a>
-      </nav>
-      <a class="btn btn-outline-primary" href="#">Sign up</a> -->
-    </header>
-
+    ></header>
     <main class="container">
-      <img src="/static/img/logo.png" class="logo d-inline" />
-      <img
-        src="/static/img/uploads/1611934869304_INSAFORP TRASNPARENTE Y RESPLANDOR.png"
-        class="logo d-inline float-right"
-      />
+      <div class="row">
+        <div class="col align-self-start">
+          <img
+            src="/static/img/logo.png"
+            class="logo"
+            alt="logo Cfp Ricaldone"
+          />
+        </div>
+        <div class="col align-self-end">
+          <img
+            src="/static/img/uploads/1611934869304_INSAFORP TRASNPARENTE Y RESPLANDOR.png"
+            class="logo d-inline float-right"
+            alt="logo insaforp"
+          />
+        </div>
+      </div>
       <hr />
       <div class="mx-auto">
         <h3 class="text-primary">
-          Centro de formación profesional, hoja de inscipción de 
-          participantes
+          Centro de formación profesional, hoja de inscipción de participantes
         </h3>
         <p class="text-dark">
           <b>Ayuda: </b>Siga las instrucciones de cada paso
-        </p>    
+        </p>
       </div>
-
       <div class="row">
         <div class="col">
-          <div class="card mb-4 shadow-sm">
-            <div class="card-body">
-              <div class="card mb-4 shadow-sm">
-                <div class="card-header">
-                  <h4 class="my-0 fw-normal">#1 Seleccionar empresa</h4>
+          <div class="card mb-4 shadow-sm form">
+            <div class="card-header">
+              <small
+                ><span id="texto">Datos de identificación </span>:
+                <span id="id"> 1</span> de 6</small
+              >
+              <progress value="16.66" max="100" id="progBar"></progress>
+            </div>
+            <div class="card-body" id="sec1">
+              <h3>SECCIÓN 1. DATOS DE IDENTIFICACIÓN</h3>
+              <h6 class="lead">DATOS PERSONALES</h6>
+              <hr />
+              <div class="row">
+                <div class="col-md-3">
+                  <label>DUI</label
+                  ><input
+                    type="text"
+                    class="form-control form-control-sm"
+                    name="dui"
+                    id="dui"
+                  />
                 </div>
-                <div class="card-body">
-                  <p class="text-dark">
-                    <b>Instrucciones: </b>Buscar nombre de empresa
-                  </p>
-                  <select class="custom-select" id="select_empresa">
-                    <option value="0">- Buscar empresa -</option>
+                <div class="col-md-3">
+                  <label>NIT</label
+                  ><input
+                    type="text"
+                    class="form-control form-control-sm"
+                    name="NIT"
+                    id="nit"
+                  />
+                </div>
+                <div class="col-md-3">
+                  <label>Nacionalidad</label>
+                  <select
+                    id="nacionalidad"
+                    class="form-control form-control-sm"
+                  >
+                    <option selected disabled>Seleccione nacionalidad</option>
+                    <option value="salvadoreno">Salvadoreño</option>
+                    <option value="extranjero">Extranjero</option>
                   </select>
                 </div>
-              </div>
-              <div class="card mb-4 shadow-sm">
-                <div class="card-header">
-                  <h4 class="my-0 fw-normal">SECCION 1. DATOS DE IDENTIFICACIÓN     </h4>
+                <div class="col-md-3">
+                  <label>País</label
+                  ><input
+                    type="text"
+                    class="form-control form-control-sm"
+                    name="pais"
+                    id="pais"
+                  />
                 </div>
-                <div class="card-body">
-                  <p class="text-dark">
-                    <b>Instrucciones: </b>Rellenar la información de los
-                    participantes que desea inscribir y verificar la información
-                    de la tabla
-                  </p>
-                  <div class="form-row">
-                    <div class="col">
-                      <label for="name">DUI*</label>
+                <div class="col-md-3">
+                  <label>1er Nombre</label
+                  ><input
+                    type="text"
+                    class="form-control form-control-sm"
+                    name="1ernombre"
+                    id="1ernombre"
+                  />
+                </div>
+                <div class="col-md-3">
+                  <label>2do Nombre</label
+                  ><input
+                    type="text"
+                    class="form-control form-control-sm"
+                    name="2donombre"
+                    id="2donombre"
+                  />
+                </div>
+                <div class="col-md-3">
+                  <label>1er Apellido</label
+                  ><input
+                    type="text"
+                    class="form-control form-control-sm"
+                    name="1erapellido"
+                    id="1erapellido"
+                  />
+                </div>
+                <div class="col-md-3">
+                  <label>2do Apellido</label
+                  ><input
+                    type="text"
+                    class="form-control form-control-sm"
+                    name="2doapellido"
+                    id="2doapellido"
+                  />
+                </div>
+                <div class="col-md-3">
+                  <label>Sexo</label>
+                  <select id="sexo" class="form-control form-control-sm">
+                    <option selected disabled>Seleccione sexo</option>
+                    <option value="Masculino">Masculino</option>
+                    <option value="Femenino">Femenino</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label for="cfamilia"
+                    >Cuantas personas integran su grupo familiar</label
+                  >
+                  <input
+                    type="number"
+                    class="form-control form-control-sm"
+                    value="0"
+                    min="0"
+                    name="cfamilia"
+                    id="cfamilia"
+                  />
+                </div>
+                <div class="col-md-3">
+                  <label>Estado familiar</label>
+                  <select
+                    id="estadofamiliar"
+                    class="form-control form-control-sm"
+                  >
+                    <option selected disabled>
+                      Seleccione Estado familiar
+                    </option>
+                    <option value="Soltero(a)">Soltero(a)</option>
+                    <option value="Casado(a)">Casado(a)</option>
+                    <option value="Acompanado">Acompañado</option>
+                    <option value="Divorciado(a)">Divorciado(a)</option>
+                    <option value="Separado(a)">Separado(a)</option>
+                    <option value="Viudo(a)">Viudo(a)</option>
+                  </select>
+                </div>
+                <div class="col-md-2">
+                  <label>Jefe(a) de hogar</label>
+                  <select id="jefehogar" class="form-control form-control-sm">
+                    <option selected disabled>Seleccione</option>
+                    <option value="Si">Si</option>
+                    <option value="No">No</option>
+                    <option value="Compartida">Compartida</option>
+                  </select>
+                </div>
+
+                <div class="col-md-3">
+                  <label for="nhijos">N° Hijos</label>
+                  <input
+                    type="number"
+                    class="form-control form-control-sm"
+                    value="0"
+                    min="0"
+                    name="nhijos"
+                    id="nhijos"
+                  />
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>Se dedica a alguna Profesión u Oficio</label>
+                    <div class="form-check">
                       <input
-                        type="text"
-                        id="dui"
-                        class="form-control"
-                        placeholder="0000000-0"
+                        class="form-check-input"
+                        type="checkbox"
+                        id="gridCheck"
                       />
-                    </div>
-                    <div class="col">
-                      <label for="tel">Nombre*</label>
-                      <input type="text" id="nombre" class="form-control" />
-                    </div>
-                    <div class="col">
-                      <label for="tel">Teléfono</label>
-                      <input type="text" id="tel" class="form-control" />
+                      <label class="form-check-label" for="gridCheck">
+                        Si
+                      </label>
                     </div>
                   </div>
-                  <div class="form-row">
-                    <div class="col-4">
-                      <label for="tel">Email</label>
-                      <input type="text" id="email" class="form-control" />
-                    </div>
-                    <div class="col-8">
-                      <label for="tel">Curso que desea tomar:</label>
-                      <select class="custom-select" id="curso">
-                        <option value="ITR-FCOO-48">
-                          - MICROSOFT EXCEL BÁSICO-
-                        </option>
-                        <option value="1">- Buscar cursos -</option>
-                        <option value="2">- Buscar cursos -</option>
-                      </select>
-                    </div>
-                  </div>
-                  <button
-                    class="btn btn-success float-right my-2"
-                    id="botonAdd"
-                  >
-                    Agregar
-                  </button>
-                  <br />
-                  <br /><br />
-                  <table
-                    class="table table-bordered"
-                    id="tablaParticipantes"
-                    width="100%"
-                    cellspacing="0"
-                  >
-                    <thead>
-                      <tr>
-                        <th>DUI</th>
-                        <th>Nombre</th>
-                        <th>Teléfono</th>
-                        <th>Email</th>
-                        <th>Curso</th>
-                        <th>Código de curso</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                  </table>
+                </div>
+                <div class="col-md-5" style="display: none" id="profesiondiv">
+                  <label>¿A que Profesión u oficio se dedica?</label>
+                  <input
+                    type="text"
+                    class="form-control form-control-sm"
+                    name="profesion"
+                    id="profesion"
+                  />
                 </div>
               </div>
-              <div class="card mb-4 shadow-sm">
-                <div class="card-header">
-                  <h4 class="my-0 fw-normal">#3 Ingresar documentación correspondiente</h4>
+              <hr />
+              <h6 class="lead">FECHA/LUGAR DE NACIMIENTO</h6>
+              <div class="row">
+                <div class="col-md-4">
+                  <label>Municipio</label>
+                  <select
+                    id="municipioNac"
+                    class="form-control form-control-sm"
+                  >
+                    <option selected disabled>Seleccione municipio</option>
+                    <option value="salvadoreno">Salvadoreño</option>
+                    <option value="extranjero">Extranjero</option>
+                  </select>
                 </div>
-                <div class="card-body">
-                  <p class="text-dark">
-                    <b>Instrucciones: </b>Buscar nombre de empresa
-                  </p>
-                  <select class="custom-select" id="select_empresa">
-                    <option value="0">- Buscar empresa -</option>
+                <div class="col-md-4">
+                  <label>Departamento</label>
+                  <select id="depa_nac" class="form-control form-control-sm">
+                    <option selected disabled>Seleccione departamento</option>
+                    <option value="salvadoreno">Salvadoreño</option>
+                    <option value="extranjero">Extranjero</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label>Fecha</label
+                  ><input
+                    type="text"
+                    class="form-control form-control-sm"
+                    name="fechanac"
+                    id="fechanac"
+                  />
+                </div>
+              </div>
+              <hr />
+              <h6 class="lead">DOMICILIO</h6>
+              <div class="row">
+                <div class="col-md-3">
+                  <label>Municipio</label>
+                  <select
+                    id="municipioDomicilio"
+                    class="form-control form-control-sm"
+                  >
+                    <option selected disabled>Seleccione municipio</option>
+                    <option value="salvadoreno">Salvadoreño</option>
+                    <option value="extranjero">Extranjero</option>
+                  </select>
+                </div>
+                <div class="col-md-3">
+                  <label>Departamento</label>
+                  <select
+                    id="depdomicilio"
+                    class="form-control form-control-sm"
+                  >
+                    <option selected disabled>Seleccione departamento</option>
+                    <option value="salvadoreno">Salvadoreño</option>
+                    <option value="extranjero">Extranjero</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label>Dirección</label
+                  ><input
+                    type="text"
+                    class="form-control form-control-sm"
+                    name="direccion"
+                    id="direccion"
+                  />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-3">
+                  <label>Tel. Fijo</label
+                  ><input
+                    type="text"
+                    class="form-control form-control-sm"
+                    name="fijo"
+                    id="fijo"
+                  />
+                </div>
+                <div class="col-md-3">
+                  <label>Tel. Movil</label
+                  ><input
+                    type="text"
+                    class="form-control form-control-sm"
+                    name="movil"
+                    id="movil"
+                  />
+                </div>
+                <div class="col-md-6">
+                  <label>E-mail</label
+                  ><input
+                    type="email"
+                    class="form-control form-control-sm"
+                    name="mail"
+                    id="mail"
+                  />
+                </div>
+              </div>
+              <hr />
+              <h6 class="lead">Discapacidades</h6>
+              <div class="row">
+                <div class="col-md-12">
+                  <label
+                    >¿Tiene usted alguna discapacidad permanente? Si su
+                    respuesta es <b>NO</b> por favor continue a la siguiente
+                    sección</label
+                  >
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="discapacidad"
+                    />
+                    <label class="form-check-label" for="discapacidad">
+                      Si
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="container" id="discapacidades" style="display: none">
+                <hr />
+                <p>Por favor seleccione su discapacidad:</p>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value="Moverse o caminar"
+                    id="defaultCheck1"
+                  />
+                  <label class="form-check-label" for="defaultCheck1">
+                    Moverse o caminar
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value="Usar sus brazos o manos"
+                    id="defaultCheck2"
+                  />
+                  <label class="form-check-label" for="defaultCheck2">
+                    Usar sus brazos o manos
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value="Ver, aun usando lentes"
+                    id="defaultCheck3"
+                  />
+                  <label class="form-check-label" for="defaultCheck3">
+                    Ver, aun usando lentes
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value="Oír, aun usando aparatos especiales"
+                    id="defaultCheck4"
+                  />
+                  <label class="form-check-label" for="defaultCheck4">
+                    Oír, aun usando aparatos especiales
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value="Hablar"
+                    id="defaultCheck5"
+                  />
+                  <label class="form-check-label" for="defaultCheck5">
+                    Hablar
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value="Tiene algún retraso o deficiencia mental"
+                    id="defaultCheck6"
+                  />
+                  <label class="form-check-label" for="defaultCheck6">
+                    Tiene algún retraso o deficiencia mental
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value="Bañarse, vestirse, alimentarse por si mismo"
+                    id="defaultCheck7"
+                  />
+                  <label class="form-check-label" for="defaultCheck7">
+                    Bañarse, vestirse, alimentarse por si mismo
+                  </label>
+                </div>
+              </div>
+              <hr />
+              <button class="btn btn-success float-right" id="next1">
+                Continuar a : EDUCACIÓN FORMAL Y FORMACIÓN OCUPACIONAL
+              </button>
+            </div>
+            <div class="card-body" id="sec2" style="display: none">
+              <h3>SECCIÓN 2. EDUCACIÓN FORMAL Y FORMACIÓN OCUPACIONAL</h3>
+              <h6 class="lead">EDUCACIÓN</h6>
+              <hr />
+              <div class="form-row">
+                <div class="form-group col-md-3">
+                  <label>¿Sabe usted leer y escribir?</label>
+                  <select
+                    id="leerescribir"
+                    class="form-control form-control-sm"
+                  >
+                    <option selected disabled>Seleccione</option>
+                    <option value="1">Si</option>
+                    <option value="0">No</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-3 analfabeta">
+                  <label>¿Solo sabe leer?</label>
+                  <select id="sololeer" class="form-control form-control-sm">
+                    <option selected disabled>Seleccione</option>
+                    <option value="Si">Si</option>
+                    <option value="No">No</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-3 analfabeta">
+                  <label>¿Solo sabe escribir?</label>
+                  <select
+                    id="soloescribir"
+                    class="form-control form-control-sm"
+                  >
+                    <option selected disabled>Seleccione</option>
+                    <option value="Si">Si</option>
+                    <option value="No">No</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-3 analfabeta">
+                  <label>¿Solo sabe firmar?</label>
+                  <select id="solofirmar" class="form-control form-control-sm">
+                    <option selected disabled>Seleccione</option>
+                    <option value="Si">Si</option>
+                    <option value="No">No</option>
                   </select>
                 </div>
               </div>
+              <div class="form-row">
+                <div class="col-md-5 form-group">
+                  <label>¿Cuál es el último grado de estudio finalizado?</label>
+                  <select id="ultgrado" class="form-control form-control-sm">
+                    <option selected disabled>Seleccione</option>
+                    <option value="Ninguno">Ninguno</option>
+                    <option value="1">1er. Gdo</option>
+                    <option value="2">2° Gdo</option>
+                    <option value="3">3er. Gdo</option>
+                    <option value="4">4° Gdo</option>
+                    <option value="5">5° Gdo</option>
+                    <option value="6">6° Gdo</option>
+                    <option value="7">7° Gdo</option>
+                    <option value="8">8° Gdo</option>
+                    <option value="9">9° Gdo</option>
+                    <option value="BachInc">Bachillerato Incompleto</option>
+                    <option value="BachCom">Bachillerato Completo</option>
+                    <option value="UniInc">Universidad Incompleta</option>
+                    <option value="UniCom">Universidad Completa</option>
+                  </select>
+                </div>
+                <div class="col-md-3 form-group">
+                  <label>¿Estudia actualmente?</label>
+                  <select
+                    id="estudiaactualmente"
+                    class="form-control form-control-sm"
+                  >
+                    <option selected disabled>Seleccione</option>
+                    <option value="1">Si</option>
+                    <option value="0">No</option>
+                  </select>
+                </div>
+                <div
+                  class="col-md-4 form-group"
+                  id="tiempodejoestudio"
+                  style="display: none"
+                >
+                  <label>¿Hace cuánto tiempo dejó de estudiar?</label>
+                  <select
+                    id="tiempoestudio"
+                    class="form-control form-control-sm"
+                  >
+                    <option selected disabled>Seleccione</option>
+                    <option value="1y">1 año</option>
+                    <option value="2-3y">2-3 años</option>
+                    <option value="3y">Más de 3 años</option>
+                    <option value="NR">NR</option>
+                  </select>
+                </div>
+              </div>
+              <h6 class="lead">CURSOS PASADOS</h6>
+              <hr />
+              <div class="form-row">
+                <div class="col-md-12 form-group">
+                  <label
+                    >¿Ha recibido antes algún(os) curso(s) de
+                    capacitación?</label
+                  >
+                  <select
+                    id="cursospasados"
+                    class="form-control form-control-sm"
+                  >
+                    <option selected disabled>Seleccione</option>
+                    <option value="1">Si</option>
+                    <option value="0">No</option>
+                  </select>
+                </div>
+              </div>
+              <hr />
+              <div class="container" id="beneficiocursos" style="display: none">
+                <p>
+                  Si, ¿Cuál(es)? Mencione solamente las recibida los últimos 3
+                  años
+                </p>
+                <div class="form-row">
+                  <div class="col-md-3 form-group">
+                    <label>Nombre del curso</label>
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      name="curso1"
+                      id="curso1"
+                    />
+                  </div>
+                  <div class="col-md-3 form-group">
+                    <label>¿Lo impartio INSAFORP?</label>
+                    <select id="impartio1" class="form-control form-control-sm">
+                      <option selected disabled>Seleccione</option>
+                      <option value="Si">Si</option>
+                      <option value="No">No</option>
+                    </select>
+                  </div>
+                  <div class="col-md-3 form-group">
+                    <label>Año que se impartio</label>
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      name="year1"
+                      id="year1"
+                    />
+                  </div>
+                  <div class="col-md-3 form-group">
+                    <label>¿El curso le dio beneficios?</label>
+                    <select
+                      id="beneficio1"
+                      class="form-control form-control-sm"
+                    >
+                      <option selected disabled>Seleccione</option>
+                      <option value="Si">Si</option>
+                      <option value="No">No</option>
+                      <option value="No">NR</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="col-md-3 form-group">
+                    <label>Nombre del curso</label>
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      name="curso2"
+                      id="curso2"
+                    />
+                  </div>
+                  <div class="col-md-3 form-group">
+                    <label>¿Lo impartio INSAFORP?</label>
+                    <select id="impartio2" class="form-control form-control-sm">
+                      <option selected disabled>Seleccione</option>
+                      <option value="Si">Si</option>
+                      <option value="No">No</option>
+                    </select>
+                  </div>
+                  <div class="col-md-3 form-group">
+                    <label>Año que se impartio</label>
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      name="year2"
+                      id="year2"
+                    />
+                  </div>
+                  <div class="col-md-3 form-group">
+                    <label>¿El curso le dio beneficios?</label>
+                    <select
+                      id="beneficio2"
+                      class="form-control form-control-sm"
+                    >
+                      <option selected disabled>Seleccione</option>
+                      <option value="Si">Si</option>
+                      <option value="No">No</option>
+                      <option value="No">NR</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="col-md-3 form-group">
+                    <label>Nombre del curso</label>
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      name="curso3"
+                      id="curso3"
+                    />
+                  </div>
+                  <div class="col-md-3 form-group">
+                    <label>¿Lo impartio INSAFORP?</label>
+                    <select id="impartio3" class="form-control form-control-sm">
+                      <option selected disabled>Seleccione</option>
+                      <option value="Si">Si</option>
+                      <option value="No">No</option>
+                    </select>
+                  </div>
+                  <div class="col-md-3 form-group">
+                    <label>Año que se impartio</label>
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      name="year3"
+                      id="year3"
+                    />
+                  </div>
+                  <div class="col-md-3 form-group">
+                    <label>¿El curso le dio beneficios?</label>
+                    <select
+                      id="beneficio3"
+                      class="form-control form-control-sm"
+                    >
+                      <option selected disabled>Seleccione</option>
+                      <option value="Si">Si</option>
+                      <option value="No">No</option>
+                      <option value="No">NR</option>
+                    </select>
+                  </div>
+                </div>
+                <hr />
+                <p>
+                  ¿Para que sirvió(eron) la(s) capacitacion(es) que recibió?
+                </p>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value="Para trabajar por cuenta propia"
+                    id="b2"
+                  />
+                  <label class="form-check-label" for="b2">
+                    Para trabajar por cuenta propia
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value="Obtener oportunidades de promoción en mi empleo actual"
+                    id="b3"
+                  />
+                  <label class="form-check-label" for="b3">
+                    Obtener oportunidades de promoción en mi empleo actual
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value="Obtener otros ingresos por trabajos extras"
+                    id="b4"
+                  />
+                  <label class="form-check-label" for="b4">
+                    Obtener otros ingresos por trabajos extras
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value="Cambiar a un empleo relacionado con la capacitación recibida"
+                    id="b5"
+                  />
+                  <label class="form-check-label" for="b5">
+                    Cambiar a un empleo relacionado con la capacitación recibida
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value="Para obtener un empleo"
+                    id="b6"
+                  />
+                  <label class="form-check-label" for="b6">
+                    Para obtener un empleo
+                  </label>
+                </div>
+              </div>
+              <button class="btn btn-success float-right" id="next2">
+                Continuar a : INFORMACIÓN SOBRE SU SITUACIÓN LABORAL
+              </button>
+            </div>
+            <div class="card-body" id="sec3" style="display: none">
+              <h3>SECCION 3. INFORMACIÓN SOBRE SU SITUACIÓN LABORAL</h3>
+              <hr />
+              <p>¿A qué actividad se dedica usted actualmente?</p>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value="Estudia"
+                  id="c1"
+                />
+                <label class="form-check-label" for="c1"> Estudia </label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value="Oficios del hogar"
+                  id="c2"
+                />
+                <label class="form-check-label" for="c2">
+                  Oficios del hogar
+                </label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value="Busca trabajo"
+                  id="c3"
+                />
+                <label class="form-check-label" for="c3"> Busca trabajo </label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value="Trabaja"
+                  id="c4"
+                />
+                <label class="form-check-label" for="c4"> Trabaja </label>
+              </div>
+              <hr />
+              <div class="form-row" id="ifnottrabaja">
+                <div class="col-md-3 form-group">
+                  <label>¿Ha trabajado antes?</label>
+                  <select
+                    id="trabajaantes"
+                    class="form-control form-control-sm"
+                  >
+                    <option selected disabled>Seleccione</option>
+                    <option value="1">Si</option>
+                    <option value="0">No</option>
+                  </select>
+                </div>
+                <div
+                  class="col-md-4 form-group"
+                  id="tiempoSinTrabajar"
+                  style="display: none"
+                >
+                  <label>¿Cuánto tiempo hace que no trabaja?</label>
+                  <select
+                    id="tiempoSinTrabajarselect"
+                    class="form-control form-control-sm"
+                  >
+                    <option selected disabled>Seleccione</option>
+                    <option value="1y-">1 año o menos</option>
+                    <option value="2y">2 años</option>
+                    <option value="3y">3 años</option>
+                    <option value="3y+">Más de 3 años</option>
+                  </select>
+                </div>
+              </div>
+              <div id="iftrabaja" style="display: none">
+                <p>Si usted trabaja, ¿Qué tipo de trabajo tiene?</p>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value="Empleo a tiempo completo"
+                        id="d1"
+                      />
+                      <label class="form-check-label" for="d1">
+                        Empleo a tiempo completo
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value="Empleo a tiempo parcial"
+                        id="d2"
+                      />
+                      <label class="form-check-label" for="d2">
+                        Empleo a tiempo parcial
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value="Empleo temporal"
+                        id="d3"
+                      />
+                      <label class="form-check-label" for="d3">
+                        Empleo temporal
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value="Negocio familiar"
+                        id="d4"
+                      />
+                      <label class="form-check-label" for="d4">
+                        Negocio familiar
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value="Independiente o cuenta propia"
+                        id="d5"
+                      />
+                      <label class="form-check-label" for="d5">
+                        Independiente o cuenta propia
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value="Trabajo informal"
+                        id="d6"
+                      />
+                      <label class="form-check-label" for="d6">
+                        Trabajo informal
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <p>¿En que Sector trabaja?</p>
+                    <select
+                      id="sectortrabajo"
+                      class="form-control form-control-sm"
+                    >
+                      <option selected disabled>Seleccione</option>
+                      <option value="privado">Sector Privado</option>
+                      <option value="publico">Sector Público</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <hr />
+              <button class="btn btn-success float-right" id="next3">
+                Continuar a : INFORMACIÓN SOBRE LOS INGRESOS
+              </button>
+            </div>
+            <div class="card-body" id="sec4" style="display: none">
+              <h3>SECCIÓN 4. INFORMACIÓN SOBRE LOS INGRESOS</h3>
+              <hr />
+              <div class="row">
+                <div class="col-md-6">
+                  <p>¿Usted recibe ingresos?</p>
+                  <select
+                    id="recibeingresosselect"
+                    class="form-control form-control-sm"
+                  >
+                    <option selected disabled>Seleccione</option>
+                    <option value="1">Si</option>
+                    <option value="0">No</option>
+                  </select>
+                </div>
+                <div
+                  class="col-md-6"
+                  id="sirecibeingresos"
+                  style="display: none"
+                >
+                  <p>¿De qué manera los obtiene?</p>
+                  <select
+                    id="formasdeingreso"
+                    class="form-control form-control-sm"
+                  >
+                    <option selected disabled>Seleccione</option>
+                    <option value="Trabajo">Trabajo</option>
+                    <option value="Ayuda familiar">Ayuda familiar</option>
+                    <option value="Remesa">Remesa</option>
+                    <option value="Pensión">Pensión</option>
+                  </select>
+                </div>
+              </div>
+              <hr />
+              <button class="btn btn-success float-right" id="next4">
+                Continuar a : EXPECTATIVA Y PERTINENCIA DE LA FORMACIÓN
+              </button>
+            </div>
+            <div class="card-body" id="sec5" style="display: none">
+              <h3>SECCIÓN 5. EXPECTATIVA Y PERTINENCIA DE LA FORMACIÓN</h3>
+              <hr />
+              <div class="row">
+                <div class="col-md-6">
+                  <p>¿Qué espera lograr con la capacitación a recibir?</p>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value="Obtener oportunidades de promoción en mi empleo actual"
+                      id="e1"
+                    />
+                    <label class="form-check-label" for="e1">
+                      Obtener oportunidades de promoción en mi empleo actual
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value="Cambiar a un empleo relacionado con la capacitación recibida"
+                      id="e2"
+                    />
+                    <label class="form-check-label" for="e2">
+                      Cambiar a un empleo relacionado con la capacitación
+                      recibida
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value="Obtener un empleo formal"
+                      id="e3"
+                    />
+                    <label class="form-check-label" for="e3">
+                      Obtener un empleo formal
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value="Trabajar por cuenta propia"
+                      id="e4"
+                    />
+                    <label class="form-check-label" for="e4">
+                      Trabajar por cuenta propia
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value="Obtener ingresos extras"
+                      id="e5"
+                    />
+                    <label class="form-check-label" for="e5">
+                      Obtener ingresos extras
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value="Ninguno"
+                      id="e6"
+                    />
+                    <label class="form-check-label" for="e6"> Ninguno </label>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <p>
+                    Pertinencia del curso que está solicitando con su ocupación
+                    actual
+                  </p>
+                  <select id="pertinencia" class="form-control form-control-sm">
+                    <option selected disabled>Seleccione</option>
+                    <option value="trabajoactual">
+                      El curso esta relacionado con su trabajo actual
+                    </option>
+                    <option value="nuevotrabajo">
+                      El curso esta relacionado con un nuevo trabajo
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <hr />
+              <button class="btn btn-success float-right" id="next5">
+                Continuar a : SEGUIMIENTO
+              </button>
+            </div>
+            <div class="card-body" id="sec6" style="display: none">
+              <h3>SECCIÓN 6. SEGUIMIENTO</h3>
+              <p>
+                <b>IMPORTANTE:</b> Por favor brinde información de 1 persona, en
+                caso que el INSAFORP necesite ponerse en contacto con usted para
+                un seguimiento de la capacitación
+              </p>
+              <hr />
+              <div class="form-row">
+                <div class="col-md-6">
+                  <label>Nombre completo del contacto</label>
+                  <input
+                    type="text"
+                    class="form-control form-control-sm"
+                    name="nombrecontacto"
+                  />
+                </div>
+                <div class="col-md-6">
+                  <label>Parentesco:</label>
+                  <select id="parentesco" class="form-control form-control-sm">
+                    <option selected disabled>Seleccione</option>
+                    <option value="Abuelo(a)">Abuelo(a)</option>
+                    <option value="Amigo(a)">Amigo(a)</option>
+                    <option value="Comadre(a)">Comadre(a)</option>
+                    <option value="Compadre(a)">Compadre(a)</option>
+                    <option value="Compañero de vida(a)">
+                      Compañero de vida(a)
+                    </option>
+                    <option value="Consuegro(a)">Consuegro(a)</option>
+                    <option value="Cuñado(a)">Cuñado(a)</option>
+                    <option value="Esposo(a)">Esposo(a)</option>
+                    <option value="Familiar(a)">Familiar(a)</option>
+                    <option value="Hermano(a)">Hermano(a)</option>
+                    <option value="Hijastro(a)">Hijastro(a)</option>
+                    <option value="Hijo(a)">Hijo(a)</option>
+                    <option value="Madrastra">Madrastra</option>
+                    <option value="Madre">Madre</option>
+                    <option value="Madrina">Madrina</option>
+                    <option value="Nieto(a)">Nieto(a)</option>
+                    <option value="Nuera">Nuera</option>
+                    <option value="Padrastro">Padrastro</option>
+                    <option value="Padre">Padre</option>
+                    <option value="Padrino">Padrino</option>
+                    <option value="Primo(a)">Primo(a)</option>
+                    <option value="Sobrino(a)">Sobrino(a)</option>
+                    <option value="Suegro(a)">Suegro(a)</option>
+                    <option value="Tio(a)">Tio(a)</option>
+                    <option value="Yerno">Yerno</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col-md-12">
+                  <label>Dirección:</label>
+                  <input
+                    type="text"
+                    class="form-control form-control-sm"
+                    name="nombrecontacto"
+                  />
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="col-md-6">
+                  <label>Municipio</label>
+                  <select
+                    id="municipiocontacto"
+                    class="form-control form-control-sm"
+                  >
+                    <option selected disabled>Seleccione municipio</option>
+                    <option value="salvadoreno">Salvadoreño</option>
+                    <option value="extranjero">Extranjero</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label>Departamento</label>
+                  <select
+                    id="departcontact"
+                    class="form-control form-control-sm"
+                  >
+                    <option selected disabled>Seleccione municipio</option>
+                    <option value="salvadoreno">Salvadoreño</option>
+                    <option value="extranjero">Extranjero</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col-md-4">
+                  <label>Tel. Fijo:</label>
+                  <input
+                    type="text"
+                    class="form-control form-control-sm"
+                    name="telfijocontacto"
+                  />
+                </div>
+                <div class="col-md-4">
+                  <label>Tel. Movil:</label>
+                  <input
+                    type="text"
+                    class="form-control form-control-sm"
+                    name="telmovilcontacto"
+                  />
+                </div>
+                <div class="col-md-4">
+                  <label>E-mail:</label>
+                  <input
+                    type="text"
+                    class="form-control form-control-sm"
+                    name="emailcontacto"
+                  />
+                </div>
+              </div>
+              <hr />
+              <button class="btn btn-success float-right" id="next6">
+                FINALIZAR
+              </button>
             </div>
           </div>
         </div>
       </div>
-
-      <footer class="pt-4 my-md-5 pt-md-5 border-top">
-        <div class="row">
-          <div class="col-12 col-md">
-            <img
-              class="mb-2"
-              src="/docs/5.0/assets/brand/bootstrap-logo.svg"
-              alt=""
-              width="24"
-              height="19"
-            />
-            <small class="d-block mb-3 text-muted">&copy; 2017-2021</small>
-          </div>
-          <div class="col-6 col-md">
-            <h5>Features</h5>
-            <ul class="list-unstyled text-small">
-              <li><a class="link-secondary" href="#">Cool stuff</a></li>
-              <li><a class="link-secondary" href="#">Random feature</a></li>
-              <li><a class="link-secondary" href="#">Team feature</a></li>
-              <li>
-                <a class="link-secondary" href="#">Stuff for developers</a>
-              </li>
-              <li><a class="link-secondary" href="#">Another one</a></li>
-              <li><a class="link-secondary" href="#">Last time</a></li>
-            </ul>
-          </div>
-          <div class="col-6 col-md">
-            <h5>Resources</h5>
-            <ul class="list-unstyled text-small">
-              <li><a class="link-secondary" href="#">Resource</a></li>
-              <li><a class="link-secondary" href="#">Resource name</a></li>
-              <li><a class="link-secondary" href="#">Another resource</a></li>
-              <li><a class="link-secondary" href="#">Final resource</a></li>
-            </ul>
-          </div>
-          <div class="col-6 col-md">
-            <h5>About</h5>
-            <ul class="list-unstyled text-small">
-              <li><a class="link-secondary" href="#">Team</a></li>
-              <li><a class="link-secondary" href="#">Locations</a></li>
-              <li><a class="link-secondary" href="#">Privacy</a></li>
-              <li><a class="link-secondary" href="#">Terms</a></li>
-            </ul>
-          </div>
-        </div>
-      </footer>
     </main>
+
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/validate.js/0.13.1/validate.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <script
-      type="text/javascript"
-      src="https://cdn.datatables.net/v/bs4/dt-1.10.23/datatables.min.js"
-    ></script>
     <script src="/static/js/jquery.mask.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
-    <script src="/static/js/public.js"></script>
+    <script src="/static/js/habil/formhabil.js"></script>
   </body>
 </html>
