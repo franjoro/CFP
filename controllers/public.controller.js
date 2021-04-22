@@ -284,6 +284,8 @@ PublicFunctions.FichaRegistro = async (req, res) => {
   const cursos = req.params.data;
   const { empresa } = req.params;
   let { alumnos } = req.body;
+  let { firmante } = req.body;
+  
 
   if (
     !alumnos ||
@@ -318,8 +320,9 @@ PublicFunctions.FichaRegistro = async (req, res) => {
     );
 
     alumnos = JSON.parse(alumnos);
+    firmante = JSON.parse(firmante);
     const MainQuery = await Promise.all(queries);
-    const pdf = await GenerarPdf({ data: MainQuery, alumnos });
+    const pdf = await GenerarPdf({ data: MainQuery, alumnos , firmante });
     return res.status(200).json({ status: true, data: pdf });
   } catch (error) {
     console.log(error);

@@ -14,7 +14,7 @@ const Directivas = {
             "https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js",
             "https://www.googletagmanager.com/gtag/js"
         ],
-        connectSrc: ["'self'", "https://api.salud.gob.sv/"],
+        connectSrc: ["'self'", "https://api.salud.gob.sv/", "https://www.google-analytics.com/"],
         styleSrc: [
             "'self'",
             "fonts.googleapis.com",

@@ -55,11 +55,18 @@ let global_estado_participante = false;
 let global_data_solicitud;
 let global_data_actualizacionEmpresa;
 let global_data_cursos;
+let global_data_firmante;
 const AsginarGlobalEmpresa = () => {
   global_data_actualizacionEmpresa = {
     aportacion: $("#aportacion").val(),
     num_empleados: $("#num_empleados").val(),
     id: global_empresa_seleccionada,
+  };
+  global_data_firmante = {
+    primera: $("#primerape").val(),
+    segundoa: $("#segunape").val(),
+    nombres: $("#nombres").val(),
+    cargo: $("#cargof").val(),
   };
   $.ajax({
     url: "/public/updateEmpresaData",
@@ -80,7 +87,7 @@ const AsginarGlobalCursos = () => {
       ContentHtml += `
       <hr><div class="card"><h5 class="card-header"><i class="fas fa-arrow-right"></i>${element[6]}</h5><div class="card-body"><h5 class="card-title">Adjunte los siguientes documentos:</h5><div class="row"><div class="col-md-3"><p class="text-justify">1. Solicitud de capacitación firmada y sellada. Puede descargar la ficha aquí: <i class="fas fa-arrow-right"></i> <a onclick="GenerarPdf('${element[7]}')" href="#">DESCARGAR PLANTILLA</a></p></div><div class="col-md-3"><p class="text-justify">2. Recibo de ingresos por cotización (Recibo de aportación) del último mes cancelado - <i class="fas fa-arrow-right"></i> <a target="_blank" href="/static/files/recibo.pdf" class="text-danger">VER EJEMPLO</a></p></div><div class="col-md-3"><p class="text-justify">Comprobante de pago en línea (Opcional) del último mes cancelado - <i class="fas fa-arrow-right"></i> <a target="_blank" href="/static/files/cancelacion.pdf" class="text-danger">VER EJEMPLO</a></p></div><div class="col-md-3"><p class="text-justify">3. Planilla ISSS (Resaltar colaboradores a inscribir) <i class="fas fa-arrow-right"></i> <a target="_blank" href="/static/files/planilla.pdf" class="text-danger">VER EJEMPLO</a></p></div></div><div class="row"><div class="col-md-3"><div class="custom-file"><input type="file" class="custom-file-input" name="ficha${i}" data-i="FichaLabel${i}"  id="ficha${i}" > <label class="custom-file-label" id="FichaLabel${i}"  for="customFile">Choose file</label></div></div><div class="col-md-3"><div class="custom-file"><input type="file" class="custom-file-input" name="recibo${i}"  data-i="ReciboLabel${i}"  id="recibo${i}"> <label id="ReciboLabel${i}" class="custom-file-label" for="customFile">Choose file</label></div></div><div class="col-md-3"><div class="custom-file"><input type="file" class="custom-file-input" name="cancelacion${i}" data-i="CancelacionLabel${i}"  id="cancelacion${i}" > <label id="CancelacionLabel${i}" class="custom-file-label" for="customFile">Choose file</label></div></div><div class="col-md-3"><div class="custom-file"><input type="file" class="custom-file-input" name="planilla${i}" data-i="PlanillaLabel${i}"   id="planilla${i}"> <label id="PlanillaLabel${i}" class="custom-file-label" for="customFile">Choose file</label></div></div></div></div></div><hr>
       `;
-      i = i +1;
+      i = i + 1;
     }
   });
   $("#cursos_files").append(ContentHtml);
@@ -128,8 +135,13 @@ const registrarSolicitud = async () => {
     }
   } catch (error) {
     console.log(error);
-    if (error == "CURSO_EXISTENTE") return error("Su empresa ya cuenta con una solicitud pendiente en un curso seleccionado , por favor comuniquese con el encargado del programa o soporte técnico");
-    error("No se pudo realizar la operación, verifica la información o comuniquese con el encargado del programa o soporte ");
+    if (error == "CURSO_EXISTENTE")
+      return error(
+        "Su empresa ya cuenta con una solicitud pendiente en un curso seleccionado , por favor comuniquese con el encargado del programa o soporte técnico"
+      );
+    error(
+      "No se pudo realizar la operación, verifica la información o comuniquese con el encargado del programa o soporte "
+    );
   }
 };
 const SendFiles = async () => {
@@ -161,7 +173,9 @@ const SendFiles = async () => {
     window.location.href = "/public/gracias";
   } catch (error) {
     console.log(error);
-    error("No se pudo realizar la operación, verifica la información o comuniquese con el encargado del programa o soporte ")
+    error(
+      "No se pudo realizar la operación, verifica la información o comuniquese con el encargado del programa o soporte "
+    );
   }
 };
 $("#dui").blur(async function () {
@@ -194,10 +208,12 @@ const GenerarPdf = async (curso) => {
       }
     });
     AlumnosParaEnviar = JSON.stringify(AlumnosParaEnviar);
+    firmante = JSON.stringify(global_data_firmante);
+
     let query = await $.ajax({
       url: `/public/ficha/${global_empresa_seleccionada}/${curso} `,
       type: "POST",
-      data: { alumnos: AlumnosParaEnviar },
+      data: { alumnos: AlumnosParaEnviar, firmante },
     });
     if (query.status) {
       swal.close();
@@ -205,7 +221,9 @@ const GenerarPdf = async (curso) => {
     }
   } catch (error) {
     console.log(error);
-    error("No se pudo realizar la operación, verifica la información o comuniquese con el encargado del programa o soporte ");
+    error(
+      "No se pudo realizar la operación, verifica la información o comuniquese con el encargado del programa o soporte "
+    );
   }
 };
 $(document).ready(() => {
@@ -249,7 +267,9 @@ $(document).ready(() => {
       validate.isEmpty(tel) ||
       validate.isEmpty(email)
     ) {
-      return error("No se pudo realizar la operación, verifica la información o comuniquese con el encargado del programa o soporte ");
+      return error(
+        "No se pudo realizar la operación, verifica la información o comuniquese con el encargado del programa o soporte "
+      );
     }
     data = [
       dui,
@@ -335,9 +355,9 @@ $(document).on("change", ".custom-file-input", function (e) {
   const { i } = $(this).data();
   let ext = $(this).val().split(".").pop();
   ext = ext.toLowerCase();
-  console.log (ext);
+  console.log(ext);
   if ($(this).val() != "") {
-    if (ext == "pdf" || ext == "png" || ext == "jpeg"  || ext =="jpg" ) {
+    if (ext == "pdf" || ext == "png" || ext == "jpeg" || ext == "jpg") {
       $(`#${i}`).html(e.target.files[0].name);
       return;
     } else {
@@ -352,12 +372,8 @@ const ReiniciarInputs = () => {
   $("#cursos_files").html("<div></div>");
 };
 const VerificarEmpresa = () => {
-  if (!global_empresa_seleccionada) {
-    error("Debe seleccionar su empresa para continuar");
-  } else {
     AsginarGlobalEmpresa();
     stepper1.next();
-  }
 };
 const VerificarArchivos = () => {
   const cursos = JSON.parse(global_data_cursos);
@@ -372,6 +388,6 @@ const VerificarArchivos = () => {
     });
     registrarSolicitud();
   } catch (err) {
-    error("Debe subir los archivos obligatorios "+err);
+    error("Debe subir los archivos obligatorios " + err);
   }
 };
