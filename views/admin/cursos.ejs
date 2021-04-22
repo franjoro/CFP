@@ -3,258 +3,306 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"
   type="text/css" />
 <%- include('../partials/header.admin.ejs'); %>
-<div class="container-fluid">
+  <div class="container-fluid">
 
-  <div class="row container-fluid">
-    <div class="col-lg-12">
-      <div class="card shadow mb-4">
-        <div class="card-header py-3">
-          <a href="/admin/cursos" class="btn btn-success btn-sm float-left d-inline"><i
-              class="fas fa-arrow-left"></i></a>
-          <a data-toggle="modal" data-target="#modal_oferta" class="btn btn-info btn-sm float-right d-inline mx-1"><i
-              class="fas fa-paperclip"></i>Agregar nueva oferta</a>
+    <div class="row container-fluid">
+      <div class="col-lg-12">
+        <div class="card shadow mb-4">
+          <div class="card-header py-3">
+            <a href="/admin/cursos" class="btn btn-success btn-sm float-left d-inline"><i
+                class="fas fa-arrow-left"></i></a>
+            <a data-toggle="modal" data-target="#modal_oferta" class="btn btn-info btn-sm float-right d-inline mx-1"><i
+                class="fas fa-paperclip"></i>Agregar nueva oferta</a>
 
-          <a data-toggle="modal" data-target="#insertar_modal"
-            class="btn btn-success btn-sm float-right d-inline mx-1"><i class="fas fa-plus"></i>Agregar nuevo
-            curso</a>
-        </div>
-        <div class="card-body">
-          <a href="/admin/cursos/finalizados/<%= programa%>">
-            <div class="card shadow mb-3">
-              <div class="card-body">
-                <img class="logo rounded float-left" src="/static/img/finalizado_at.png" alt="">
-                <h4>Cursos finalizados</h4>
-                <p class="ml-5"> </p>
-              </div>
-            </div>
-          </a>
-
-          <%if(!oferta.length) {%>
-          <h5>No existen ofertas abiertas</h5>
-          <%}else{%>
-          <h5 class="text-secondary">Oferta disponible</h5>
-          <% } %>
-          <div class="row">
-            <% for(var i=0; i<oferta.length; i++) {%>
-            <div class="col-md-4">
+            <a data-toggle="modal" data-target="#insertar_modal"
+              class="btn btn-success btn-sm float-right d-inline mx-1"><i class="fas fa-plus"></i>Agregar nuevo
+              curso</a>
+          </div>
+          <div class="card-body">
+            <a href="/admin/cursos/finalizados/<%= programa%>">
               <div class="card shadow mb-3">
                 <div class="card-body">
-                  <a href="/admin/cursos/detalle/<%= oferta[i].Codigo_curso %>/<%= programa %>/oferta  ">
-                    <h5 class="text-primary d-inline">
-                      <i class="fas fa-arrow-right"></i>
-                      <%= oferta[i].Nombre %>
-                    </h5>
-                  </a>
-                  <p>
-                    <b>Participantes:</b>
-                    <%= oferta[i].cantidadAlumnos %> -
-                    <b>Empresas:</b>
-                    <%= oferta[i].cantidadEmpresas %>
-                  </p>
-                  <button class="btn btn-danger btn-sm float-right d-inline"
-                    onclick="deleteOferta('<%= oferta[i].Codigo_curso %>')"> <i class="fas fa-trash-alt"></i></button>
+                  <img class="logo rounded float-left" src="/static/img/finalizado_at.png" alt="">
+                  <h4>Cursos finalizados</h4>
+                  <p class="ml-5"> </p>
                 </div>
               </div>
-            </div>
-            <% } %>
-          </div>
-          <%if(!datos.length) {%>
-          <h5>No existen cursos activos</h5>
-          <%}else{%>
-          <h5>Cursos Activos:</h5>
-          <% } %>
-          <% for(var i=0; i<datos.length; i++) {%>
-          <a href="/admin/cursos/detalle/<%= datos[i].Codigo_curso %>/<%= programa %> /curso ">
-            <div class="card shadow mb-3">
-              <div class="card-body">
-                <h4 class="text-dark">Nombre: <%= datos[i].Nombre %>
-                </h4>
-                <p class="d-inline"><b>Código del curso:</b>
-                  <%= datos[i].Codigo_curso %> <br>
-                  <b>Profesor:</b>
-                  <%= datos[i].instructor %><br>
-                  <b>Orden de inicio:</b>
-                  <%= datos[i].Orden %> <br>
-                  <b>Agrupación:</b>
-                  <%= datos[i].Agrupacion %> <br>
-                  <b>Estado:</b>
-                  <%if(datos[i].Estado==1) {%> EN PREPARACIÓN <%}%>
-                                                  <%if(datos[i].Estado==2) {%> EN CURSO <%}%>
-                                    </p>
-                                    <!-- <button class="btn btn-success float-right d-inline"> Participantes</button> -->
-                                  </div>
-                                </div>
-                              </a>
-                              <% } %>
+            </a>
+
+            <%if(!oferta.length) {%>
+              <h5>No existen ofertas abiertas</h5>
+              <%}else{%>
+                <h5 class="text-secondary">Oferta disponible</h5>
+                <% } %>
+                  <div class="row">
+                    <% for(var i=0; i<oferta.length; i++) {%>
+                      <div class="col-md-4">
+                        <div class="card shadow mb-3">
+                          <div class="card-body">
+                            <a href="/admin/cursos/detalle/<%= oferta[i].Codigo_curso %>/<%= programa %>/oferta  ">
+                              <h5 class="text-primary d-inline">
+                                <i class="fas fa-arrow-right"></i>
+                                <%= oferta[i].Nombre %>
+                              </h5>
+                            </a>
+                            <p>
+                              <b>Participantes:</b>
+                              <%= oferta[i].cantidadAlumnos %> -
+                                <b>Empresas:</b>
+                                <%= oferta[i].cantidadEmpresas %>
+                            </p>
+                            <button class="btn btn-danger btn-sm float-right d-inline"
+                              onclick="deleteOferta('<%= oferta[i].Codigo_curso %>')"> <i
+                                class="fas fa-trash-alt"></i></button>
+                          </div>
+                        </div>
+                      </div>
+                      <% } %>
+                  </div>
+                  <%if(!datos.length) {%>
+                    <h5>No existen cursos activos</h5>
+                    <%}else{%>
+                      <h5>Cursos Activos:</h5>
+                      <% } %>
+                        <% for(var i=0; i<datos.length; i++) {%>
+                          <a href="/admin/cursos/detalle/<%= datos[i].Codigo_curso %>/<%= programa %> /curso ">
+                            <div class="card shadow mb-3">
+                              <div class="card-body">
+                                <h4 class="text-dark">Nombre: <%= datos[i].Nombre %>
+                                </h4>
+                                <p class="d-inline"><b>Código del curso:</b>
+                                  <%= datos[i].Codigo_curso %> <br>
+                                    <b>Profesor:</b>
+                                    <%= datos[i].instructor %><br>
+                                      <b>Orden de inicio:</b>
+                                      <%= datos[i].Orden %> <br>
+                                        <b>Agrupación:</b>
+                                        <%= datos[i].Agrupacion %> <br>
+                                          <b>Estado:</b>
+                                          <%if(datos[i].Estado==1) {%> EN PREPARACIÓN <%}%>
+                                              <%if(datos[i].Estado==2) {%> EN CURSO <%}%>
+                                </p>
+                                <!-- <button class="btn btn-success float-right d-inline"> Participantes</button> -->
+                              </div>
+                            </div>
+                          </a>
+                          <% } %>
 
 
 
 
-              </div>
-            </div>
-        </div>
-      </div>
-    </div>
-
-
-    <!-- Modal Insertar -->
-    <div class="modal fade" id="insertar_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-      aria-hidden="true">
-      <div class="modal-dialog  modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">AGREGAR NUEVO CURSO</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form id="form_curso">
-              <input type="hidden" name="programa" value="<%= programa%>">
-              <div class="form-row">
-                <div class="form-group col-md-4">
-                  <label for="codigo_curso">Código de curso*</label>
-                  <input type="text" class="form-control" required name="codigo_curso" id="codigo_curso">
-                </div>
-                <div class="form-group col-md-8">
-                  <label for="nombre">Nombre del curso*</label>
-                  <input type="text" class="form-control" required name="nombre" id="nombre">
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="col-3">
-                  <label for="date_inicio">Fecha de inicio</label>
-                  <input type="text" class="form-control" name="date_inicio" id="date_inicio">
-                </div>
-                <div class="col-3">
-                  <label for="date_fin">Fecha de finalización</label>
-                  <input type="text" class="form-control" name="date_fin" id="date_fin">
-                </div>
-                <div class="col-3">
-                  <label for="orden">Orden de inicio</label>
-                  <input type="text" class="form-control" name="orden" id="orden">
-                </div>
-                <div class="col-3">
-                  <label for="agrupacion">Agrupación</label>
-                  <input type="text" class="form-control" name="agrupacion" id="agrupacion">
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="col-3">
-                  <label for="modalidad">Modalidad de contratación</label>
-                  <select class="form-control" name="modalidad" id="modalidad">
-                    <option value="Licitación">Licitación</option>
-                    <option value="Bolpros">Bolpros</option>
-                  </select>
-                </div>
-                <div class="col-3">
-                  <label for="modadlidad_id">Identificador de modalidad</label>
-                  <input type="text" class="form-control" name="modadlidad_id" id="modadlidad_id">
-                </div>
-                <div class="col-3">
-                  <label for="documento">Documento de contratación</label>
-                  <select class="form-control" name="documento" id="documento">
-                    <option value="Contrato">Contrato</option>
-                    <option value="Orden">Orden de compra</option>
-                  </select>
-                </div>
-                <div class="col-3">
-                  <label for="documento_id">Identificador de documento</label>
-                  <input type="text" class="form-control" name="documento_id" id="documento_id">
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="form-group col-md-8">
-                  <label for="fechas">Fechas</label>
-                  <input type="text" class="form-control" name="fechas" id="fechas" placeholder="Sábados...">
-                </div>
-                <div class="form-group col-md-4">
-                  <label for="horario">Horario</label>
-                  <input type="text" class="form-control" name="horario" id="horario" placeholder="De 0:00 a 0:00">
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="form-group col-md-4">
-                  <label for="factura">Factura</label>
-                  <input type="text" class="form-control" name="factura" id="factura" placeholder="000000">
-                </div>
-                <div class="form-group col-md-4">
-                  <label for="instructor">Instructor</label>
-                  <select id="instructor" name="instructor" class="form-control">
-                    <option selected>Seleccionar instructor</option>
-                    <option>...</option>
-                  </select>
-                </div>
-                <div class="form-group col-md-4">
-                  <label for="costo">Costo Por alumno</label>
-                  <input type="text" class="form-control" name="costo" id="costo" placeholder="$0.00">
-                </div>
-              </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            <button type="submit" class="btn btn-primary">Agregar curso</button>
-            </form>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
 
-    <!-- Modal oferta -->
-    <div class="modal fade" id="modal_oferta" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-      aria-hidden="true">
-      <div class="modal-dialog  modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">AGREGAR NUEVA OFERTA</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form id="form_oferta">
-              <input type="hidden" name="programa" id="programa_oferta" required value="<%= programa%>">
-              <div class="form-row">
-                <div class="form-group col-md-12">
-                  <label for="nombre">Nombre de la oferta</label>
-                  <input type="text" class="form-control" required name="nombre" id="nombre_oferta">
-                </div>
+  <!-- Modal Insertar -->
+  <div class="modal fade" id="insertar_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog  modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">AGREGAR NUEVO CURSO</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="form_curso">
+            <input type="hidden" name="programa" value="<%= programa%>">
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label for="codigo_curso">Código de curso*</label>
+                <input type="text" class="form-control" required name="codigo_curso" id="codigo_curso">
               </div>
-              <div class="form-row">
-                <div class="form-group col-md-12">
-                  <label for="horario">Fechas</label>
-                  <input type="text" class="form-control" name="fecha" required id="horario_fecha"
-                    placeholder="Sábado...">
-                </div>
-                <div class="form-group col-md-4">
-                  <label for="horario">Horario</label>
-                  <input type="text" class="form-control" name="horario" required id="horario_oferta"
-                    placeholder="De 0:00 a 0:00">
-                </div>
-                <div class="form-group col-md-4">
-                  <label for="costo">Costo Por alumno</label>
-                  <input type="text" class="form-control" name="costo" required id="costo_oferta" placeholder="$0.00">
-                </div>
-                <div class="form-group col-md-4">
-                  <label for="costo">Fecha limite inscripción</label>
-                  <input type="text" class="form-control" name="fecha_limite" required id="fecha_limite">
-                </div>
+              <div class="form-group col-md-8">
+                <label for="nombre">Nombre del curso*</label>
+                <input type="text" class="form-control" required name="nombre" id="nombre">
               </div>
+            </div>
+            <div class="form-row">
+              <div class="col-3">
+                <label for="date_inicio">Fecha de inicio</label>
+                <input type="text" class="form-control" name="date_inicio" id="date_inicio">
+              </div>
+              <div class="col-3">
+                <label for="date_fin">Fecha de finalización</label>
+                <input type="text" class="form-control" name="date_fin" id="date_fin">
+              </div>
+              <div class="col-3">
+                <label for="orden">Orden de inicio</label>
+                <input type="text" class="form-control" name="orden" id="orden">
+              </div>
+              <div class="col-3">
+                <label for="agrupacion">Agrupación</label>
+                <input type="text" class="form-control" name="agrupacion" id="agrupacion">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col-3">
+                <label for="modalidad">Modalidad de contratación</label>
+                <select class="form-control" name="modalidad" id="modalidad">
+                  <option value="Licitación">Licitación</option>
+                  <option value="Bolpros">Bolpros</option>
+                </select>
+              </div>
+              <div class="col-3">
+                <label for="modadlidad_id">Identificador de modalidad</label>
+                <input type="text" class="form-control" name="modadlidad_id" id="modadlidad_id">
+              </div>
+              <div class="col-3">
+                <label for="documento">Documento de contratación</label>
+                <select class="form-control" name="documento" id="documento">
+                  <option value="Contrato">Contrato</option>
+                  <option value="Orden">Orden de compra</option>
+                </select>
+              </div>
+              <div class="col-3">
+                <label for="documento_id">Identificador de documento</label>
+                <input type="text" class="form-control" name="documento_id" id="documento_id">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-8">
+                <label for="fechas">Fechas</label>
+                <input type="text" class="form-control" name="fechas" id="fechas" placeholder="Sábados...">
+              </div>
+              <div class="form-group col-md-4">
+                <label for="horario">Horario</label>
+                <input type="text" class="form-control" name="horario" id="horario" placeholder="De 0:00 a 0:00">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label for="factura">Factura</label>
+                <input type="text" class="form-control" name="factura" id="factura" placeholder="000000">
+              </div>
+              <div class="form-group col-md-4">
+                <label for="instructor">Instructor</label>
+                <select id="instructor" name="instructor" class="form-control">
+                  <option selected>Seleccionar instructor</option>
+                  <option>...</option>
+                </select>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="costo">Costo Por alumno</label>
+                <input type="text" class="form-control" name="costo" id="costo" placeholder="$0.00">
+              </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="submit" class="btn btn-primary">Agregar curso</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Modal oferta -->
+  <div class="modal fade" id="modal_oferta" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog  modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Nueva oferta</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <div class="container p-5" id="menu" style="display: none;">
+            <h5>¿A quien va destinada la oferta?</h5>
+            <hr>
+            <div class="row">
+              <div class="col-md-6">
+                <button class="btn btn-primary btn-block"> <i class="fas fa-building"></i> Empresas / Cotizantes
+                  ISSS</button>
+              </div>
+              <div class="col-md-6">
+                <button class="btn btn-primary btn-block"><i class="fas fa-user-friends"></i>Particulares no
+                  cotizantes</button>
+              </div>
+            </div>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            <button type="submit" class="btn btn-primary">Agregar oferta</button>
-            </form>
-          </div>
+
+          <form id="form_oferta_particulares">
+            <h5>Oferta para no cotizantes</h5>
+            <input type="hidden" name="programa" id="programa_oferta" required value="<%= programa%>">
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label for="nombre">Nombre de la oferta</label>
+                <input type="text" class="form-control" required name="nombre" id="nombre_oferta">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label for="horario">Fechas</label>
+                <input type="text" class="form-control" name="fecha" required id="horario_fecha"
+                  placeholder="Sábado...">
+              </div>
+              <div class="form-group col-md-4">
+                <label for="horario">Horario</label>
+                <input type="text" class="form-control" name="horario" required id="horario_oferta"
+                  placeholder="De 0:00 a 0:00">
+              </div>
+              <div class="form-group col-md-4">
+                <label for="costo">Costo Por alumno</label>
+                <input type="text" class="form-control" name="costo" required id="costo_oferta" placeholder="$0.00">
+              </div>
+              <div class="form-group col-md-4">
+                <label for="costo">Fecha limite inscripción</label>
+                <input type="text" class="form-control" name="fecha_limite" required id="fecha_limite">
+              </div>
+            </div>
+            <button type="button" class="btn btn-secondary float-right m-1" data-dismiss="modal">Cerrar</button>
+            <button type="submit" class="btn btn-primary float-right m-1">Agregar oferta</button>
+          </form>
+
+
+          <form id="form_oferta_empresas" style="display: none;">
+            <input type="hidden" name="programa" id="programa_oferta" required value="<%= programa%>">
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label for="nombre">Nombre de la oferta</label>
+                <input type="text" class="form-control" required name="nombre" id="nombre_oferta">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label for="horario">Fechas</label>
+                <input type="text" class="form-control" name="fecha" required id="horario_fecha"
+                  placeholder="Sábado...">
+              </div>
+              <div class="form-group col-md-4">
+                <label for="horario">Horario</label>
+                <input type="text" class="form-control" name="horario" required id="horario_oferta"
+                  placeholder="De 0:00 a 0:00">
+              </div>
+              <div class="form-group col-md-4">
+                <label for="costo">Costo Por alumno</label>
+                <input type="text" class="form-control" name="costo" required id="costo_oferta" placeholder="$0.00">
+              </div>
+              <div class="form-group col-md-4">
+                <label for="costo">Fecha limite inscripción</label>
+                <input type="text" class="form-control" name="fecha_limite" required id="fecha_limite">
+              </div>
+            </div>
+            <button type="button" class="btn btn-secondary float-right m-1" data-dismiss="modal">Cerrar</button>
+            <button type="submit" class="btn btn-primary float-right m-1">Agregar oferta</button>
+          </form>
         </div>
       </div>
     </div>
     <!-- /.container-fluid -->
     <%- include('../partials/footer'); %>
-    <script src="/static/js/jquery.mask.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+      <script src="/static/js/jquery.mask.min.js"></script>
+      <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
-    <script src="/static/js/cursos.js"></script>
+      <script src="/static/js/cursos.js"></script>
