@@ -17,6 +17,15 @@ loader = () => {
     },
   });
 };
+$("#btn_empresas").click(() => {
+  $("#form_oferta_empresas").css("display", "block")
+  $("#menu").css("display", "none")
+});
+
+$("#btn_back_menu").click(() => {
+  $("#form_oferta_empresas").css("display", "none")
+  $("#menu").css("display", "block")
+});
 
 $(document).ready(() => {
   $("#costo").mask("000,000,000,000,000.00", { reverse: true });
@@ -24,6 +33,8 @@ $(document).ready(() => {
   $("#date_inicio").datepicker({ dateFormat: "yy-mm-dd" });
   $("#date_fin").datepicker({ dateFormat: "yy-mm-dd" });
   $("#fecha_limite").datepicker({ dateFormat: "yy-mm-dd" });
+
+
 
   $("#instructor").select2({
     width: "100%",

@@ -8,6 +8,7 @@ const pool = require("../models/db");
 const { getUserDataByToken } = require("../middlewares/auth");
 const { sendEmail } = require("../utils/mailer");
 const { upload, getFolderData } = require("../utils/s3");
+const { LexModelBuildingService } = require("aws-sdk");
 
 // Renderizar pantalla de cursos ya con programa
 cursos.cursos = async (req, res) => {
@@ -25,7 +26,8 @@ cursos.cursos = async (req, res) => {
 
     queries.push(
       pool.query(
-        "SELECT CONCAT(Nombre,' - ',Horario) AS Nombre , Codigo_curso, (SELECT COUNT(*) FROM union_matricula WHERE id_curso = tb_cursos.Codigo_curso ) AS cantidadAlumnos , (SELECT COUNT(*) FROM union_curso_empresa WHERE id_curso = tb_cursos.Codigo_curso ) AS cantidadEmpresas FROM tb_cursos WHERE Estado = 5 AND id_programa=?", [programa]
+        "SELECT CONCAT(Nombre,' - ',Horario) AS Nombre , Codigo_curso, (SELECT COUNT(*) FROM union_matricula WHERE id_curso = tb_cursos.Codigo_curso ) AS cantidadAlumnos , (SELECT COUNT(*) FROM union_curso_empresa WHERE id_curso = tb_cursos.Codigo_curso ) AS cantidadEmpresas FROM tb_cursos WHERE Estado = 5 AND id_programa=?",
+        [programa]
       )
     );
     const query = await Promise.all(queries);
@@ -521,6 +523,13 @@ cursos.ArchivoExtra = async (req, res) => {
     console.log(error);
     return res.status(400).json({ status: false, error });
   }
+};
+
+cursos.form = async (req, res) => {
+  const usuario = getUserDataByToken(req.cookies.token);
+  const { programa } = req.params;
+
+  res.render("./habil/addoferta.ejs", { data: usuario, programa });
 };
 
 module.exports = cursos;

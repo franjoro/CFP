@@ -14,7 +14,7 @@ const Directivas = {
             "https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js",
             "https://www.googletagmanager.com/gtag/js"
         ],
-        connectSrc: ["'self'"],
+        connectSrc: ["'self'", "https://api.salud.gob.sv/", "https://www.google-analytics.com/"],
         styleSrc: [
             "'self'",
             "fonts.googleapis.com",
@@ -29,7 +29,8 @@ const Directivas = {
             "'self'",
             "https://maps.gstatic.com",
             "https://maps.googleapis.com",
-            "data:"
+            "http://code.jquery.com/ui/1.12.1/themes/base/images/ui-icons_444444_256x240.png",
+            "http://code.jquery.com/ui/1.12.1/themes/base/images/ui-icons_555555_256x240.png"
         ],
         frameSrc: ["'self'", "https://www.google.com"],
     },

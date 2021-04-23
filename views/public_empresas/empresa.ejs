@@ -1,241 +1,211 @@
 <%- include('../partials/header.public.ejs'); %>
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css"
-/>
-<!-- <div class="container"> -->
-<div class="mb-5 p-4 bg-white shadow-sm">
-  <div id="stepper1" class="bs-stepper">
-    <div class="bs-stepper-header">
-      <div class="step" data-target="#test-l-1">
-        <button type="button" class="btn step-trigger">
-          <span class="bs-stepper-circle">1</span>
-          <br />
-          <span class="bs-stepper-label">Información empresarial</span>
-        </button>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css" />
+  <!-- <div class="container"> -->
+  <div class="mb-5 p-4 bg-white shadow-sm">
+    <div id="stepper1" class="bs-stepper">
+      <div class="bs-stepper-header">
+        <div class="step" data-target="#test-l-1">
+          <button type="button" class="btn step-trigger">
+            <span class="bs-stepper-circle">1</span>
+            <br />
+            <span class="bs-stepper-label">Información empresarial</span>
+          </button>
+        </div>
+        <div class="line"></div>
+        <div class="step" data-target="#test-l-2">
+          <button type="button" class="btn step-trigger">
+            <span class="bs-stepper-circle">2</span>
+            <span class="bs-stepper-label">Administración de participantes</span>
+          </button>
+        </div>
+        <div class="line"></div>
+        <div class="step" data-target="#test-l-3">
+          <button type="button" class="btn step-trigger" aria-selected="true">
+            <span class="bs-stepper-circle">3</span>
+            <span class="bs-stepper-label">Subida de documentación</span>
+          </button>
+        </div>
       </div>
-      <div class="line"></div>
-      <div class="step" data-target="#test-l-2">
-        <button type="button" class="btn step-trigger">
-          <span class="bs-stepper-circle">2</span>
-          <span class="bs-stepper-label">Administración de participantes</span>
-        </button>
-      </div>
-      <div class="line"></div>
-      <div class="step" data-target="#test-l-3">
-        <button type="button" class="btn step-trigger" aria-selected="true">
-          <span class="bs-stepper-circle">3</span>
-          <span class="bs-stepper-label">Subida de documentación</span>
-        </button>
-      </div>
-    </div>
-    <div class="bs-stepper-content">
-      <div id="test-l-1" class="content">
-        <p class="text-dark">
-          <b>Instrucciones: </b>Verifique la información y actualizar de ser
-          necesario
-        </p>
-        <form id="update_form">
-          <input
-            type="hidden"
-            id="id_empresa"
-            value="<%=  update.id_empresa %>"
-          />
-          <h5>Actualización de información empresarial</h5>
-          <small
-            >Esta información debe ser actualizada al momento de solicitar
-            inscripción a cursos
-          </small>
-          <hr />
-          <div class="form-row">
-            <div class="col">
-              <label for="num_empleados"
-                >Número de empleados inscritos en planilla
-              </label>
-              <input
-                type="number"
-                id="num_empleados"
-                name="num_empleados"
-                value="<%=  update.Num_Empleados %>"
-                class="form-control"
-              />
-            </div>
-            <div class="col">
-              <label for="aportacion"
-                >Aportación monetaria mensual a INSAFORP</label
-              >
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">$</span>
+      <div class="bs-stepper-content">
+        <div id="test-l-1" class="content">
+          <p class="text-dark">
+            <b>Instrucciones: </b>Verifique la información y actualizar de ser
+            necesario
+          </p>
+          <form id="update_form">
+            <input type="hidden" id="id_empresa" value="<%=  update.id_empresa %>" />
+            <h5>Actualización de información empresarial</h5>
+            <small>Esta información debe ser actualizada al momento de solicitar
+              inscripción a cursos
+            </small>
+            <hr />
+            <div class="form-row">
+              <div class="col">
+                <label for="num_empleados">Número de empleados inscritos en planilla
+                </label>
+                <input type="number" id="num_empleados" name="num_empleados" value="<%=  update.Num_Empleados %>"
+                  class="form-control" />
+              </div>
+              <div class="col">
+                <label for="aportacion">Aportación monetaria mensual a INSAFORP</label>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">$</span>
+                  </div>
+                  <input type="text" id="aportacion" name="aportacion" value="<%=  update.Aportacion_insaforp %>"
+                    class="form-control" />
                 </div>
-                <input
-                  type="text"
-                  id="aportacion"
-                  name="aportacion"
-                  value="<%=  update.Aportacion_insaforp %>"
-                  class="form-control"
-                />
               </div>
             </div>
-          </div>
-          <hr />
-        </form>
-        <small
-          >Si la información es correcta por favor continue al siguiente paso
-        </small>
-        <button
-          class="btn btn-primary float-right"
-          onclick=" VerificarEmpresa()"
-        >
-          Continuar al siguiente paso
-        </button>
-      </div>
-      <div id="test-l-2" class="content">
-        <p class="text-dark">
-          <b>Instrucciones: </b>Rellenar la información de los participantes que
-          desea inscribir y verificar la información de la tabla. Posteriormente
-          continuar al siguiente paso
-        </p>
-        <div class="form-row">
-          <div class="col">
-            <label for="name">DUI*</label>
-            <input
-              type="text"
-              id="dui"
-              name="dui"
-              class="form-control"
-              placeholder="0000000-0"
-            />
-          </div>
-          <div class="col">
-            <label for="tel">Nombre Completo*</label>
-            <input type="text" id="nombre" name="nombre" class="form-control" />
-          </div>
-          <div class="col">
-            <label for="isss">N° ISSS</label>
-            <input type="text" id="isss" name="isss" class="form-control" />
-          </div>
-          <div class="col">
-            <label for="cargo">Cargo</label>
-            <input type="text" id="cargo" name="cargo" class="form-control" />
-          </div>
-          <div class="col">
-            <label for="tel">Teléfono celular</label>
-            <input
-              type="text"
-              id="tel"
-              class="form-control"
-              placeholder="0000-0000"
-            />
-          </div>
+            <p>NOMBRE DEL GERENTE O RESPONSABLE A FIRMAR</p>
+            <div class="form-row">
+              <div class="col-md-2">
+                <label for="primerape">1er Apellido</label>
+                <input type="text" id="primerape" name="primerape" class="form-control text-uppercase"
+                  onkeyup="javascript:this.value=this.value.toUpperCase();" />
+              </div>
+              <div class="col-md-2">
+                <label for="segunape">2do Apellido</label>
+                <input type="text" id="segunape" name="segunape" class="form-control text-uppercase"
+                  onkeyup="javascript:this.value=this.value.toUpperCase();" />
+              </div>
+              <div class="col-md-6">
+                <label for="nombres">Nombres</label>
+                <input type="text" id="nombres" name="nombres" class="form-control text-uppercase"
+                  onkeyup="javascript:this.value=this.value.toUpperCase();" />
+              </div>
+              <div class="col-md-2">
+                <label for="cargo">Cargo</label>
+                <input type="text" id="cargof" name="cargof" class="form-control text-uppercase"
+                  onkeyup="javascript:this.value=this.value.toUpperCase();" />
+              </div>
+            </div>
+            <hr />
+          </form>
+          <small>Si la información es correcta por favor continue al siguiente paso
+          </small>
+          <button class="btn btn-primary float-right" onclick=" VerificarEmpresa()">
+            Continuar al siguiente paso
+          </button>
         </div>
-        <div class="form-row">
-          <div class="col-3">
-            <label for="tel">Correo Electrónico</label>
-            <input type="text" id="email" class="form-control" />
+        <div id="test-l-2" class="content">
+          <p class="text-dark">
+            <b>Instrucciones: </b>Rellenar la información de los participantes que
+            desea inscribir y verificar la información de la tabla. Posteriormente
+            continuar al siguiente paso
+          </p>
+          <div class="form-row">
+            <div class="col">
+              <label for="name">DUI*</label>
+              <input type="text" id="dui" name="dui" class="form-control" placeholder="0000000-0" />
+            </div>
+            <div class="col">
+              <label for="tel">Nombre Completo*</label>
+              <input type="text" id="nombre" name="nombre" class="form-control" />
+            </div>
+            <div class="col">
+              <label for="isss">N° ISSS</label>
+              <input type="text" id="isss" name="isss" class="form-control" />
+            </div>
+            <div class="col">
+              <label for="cargo">Cargo</label>
+              <input type="text" id="cargo" name="cargo" class="form-control" />
+            </div>
+            <div class="col">
+              <label for="tel">Teléfono celular</label>
+              <input type="text" id="tel" class="form-control" placeholder="0000-0000" />
+            </div>
           </div>
-          <div class="col-3">
-            <label for="genero">Sexo</label>
-            <select class="custom-select" required id="genero">
-              <option disabled selected>Seleccionar Sexo</option>
-              <option value="Hombre">Hombre</option>
-              <option value="Mujer">Mujer</option>
-            </select>
+          <div class="form-row">
+            <div class="col-3">
+              <label for="tel">Correo Electrónico</label>
+              <input type="text" id="email" class="form-control" />
+            </div>
+            <div class="col-3">
+              <label for="genero">Sexo</label>
+              <select class="custom-select" required id="genero">
+                <option disabled selected>Seleccionar Sexo</option>
+                <option value="Hombre">Hombre</option>
+                <option value="Mujer">Mujer</option>
+              </select>
+            </div>
+            <div class="col-6">
+              <label for="tel">Curso que desea tomar el participante:</label>
+              <select class="custom-select" id="curso">
+                <% cursos.forEach(element=> { %>
+                  <option value="<%= element.Codigo_curso %>">
+                    <%= element.Nombre.trim() + ' ' + element.Horario.trim() %>
+                  </option>
+                  <% }) %>
+              </select>
+            </div>
           </div>
-          <div class="col-6">
-            <label for="tel">Curso que desea tomar el participante:</label>
-            <select class="custom-select" id="curso">
-              <% cursos.forEach(element=> { %>
-              <option value="<%= element.Codigo_curso %>">
-                <%= element.Nombre.trim() + ' ' + element.Horario.trim() %>
-              </option>
-              <% }) %>
-            </select>
+          <button class="btn btn-success float-right my-2" id="botonAdd">
+            Agregar participante
+          </button>
+          <br />
+          <br /><br />
+          <div class="table-responsive">
+            <table class="table table-bordered" id="tablaParticipantes" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th>DUI</th>
+                  <th>Nombre</th>
+                  <th>Teléfono</th>
+                  <th>ISSS</th>
+                  <th>Cargo</th>
+                  <th>Email</th>
+                  <th>Curso</th>
+                  <th>Código de curso</th>
+                  <th>Género</th>
+                  <th>Borrar</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
           </div>
+          <button class="btn btn-danger btn-small float-left" onclick="deleteTableAndLocal()">
+            Borrar Tabla
+          </button>
+          <button class="btn btn-primary float-right" onclick="AsginarGlobalCursos(); ">
+            Continuar al siguiente paso
+          </button>
         </div>
-        <button class="btn btn-success float-right my-2" id="botonAdd">
-          Agregar participante
-        </button>
-        <br />
-        <br /><br />
-        <div class="table-responsive">
-          <table
-            class="table table-bordered"
-            id="tablaParticipantes"
-            width="100%"
-            cellspacing="0"
-          >
-            <thead>
-              <tr>
-                <th>DUI</th>
-                <th>Nombre</th>
-                <th>Teléfono</th>
-                <th>ISSS</th>
-                <th>Cargo</th>
-                <th>Email</th>
-                <th>Curso</th>
-                <th>Código de curso</th>
-                <th>Género</th>
-                <th>Borrar</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
+        <div id="test-l-3" class="content">
+          <h3>Cargue sus documentos</h3>
+          <p class="text-dark">
+            <b>Instrucciones: </b>Abrir cada curso y adjuntar los archivos
+            solicitados:
+          </p>
+          <p><b>Tome en cuenta las siguientes recomendaciones: </b></p>
+          <ul>
+            <li>Asegúrese que los archivos e imagenes cargadas sean legibles.</li>
+            <li>Los documentos deben corresponder a los solicitados.</li>
+            <li>
+              Si escanea un documento que contiene varias páginas es recomendable
+              subirlo en un único archivo en formato PDF configurando su escaner a
+              150 PPP o DPI.
+            </li>
+            <li>
+              Revise que sus documentos se han escaneado correctamente antes de
+              enviar su solicitud.
+            </li>
+          </ul>
+          <div id="cursos_files"></div>
+          <button class="btn btn-primary float-left" onclick="ReiniciarInputs(); stepper1.previous()">
+            Anterior
+          </button>
+          <button class="btn btn-primary float-right" onclick="VerificarArchivos(); stepper1.next()">
+            Enviar y finalizar solicitud
+          </button>
         </div>
-        <button
-          class="btn btn-danger btn-small float-left"
-          onclick="deleteTableAndLocal()"
-        >
-          Borrar Tabla
-        </button>
-        <button
-          class="btn btn-primary float-right"
-          onclick="AsginarGlobalCursos(); "
-        >
-          Continuar al siguiente paso
-        </button>
-      </div>
-      <div id="test-l-3" class="content">
-        <h3>Cargue sus documentos</h3>
-        <p class="text-dark">
-          <b>Instrucciones: </b>Abrir cada curso y adjuntar los archivos
-          solicitados:
-        </p>
-        <p><b>Tome en cuenta las siguientes recomendaciones: </b></p>
-        <ul>
-          <li>Asegúrese que los archivos e imagenes cargadas sean legibles.</li>
-          <li>Los documentos deben corresponder a los solicitados.</li>
-          <li>
-            Si escanea un documento que contiene varias páginas es recomendable
-            subirlo en un único archivo en formato PDF configurando su escaner a
-            150 PPP o DPI.
-          </li>
-          <li>
-            Revise que sus documentos se han escaneado correctamente antes de
-            enviar su solicitud.
-          </li>
-        </ul>
-        <div id="cursos_files"></div>
-        <button
-          class="btn btn-primary float-left"
-          onclick="ReiniciarInputs(); stepper1.previous()"
-        >
-          Anterior
-        </button>
-        <button
-          class="btn btn-primary float-right"
-          onclick="VerificarArchivos(); stepper1.next()"
-        >
-          Enviar y finalizar solicitud
-        </button>
       </div>
     </div>
   </div>
-</div>
-<!-- </div> -->
-<%- include('../partials/footer.public.ejs'); %>
-<script src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>
-<script>
-  var stepper1Node = document.querySelector("#stepper1");
-  var stepper1 = new Stepper(document.querySelector("#stepper1"));
-</script>
+  <!-- </div> -->
+  <%- include('../partials/footer.public.ejs'); %>
+    <script src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>
+    <script>
+      var stepper1Node = document.querySelector("#stepper1");
+      var stepper1 = new Stepper(document.querySelector("#stepper1"));
+    </script>

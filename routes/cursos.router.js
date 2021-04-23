@@ -26,6 +26,8 @@ router.put("/UpdatePermisos",authcheck , cursos.UpdatePermisos)
 router.get("/:id?",authcheck , cursos.cursos);
 // Muestra los finalizados de la categoria ID
 router.get("/finalizados/:id",authcheck , cursos.cursosFinalizados);
+// Muestra el formulario para ofertas habil o  personas no cotizantes 
+router.get("/form/:programa" , authcheck, cursos.form)
 // Muestra el detalle de cada curso con empresas y alumnos
 router.get("/detalle/:id/:programa/:tipo",authcheck ,  cursos.curso_detalle);
 // Devuelve todos los instructores para select
