@@ -56,6 +56,7 @@
                         if(element.Role == 2 ) {archivo = "Recibo de aportación"}
                         if(element.Role == 3 ) {archivo = "Comprobante de pago en línea"}
                         if(element.Role == 4 ) {archivo = "Planilla ISSS"}
+                        if(element.Role >= 40 ) {archivo = "Planilla ISSS"}
                         element.isEditable == 1 ? checked1 = "checked" : checked2 = "checked";
                         %>
                         <tr>
@@ -68,7 +69,7 @@
                             </button>
                           <td>
                             <button class="btn btn-info btn-sm"
-                              onclick="SustituirArchivo('<%=curso.id %>','<%=empresa %>', '<%=element.id %>', '<%=element.Role %>')">
+                              onclick="SustituirArchivo('<%=curso %>','<%=empresa %>', '<%=element.id %>', '<%=element.Role %>')">
                               <i class="fas fa-file-signature"></i>
                             </button>
                           </td>

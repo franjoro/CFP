@@ -25,7 +25,8 @@ cursos.cursos = async (req, res) => {
 
     queries.push(
       pool.query(
-        "SELECT CONCAT(Nombre,' - ',Horario) AS Nombre , Codigo_curso, (SELECT COUNT(*) FROM union_matricula WHERE id_curso = tb_cursos.Codigo_curso ) AS cantidadAlumnos , (SELECT COUNT(*) FROM union_curso_empresa WHERE id_curso = tb_cursos.Codigo_curso ) AS cantidadEmpresas FROM tb_cursos WHERE Estado = 5 AND id_programa=?", [programa]
+        "SELECT CONCAT(Nombre,' - ',Horario) AS Nombre , Codigo_curso, (SELECT COUNT(*) FROM union_matricula WHERE id_curso = tb_cursos.Codigo_curso ) AS cantidadAlumnos , (SELECT COUNT(*) FROM union_curso_empresa WHERE id_curso = tb_cursos.Codigo_curso ) AS cantidadEmpresas FROM tb_cursos WHERE Estado = 5 AND id_programa=?",
+        [programa]
       )
     );
     const query = await Promise.all(queries);
@@ -433,6 +434,7 @@ cursos.GestorDeDocumentos = async (req, res) => {
     "SELECT id, s3key, Role, isEditable  FROM archivo_empresa_curso WHERE id_empresa=? AND id_curso = ? AND Role != 0; SELECT Nombre FROM tb_empresa WHERE id_empresa = ?",
     [req.params.empresa, req.params.curso, req.params.empresa]
   );
+
 
   return res.render("admin/gestor_documentos", {
     data: usuario.data,

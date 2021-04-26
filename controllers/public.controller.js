@@ -285,7 +285,6 @@ PublicFunctions.FichaRegistro = async (req, res) => {
   const { empresa } = req.params;
   let { alumnos } = req.body;
   let { firmante } = req.body;
-  
 
   if (
     !alumnos ||
@@ -322,7 +321,7 @@ PublicFunctions.FichaRegistro = async (req, res) => {
     alumnos = JSON.parse(alumnos);
     firmante = JSON.parse(firmante);
     const MainQuery = await Promise.all(queries);
-    const pdf = await GenerarPdf({ data: MainQuery, alumnos , firmante });
+    const pdf = await GenerarPdf({ data: MainQuery, alumnos, firmante });
     return res.status(200).json({ status: true, data: pdf });
   } catch (error) {
     console.log(error);
@@ -335,24 +334,26 @@ PublicFunctions.archivos = async (req, res) => {
   Object.keys(req.files);
   const CursosCrud = req.body.curso;
   const cursos = JSON.parse(CursosCrud);
-  const { empresa } = req.body;
+  const { empresa, CantidadPlanilla } = req.body;
   try {
     const promesas = [];
     const inserts = [];
     let ext;
     let fileContent;
     cursos.forEach((curso, index) => {
+      // SUBIR Ficha
       ext = req.files[`ficha${index}`].name.split(".")[1];
       fileContent = Buffer.from(req.files[`ficha${index}`].data, "binary");
       promesas.push(
         upload(fileContent, Date.now(), ext, empresa, `ficha${index}`)
       );
+      // SUBIR Recibo
       ext = req.files[`recibo${index}`].name.split(".")[1];
       fileContent = Buffer.from(req.files[`recibo${index}`].data, "binary");
       promesas.push(
         upload(fileContent, Date.now(), ext, empresa, `recibo${index}`)
       );
-
+      // SUBIR Si existe cancelación
       if (req.files[`cancelacion${index}`]) {
         ext = req.files[`cancelacion${index}`].name.split(".")[1];
         fileContent = Buffer.from(
@@ -363,15 +364,21 @@ PublicFunctions.archivos = async (req, res) => {
           upload(fileContent, Date.now(), ext, empresa, `cancelacion${index}`)
         );
       }
-
-      ext = req.files[`planilla${index}`].name.split(".")[1];
-      fileContent = Buffer.from(req.files[`planilla${index}`].data, "binary");
-      promesas.push(
-        upload(fileContent, Date.now(), ext, empresa, `planilla${index}`)
-      );
+      // SUBIR Archivos de planilla
+      for (let i = 0; i < CantidadPlanilla; i++) {
+        ext = req.files[`planilla${index}${i}`].name.split(".")[1];
+        fileContent = Buffer.from(
+          req.files[`planilla${index}${i}`].data,
+          "binary"
+        );
+        promesas.push(
+          upload(fileContent, Date.now(), ext, empresa, `planilla${index}${i}`)
+        );
+      }
     });
 
     const datos = await Promise.all(promesas);
+
     cursos.forEach((curso, index) => {
       let key;
       datos.forEach((element) => {
@@ -404,27 +411,22 @@ PublicFunctions.archivos = async (req, res) => {
             );
           }
         }
-        if (element.posicion == `planilla${index}`) {
-          key = element.key;
-          inserts.push(
-            pool.query(
-              "INSERT INTO archivo_empresa_curso(s3key, Role, id_empresa, id_curso) VALUES(?,?,?,?) ",
-              [key, 4, empresa, curso]
-            )
-          );
+
+        for (let i = 0; i < CantidadPlanilla; i++) {
+          if (element.posicion == `planilla${index}${i}`) {
+            key = element.key;
+            inserts.push(
+              pool.query(
+                "INSERT INTO archivo_empresa_curso(s3key, Role, id_empresa, id_curso) VALUES(?,?,?,?) ",
+                [key, `4${i}`, empresa, curso]
+              )
+            );
+          }
         }
       });
     });
 
     await Promise.all(inserts);
-    const {
-      Email,
-    } = pool.query(
-      "SELECT email AS Email FROM tb_empresa WHERE id_empresa = ?",
-      [empresa]
-    );
-    const html = `<h3>Solicitud de curso creada</h3> 
-    <p>Gracias por solicitar la inscripción de cursos en el Centro de Formación Profesional Ricaldone, uno de nuestros colaboradores revisara la solicitud y te contactaremos a la mayor brevedad posible</p>`;
 
     return res.status(200).json({ status: true });
   } catch (error) {
