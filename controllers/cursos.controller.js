@@ -436,6 +436,7 @@ cursos.GestorDeDocumentos = async (req, res) => {
     [req.params.empresa, req.params.curso, req.params.empresa]
   );
 
+
   return res.render("admin/gestor_documentos", {
     data: usuario.data,
     query,
