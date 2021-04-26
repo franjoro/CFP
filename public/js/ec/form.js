@@ -7,157 +7,195 @@ $(document).ready(function () {
   // Cambiador de progress
   // BOTONES
   $("#next1").click(() => {
-    ProgressChange("Educación formal y formación ocupacional", "2", "33.33");
+    ProgressChange("Información familiar", "2", "50");
     $("#sec1").css("display", "none");
     $("#sec2").css("display", "block");
   });
   $("#next2").click(() => {
-    ProgressChange("Información sobre situación laboral", "3", "50");
+    ProgressChange("Situación económica", "3", "100");
     $("#sec2").css("display", "none");
     $("#sec3").css("display", "block");
   });
   $("#next3").click(() => {
-    ProgressChange("Información sobre ingresos", "4", "66.33");
+    ProgressChange("Información sobre ingresos", "4", "100");
     $("#sec3").css("display", "none");
     $("#sec4").css("display", "block");
   });
-  $("#next4").click(() => {
-    ProgressChange(
-      "Expectativas y pertenencia de la información",
-      "5",
-      "82.66"
-    );
-    $("#sec4").css("display", "none");
-    $("#sec5").css("display", "block");
-  });
-  $("#next5").click(() => {
-    ProgressChange("Seguimiento", "6", "100");
-    $("#sec5").css("display", "none");
-    $("#sec6").css("display", "block");
-  });
+
   //Mascara
-  $("#dui").mask("00000000-0");
-  $("#nit").mask("0000-000000-000-0");
-  $("#year1").mask("0000");
-  $("#year2").mask("0000");
-  $("#year3").mask("0000");
+  // $("#dui").mask("00000000-0");
+  //Pendiente a edad
+  $("#edad1").mask("00");
+  $("#edad2").mask("00");
+  $("#edad3").mask("00");
+  $("#edad4").mask("00");
+  $("#edad5").mask("00");
+
   $("#telfijocontacto").mask("0000-0000");
   $("#telmovilcontacto").mask("0000-0000");
   $("#fijo").mask("0000-0000");
   $("#movil").mask("0000-0000");
+  $("#teltabl1").mask("0000-0000");
+  $("#teltabl2").mask("0000-0000");
+  $("#teltabl3").mask("0000-0000");
+  $("#teltabl4").mask("0000-0000");
+  $("#cuota").mask("000,000,000,000,000.00", {
+    reverse: true,
+  });
+  $("#pagovi").mask("000,000,000,000,000.00", {
+    reverse: true,
+  });
+
+  $("#salario1").mask("000,000,000,000,000.00", {
+    reverse: true,
+  });
+  $("#salario2").mask("000,000,000,000,000.00", {
+    reverse: true,
+  });
+  $("#salario3").mask("000,000,000,000,000.00", {
+    reverse: true,
+  });
+  $("#salario4").mask("000,000,000,000,000.00", {
+    reverse: true,
+  });
+
+  $(".costo").mask("000,000,000,000,000.00", {
+    reverse: true,
+  });
+  $("#remesacantidad").mask("000,000,000,000,000.00", {
+    reverse: true,
+  });
+
+
+  let global_salarios = currency(0);
+  let global_gastos = currency(0);
+
+  $(".salario").focusout(function () {
+    global_salarios = currency($("#salario1").val())
+      .add($("#salario2").val())
+      .add($("#salario3").val())
+      .add($("#salario4").val());
+    $("#totalsalarios").text(global_salarios);
+  });
+
+  $(".costo").focusout(function () {
+    global_gastos = 
+    currency($("#txt_alimentacion").val())
+      .add($("#txt_vivienda").val())
+      .add($("#txt_agua").val())
+      .add($("#txt_energia").val())
+      .add($("#txt_cable").val())
+      .add($("#txt_higiene").val())
+      .add($("#txt_celular").val())
+      .add($("#txt_servicio").val())
+      .add($("#txt_cotizacion").val())
+      .add($("#txt_transporte").val())
+      .add($("#txt_vigilancia").val())
+      .add($("#txt_salud").val())
+      .add($("#txt_educacion").val());
+      
+    $("#totalgastos").text(global_gastos);
+  });
+
   // FIN Mascara
   // fecha
-  $.datepicker.setDefaults( $.datepicker.regional[ "es" ] );
+  $.datepicker.setDefaults($.datepicker.regional["es"]);
   $("#fechanac").datepicker({
     dateFormat: "dd-mm-yy",
     changeMonth: true,
     changeYear: true,
-    yearRange: "-100:+0"
+    yearRange: "-100:+0",
   });
   // Discapacidad
   // Fin fecha
   // SECCION 1 =========================================================================
-  $("#discapacidad").click(function () {
-    const checkBox = document.getElementById("discapacidad");
-    if (checkBox.checked == true) {
-      $("#discapacidades").css("display", "block");
-    } else {
-      $("#discapacidades").css("display", "none");
-    }
-  });
-  $("#discapacidades1").click(function () {
-    const checkBox = document.getElementById("discapacidades1");
-    if (checkBox.checked == true) {
-      $("#discapacidades").css("display", "block");
-    }
-  });
-  $("#discapacidades2").click(function () {
-    const checkBox = document.getElementById("discapacidades2");
-    if (checkBox.checked == true) {
-      $("#discapacidades").css("display", "none");
-    }
-  });
-  //profesion
+  //El participante trabaja
   $("#flexRadioDefault1").click(function () {
     const checkBox = document.getElementById("flexRadioDefault1");
     if (checkBox.checked == true) {
-      $("#profesiondiv").css("display", "block");
+      $("#lugartrabajo").css("display", "block");
+      $("#direciontrabajo").css("display", "block");
     }
   });
   $("#flexRadioDefault2").click(function () {
     const checkBox = document.getElementById("flexRadioDefault2");
     if (checkBox.checked == true) {
-      $("#profesiondiv").css("display", "none");
+      $("#lugartrabajo").css("display", "none");
+      $("#direciontrabajo").css("display", "none");
     }
   });
-  // Paises
-  $("#nacionalidad").on("change", function () {
-    if (this.value == "salvadoreno") {
-      $("#pais")
-        .append(`<option value="sv">El Salvador</option> `)
-        .prop("disabled", true);
+
+  //Capacidad de internet
+  $("#internet").on("change", function () {
+    if (this.value == "residencial" || this.value == "movil") {
+      $("#capacidadinternetdiv").css("display", "block");
     } else {
-      $("#pais").prop("disabled", false);
-      $("#pais").select2({
-        width: "100%",
-        ajax: {
-          url: "https://api.salud.gob.sv/pais",
-          dataType: "json",
-          delay: 250,
-          data(params) {
-            return {
-              nombre: params.term,
-            };
-          },
-          processResults: function (data) {
-            return {
-              results: $.map(data, function (obj, index) {
-                return { id: obj.id, text: obj.nombre };
-              }),
-            };
-          },
-          cache: true,
-        },
-      });
+      $("#capacidadinternetdiv").css("display", "none");
     }
+  });
+
+  $("#carreras").select2({
+    width: "100%",
+    ajax: {
+      url: "/ec/carreras",
+      dataType: "json",
+      delay: 250,
+      processResults: function (data) {
+        return {
+          results: $.map(data, function (obj, index) {
+            return { id: obj.id, text: obj.Nombre };
+          }),
+        };
+      },
+      cache: true,
+    },
+  });
+  //Selector de carreras
+  $("#carreras").on("select2:select", function (e) {
+    var idcarrera = e.params.data.id;
+    $("#grupos").select2({
+      width: "100%",
+      ajax: {
+        url: `/ec/${idcarrera}/grupos`,
+        dataType: "json",
+        delay: 250,
+        data(params) {
+          return {
+            idcarrera,
+            nombre: params.term,
+          };
+        },
+        processResults: function (data) {
+          return {
+            results: $.map(data, function (obj, index) {
+              return { id: obj.id, text: obj.Nombre };
+            }),
+          };
+        },
+        cache: true,
+      },
+    });
   });
 
   // FIN SECCION 1 =====================================================================
   // SECCION 2 =========================================================================
-  // Sabe leer escribir
-  $("#leerescribir").on("change", function () {
-    if (this.value == "0") {
-      $(".analfabeta").css("display", "block");
+  // la vivienda es otros
+  $("#tipodecasa").on("change", function () {
+    if (this.value == "Otro") {
+      $("#especificarvivienda").css("display", "block");
     } else {
-      $(".analfabeta").css("display", "none");
+      $("#especificarvivienda").css("display", "none");
     }
-  });
-  // Estudia actualmete
-  $("#estudiaactualmente").on("change", function () {
-    if (this.value == "0") {
-      $("#tiempodejoestudio").css("display", "block");
+    if (
+      this.value == "Alquilada" ||
+      this.value == "FinanciadaSocial" ||
+      this.value == "Finaciada"
+    ) {
+      $("#pagovivienda").css("display", "block");
     } else {
-      $("#tiempodejoestudio").css("display", "none");
+      $("#pagovivienda").css("display", "none");
     }
   });
-  //Cursos pasados
-  $("#cursospasados").on("change", function () {
-    if (this.value == "1") {
-      $("#beneficiocursos").css("display", "block");
-    } else {
-      $("#beneficiocursos").css("display", "none");
-    }
-  });
-
-  $(".beneficios").on("change", function () {
-    if (this.value == "Si") {
-      $("#cursopositivo").css("display", "block");
-    }
-    if (this.value == "No") {
-      $("#cursonegativo").css("display", "block");
-    }
-  });
-
   // FIN SECCION 2 =====================================================================
 
   // SECCION 3 =====================================================================

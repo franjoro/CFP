@@ -8,7 +8,8 @@ const GenerarPdf = (data) => {
     let empresa = data.data[0][0];
     let nit = data.data[0][0].NIT.split("-");
     const d = new Date();
-
+    const {firmante} = data;
+    
     const {Horario, Nombre, programa, Fechas} = data.data[1][0] 
     const {NombreContacto,  EmailContacto} = data.data[2][0] 
     itineracion = "";
@@ -324,17 +325,17 @@ const GenerarPdf = (data) => {
                   </p>
                   <div class="encabezado">
                     <div class="group" style="width: 25%">
-                      <input style="width: 100%" type="text" /><label
+                      <input style="width: 100%" type="text" value="${firmante.primera}" /><label
                         >1er. apellido</label
                       ><br />
                     </div>
                     <div class="group" style="width: 25%">
-                      <input style="width: 100%" type="text" /><label
+                      <input style="width: 100%" type="text" value="${firmante.segundoa}" /><label
                         >2do. Apellido</label
                       ><br />
                     </div>
                     <div class="group" style="width: 50%">
-                      <input style="width: 100%" type="text" /><label>Nombres</label
+                      <input style="width: 100%" type="text" value="${firmante.nombres}" /><label>Nombres</label
                       ><br />
                     </div>
                   </div>
@@ -345,7 +346,7 @@ const GenerarPdf = (data) => {
                   <div class="cuerpo" style="margin-top: 3px">
                     <div class="group" style="width: 50%">
                       <label>Cargo</label>
-                      <input style="width: 90%" type="text" />
+                      <input style="width: 90%" type="text" value="${firmante.cargo}" />
                       <br />
                     </div>
                     <div class="group" style="width: 50%">

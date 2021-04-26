@@ -19,7 +19,7 @@ PublicFunctions.thanks = (req, res) => {
 PublicFunctions.profile = async (req, res) => {
   const { data } = getUserDataByToken(req.cookies.token);
   let perfil = await pool.query(
-    "SELECT tb_empresa.Actividad_eco , tb_empresa.Direccion, tb_empresa.Aportacion_insaforp, tb_empresa.Num_Patronal, tb_empresa.Num_Empleados, tb_empresa_contact.Nombre ,  tb_empresa_contact.Email , tb_empresa_contact.Telefono FROM tb_empresa , tb_empresa_contact WHERE tb_empresa.NIT = ? LIMIT 1",
+    "SELECT tb_empresa.Actividad_eco , tb_empresa.Direccion, tb_empresa.Aportacion_insaforp, tb_empresa.Num_Patronal, tb_empresa.Num_Empleados, tb_empresa_contact.Nombre ,  tb_empresa_contact.Email , tb_empresa_contact.Telefono FROM tb_empresa INNER JOIN tb_empresa_contact ON tb_empresa_contact.id_empresa = tb_empresa.id_empresa WHERE tb_empresa.NIT = ? LIMIT 1",
     [data.usuario]
   );
   perfil = perfil[0];
@@ -284,6 +284,8 @@ PublicFunctions.FichaRegistro = async (req, res) => {
   const cursos = req.params.data;
   const { empresa } = req.params;
   let { alumnos } = req.body;
+  let { firmante } = req.body;
+  
 
   if (
     !alumnos ||
@@ -318,8 +320,9 @@ PublicFunctions.FichaRegistro = async (req, res) => {
     );
 
     alumnos = JSON.parse(alumnos);
+    firmante = JSON.parse(firmante);
     const MainQuery = await Promise.all(queries);
-    const pdf = await GenerarPdf({ data: MainQuery, alumnos });
+    const pdf = await GenerarPdf({ data: MainQuery, alumnos , firmante });
     return res.status(200).json({ status: true, data: pdf });
   } catch (error) {
     console.log(error);
@@ -570,7 +573,7 @@ PublicFunctions.RegisterPost = async (req, res) => {
       )
     );
 
-    const html = `<h3>Creación de usuario para empresas</h3>  Empresa: ${Nombre}, <p>Gracias por rellenar la información empresarial, uno de nuestros colaboradores revisara la información adjunta. Por favor espera la confirmación para poder hacer las solicitudes de tu curso.</p>  <br> <p>Por este medio informamos las credenciales de acceso, </p>  <b> Usuario: <b/> ${Nit}  <br> <b>Contraseña: </b> ${password}`;
+    const html = `<h3>Creación de usuario para empresas</h3>  Empresa: ${Nombre}, <p>Por favor espera la confirmación para poder hacer las solicitudes de tu curso.</p>  <br> <p>Por este medio informamos las credenciales de acceso,   <b> Usuario: <b/> ${Nit}  <br> <b>Contraseña: </b> ${password}</p> <p>Gracias por rellenar la información empresarial, uno de nuestros colaboradores revisara la información adjunta. </p> `;
 
     sendEmail(
       Email,

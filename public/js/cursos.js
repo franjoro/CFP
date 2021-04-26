@@ -81,7 +81,7 @@ $(document).ready(() => {
   });
 
   // Agregar nueva oferta
-  $("#form_oferta").submit(async function (e) {
+  $("#form_oferta_empresas").submit(async function (e) {
     e.preventDefault();
     const t = $(this).serialize();
     loader();

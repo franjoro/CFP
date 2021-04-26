@@ -49,6 +49,9 @@ app.use("/public", require("./routes/public.router"));
 app.use("/habil", require("./routes/habil.router"));
 
 // Router Formulario de Habil
+app.use("/ec", require("./routes/ec.router"));
+
+// Router Formulario de Habil
 app.use("/reportes", require("./routes/reportes.router"));
 
 app.get("/terms", (req, res) => {

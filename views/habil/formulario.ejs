@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Pricing example · Bootstrap v5.0</title>
     <link href="/static/css/sb-admin-2.min.css" rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
+    />
   </head>
 
   <body class="bg-gradient-light" style="font-family: Roboto">
@@ -47,7 +56,7 @@
               >
               <progress value="16.66" max="100" id="progBar"></progress>
             </div>
-            <div class="card-body" id="sec1">
+            <div class="card-body" id="sec1" >
               <h3>SECCIÓN 1. DATOS DE IDENTIFICACIÓN</h3>
               <h6 class="lead">DATOS PERSONALES</h6>
               <hr />
@@ -82,48 +91,29 @@
                   </select>
                 </div>
                 <div class="col-md-3">
-                  <label>País</label
-                  ><input
-                    type="text"
+                  <label>País</label>
+                  <select
                     class="form-control form-control-sm"
                     name="pais"
                     id="pais"
-                  />
+                  ></select>
                 </div>
-                <div class="col-md-3">
-                  <label>1er Nombre</label
+                <div class="col-md-6">
+                  <label>Nombres</label
                   ><input
                     type="text"
-                    class="form-control form-control-sm"
-                    name="1ernombre"
-                    id="1ernombre"
+                    class="form-control form-control-sm text-uppercase"
+                    name="nombres"
+                    id="nombres"
                   />
                 </div>
-                <div class="col-md-3">
-                  <label>2do Nombre</label
+                <div class="col-md-6">
+                  <label>Apellidos</label
                   ><input
                     type="text"
-                    class="form-control form-control-sm"
-                    name="2donombre"
-                    id="2donombre"
-                  />
-                </div>
-                <div class="col-md-3">
-                  <label>1er Apellido</label
-                  ><input
-                    type="text"
-                    class="form-control form-control-sm"
-                    name="1erapellido"
-                    id="1erapellido"
-                  />
-                </div>
-                <div class="col-md-3">
-                  <label>2do Apellido</label
-                  ><input
-                    type="text"
-                    class="form-control form-control-sm"
-                    name="2doapellido"
-                    id="2doapellido"
+                    class="form-control form-control-sm text-uppercase"
+                    name="apellidos"
+                    id="apellidos"
                   />
                 </div>
                 <div class="col-md-3">
@@ -191,11 +181,24 @@
                     <div class="form-check">
                       <input
                         class="form-check-input"
-                        type="checkbox"
-                        id="gridCheck"
+                        type="radio"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault1"
                       />
-                      <label class="form-check-label" for="gridCheck">
+                      <label class="form-check-label" for="flexRadioDefault1">
                         Si
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault2"
+                        checked
+                      />
+                      <label class="form-check-label" for="flexRadioDefault2">
+                        No
                       </label>
                     </div>
                   </div>
@@ -204,7 +207,7 @@
                   <label>¿A que Profesión u oficio se dedica?</label>
                   <input
                     type="text"
-                    class="form-control form-control-sm"
+                    class="form-control form-control-sm text-uppercase"
                     name="profesion"
                     id="profesion"
                   />
@@ -214,22 +217,20 @@
               <h6 class="lead">FECHA/LUGAR DE NACIMIENTO</h6>
               <div class="row">
                 <div class="col-md-4">
-                  <label>Municipio</label>
-                  <select
-                    id="municipioNac"
-                    class="form-control form-control-sm"
-                  >
-                    <option selected disabled>Seleccione municipio</option>
-                    <option value="salvadoreno">Salvadoreño</option>
-                    <option value="extranjero">Extranjero</option>
-                  </select>
-                </div>
-                <div class="col-md-4">
                   <label>Departamento</label>
                   <select id="depa_nac" class="form-control form-control-sm">
                     <option selected disabled>Seleccione departamento</option>
                     <option value="salvadoreno">Salvadoreño</option>
                     <option value="extranjero">Extranjero</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label>Municipio</label>
+                  <select
+                    id="municipioNac"
+                    class="form-control form-control-sm"
+                  >
+                    <option selected disabled>Seleccione</option>
                   </select>
                 </div>
                 <div class="col-md-4">
@@ -246,17 +247,6 @@
               <h6 class="lead">DOMICILIO</h6>
               <div class="row">
                 <div class="col-md-3">
-                  <label>Municipio</label>
-                  <select
-                    id="municipioDomicilio"
-                    class="form-control form-control-sm"
-                  >
-                    <option selected disabled>Seleccione municipio</option>
-                    <option value="salvadoreno">Salvadoreño</option>
-                    <option value="extranjero">Extranjero</option>
-                  </select>
-                </div>
-                <div class="col-md-3">
                   <label>Departamento</label>
                   <select
                     id="depdomicilio"
@@ -267,11 +257,20 @@
                     <option value="extranjero">Extranjero</option>
                   </select>
                 </div>
+                <div class="col-md-3">
+                  <label>Municipio</label>
+                  <select
+                    id="municipioDomicilio"
+                    class="form-control form-control-sm"
+                  >
+                    <option selected disabled>Seleccione</option>
+                  </select>
+                </div>
                 <div class="col-md-6">
                   <label>Dirección</label
                   ><input
                     type="text"
-                    class="form-control form-control-sm"
+                    class="form-control form-control-sm text-uppercase"
                     name="direccion"
                     id="direccion"
                   />
@@ -318,11 +317,24 @@
                   <div class="form-check">
                     <input
                       class="form-check-input"
-                      type="checkbox"
-                      id="discapacidad"
+                      type="radio"
+                      name="discapacidadesc"
+                      id="discapacidades1"
                     />
-                    <label class="form-check-label" for="discapacidad">
+                    <label class="form-check-label" for="discapacidades1">
                       Si
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="discapacidadesc"
+                      id="discapacidades2"
+                      checked
+                    />
+                    <label class="form-check-label" for="discapacidades2">
+                      No
                     </label>
                   </div>
                 </div>
@@ -407,13 +419,27 @@
                     Bañarse, vestirse, alimentarse por si mismo
                   </label>
                 </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value=""
+                    id="defaultCheck8"
+                  />
+                  <label>Otros</label>
+                  <input
+                    type="text"
+                    name="otrosdiscapacidades"
+                    id="otrosdiscapacidades"
+                  />
+                </div>
               </div>
               <hr />
               <button class="btn btn-success float-right" id="next1">
                 Continuar a : EDUCACIÓN FORMAL Y FORMACIÓN OCUPACIONAL
               </button>
             </div>
-            <div class="card-body" id="sec2" style="display: none">
+            <div class="card-body" id="sec2" style="display: none;">
               <h3>SECCIÓN 2. EDUCACIÓN FORMAL Y FORMACIÓN OCUPACIONAL</h3>
               <h6 class="lead">EDUCACIÓN</h6>
               <hr />
@@ -430,31 +456,29 @@
                   </select>
                 </div>
                 <div class="form-group col-md-3 analfabeta">
-                  <label>¿Solo sabe leer?</label>
-                  <select id="sololeer" class="form-control form-control-sm">
-                    <option selected disabled>Seleccione</option>
-                    <option value="Si">Si</option>
-                    <option value="No">No</option>
-                  </select>
-                </div>
-                <div class="form-group col-md-3 analfabeta">
-                  <label>¿Solo sabe escribir?</label>
+                  <label>¿Solo sabe escribir o leer?</label>
                   <select
                     id="soloescribir"
                     class="form-control form-control-sm"
                   >
                     <option selected disabled>Seleccione</option>
-                    <option value="Si">Si</option>
-                    <option value="No">No</option>
+                    <option value="Leer">Solo Leer</option>
+                    <option value="Escribir">Solo Escribir</option>
                   </select>
                 </div>
                 <div class="form-group col-md-3 analfabeta">
-                  <label>¿Solo sabe firmar?</label>
-                  <select id="solofirmar" class="form-control form-control-sm">
-                    <option selected disabled>Seleccione</option>
-                    <option value="Si">Si</option>
-                    <option value="No">No</option>
-                  </select>
+                  <label>¿Solo firma ?</label>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value="firmahuella"
+                      id="firmahuella"
+                    />
+                    <label class="form-check-label" for="firmahuella">
+                      (firma ó huella):
+                    </label>
+                  </div>
                 </div>
               </div>
               <div class="form-row">
@@ -503,7 +527,7 @@
                     <option value="1y">1 año</option>
                     <option value="2-3y">2-3 años</option>
                     <option value="3y">Más de 3 años</option>
-                    <option value="NR">NR</option>
+                    <option value="No recuerda">No recuerda</option>
                   </select>
                 </div>
               </div>
@@ -536,7 +560,7 @@
                     <label>Nombre del curso</label>
                     <input
                       type="text"
-                      class="form-control form-control-sm"
+                      class="form-control form-control-sm text-uppercase"
                       name="curso1"
                       id="curso1"
                     />
@@ -562,12 +586,12 @@
                     <label>¿El curso le dio beneficios?</label>
                     <select
                       id="beneficio1"
-                      class="form-control form-control-sm"
+                      class="form-control form-control-sm beneficios"
                     >
                       <option selected disabled>Seleccione</option>
                       <option value="Si">Si</option>
                       <option value="No">No</option>
-                      <option value="No">NR</option>
+                      <option value="No">No recuerda</option>
                     </select>
                   </div>
                 </div>
@@ -576,7 +600,7 @@
                     <label>Nombre del curso</label>
                     <input
                       type="text"
-                      class="form-control form-control-sm"
+                      class="form-control form-control-sm text-uppercase"
                       name="curso2"
                       id="curso2"
                     />
@@ -602,12 +626,12 @@
                     <label>¿El curso le dio beneficios?</label>
                     <select
                       id="beneficio2"
-                      class="form-control form-control-sm"
+                      class="form-control form-control-sm beneficios"
                     >
                       <option selected disabled>Seleccione</option>
                       <option value="Si">Si</option>
                       <option value="No">No</option>
-                      <option value="No">NR</option>
+                      <option value="No">No recuerda</option>
                     </select>
                   </div>
                 </div>
@@ -616,7 +640,7 @@
                     <label>Nombre del curso</label>
                     <input
                       type="text"
-                      class="form-control form-control-sm"
+                      class="form-control form-control-sm text-uppercase"
                       name="curso3"
                       id="curso3"
                     />
@@ -642,73 +666,92 @@
                     <label>¿El curso le dio beneficios?</label>
                     <select
                       id="beneficio3"
-                      class="form-control form-control-sm"
+                      class="form-control form-control-sm beneficios"
                     >
                       <option selected disabled>Seleccione</option>
                       <option value="Si">Si</option>
                       <option value="No">No</option>
-                      <option value="No">NR</option>
+                      <option value="No">No recuerda</option>
                     </select>
                   </div>
                 </div>
                 <hr />
-                <p>
-                  ¿Para que sirvió(eron) la(s) capacitacion(es) que recibió?
-                </p>
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value="Para trabajar por cuenta propia"
-                    id="b2"
-                  />
-                  <label class="form-check-label" for="b2">
-                    Para trabajar por cuenta propia
-                  </label>
+                <div id="cursopositivo" style="display: none;">
+                  <p>
+                    ¿Para que sirvió(eron) la(s) capacitacion(es) que recibió?
+                  </p>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value="Para trabajar por cuenta propia"
+                      id="b2"
+                    />
+                    <label class="form-check-label" for="b2">
+                      Para trabajar por cuenta propia
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value="Obtener oportunidades de promoción en mi empleo actual"
+                      id="b3"
+                    />
+                    <label class="form-check-label" for="b3">
+                      Obtener oportunidades de promoción en mi empleo actual
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value="Obtener otros ingresos por trabajos extras"
+                      id="b4"
+                    />
+                    <label class="form-check-label" for="b4">
+                      Obtener otros ingresos por trabajos extras
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value="Cambiar a un empleo relacionado con la capacitación recibida"
+                      id="b5"
+                    />
+                    <label class="form-check-label" for="b5">
+                      Cambiar a un empleo relacionado con la capacitación
+                      recibida
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value="Para obtener un empleo"
+                      id="b6"
+                    />
+                    <label class="form-check-label" for="b6">
+                      Para obtener un empleo
+                    </label>
+                  </div>
                 </div>
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value="Obtener oportunidades de promoción en mi empleo actual"
-                    id="b3"
-                  />
-                  <label class="form-check-label" for="b3">
-                    Obtener oportunidades de promoción en mi empleo actual
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value="Obtener otros ingresos por trabajos extras"
-                    id="b4"
-                  />
-                  <label class="form-check-label" for="b4">
-                    Obtener otros ingresos por trabajos extras
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value="Cambiar a un empleo relacionado con la capacitación recibida"
-                    id="b5"
-                  />
-                  <label class="form-check-label" for="b5">
-                    Cambiar a un empleo relacionado con la capacitación recibida
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value="Para obtener un empleo"
-                    id="b6"
-                  />
-                  <label class="form-check-label" for="b6">
-                    Para obtener un empleo
-                  </label>
+
+                <hr />
+                <div class="form-row" id="cursonegativo" style="display: none;">
+                  <div class="col-md-12 form-group">
+                    <label
+                      >¿Por que cree que no recibió beneficios como producto de
+                      la/las capacitación/es?o</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control form-control-sm text-uppercase"
+                      name="nobeneficioc"
+                      id="nobeneficioc"
+                    />
+                  </div>
                 </div>
               </div>
               <button class="btn btn-success float-right" id="next2">
@@ -789,77 +832,33 @@
                 </div>
               </div>
               <div id="iftrabaja" style="display: none">
-                <p>Si usted trabaja, ¿Qué tipo de trabajo tiene?</p>
                 <div class="row">
                   <div class="col-md-6">
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                        value="Empleo a tiempo completo"
-                        id="d1"
-                      />
-                      <label class="form-check-label" for="d1">
+                    <p>Si usted trabaja, ¿Qué tipo de trabajo tiene?</p>
+                    <select
+                      id="tipoempleo"
+                      class="form-control form-control-sm"
+                    >
+                      <option selected disabled>Seleccione</option>
+                      <option value="tmpcompleto">
                         Empleo a tiempo completo
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                        value="Empleo a tiempo parcial"
-                        id="d2"
-                      />
-                      <label class="form-check-label" for="d2">
+                      </option>
+                      <option value="tmpparcial">
                         Empleo a tiempo parcial
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                        value="Empleo temporal"
-                        id="d3"
-                      />
-                      <label class="form-check-label" for="d3">
-                        Empleo temporal
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                        value="Negocio familiar"
-                        id="d4"
-                      />
-                      <label class="form-check-label" for="d4">
-                        Negocio familiar
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                        value="Independiente o cuenta propia"
-                        id="d5"
-                      />
-                      <label class="form-check-label" for="d5">
+                      </option>
+                      <option value="temporal">Empleo temporal</option>
+                      <option value="negocio">Negocio familiar</option>
+                      <option value="inde">
                         Independiente o cuenta propia
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                        value="Trabajo informal"
-                        id="d6"
-                      />
-                      <label class="form-check-label" for="d6">
-                        Trabajo informal
-                      </label>
-                    </div>
+                      </option>
+                      <option value="informal">Trabajo informal</option>
+                    </select>
                   </div>
-                  <div class="col-md-6">
+                  <div
+                    class="col-md-6"
+                    id="sectordetraajo"
+                    style="display: none"
+                  >
                     <p>¿En que Sector trabaja?</p>
                     <select
                       id="sectortrabajo"
@@ -898,16 +897,65 @@
                   style="display: none"
                 >
                   <p>¿De qué manera los obtiene?</p>
-                  <select
-                    id="formasdeingreso"
-                    class="form-control form-control-sm"
-                  >
-                    <option selected disabled>Seleccione</option>
-                    <option value="Trabajo">Trabajo</option>
-                    <option value="Ayuda familiar">Ayuda familiar</option>
-                    <option value="Remesa">Remesa</option>
-                    <option value="Pensión">Pensión</option>
-                  </select>
+
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value="Trabajo"
+                      id="ingresos1"
+                    />
+                    <label class="form-check-label" for="ingresos1">
+                      Trabajo
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value="Ayuda familiar"
+                      id="ingresos2"
+                    />
+                    <label class="form-check-label" for="ingresos2">
+                      Ayuda familiar
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value="Remesa"
+                      id="ingresos3"
+                    />
+                    <label class="form-check-label" for="ingresos3">
+                      Remesa
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value="Pensión"
+                      id="ingresos4"
+                    />
+                    <label class="form-check-label" for="ingresos4">
+                      Pensión
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value=""
+                      id="ingresos4"
+                    />
+                    <label>Otros</label>
+                    <input
+                      type="text"
+                      name="otrosingresos"
+                      id="otrosingresos"
+                    />
+                  </div>
                 </div>
               </div>
               <hr />
@@ -986,6 +1034,20 @@
                     />
                     <label class="form-check-label" for="e6"> Ninguno </label>
                   </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value=""
+                      id="e7"
+                    />
+                    <label>Otros</label>
+                    <input
+                      type="text"
+                      name="otrosexpectativas"
+                      id="otrosexpectativas"
+                    />
+                  </div>
                 </div>
                 <div class="col-md-6">
                   <p>
@@ -1021,7 +1083,7 @@
                   <label>Nombre completo del contacto</label>
                   <input
                     type="text"
-                    class="form-control form-control-sm"
+                    class="form-control form-control-sm text-uppercase"
                     name="nombrecontacto"
                   />
                 </div>
@@ -1064,7 +1126,7 @@
                   <label>Dirección:</label>
                   <input
                     type="text"
-                    class="form-control form-control-sm"
+                    class="form-control form-control-sm text-uppercase"
                     name="nombrecontacto"
                   />
                 </div>
@@ -1072,25 +1134,21 @@
 
               <div class="form-row">
                 <div class="col-md-6">
+                  <label>Departamento</label>
+                  <select
+                    id="departcontact"
+                    class="form-control form-control-sm"
+                  >
+                    <option selected disabled>Seleccione Departamento</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
                   <label>Municipio</label>
                   <select
                     id="municipiocontacto"
                     class="form-control form-control-sm"
                   >
                     <option selected disabled>Seleccione municipio</option>
-                    <option value="salvadoreno">Salvadoreño</option>
-                    <option value="extranjero">Extranjero</option>
-                  </select>
-                </div>
-                <div class="col-md-6">
-                  <label>Departamento</label>
-                  <select
-                    id="departcontact"
-                    class="form-control form-control-sm"
-                  >
-                    <option selected disabled>Seleccione municipio</option>
-                    <option value="salvadoreno">Salvadoreño</option>
-                    <option value="extranjero">Extranjero</option>
                   </select>
                 </div>
               </div>
@@ -1101,6 +1159,7 @@
                     type="text"
                     class="form-control form-control-sm"
                     name="telfijocontacto"
+                    id="telfijocontacto"
                   />
                 </div>
                 <div class="col-md-4">
@@ -1109,6 +1168,7 @@
                     type="text"
                     class="form-control form-control-sm"
                     name="telmovilcontacto"
+                    id="telmovilcontacto"
                   />
                 </div>
                 <div class="col-md-4">
@@ -1133,6 +1193,9 @@
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/validate.js/0.13.1/validate.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src='/static/js/DatepickerES.js' type='text/javascript'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <script src="/static/js/jquery.mask.min.js"></script>
     <script src="/static/js/habil/formhabil.js"></script>
   </body>

@@ -47,7 +47,7 @@ const DowloadS3File = async (key) => {
   }
 };
 
-const Aprobar = async (id, nit, mail) => {
+const Aprobar = async (id, nit, email) => {
   const alerta = await Swal.fire({
     title: "¿Aprobar solicitud de empresa?",
     text: "Se notificara a la empresa y se le permitirá ingresar solicitudes",
@@ -64,7 +64,7 @@ const Aprobar = async (id, nit, mail) => {
       await $.ajax({
         url: "/admin/empresas/solicitudes",
         type: "POST",
-        data: { id, nit, mail },
+        data: { id, nit, email },
       });
       swal.close();
       window.location.replace('/admin/empresas');
