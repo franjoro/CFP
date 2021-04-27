@@ -40,7 +40,11 @@ app.use("/admin/participantes", require("./routes/participantes.router"));
 app.use("/admin/cursos", require("./routes/cursos.router"));
 
 // Router de login
-app.use("/", require("./routes/login.router"));
+
+app.use("/soporte", require("./routes/login.router"));
+app.use("/",  (req,res)=>{
+  res.render("mantenimiento")
+} );
 
 // Router public
 app.use("/public", require("./routes/public.router"));

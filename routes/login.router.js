@@ -10,7 +10,7 @@ const {CloseSession} = require("../middlewares/auth");
 
 
 
-router.get("/",CloseSession , login.renderIndex);
+router.get("/", CloseSession , login.renderIndex);
 router.post("/signin", login.signin);
 router.get("/signout", login.signout);
 
