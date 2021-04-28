@@ -129,7 +129,7 @@ const registrarSolicitud = async () => {
       });
       if (query.status) {
         SendFiles();
-        // localStorage.removeItem("storage");
+        localStorage.removeItem("storage");
       }
     }
   } catch (e) {
@@ -176,15 +176,13 @@ const SendFiles = async () => {
       contentType: false,
     });
     console.log(respuesta);
-    // if(respuesta.status){
     swal.close();
-    //   Swal.fire({
-    //     icon: "success",
-    //     title: "Solicitud enviada correctamente",
-    //     showConfirmButton: false,
-    //   });
-    //   // window.location.href = "/public/gracias";
-    // }
+      Swal.fire({
+        icon: "success",
+        title: "Solicitud enviada correctamente",
+        showConfirmButton: false,
+      });
+      window.location.href = "/public/gracias";
   } catch (e) {
     console.log(e);
     error(
@@ -276,10 +274,12 @@ $(document).ready(() => {
     curso_text = $("#curso").children("option:selected").text();
 
     if (
-      validate.isEmpty(dui) ||
-      validate.isEmpty(nombre) ||
-      validate.isEmpty(tel) ||
-      validate.isEmpty(email)
+      !dui ||
+      !nombre ||
+      !tel ||
+      !email ||
+      !genero || 
+      !cursoCodigo
     ) {
       return error(
         "No se pudo realizar la operación, verifica la información o comuniquese con el encargado del programa o soporte "

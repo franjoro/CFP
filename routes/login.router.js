@@ -12,10 +12,10 @@ const {CloseSession} = require("../middlewares/auth");
 
 // router.get("/", CloseSession , login.renderIndex);
 
-router.get("/" , (req, res) => {
-    res.render('mantenimiento')
-})
-router.get("/soporte", CloseSession , login.renderIndex);
+// router.get("/" , (req, res) => {
+//     res.render('mantenimiento')
+// })
+router.get("/", CloseSession , login.renderIndex);
 
 router.post("/signin", login.signin);
 router.get("/signout", login.signout);
