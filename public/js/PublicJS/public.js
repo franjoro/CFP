@@ -27,7 +27,7 @@ const loaderEnviar = () => {
     },
   });
 };
-const archivosLoader = () =>{
+const archivosLoader = () => {
   Swal.fire({
     title: "Por favor, Espere",
     allowOutsideClick: !1,
@@ -37,7 +37,7 @@ const archivosLoader = () =>{
       Swal.showLoading();
     },
   });
-}
+};
 const loader = () => {
   Swal.fire({
     title: "Por favor, Espere",
@@ -129,17 +129,14 @@ const registrarSolicitud = async () => {
       });
       if (query.status) {
         SendFiles();
-        localStorage.removeItem("storage");
+        // localStorage.removeItem("storage");
       }
     }
-  } catch (error) {
-    console.log(error);
-    if (error == "CURSO_EXISTENTE")
-      return error(
-        "Su empresa ya cuenta con una solicitud pendiente en un curso seleccionado , por favor comuniquese con el encargado del programa o soporte técnico"
-      );
+  } catch (e) {
+    console.log(e);
     error(
-      "No se pudo realizar la operación, verifica la información o comuniquese con el encargado del programa o soporte "
+      "No se pudo realizar la operación, verifica la información o comuniquese con el encargado del programa o soporte errorcode" +
+        e.responseJSON.error
     );
   }
 };
@@ -161,24 +158,28 @@ const SendFiles = async () => {
   fd.append("empresa", global_empresa_seleccionada);
   try {
     archivosLoader();
-    await $.ajax({
+    const respuesta = await $.ajax({
       url: "/public/EnviarFiles",
       type: "POST",
       data: fd,
       processData: false,
       contentType: false,
     });
+    console.log(respuesta);
+    // if(respuesta.status){
     swal.close();
-    Swal.fire({
-      icon: "success",
-      title: "Solicitud enviada correctamente",
-      showConfirmButton: false,
-    });
-    window.location.href = "/public/gracias";
-  } catch (error) {
-    console.log(error);
+    //   Swal.fire({
+    //     icon: "success",
+    //     title: "Solicitud enviada correctamente",
+    //     showConfirmButton: false,
+    //   });
+    //   // window.location.href = "/public/gracias";
+    // }
+  } catch (e) {
+    console.log(e);
     error(
-      "No se pudo realizar la operación, verifica la información o comuniquese con el encargado del programa o soporte "
+      "No se pudo realizar la operación, verifica la información o comuniquese con el encargado del programa o soporte  errorcode"+
+        e.responseJSON.error
     );
   }
 };
@@ -198,7 +199,6 @@ $("#dui").blur(async function () {
     }
   } catch (error) {
     global_estado_participante = false;
-    console.log(error);
   }
 });
 const GenerarPdf = async (curso) => {
@@ -361,11 +361,9 @@ $(document).on("change", ".custom-file-input", function (e) {
   ext = ext.toLowerCase();
   if ($(this).val() != "") {
     if (ext == "pdf" || ext == "png" || ext == "jpeg" || ext == "jpg") {
-      if(e.target.files.length >10 ){
+      if (e.target.files.length > 10) {
         $(this).val("");
-        return error(
-          "Unicamente se permite adjuntar 10 archivos"
-        );
+        return error("Unicamente se permite adjuntar 10 archivos");
       }
       $(`#${i}`).html(e.target.files[0].name);
       return;

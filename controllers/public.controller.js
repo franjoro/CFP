@@ -206,7 +206,7 @@ PublicFunctions.CreateSolicitud = async (req, res) => {
 
     ExisteSolicitudPromesa.forEach((element) => {
       if (element[0].Cantidad > 0) {
-        throw new Error("CURSO_EXISTENTE");
+        throw 'CURSO_EXISTENTE';
       }
     });
 
@@ -266,11 +266,11 @@ PublicFunctions.CreateSolicitud = async (req, res) => {
       );
       correos.forEach((element) => {
         const html = `<h1>Notificación automática de sistema Razón: Solicitud de empresa creada en el curso : ${data[0][0].Nombre}</h1> <p> Nombre: ${data[0][0].Nombre} </p>  <p> Horario: ${data[0][0].Horario} </p>   <p> Cantidad de participantes: ${participantes.length}   </p>  <p> Empresa: ${data[1][0].Nombre}  </p>`;
-        sendEmail(
-          element.Email,
-          `SOLICITUD REALIZADA EN CURSO: ${curso}`,
-          html
-        );
+        // sendEmail(
+        //   element.Email,
+        //   `SOLICITUD REALIZADA EN CURSO: ${curso}`,
+        //   html
+        // );
       });
     });
     return 0;
@@ -376,8 +376,9 @@ PublicFunctions.archivos = async (req, res) => {
         );
       }
     });
-
+    console.log(req.files);
     const datos = await Promise.all(promesas);
+    console.log(datos);
 
     cursos.forEach((curso, index) => {
       let key;
@@ -425,9 +426,8 @@ PublicFunctions.archivos = async (req, res) => {
         }
       });
     });
-
     await Promise.all(inserts);
-
+    console.log(inserts);
     return res.status(200).json({ status: true });
   } catch (error) {
     console.log(error);

@@ -27,6 +27,7 @@ const Directivas = {
         fontSrc: ["'self'", "fonts.gstatic.com"],
         imgSrc: [
             "'self'",
+            "http://www.w3.org/2000/svg",
             "https://maps.gstatic.com",
             "https://maps.googleapis.com",
             "http://code.jquery.com/ui/1.12.1/themes/base/images/ui-icons_444444_256x240.png",
