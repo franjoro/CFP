@@ -40,6 +40,7 @@ app.use("/admin/participantes", require("./routes/participantes.router"));
 app.use("/admin/cursos", require("./routes/cursos.router"));
 
 // Router de login
+
 app.use("/", require("./routes/login.router"));
 
 // Router public

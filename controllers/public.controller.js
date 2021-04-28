@@ -206,7 +206,7 @@ PublicFunctions.CreateSolicitud = async (req, res) => {
 
     ExisteSolicitudPromesa.forEach((element) => {
       if (element[0].Cantidad > 0) {
-        throw new Error("CURSO_EXISTENTE");
+        throw "UNO O MÁS PARTICIPANTES YA ESTAN INSCRITOS EN EL CURSO";
       }
     });
 
@@ -334,7 +334,12 @@ PublicFunctions.archivos = async (req, res) => {
   Object.keys(req.files);
   const CursosCrud = req.body.curso;
   const cursos = JSON.parse(CursosCrud);
-  const { empresa, CantidadPlanilla } = req.body;
+  const {
+    empresa,
+    CantidadPlanilla,
+    CantidadRecibo,
+    CantidadCancelacion,
+  } = req.body;
   try {
     const promesas = [];
     const inserts = [];
@@ -347,25 +352,39 @@ PublicFunctions.archivos = async (req, res) => {
       promesas.push(
         upload(fileContent, Date.now(), ext, empresa, `ficha${index}`)
       );
+
       // SUBIR Recibo
-      ext = req.files[`recibo${index}`].name.split(".")[1];
-      fileContent = Buffer.from(req.files[`recibo${index}`].data, "binary");
-      promesas.push(
-        upload(fileContent, Date.now(), ext, empresa, `recibo${index}`)
-      );
-      // SUBIR Si existe cancelación
-      if (req.files[`cancelacion${index}`]) {
-        ext = req.files[`cancelacion${index}`].name.split(".")[1];
+      for (let i = 0; i < CantidadRecibo[index]; i++) {
+        ext = req.files[`recibo${index}${i}`].name.split(".")[1];
         fileContent = Buffer.from(
-          req.files[`cancelacion${index}`].data,
+          req.files[`recibo${index}${i}`].data,
           "binary"
         );
         promesas.push(
-          upload(fileContent, Date.now(), ext, empresa, `cancelacion${index}`)
+          upload(fileContent, Date.now(), ext, empresa, `recibo${index}${i}`)
         );
       }
+
+      // SUBIR Si existe cancelación
+      for (let i = 0; i < CantidadCancelacion[index]; i++) {
+          ext = req.files[`cancelacion${index}${i}`].name.split(".")[1];
+          fileContent = Buffer.from(
+            req.files[`cancelacion${index}${i}`].data,
+            "binary"
+          );
+          promesas.push(
+            upload(
+              fileContent,
+              Date.now(),
+              ext,
+              empresa,
+              `cancelacion${index}${i}`
+            )
+          );
+      }
+
       // SUBIR Archivos de planilla
-      for (let i = 0; i < CantidadPlanilla; i++) {
+      for (let i = 0; i < CantidadPlanilla[index]; i++) {
         ext = req.files[`planilla${index}${i}`].name.split(".")[1];
         fileContent = Buffer.from(
           req.files[`planilla${index}${i}`].data,
@@ -376,7 +395,6 @@ PublicFunctions.archivos = async (req, res) => {
         );
       }
     });
-
     const datos = await Promise.all(promesas);
 
     cursos.forEach((curso, index) => {
@@ -391,28 +409,31 @@ PublicFunctions.archivos = async (req, res) => {
             )
           );
         }
-        if (element.posicion == `recibo${index}`) {
-          key = element.key;
-          inserts.push(
-            pool.query(
-              "INSERT INTO archivo_empresa_curso(s3key, Role, id_empresa, id_curso) VALUES(?,?,?,?) ",
-              [key, 2, empresa, curso]
-            )
-          );
-        }
-        if (req.files[`cancelacion${index}`]) {
-          if (element.posicion == `cancelacion${index}`) {
+
+        for (let i = 0; i < CantidadRecibo[index]; i++) {
+          if (element.posicion == `recibo${index}${i}`) {
             key = element.key;
             inserts.push(
               pool.query(
                 "INSERT INTO archivo_empresa_curso(s3key, Role, id_empresa, id_curso) VALUES(?,?,?,?) ",
-                [key, 3, empresa, curso]
+                [key,`2${i}`, empresa, curso]
               )
             );
           }
         }
+        for (let i = 0; i < CantidadCancelacion[index]; i++) {
+            if (element.posicion == `cancelacion${index}${i}`) {
+              key = element.key;
+              inserts.push(
+                pool.query(
+                  "INSERT INTO archivo_empresa_curso(s3key, Role, id_empresa, id_curso) VALUES(?,?,?,?) ",
+                  [key, `3${i}`, empresa, curso]
+                )
+              );
+            }
+        }
 
-        for (let i = 0; i < CantidadPlanilla; i++) {
+        for (let i = 0; i < CantidadPlanilla[index]; i++) {
           if (element.posicion == `planilla${index}${i}`) {
             key = element.key;
             inserts.push(
@@ -425,9 +446,7 @@ PublicFunctions.archivos = async (req, res) => {
         }
       });
     });
-
     await Promise.all(inserts);
-
     return res.status(200).json({ status: true });
   } catch (error) {
     console.log(error);

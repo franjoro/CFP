@@ -2,7 +2,7 @@ const error = (error) => {
   Swal.fire({
     icon: "error",
     title: "Oops...",
-    text: error,
+    html: error,
   });
 };
 const Toast = Swal.mixin({
@@ -27,7 +27,7 @@ const loaderEnviar = () => {
     },
   });
 };
-const archivosLoader = () =>{
+const archivosLoader = () => {
   Swal.fire({
     title: "Por favor, Espere",
     allowOutsideClick: !1,
@@ -37,7 +37,7 @@ const archivosLoader = () =>{
       Swal.showLoading();
     },
   });
-}
+};
 const loader = () => {
   Swal.fire({
     title: "Por favor, Espere",
@@ -85,7 +85,7 @@ const AsginarGlobalCursos = () => {
     if (!data.includes(element[7])) {
       data.push(element[7]);
       ContentHtml += `
-      <hr><div class="card"><h5 class="card-header"><i class="fas fa-arrow-right"></i>${element[6]}</h5><div class="card-body"><h5 class="card-title">Adjunte los siguientes documentos:</h5><div class="row"><div class="col-md-3"><p class="text-justify">1. Solicitud de capacitación firmada y sellada. Puede descargar la ficha aquí: <i class="fas fa-arrow-right"></i> <a onclick="GenerarPdf('${element[7]}')" href="#">DESCARGAR PLANTILLA</a></p></div><div class="col-md-3"><p class="text-justify">2. Recibo de ingresos por cotización (Recibo de aportación) del último mes cancelado - <i class="fas fa-arrow-right"></i> <a target="_blank" href="/static/files/recibo.pdf" class="text-danger">VER EJEMPLO</a></p></div><div class="col-md-3"><p class="text-justify">Comprobante de pago en línea (Opcional) del último mes cancelado - <i class="fas fa-arrow-right"></i> <a target="_blank" href="/static/files/cancelacion.pdf" class="text-danger">VER EJEMPLO</a></p></div><div class="col-md-3"><p class="text-justify">3. Planilla ISSS (Resaltar colaboradores a inscribir) <i class="fas fa-arrow-right"></i> <a target="_blank" href="/static/files/planilla.pdf" class="text-danger">VER EJEMPLO</a></p></div></div><div class="row"><div class="col-md-3"><div class="custom-file"><input type="file" class="custom-file-input" name="ficha${i}" data-i="FichaLabel${i}"  id="ficha${i}" > <label class="custom-file-label" id="FichaLabel${i}"  for="customFile">Choose file</label></div></div><div class="col-md-3"><div class="custom-file"><input type="file" class="custom-file-input" name="recibo${i}"  data-i="ReciboLabel${i}"  id="recibo${i}"> <label id="ReciboLabel${i}" class="custom-file-label" for="customFile">Choose file</label></div></div><div class="col-md-3"><div class="custom-file"><input type="file" class="custom-file-input" name="cancelacion${i}" data-i="CancelacionLabel${i}"  id="cancelacion${i}" > <label id="CancelacionLabel${i}" class="custom-file-label" for="customFile">Choose file</label></div></div><div class="col-md-3"><div class="custom-file"><input type="file" class="custom-file-input" multiple max="10" name="planilla${i}" data-i="PlanillaLabel${i}"   id="planilla${i}"> <label id="PlanillaLabel${i}" class="custom-file-label" for="customFile">Choose file</label></div></div></div></div></div><hr>
+      <hr><div class="card"><h5 class="card-header"><i class="fas fa-arrow-right"></i>${element[6]}</h5><div class="card-body"><h5 class="card-title">Adjunte los siguientes documentos:</h5><div class="row"><div class="col-md-3"><p class="text-justify">1. Solicitud de capacitación firmada y sellada. Puede descargar la ficha aquí: <i class="fas fa-arrow-right"></i> <a onclick="GenerarPdf('${element[7]}')" href="#">DESCARGAR PLANTILLA</a></p></div><div class="col-md-3"><p class="text-justify">2. Recibo de ingresos por cotización (Recibo de aportación) del último mes cancelado - <i class="fas fa-arrow-right"></i> <a target="_blank" href="/static/files/recibo.pdf" class="text-danger">VER EJEMPLO</a></p></div><div class="col-md-3"><p class="text-justify">Comprobante de pago en línea (Opcional) del último mes cancelado - <i class="fas fa-arrow-right"></i> <a target="_blank" href="/static/files/cancelacion.pdf" class="text-danger">VER EJEMPLO</a></p></div><div class="col-md-3"><p class="text-justify">3. Planilla ISSS (Resaltar colaboradores a inscribir) <i class="fas fa-arrow-right"></i> <a target="_blank" href="/static/files/planilla.pdf" class="text-danger">VER EJEMPLO</a></p></div></div><div class="row"><div class="col-md-3"><div class="custom-file"><input type="file" class="custom-file-input" name="ficha${i}" data-i="FichaLabel${i}"  id="ficha${i}" > <label class="custom-file-label" id="FichaLabel${i}"  for="customFile">Choose file</label></div></div><div class="col-md-3"><div class="custom-file"><input type="file" class="custom-file-input" multiple max="5" name="recibo${i}"  data-i="ReciboLabel${i}"  id="recibo${i}"> <label id="ReciboLabel${i}" class="custom-file-label" for="customFile">Choose file</label></div></div><div class="col-md-3"><div class="custom-file"><input type="file" class="custom-file-input" multiple max="5" name="cancelacion${i}" data-i="CancelacionLabel${i}"  id="cancelacion${i}" > <label id="CancelacionLabel${i}" class="custom-file-label" for="customFile">Choose file</label></div></div><div class="col-md-3"><div class="custom-file"><input type="file" class="custom-file-input" multiple max="10" name="planilla${i}" data-i="PlanillaLabel${i}"   id="planilla${i}"> <label id="PlanillaLabel${i}" class="custom-file-label" for="customFile">Choose file</label></div></div></div></div></div><hr>
       `;
       i = i + 1;
     }
@@ -132,14 +132,11 @@ const registrarSolicitud = async () => {
         localStorage.removeItem("storage");
       }
     }
-  } catch (error) {
-    console.log(error);
-    if (error == "CURSO_EXISTENTE")
-      return error(
-        "Su empresa ya cuenta con una solicitud pendiente en un curso seleccionado , por favor comuniquese con el encargado del programa o soporte técnico"
-      );
+  } catch (e) {
+    console.log(e);
     error(
-      "No se pudo realizar la operación, verifica la información o comuniquese con el encargado del programa o soporte "
+      "No se pudo realizar la operación, verifica la información o comuniquese con el encargado del programa o soporte <b> errorcode: </b> " +
+        e.responseJSON.error
     );
   }
 };
@@ -147,12 +144,22 @@ const SendFiles = async () => {
   const cursos = JSON.parse(global_data_cursos);
   const fd = new FormData();
   cursos.forEach((element, index) => {
-    let CantidadPlanilla = $(`#planilla${index}`)[0].files.length;
-
     fd.append(`ficha${index}`, $(`#ficha${index}`)[0].files[0]);
-    fd.append(`recibo${index}`, $(`#recibo${index}`)[0].files[0]);
-    fd.append(`cancelacion${index}`, $(`#cancelacion${index}`)[0].files[0]);
+
+    let CantidadPlanilla = $(`#planilla${index}`)[0].files.length;
+    let CantidadRecibo = $(`#recibo${index}`)[0].files.length;
+    let CantidadCancelacion = $(`#cancelacion${index}`)[0].files.length;
+
     fd.append("CantidadPlanilla", CantidadPlanilla);
+    fd.append("CantidadRecibo", CantidadRecibo);
+    fd.append("CantidadCancelacion", CantidadCancelacion);
+
+    for (let i = 0; i < CantidadRecibo; i++) {
+      fd.append(`recibo${index}${i}`, $(`#recibo${index}`)[0].files[i]);
+    }
+    for (let i = 0; i < CantidadCancelacion; i++) {
+      fd.append(`cancelacion${index}${i}`, $(`#cancelacion${index}`)[0].files[i]);
+    }
     for (let i = 0; i < CantidadPlanilla; i++) {
       fd.append(`planilla${index}${i}`, $(`#planilla${index}`)[0].files[i]);
     }
@@ -161,24 +168,26 @@ const SendFiles = async () => {
   fd.append("empresa", global_empresa_seleccionada);
   try {
     archivosLoader();
-    await $.ajax({
+    const respuesta = await $.ajax({
       url: "/public/EnviarFiles",
       type: "POST",
       data: fd,
       processData: false,
       contentType: false,
     });
+    console.log(respuesta);
     swal.close();
-    Swal.fire({
-      icon: "success",
-      title: "Solicitud enviada correctamente",
-      showConfirmButton: false,
-    });
-    window.location.href = "/public/gracias";
-  } catch (error) {
-    console.log(error);
+      Swal.fire({
+        icon: "success",
+        title: "Solicitud enviada correctamente",
+        showConfirmButton: false,
+      });
+      window.location.href = "/public/gracias";
+  } catch (e) {
+    console.log(e);
     error(
-      "No se pudo realizar la operación, verifica la información o comuniquese con el encargado del programa o soporte "
+      "No se pudo realizar la operación, verifica la información o comuniquese con el encargado del programa o soporte  <b> errorcode: </b>  " +
+        e.responseJSON.error
     );
   }
 };
@@ -198,7 +207,6 @@ $("#dui").blur(async function () {
     }
   } catch (error) {
     global_estado_participante = false;
-    console.log(error);
   }
 });
 const GenerarPdf = async (curso) => {
@@ -266,10 +274,12 @@ $(document).ready(() => {
     curso_text = $("#curso").children("option:selected").text();
 
     if (
-      validate.isEmpty(dui) ||
-      validate.isEmpty(nombre) ||
-      validate.isEmpty(tel) ||
-      validate.isEmpty(email)
+      !dui ||
+      !nombre ||
+      !tel ||
+      !email ||
+      !genero || 
+      !cursoCodigo
     ) {
       return error(
         "No se pudo realizar la operación, verifica la información o comuniquese con el encargado del programa o soporte "
@@ -361,11 +371,9 @@ $(document).on("change", ".custom-file-input", function (e) {
   ext = ext.toLowerCase();
   if ($(this).val() != "") {
     if (ext == "pdf" || ext == "png" || ext == "jpeg" || ext == "jpg") {
-      if(e.target.files.length >10 ){
+      if (e.target.files.length > 10) {
         $(this).val("");
-        return error(
-          "Unicamente se permite adjuntar 10 archivos"
-        );
+        return error("Unicamente se permite adjuntar 10 archivos");
       }
       $(`#${i}`).html(e.target.files[0].name);
       return;
