@@ -166,7 +166,7 @@
             </div>
 
             <div class="form-row">
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <label>Personas con las que vive</label>
                 <select id="vivecon" class="form-control form-control-sm">
                   <option selected disabled>Seleccione</option>
@@ -176,12 +176,12 @@
                   <option value="Otros">Otros</option>
                 </select>
               </div>
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <label>Ocupación u Oficio:</label>
                 <input type="text" class="form-control form-control-sm text-uppercase" name="ocupacionec"
                   id="ocupacionec" />
               </div>
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <label>Religión:</label>
                 <select id="religions" class="form-control form-control-sm">
                   <option selected disabled>Seleccione</option>
@@ -191,7 +191,34 @@
                   <option value="Otra">Otra</option>
                 </select>
               </div>
+              <div class="col-md-3" id="sacramentos" style="display: none;">
+                <p>Sacramentos realizados</p>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="Bautismo" id="bautismo" />
+                  <label class="form-check-label" for="bautismo">
+                    Bautismo
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="Primera comunión" id="comunion" />
+                  <label class="form-check-label" for="comunion">
+                    Primera comunión
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="Confirmación" id="confirmacion" />
+                  <label class="form-check-label" for="confirmacion">
+                    Confirmación
+                  </label>
+                </div>
+              </div>
             </div>
+            <div class="form-row">
+
+            </div>
+
+
+
             <hr />
             <h6 class="lead">FECHA/LUGAR DE NACIMIENTO</h6>
             <div class="row">

@@ -134,6 +134,15 @@ $(document).ready(function () {
     }
   });
 
+    // Religión
+    $("#religions").on("change", function () {
+      if (this.value == "Catolico") {
+        $("#sacramentos").css("display", "block");
+      } else {
+        $("#sacramentos").css("display", "none");
+      }
+    });
+
   $("#carreras").select2({
     width: "100%",
     ajax: {
