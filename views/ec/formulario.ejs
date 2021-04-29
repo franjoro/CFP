@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Pricing example · Bootstrap v5.0</title>
+  <title>Formulario Situacional - Empresa Centro</title>
   <link href="/static/css/sb-admin-2.min.css" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"
     type="text/css" />
@@ -13,6 +13,7 @@
 
 <body class="bg-gradient-light" style="font-family: Roboto">
   <header class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+     <a href="/admin/ec" class="btn btn-info btn-sm"> Volver</a>
   </header>
   <main class="container">
     <div class="row">
@@ -62,8 +63,6 @@
                 <label>Grupo</label>
                 <select id="grupos" class="form-control form-control-sm">
                   <option selected disabled>Seleccione grupo</option>
-                  <option value="salvadoreno">Salvadoreño</option>
-                  <option value="extranjero">Extranjero</option>
                 </select>
               </div>
             </div>
@@ -106,13 +105,13 @@
                 <div class="form-group">
                   <label>¿El participante trabaja?</label>
                   <div class="form-check">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" value="Si trabaja" id="flexRadioDefault1" />
                     <label class="form-check-label" for="flexRadioDefault1">
                       Si
                     </label>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2"
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" value="No Trabaja" id="flexRadioDefault2"
                       checked />
                     <label class="form-check-label" for="flexRadioDefault2">
                       No
@@ -125,11 +124,11 @@
             <div class="form-row">
               <div class="col-md-6" style="display: none" id="lugartrabajo">
                 <label>Lugar de trabajo</label>
-                <input type="text" class="form-control form-control-sm text-uppercase" name="lugartrabajo" />
+                <input type="text" class="form-control form-control-sm text-uppercase" id="trabajolugar" name="lugartrabajo" />
               </div>
               <div class="col-md-6" style="display: none" id="direciontrabajo">
                 <label>Dirección del lugar que trabaja</label>
-                <input type="text" class="form-control form-control-sm text-uppercase" name="direciontrabajo"
+                <input type="text" class="form-control form-control-sm text-uppercase" id="direcciont" name="direciontrabajo"
                   id="direcciontrabajo" />
               </div>
             </div>
@@ -226,8 +225,6 @@
                 <label>Departamento</label>
                 <select id="depa_nac" class="form-control form-control-sm">
                   <option selected disabled>Seleccione departamento</option>
-                  <option value="salvadoreno">Salvadoreño</option>
-                  <option value="extranjero">Extranjero</option>
                 </select>
               </div>
               <div class="col-md-4">
@@ -248,8 +245,6 @@
                 <label>Departamento</label>
                 <select id="depdomicilio" class="form-control form-control-sm">
                   <option selected disabled>Seleccione departamento</option>
-                  <option value="salvadoreno">Salvadoreño</option>
-                  <option value="extranjero">Extranjero</option>
                 </select>
               </div>
               <div class="col-md-3">
@@ -296,7 +291,7 @@
             <div class="form-row">
               <div class="col-md-6">
                 <label>Nombre completo del contacto</label>
-                <input type="text" class="form-control form-control-sm text-uppercase" name="nombrecontacto" />
+                <input type="text" class="form-control form-control-sm text-uppercase" name="nombrecontacto"  id="nombrecontacto"  />
               </div>
               <div class="col-md-6">
                 <label>Parentesco:</label>
@@ -335,7 +330,7 @@
             <div class="form-row">
               <div class="col-md-12">
                 <label>Dirección:</label>
-                <input type="text" class="form-control form-control-sm text-uppercase" name="nombrecontacto" />
+                <input type="text" class="form-control form-control-sm text-uppercase" id="direccioncontacto" name="direccioncontacto" />
               </div>
             </div>
             <div class="form-row">
@@ -363,11 +358,11 @@
               </div>
               <div class="col-md-4">
                 <label>E-mail:</label>
-                <input type="text" class="form-control form-control-sm" name="emailcontacto" />
+                <input type="text" class="form-control form-control-sm" name="emailcontacto" id="emailcontacto" />
               </div>
             </div>
             <hr />
-            <button class="btn btn-success float-right" id="next1">
+            <button class="btn btn-info float-right" id="next1">
               Continuar a : INFORMACIÓN FAMILIAR
             </button>
           </div>
@@ -382,11 +377,11 @@
               </div>
               <div class="col-md-4">
                 <label>Nombre Completo</label>
-                <input type="text" class="form-control form-control-sm" name="nombrec1" />
+                <input type="text" class="form-control form-control-sm text-uppercase" name="nombrec1" id="nombrec1"  />
               </div>
               <div class="col-md-2">
                 <label>Parentesco</label>
-                <input type="text" class="form-control form-control-sm" name="parentesco1" />
+                <input type="text" class="form-control form-control-sm text-uppercase" name="parentesco1"  id="parentesco1" />
               </div>
               <div class="col-md-1">
                 <label>Edad</label>
@@ -394,7 +389,7 @@
               </div>
               <div class="col-md-4">
                 <label>Ocupación</label>
-                <input type="text" class="form-control form-control-sm" name="oficicio1" />
+                <input type="text" class="form-control form-control-sm text-uppercase" name="oficicio1" id="oficicio1" />
               </div>
             </div>
             <div class="form-row">
@@ -402,16 +397,16 @@
                 <p>2</p>
               </div>
               <div class="col-md-4">
-                <input type="text" class="form-control form-control-sm" name="nombrec2" />
+                <input type="text" class="form-control form-control-sm text-uppercase" name="nombrec2" id="nombrec2" />
               </div>
               <div class="col-md-2">
-                <input type="text" class="form-control form-control-sm" name="parentesco2" />
+                <input type="text" class="form-control form-control-sm text-uppercase" name="parentesco2" id="parentesco2" />
               </div>
               <div class="col-md-1">
-                <input type="text" class="form-control form-control-sm" name="edad2"  id="edad2" />
+                <input type="text" class="form-control form-control-sm text-uppercase" name="edad2"  id="edad2" />
               </div>
               <div class="col-md-4">
-                <input type="text" class="form-control form-control-sm" name="oficicio2" />
+                <input type="text" class="form-control form-control-sm text-uppercase" name="oficicio2" id="oficicio2" />
               </div>
             </div>
             <div class="form-row">
@@ -419,16 +414,16 @@
                 <p>3</p>
               </div>
               <div class="col-md-4">
-                <input type="text" class="form-control form-control-sm" name="nombrec3" />
+                <input type="text" class="form-control form-control-sm text-uppercase" name="nombrec3" id="nombrec3" />
               </div>
               <div class="col-md-2">
-                <input type="text" class="form-control form-control-sm" name="parentesco3" />
+                <input type="text" class="form-control form-control-sm text-uppercase" name="parentesco3" id="parentesco3" />
               </div>
               <div class="col-md-1">
-                <input type="text" class="form-control form-control-sm" name="edad3"  id="edad3"/>
+                <input type="text" class="form-control form-control-sm text-uppercase" name="edad3"  id="edad3"/>
               </div>
               <div class="col-md-4">
-                <input type="text" class="form-control form-control-sm" name="oficicio3" />
+                <input type="text" class="form-control form-control-sm text-uppercase" name="oficicio3" id="oficicio3" />
               </div>
             </div>
             <div class="form-row">
@@ -436,16 +431,16 @@
                 <p>4</p>
               </div>
               <div class="col-md-4">
-                <input type="text" class="form-control form-control-sm" name="nombrec4" />
+                <input type="text" class="form-control form-control-sm text-uppercase" name="nombrec4" id="nombrec4" />
               </div>
               <div class="col-md-2">
-                <input type="text" class="form-control form-control-sm" name="parentesco4" />
+                <input type="text" class="form-control form-control-sm text-uppercase" name="parentesco4" id="parentesco4" />
               </div>
               <div class="col-md-1">
                 <input type="text" class="form-control form-control-sm" name="edad4"  id="edad4"/>
               </div>
               <div class="col-md-4">
-                <input type="text" class="form-control form-control-sm" name="oficicio4" />
+                <input type="text" class="form-control form-control-sm text-uppercase" name="oficicio4" id="oficicio4" />
               </div>
             </div>
             <div class="form-row">
@@ -453,16 +448,16 @@
                 <p>5</p>
               </div>
               <div class="col-md-4">
-                <input type="text" class="form-control form-control-sm" name="nombrec5" />
+                <input type="text" class="form-control form-control-sm text-uppercase" name="nombrec5" id="nombrec5" />
               </div>
               <div class="col-md-2">
-                <input type="text" class="form-control form-control-sm" name="parentesco5" />
+                <input type="text" class="form-control form-control-sm text-uppercase" name="parentesco5" id="parentesco5" />
               </div>
               <div class="col-md-1">
                 <input type="text" class="form-control form-control-sm" name="edad5" id="edad5" />
               </div>
               <div class="col-md-4">
-                <input type="text" class="form-control form-control-sm" name="oficicio5" />
+                <input type="text" class="form-control form-control-sm text-uppercase" name="oficicio5" id="oficicio5" />
               </div>
             </div>
             <hr />
@@ -489,12 +484,39 @@
                 <input type="text" class="form-control form-control-sm"  id="pagovi" name="pagovivienda">
               </div>
               <div class="col-md-4 form-group">
-                <label>Zona a la que pertenece su residencial</label>
+                <label>Zona a la que pertenece su residencia</label>
                 <select id="zonaresidencia" class="form-control form-control-sm">
                   <option selected disabled>Seleccione</option>
                   <option value="Rural">Rural</option>
                   <option value="Urbana">Urbana</option>
                 </select>
+              </div>
+              <div class="col-md-4 form-group">
+                <label>Vive cerca de zona de riesgo</label>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="Rios" id="Rios" />
+                  <label class="form-check-label" for="Rios">
+                    Rios o quebradas
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="deslaves" id="deslaves" />
+                  <label class="form-check-label" for="deslaves">
+                    Zona de deslaves o derrumbes
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="costera" id="costera" />
+                  <label class="form-check-label" for="costera">
+                    Zona costera
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="volcanes" id="volcanes" />
+                  <label class="form-check-label" for="volcanes">
+                    Zona de riesgo por erupción de volcan
+                  </label>
+                </div>
               </div>
               <div class="col-md-6 form-group">
                 <label>¿Cómo se movilizará de su casa hacia el Centro de
@@ -546,7 +568,7 @@
               </div>
               <div class="col-md-3">
                 <label>Nombre del familiar que trabaja</label>
-                <input type="text" class="form-control form-control-sm" name="trabajador1" />
+                <input type="text" class="form-control form-control-sm text-uppercase" name="trabajador1" id="trabajador1" />
               </div>
               <div class="col-md-2">
                 <label>Salario Mensual</label>
@@ -554,11 +576,11 @@
               </div>
               <div class="col-md-2">
                 <label>Lugar de trabajo</label>
-                <input type="text" class="form-control form-control-sm" name="trabajo1" />
+                <input type="text" class="form-control form-control-sm" name="trabajo1" id="trabajo1" />
               </div>
               <div class="col-md-2">
                 <label>Cargo</label>
-                <input type="text" class="form-control form-control-sm" name="cargo1" />
+                <input type="text" class="form-control form-control-sm text-uppercase" name="cargo1" id="cargo1" />
               </div>
               <div class="col-md-2">
                 <label>Teléfono</label>
@@ -570,16 +592,16 @@
                 <p>2</p>
               </div>
               <div class="col-md-3">
-                <input type="text" class="form-control form-control-sm" name="trabajador2" />
+                <input type="text" class="form-control form-control-sm text-uppercase" name="trabajador2" id="trabajador2" />
               </div>
               <div class="col-md-2">
                 <input type="text" class="form-control form-control-sm salario" placeholder="0" name="salario2" id="salario2" />
               </div>
               <div class="col-md-2">
-                <input type="text" class="form-control form-control-sm" name="trabajo2" />
+                <input type="text" class="form-control form-control-sm" name="trabajo2" id="trabajo2" />
               </div>
               <div class="col-md-2">
-                <input type="text" class="form-control form-control-sm" name="cargo2" />
+                <input type="text" class="form-control form-control-sm text-uppercase" name="cargo2" id="cargo2" />
               </div>
               <div class="col-md-2">
                 <input type="text" class="form-control form-control-sm" name="teltabl2" id="teltabl2"   />
@@ -590,16 +612,16 @@
                 <p>3</p>
               </div>
               <div class="col-md-3">
-                <input type="text" class="form-control form-control-sm" name="trabajador3" />
+                <input type="text" class="form-control form-control-sm text-uppercase" name="trabajador3" id="trabajador3" />
               </div>
               <div class="col-md-2">
                 <input type="text" class="form-control form-control-sm salario" placeholder="0" name="salario3" id="salario3" />
               </div>
               <div class="col-md-2">
-                <input type="text" class="form-control form-control-sm" name="trabajo3" />
+                <input type="text" class="form-control form-control-sm" name="trabajo3" id="trabajo3" />
               </div>
               <div class="col-md-2">
-                <input type="text" class="form-control form-control-sm" name="cargo3" />
+                <input type="text" class="form-control form-control-sm text-uppercase" name="cargo3" id="cargo3" />
               </div>
               <div class="col-md-2">
                 <input type="text" class="form-control form-control-sm" name="teltabl3" id="teltabl3" />
@@ -610,16 +632,16 @@
                 <p>4</p>
               </div>
               <div class="col-md-3">
-                <input type="text" class="form-control form-control-sm" name="trabajador4" />
+                <input type="text" class="form-control form-control-sm text-uppercase" name="trabajador4" id="trabajador4" />
               </div>
               <div class="col-md-2">
                 <input type="text" class="form-control form-control-sm salario" placeholder="0" name="salario4" id="salario4" />
               </div>
               <div class="col-md-2">
-                <input type="text" class="form-control form-control-sm" name="trabajo4" />
+                <input type="text" class="form-control form-control-sm" name="trabajo4" id="trabajo4" />
               </div>
               <div class="col-md-2">
-                <input type="text" class="form-control form-control-sm" name="cargo4" />
+                <input type="text" class="form-control form-control-sm text-uppercase" name="cargo4" id="cargo4" />
               </div>
               <div class="col-md-2">
                 <input type="text" class="form-control form-control-sm" name="teltabl4" id="teltabl4" />
@@ -627,7 +649,10 @@
             </div>
             <hr />
             <h3 class="text-right">Total: $<span id="totalsalarios">0.00</span></h3>
-            <button class="btn btn-success float-right" id="next2">
+            <button class="btn btn-danger float-left" id="back2">
+              VOLVER A SECCION ANTERIOR
+            </button>
+            <button class="btn btn-info float-right" id="next2">
               Continuar a : SITUACIÓN ECONÓMICA
             </button>
           </div>
@@ -637,24 +662,36 @@
             <div class="form-row">
               <div class="col-md-3 form-group">
                 <label>¿Recibe remesas?</label>
-                <select id="trabajaantes" class="form-control form-control-sm">
+                <select id="reciberemesas" class="form-control form-control-sm">
                   <option selected disabled>Seleccione</option>
-                  <option value="1">Si</option>
-                  <option value="0">No</option>
+                  <option value="true">Si</option>
+                  <option value="false">No</option>
                 </select>
               </div>
-              <div class="container" id="tiempoSinTrabajar" style="display: none">
+              <div class="container" id="remesasblock" style="display: none">
                 <div class="col-md-4 form-group">
                   <label>Detalle de cuanto reciben de remesas:</label>
-                  <input type="text" class="form-control form-control-sm" name="remesacantidad" id="remesacantidad"  />
+                  <input type="text" class="form-control form-control-sm" placeholder="$0.00" name="remesacantidad" id="remesacantidad"  />
                 </div>
                 <div class="col-md-4 form-group">
                   <label>¿Cada cuanto recibe las remesas?</label>
-                  <input type="text" class="form-control form-control-sm" name="candacuantorem" />
+                  <select id="cadacuantoreme" class="form-control form-control-sm">
+                    <option selected disabled>Seleccione</option>
+                    <option value="Mensual">Mensual</option>
+                    <option value="Semanal">Semanal</option>
+                    <option value="Trimestral">Trimestral</option>
+                    <option value="Sin Definir">No existe tiempo definido</option>
+                  </select>
                 </div>
                 <div class="col-md-4 form-group">
                   <label>¿Quién envia las remesas?</label>
-                  <input type="text" class="form-control form-control-sm" name="quienremesa" />
+                  <select id="quienremesa" class="form-control form-control-sm">
+                    <option selected disabled>Seleccione</option>
+                    <option value="Familiar">Familiar</option>
+                    <option value="Amigos">Amigos</option>
+                    <option value="Pareja">Pareja</option>
+                    <option value="Otros">Otros</option>
+                  </select>
                 </div>
               </div>
             </div>
@@ -670,55 +707,55 @@
               <tbody>
                 <tr>
                   <td>Alimentación</td>
-                  <td><input type="text" class="costo" placeholder="0.00" id="txt_alimentacion"></td>
+                  <td><input type="text" class="costo" placeholder="0.00" id="costo1"></td>
                 </tr>
                 <tr>
                   <td>Pago de vivienda o de alquiler</td>
-                  <td><input type="text" class="costo" placeholder="0.00" id="txt_vivienda"></td>
+                  <td><input type="text" class="costo" placeholder="0.00" id="costo2"></td>
                 </tr>
                 <tr>
                   <td>Pago de agua</td>
-                  <td><input type="text" class="costo" placeholder="0.00" id="txt_agua"></td>
+                  <td><input type="text" class="costo" placeholder="0.00" id="costo3"></td>
                 </tr>
                 <tr>
                   <td>Pago de energía eléctrica</td>
-                  <td><input type="text" class="costo" placeholder="0.00" id="txt_energia"></td>
+                  <td><input type="text" class="costo" placeholder="0.00" id="costo4"></td>
                 </tr>
                 <tr>
                   <td>Pago de línea fija o cable</td>
-                  <td><input type="text" class="costo" placeholder="0.00" id="txt_cable"></td>
+                  <td><input type="text" class="costo" placeholder="0.00" id="costo5"></td>
                 </tr>
                 <tr>
                   <td>Higiene personal</td>
-                  <td><input type="text" class="costo" placeholder="0.00" id="txt_higiene"></td>
+                  <td><input type="text" class="costo" placeholder="0.00" id="costo6"></td>
                 </tr>
                 <tr>
                   <td>Pago de celular</td>
-                  <td><input type="text" class="costo" placeholder="0.00" id="txt_celular"></td>
+                  <td><input type="text" class="costo" placeholder="0.00" id="costo7"></td>
                 </tr>
                 <tr>
                   <td>Servicio Domestico</td>
-                  <td><input type="text" class="costo" placeholder="0.00" id="txt_servicio"></td>
+                  <td><input type="text" class="costo" placeholder="0.00" id="costo8"></td>
                 </tr>
                 <tr>
                   <td>Cotizaciones ISSS, INPEP, FSV, AFP</td>
-                  <td><input type="text" class="costo" placeholder="0.00" id="txt_cotizacion"></td>
+                  <td><input type="text" class="costo" placeholder="0.00" id="costo9"></td>
                 </tr>
                 <tr>
                   <td>Transporte</td>
-                  <td><input type="text" class="costo" placeholder="0.00" id="txt_transporte"></td>
+                  <td><input type="text" class="costo" placeholder="0.00" id="costo10"></td>
                 </tr>
                 <tr>
                   <td>Vigilancia</td>
-                  <td><input type="text" class="costo" placeholder="0.00" id="txt_vigilancia"></td>
+                  <td><input type="text" class="costo" placeholder="0.00" id="costo11"></td>
                 </tr>
                 <tr>
                   <td>Salud</td>
-                  <td><input type="text" class="costo" placeholder="0.00" id="txt_salud"></td>
+                  <td><input type="text" class="costo" placeholder="0.00" id="costo12"></td>
                 </tr>
                 <tr>
                   <td>Educación: Escolaridades</td>
-                  <td><input type="text" class="costo" placeholder="0.00" id="txt_educacion"></td>
+                  <td><input type="text" class="costo" placeholder="0.00" id="costo13"></td>
                 </tr>
                 <tr>
                   <td><b>TOTAL</b></td>
@@ -727,8 +764,11 @@
               </tbody>
             </table>
             <hr />
+            <button class="btn btn-danger float-left" id="back3">
+              VOLVER A SECCION ANTERIOR
+            </button>
             <button class="btn btn-success float-right" id="next3">
-              Continuar a : INFORMACIÓN SOBRE LOS INGRESOS
+              Continuar a : ENVIAR INFORMACIÓN DE FORMULARIO
             </button>
           </div>
         </div>

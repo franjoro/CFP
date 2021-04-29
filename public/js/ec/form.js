@@ -1,25 +1,62 @@
+const error = (error) => {
+  Swal.fire({
+    icon: "error",
+    title: "Oops...",
+    html: error,
+  });
+};
+const loader = () => {
+  Swal.fire({
+    title: "Por favor, Espere",
+    html: "Procesando información",
+    allowOutsideClick: !1,
+    showConfirmButton: false,
+    willOpen: () => {
+      Swal.showLoading();
+    },
+  });
+};
 const ProgressChange = (texto, id, val) => {
   $("#progBar").val(val);
   $("#texto").text(texto);
   $("#id").text(id);
 };
+let global_json1;
+let global_json2;
+let global_json3;
 $(document).ready(function () {
   // Cambiador de progress
   // BOTONES
+
   $("#next1").click(() => {
+    if (!$("#carnet").val())
+      return error(" <b>errocode: </b> Carnet no existente ");
+    if (!$("#grupos").val())
+      return error(" <b>errocode: </b> Grupo no existente ");
     ProgressChange("Información familiar", "2", "50");
     $("#sec1").css("display", "none");
     $("#sec2").css("display", "block");
+    global_json1 = json1();
   });
   $("#next2").click(() => {
     ProgressChange("Situación económica", "3", "100");
     $("#sec2").css("display", "none");
     $("#sec3").css("display", "block");
+    global_json2 = json2();
   });
   $("#next3").click(() => {
-    ProgressChange("Información sobre ingresos", "4", "100");
+    global_json3 = json3();
+    SendFormulario();
+  });
+  $("#back2").click(() => {
+    ProgressChange("Datos de identificación", "1", "16.66");
+    $("#sec2").css("display", "none");
+    $("#sec1").css("display", "block");
+  });
+  $("#back3").click(() => {
+    ProgressChange("Información familiar", "2", "50");
     $("#sec3").css("display", "none");
-    $("#sec4").css("display", "block");
+    $("#sec2").css("display", "block");
   });
 
   //Mascara
@@ -66,7 +103,6 @@ $(document).ready(function () {
     reverse: true,
   });
 
-
   let global_salarios = currency(0);
   let global_gastos = currency(0);
 
@@ -79,21 +115,19 @@ $(document).ready(function () {
   });
 
   $(".costo").focusout(function () {
-    global_gastos = 
-    currency($("#txt_alimentacion").val())
-      .add($("#txt_vivienda").val())
-      .add($("#txt_agua").val())
-      .add($("#txt_energia").val())
-      .add($("#txt_cable").val())
-      .add($("#txt_higiene").val())
-      .add($("#txt_celular").val())
-      .add($("#txt_servicio").val())
-      .add($("#txt_cotizacion").val())
-      .add($("#txt_transporte").val())
-      .add($("#txt_vigilancia").val())
-      .add($("#txt_salud").val())
-      .add($("#txt_educacion").val());
-      
+    global_gastos = currency($("#costo1").val())
+      .add($("#costo2").val())
+      .add($("#costo3").val())
+      .add($("#costo4").val())
+      .add($("#costo5").val())
+      .add($("#costo6").val())
+      .add($("#costo7").val())
+      .add($("#costo8").val())
+      .add($("#costo9").val())
+      .add($("#costo10").val())
+      .add($("#costo11").val())
+      .add($("#costo12").val())
+      .add($("#costo13").val());
     $("#totalgastos").text(global_gastos);
   });
 
@@ -134,19 +168,19 @@ $(document).ready(function () {
     }
   });
 
-    // Religión
-    $("#religions").on("change", function () {
-      if (this.value == "Catolico") {
-        $("#sacramentos").css("display", "block");
-      } else {
-        $("#sacramentos").css("display", "none");
-      }
-    });
+  // Religión
+  $("#religions").on("change", function () {
+    if (this.value == "Catolico") {
+      $("#sacramentos").css("display", "block");
+    } else {
+      $("#sacramentos").css("display", "none");
+    }
+  });
 
   $("#carreras").select2({
     width: "100%",
     ajax: {
-      url: "/ec/carreras",
+      url: "/admin/ec/carreras",
       dataType: "json",
       delay: 250,
       processResults: function (data) {
@@ -165,7 +199,7 @@ $(document).ready(function () {
     $("#grupos").select2({
       width: "100%",
       ajax: {
-        url: `/ec/${idcarrera}/grupos`,
+        url: `/admin/ec/${idcarrera}/grupos`,
         dataType: "json",
         delay: 250,
         data(params) {
@@ -209,46 +243,14 @@ $(document).ready(function () {
 
   // SECCION 3 =====================================================================
   //Si trabaja
-  $("#c4").change(function () {
-    if (this.checked) {
-      $("#iftrabaja").css("display", "block");
-      $("#ifnottrabaja").css("display", "none");
+  $("#reciberemesas").on("change", function () {
+    if (this.value == "true") {
+      $("#remesasblock").css("display", "block");
     } else {
-      $("#iftrabaja").css("display", "none");
-      $("#ifnottrabaja").css("display", "flex");
-    }
-  });
-  // Si no trabaja
-  $("#trabajaantes").on("change", function () {
-    if (this.value == "1") {
-      $("#tiempoSinTrabajar").css("display", "block");
-    } else {
-      $("#tiempoSinTrabajar").css("display", "none");
+      $("#remesasblock").css("display", "none");
     }
   });
 
-  $("#tipoempleo").on("change", function () {
-    if (
-      this.value == "tmpcompleto" ||
-      this.value == "tmpparcial" ||
-      this.value == "temporal"
-    ) {
-      $("#sectordetraajo").css("display", "block");
-    } else {
-      $("#sectordetraajo").css("display", "none");
-    }
-  });
-
-  // FIN SECCION 3 =====================================================================
-  // SECCION 4 =====================================================================
-  // Si recibe ingresos
-  $("#recibeingresosselect").on("change", function () {
-    if (this.value == "1") {
-      $("#sirecibeingresos").css("display", "block");
-    } else {
-      $("#sirecibeingresos").css("display", "none");
-    }
-  });
   // FIN SECCION 4 =====================================================================
   //SELECTS
   $("#depa_nac").select2({
@@ -398,4 +400,207 @@ $(document).ready(function () {
     });
   });
   //FIN SELECTS
+});
+
+// CREACIÓN DE JSON POR PASOS
+// PASO 1
+const json1 = () => {
+  const Carnet = $("#carnet").val(),
+    Carrera = $("#carreras").val(),
+    Grupo = $("#grupos").val(),
+    Nombres = $("#nombres").val(),
+    Apellidos = $("#apellidos").val(),
+    Sexo = $("#sexo").val(),
+    EstadoF = $("#estadofamiliar").val(),
+    Trabaja = $("input[name='flexRadioDefault']:checked").val(),
+    LugarTrabajo = $("#trabajolugar").val(),
+    DireccionTrabajo = $("#direcciont").val(),
+    Escolaridad = $("#escolaridad").val(),
+    CentroDondeEstudio = $("#instituto").val(),
+    Cuota = $("#cuota").val(),
+    ViveCon = $("#vivecon").val(),
+    Oficio = $("#ocupacionec").val(),
+    Religion = $("#religions").val(),
+    Sacramentos = {
+      Bautismo: $("#bautismo").is(":checked"),
+      Comunion: $("#comunion").is(":checked"),
+      confirmacion: $("#confirmacion").is(":checked"),
+    },
+    NacDepartamento = $("#depa_nac option:selected").text();
+  NacMunicipio = $("#municipioNac option:selected").text();
+  (FechaNac = $("#fechanac").val()),
+    (TelFijoPropio = $("#fijo").val()),
+    (TelMovilPropio = $("#movil").val()),
+    (PoseeInternet = $("#internet").val()),
+    (CapacidadInternet = $("#capacidadinter").val()),
+    (EmerNombre = $("#nombrecontacto").val()),
+    (EmerParentesco = $("#parentesco").val()),
+    (EmerDireccion = $("#direccioncontacto").val()),
+    (EmerDep = $("#departcontact option:selected").text());
+  EmerMuni = $("#municipiocontacto option:selected").text();
+  (EmergenciaTel = $("#telfijocontacto").val()),
+    (EmergenciaMov = $("#telmovilcontacto").val()),
+    (EmergenciaEmail = $("#emailcontacto").val());
+  return {
+    Carnet,
+    Carrera,
+    Grupo,
+    Nombres,
+    Apellidos,
+    Sexo,
+    EstadoF,
+    Trabaja,
+    LugarTrabajo,
+    DireccionTrabajo,
+    Escolaridad,
+    CentroDondeEstudio,
+    Cuota,
+    ViveCon,
+    Oficio,
+    Religion,
+    Sacramentos,
+    NacDepartamento,
+    NacMunicipio,
+    FechaNac,
+    TelFijoPropio,
+    TelMovilPropio,
+    PoseeInternet,
+    CapacidadInternet,
+    EmerNombre,
+    EmerParentesco,
+    EmerDireccion,
+    EmerDep,
+    EmerMuni,
+    EmergenciaTel,
+    EmergenciaMov,
+    EmergenciaEmail,
+  };
+};
+
+// FIN PASO 1
+// PASO 2
+const json2 = () => {
+  const GrupoFamiliar = [];
+  for (let index = 1; index <= 5; index++) {
+    const nombre = $(`#nombrec${index}`).val(),
+      parentesco = $(`#parentesco${index}`).val(),
+      edad = $(`#edad${index}`).val(),
+      ocupacion = $(`#oficicio${index}`).val();
+    GrupoFamiliar.push({ nombre, parentesco, edad, ocupacion });
+  }
+  const EstadoVivienda = $("#tipodecasa").val(),
+    TipoViviendaOtros = $("#especificarvivienda").val(),
+    PagoVivienda = $("#pagovi").val(),
+    ZonaVivienda = $("#zonaresidencia").val(),
+    ZonasDeRiesgo = {
+      Rios: $("#Rios").is(":checked"),
+      Deslaves: $("#deslaves").is(":checked"),
+      Costera: $("#costera").is(":checked"),
+      Volcanes: $("#volcanes").is(":checked"),
+    },
+    ComoSeMoviliza = $("#movilizacion").val(),
+    PoseeEquipos = {
+      computadora: $("#computadora").is(":checked"),
+      Laptop: $("#Laptop").is(":checked"),
+      Tablet: $("#Tablet").is(":checked"),
+      Celular: $("#Celular").is(":checked"),
+    },
+    IngresosFamiliares = [];
+
+  for (let index = 1; index <= 4; index++) {
+    const trabajador = $(`#trabajador${index}`).val(),
+      salario = $(`#salario${index}`).val(),
+      trabajo = $(`#trabajo${index}`).val(),
+      cargo = $(`#cargo${index}`).val(),
+      teltabl = $(`#teltabl${index}`).val();
+    IngresosFamiliares.push({ trabajador, salario, trabajo, cargo, teltabl });
+  }
+  const totalingreso = $("#totalsalarios").text();
+  return {
+    GrupoFamiliar,
+    EstadoVivienda,
+    TipoViviendaOtros,
+    PagoVivienda,
+    ZonaVivienda,
+    ZonasDeRiesgo,
+    ComoSeMoviliza,
+    PoseeEquipos,
+    IngresosFamiliares,
+    totalingreso,
+  };
+};
+// FIN PASO 2
+// PASO 3
+const json3 = () => {
+  const GastosFamiliares = {
+      alimentacion: $(`#costo1`).val(),
+      vivienda: $(`#costo2`).val(),
+      agua: $(`#costo3`).val(),
+      energia: $(`#costo4`).val(),
+      cable: $(`#costo5`).val(),
+      higiene: $(`#costo6`).val(),
+      celular: $(`#costo7`).val(),
+      domestico: $(`#costo8`).val(),
+      cotizaciones: $(`#costo9`).val(),
+      transporte: $(`#costo10`).val(),
+      vigilancia: $(`#costo11`).val(),
+      salud: $(`#costo12`).val(),
+      educacion: $(`#costo13`).val(),
+    },
+    reciberemesas = $("#reciberemesas").val(),
+    remesacantidad = $("#remesacantidad").val(),
+    cadacuantoreme = $("#cadacuantoreme").val(),
+    quienremesa = $("#quienremesa").val(),
+    totalgastos = $("#totalgastos").text();
+  return {
+    reciberemesas,
+    remesacantidad,
+    cadacuantoreme,
+    quienremesa,
+    GastosFamiliares,
+    totalgastos,
+  };
+};
+// FIN PASO 3
+
+const SendFormulario = async () => {
+  try {
+    const alerta = await Swal.fire({
+      title: "¿Deseá enviar la solicitud?",
+      text:
+        "Por favor verificar que la información ingresada sea correcta antes de enviar.",
+      icon: "info",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, enviar",
+    });
+    if (alerta.isConfirmed) {
+      const carnet = $("#carnet").val(),
+        grupo = $("#grupos").val();
+      const data = {
+        carnet,
+        grupo,
+        global_json1,
+        global_json2,
+        global_json3,
+      };
+      loader();
+      await $.ajax({
+        url: "/ec/form",
+        type: "POST",
+        data,
+        dataType: "json",
+      });
+      Swal.close();
+      location.reload();
+    }
+  } catch (e) {
+    console.log(e);
+    error(`<b>errocode: </b> ${e}`);
+  }
+};
+
+$('input.text-uppercase').keyup(function(){
+  $(this).val($(this).val().toUpperCase())
 });

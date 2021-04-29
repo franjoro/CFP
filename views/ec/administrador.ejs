@@ -1,0 +1,177 @@
+<link rel="stylesheet" href="/static/vendor/datatables/datatables.min.css">
+<%- include('../partials/header.admin.ejs'); %>
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+
+
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 d-inline text-gray-800">Administrar carreras y grupos</h1>
+        <p class="mb-4 ">Directorio principal de alumnos</p>
+
+
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <a href="/admin/ec" class="btn btn-success btn-sm float-left d-inline">
+                    <i class="fas fa-arrow-left"></i></a>
+                <button class="btn btn-success btn-sm float-right m-1 d-inline" data-toggle="modal"
+                data-target="#gruposmodal">Agregar Grupo</button>
+                <button class="btn btn-success btn-sm float-right m-1 d-inline" data-toggle="modal"
+                    data-target="#carreramodal">Agregar carrera</button>
+
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="table-responsive">
+                            <h4 class="text-secundary">Carreras agregadas</h4>
+                            <table class="table table-bordered table-striped" id="tableParticipantes" width="100%"
+                                cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% carreras.forEach( (element , id)=> { %>
+                                        <tr>
+                                            <td>
+                                                <%= carreras[id].Nombre %>
+                                            </td>
+                                        </tr>
+                                        <% } )%>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="table-responsive">
+                            <h4 class="text-secundary">Grupos agregados</h4>
+                            <table class="table table-bordered table-striped" id="tableParticipantes" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Carrera a la que pertenece</th>
+                                        <th>Nombre del grupo</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% grupos.forEach( (element , id)=> { %>
+                                        <tr>
+                                            <td>
+                                                <%= grupos[id].carrera %>
+                                            </td>
+                                            <td>
+                                                <%= grupos[id].Nombre %>
+                                            </td>
+                                        </tr>
+                                        <% } )%>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal Carreras-->
+    <div class="modal " id="carreramodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">AGREGAR NUEVA CARRERA</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formcarrera">
+                        <div class="form-row">
+                            <div class="col">
+                                <label for="name">Nombre</label>
+                                <input type="text" id="nombrecarrera" name="nombrecarrera" required class="form-control"
+                                    placeholder="Nombre de la carrera">
+                            </div>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary">
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Grupos-->
+    <div class="modal " id="gruposmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">AGREGAR NUEVO GRUPO</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formgrupo">
+                        <div class="form-row">
+                            <div class="col">
+                                <label for="name">Nombre</label>
+                                <input type="text" name="nombregrupo" required class="form-control"
+                                    placeholder="Nombre del grupo">
+                            </div>
+                            <div class="col">
+                                <label for="name">Nombre</label>
+                                <select class="custom-select" required name="id_carrera">
+                                    <option selected disabled >Seleccionar </option>
+                                    <% carreras.forEach( (element , id)=> { %>
+                                        <option value="<%= carreras[id].id %>"><%= carreras[id].Nombre %>  </option>
+                                    <%   } )%>   
+                                </select>
+                            </div>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary">
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- /.container-fluid -->
+    <%- include('../partials/footer'); %>
+        <!-- Page level plugins -->
+        <script src="/static/js/jquery.mask.min.js"></script>
+        <script src="/static/vendor/datatables/datatables.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+        <!-- Page level custom scripts -->
+        <script>
+            $("#formcarrera").submit(async function (e) {
+                e.preventDefault();
+                const t = $(this).serialize();
+                try {
+                    await $.ajax({url :  ' /admin/ec/nuevacarrera'  , type:"POST"  , data : t })
+                    location.reload();
+                } catch (error) {
+                    console.log(error)
+                }
+            })
+            $("#formgrupo").submit(async function (e) {
+                e.preventDefault();
+                const t = $(this).serialize();
+                try {
+                    await $.ajax({url :  ' /admin/ec/nuevogrupo'  , type:"POST"  , data : t })
+                    location.reload();
+                } catch (error) {
+                    console.log(error)
+                }
+            })
+
+
+        </script>

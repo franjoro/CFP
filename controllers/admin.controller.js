@@ -32,6 +32,7 @@ admin.renderEmpresas = (req, res) => {
   const usuario = getUserDataByToken(req.cookies.token);
   res.render("./admin/empresas", usuario);
 };
+
 admin.renderParticipantes = (req, res) => {
   const usuario = getUserDataByToken(req.cookies.token);
   res.render("./admin/participantes", usuario);
@@ -62,6 +63,11 @@ admin.renderCursos = async (req, res) => {
     console.log(error);
     res.status(400).json(error);
   }
+};
+
+admin.ec = (req, res) => {
+  const usuario = getUserDataByToken(req.cookies.token);
+  res.render("./admin/ec", usuario);
 };
 
 module.exports = admin;

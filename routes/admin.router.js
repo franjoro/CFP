@@ -14,6 +14,8 @@ router.get("/empresas", authcheck, admin.renderEmpresas);
 router.get("/instructor", authcheck, admin.renderInstructor);
 router.get("/cursos", authcheck, admin.renderCursos);
 router.get("/participantes" , authcheck, admin.renderParticipantes)
+router.get("/ec" , authcheck, admin.ec)
+
 
 
 // Exportamos la configuración
