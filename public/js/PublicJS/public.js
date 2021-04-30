@@ -389,8 +389,12 @@ const ReiniciarInputs = () => {
   $("#cursos_files").html("<div></div>");
 };
 const VerificarEmpresa = () => {
-  AsginarGlobalEmpresa();
-  stepper1.next();
+  if( !$("#primerape").val()  || !$("#segunape").val() || !$("#nombres").val()  || !$("#cargof").val()   ){
+    error("<b>errcode: </b> DEBE RELLENAR LOS CAMPOS DEL FIRMANTE")
+  }else{
+    AsginarGlobalEmpresa();
+    stepper1.next();
+  }
 };
 const VerificarArchivos = () => {
   const cursos = JSON.parse(global_data_cursos);

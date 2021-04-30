@@ -9,22 +9,14 @@ const encriptador = require("../utils/decrypt");
 
 usuarios.addUsuario = async (req, res) => {
   try {
-    if (
-      !(
-        isEmail(req.body.email) ||
-        isEmpty(req.body.user) ||
-        isEmpty(req.body.name) ||
-        isEmpty(req.body.role)
-      )
-    )
-      throw new Error("Empty");
     const data = [
       req.body.user,
       req.body.name,
       req.body.email,
-      await encriptador.encriptar("Ricaldone_21"),
+      await encriptador.encriptar(req.body.paswordinput),
       req.body.role,
     ];
+    console.log(data);
     const statment =
       "INSERT INTO tb_usuarios(id_usuario,Nombre,Email,Password,Role,Estado) VALUES(?,?,?,?,?,1)";
     const query = await pool.query(statment, data);
@@ -67,7 +59,7 @@ usuarios.editUsuario = async (req, res) => {
 
 usuarios.loadTable = async (req, res) => {
   const data = await pool.query(
-    "SELECT id_usuario,Nombre,Email,Role,Estado FROM tb_usuarios WHERE id_usuario !=  'god' AND (Role = 1 OR Role = 0) "
+    "SELECT id_usuario,Nombre,Email,Role,Estado FROM tb_usuarios WHERE id_usuario !=  'god' AND (Role = 1 OR Role = 0 OR Role = 5) "
   );
   res.json({ data });
 };

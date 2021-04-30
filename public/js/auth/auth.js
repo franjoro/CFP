@@ -30,6 +30,7 @@ $("#loginForm").submit(async function (e) {
         if(data.role  === 0) window.location.replace('/admin/cursos');
         if(data.role  === 3) window.location.replace('/public/rechazado');
         if(data.role  === 4) window.location.replace('/public/');
+        if(data.role  === 5) window.location.replace('/admin/ec');
         swal.close();
     }
   } catch (error) {

@@ -587,13 +587,13 @@ const SendFormulario = async () => {
       };
       loader();
       await $.ajax({
-        url: "/ec/form",
+        url: "/admin/ec/form",
         type: "POST",
         data,
         dataType: "json",
       });
       Swal.close();
-      location.reload();
+      window.location.replace('/admin/ec');
     }
   } catch (e) {
     console.log(e);

@@ -30,6 +30,9 @@ table = () => {
           if (row.Role == 1) {
             return "Administrador";
           } 
+          if (row.Role == 5) {
+            return "Empresa Centro";
+          } 
             return "Coordinador";
           
         },
@@ -39,7 +42,7 @@ table = () => {
           if (row.Estado == 1) {
             return '<p class="text-primary">Activo</p>';
           } 
-            return '<p class="text-danger">Desactivado</p>';
+            return '<p class="text-danger">Inactivo</p>';
           
         },
       },
@@ -59,8 +62,9 @@ $("#formUsuarios").submit(async function (e) {
   const t = $(this).serialize();
   loader();
   try {
-    await $.ajax({ url: "/admin/usuarios/add", type: "POST", data: t });
-    $("#tableUsuario").DataTable().destroy();
+    const data =  await $.ajax({ url: "/admin/usuarios/add", type: "POST", data: t });
+    console.log(data);
+     $("#tableUsuario").DataTable().destroy();
     table();
     swal.close();
     $("#exampleModal").modal("toggle");

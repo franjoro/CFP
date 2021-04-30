@@ -56,6 +56,11 @@
                                 <input type="email" id="email" name="email" required class="form-control"
                                     placeholder="Correo Electrónico">
                             </div>
+                            <div class="col">
+                                <label for="password">Contraseña</label>
+                                <input type="password" id="paswordinput" name="paswordinput" required class="form-control"
+                                    placeholder="Correo Electrónico">
+                            </div>
                         </div>
                         <div class="form-row">
                             <div class="col">
@@ -68,6 +73,7 @@
                                 <select class="custom-select" required name="role" >
                                     <option value="0">Coordinador</option>
                                     <option value="1">Administrador</option>
+                                    <option value="5">Empresa Centro</option>
                                 </select>
                             </div>
                         </div>
@@ -115,6 +121,7 @@
                          <select class="custom-select" required id="RoleEdit" name="RoleEdit" >
                              <option value="0">Coordinador</option>
                              <option value="1">Administrador</option>
+                            <option value="5">Empresa Centro</option>
                          </select>
                      </div>
                  </div>
@@ -127,7 +134,7 @@
                     <div class="col">
                         <label for="name">Estado:</label>
                         <select class="custom-select" required name="EstadoEdit" id="EstadoEdit">
-                            <option value="0">Desactivado</option>
+                            <option value="0">Inactivo</option>
                             <option value="1">Activo</option>
                         </select>
                     </div>
