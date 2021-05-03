@@ -191,24 +191,24 @@ PublicFunctions.CreateSolicitud = async (req, res) => {
     if (!participantes) throw new Error("PARTICIPANTES_NOT_EXIST");
 
     // VALIDAR SI EMPRESA YA TIENE SOLICITUD EN ESTA OFERTA
-    const ExisteSolicitud = [];
+    // const ExisteSolicitud = [];
 
-    cursos.forEach((curso) => {
-      ExisteSolicitud.push(
-        pool.query(
-          "SELECT COUNT(*) AS Cantidad , tb_cursos.Nombre , tb_cursos.Horario FROM union_matricula INNER JOIN tb_cursos ON tb_cursos.Codigo_curso = union_matricula.id_curso WHERE id_curso  = ? AND id_empresa = ?",
-          [curso, empresa]
-        )
-      );
-    });
+    // cursos.forEach((curso) => {
+    //   ExisteSolicitud.push(
+    //     pool.query(
+    //       "SELECT COUNT(*) AS Cantidad , tb_cursos.Nombre , tb_cursos.Horario FROM union_matricula INNER JOIN tb_cursos ON tb_cursos.Codigo_curso = union_matricula.id_curso WHERE id_curso  = ? AND id_empresa = ?",
+    //       [curso, empresa]
+    //     )
+    //   );
+    // });
 
-    const ExisteSolicitudPromesa = await Promise.all(ExisteSolicitud);
+    // const ExisteSolicitudPromesa = await Promise.all(ExisteSolicitud);
 
-    ExisteSolicitudPromesa.forEach((element) => {
-      if (element[0].Cantidad > 0) {
-        throw `LA SOLICITUD EN EL CURSO YA EXISTE,  CURSO: ${element[0].Nombre}  HORARIO: ${element[0].Horario}`;
-      }
-    });
+    // ExisteSolicitudPromesa.forEach((element) => {
+    //   if (element[0].Cantidad > 0) {
+    //     throw `LA SOLICITUD EN EL CURSO YA EXISTE,  CURSO: ${element[0].Nombre}  HORARIO: ${element[0].Horario}`;
+    //   }
+    // });
 
     // Hacer consultas en arreglos para hacer promesas
     const EmpresaCursos = [];
