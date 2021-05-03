@@ -1,13 +1,8 @@
-<link rel="stylesheet" href="/static/vendor/datatables/datatables.min.css" />
 <link
   rel="stylesheet"
   href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
 />
-<link
-  href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css"
-  rel="stylesheet"
-  type="text/css"
-/>
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
 <%- include('../partials/header.admin.ejs'); %>
 <div class="container-fluid">
   <div class="row container-fluid">
@@ -21,100 +16,102 @@
           ></a>
         </div>
         <div class="card-body">
+          <p>
+            <span class="font-weight-bold">Nota: </span> Algunos datos podran
+            ser visualizados por el participante al momento de aplicar en la
+            oferta.
+          </p>
           <div class="card shadow mb-3">
-            <div class="card-body"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div
-  class="modal fade"
-  id="modal_compartir"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog modal-xl" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">
-          Compartir edición de archivos
-        </h5>
-        <button
-          type="button"
-          class="close"
-          data-dismiss="modal"
-          aria-label="Close"
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-          <li class="nav-item">
-            <a
-              class="nav-link active"
-              id="home-tab"
-              data-toggle="tab"
-              href="#enlace"
-              role="tab"
-              aria-controls="home"
-              aria-selected="true"
-              >Compartir por enlace</a
-            >
-          </li>
-          <li class="nav-item">
-            <a
-              class="nav-link"
-              id="profile-tab"
-              data-toggle="tab"
-              href="#correo"
-              role="tab"
-              aria-controls="profile"
-              aria-selected="false"
-              >Enviar por correo electrónico</a
-            >
-          </li>
-        </ul>
-        <div class="tab-content" id="myTabContent">
-          <div
-            class="tab-pane fade show active p-4"
-            id="enlace"
-            role="tabpanel"
-            aria-labelledby="home-tab"
-          >
-            <label>Copiar enlace para compartir:</label>
-            <input type="text" class="form-control" id="link" />
-            <button class="btn btn-primary my-3 float-right" id="btnCopy">
-              Copiar enlace para compartir
-            </button>
-          </div>
-          <div
-            class="tab-pane fade p-4"
-            id="correo"
-            role="tabpanel"
-            aria-labelledby="profile-tab"
-          >
-            <div class="form-group">
-              <label for="correo">Correo Electrónico</label>
-              <input
-                type="email"
-                class="form-control"
-                id="email"
-                placeholder="name@example.com"
-              />
+            <div class="card-body">
+              <form id="form">
+                <h6 class="lead">
+                  Registro de nueva oferta - cursos para no cotizantes
+                </h6>
+                <div class="form-row">
+                  <div class="col-md-12">
+                    <label class="text-dark">Nombre de la oferta</label>
+                    <input
+                      type="text"
+                      name="nombre"
+                      id="nombre"
+                      class="form-control"
+                      placeholder="Ej: Piezas gráficas"
+                    />
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="col-md-3">
+                    <label class="text-dark">Fecha de inicio</label>
+                    <input
+                      type="text"
+                      name="inicio"
+                      id="inicio"
+                      class="form-control"
+                      placeholder="00-00-0000"
+                    />
+                  </div>
+                  <div class="col-md-3">
+                    <label class="text-dark">Fecha de finalización</label>
+                    <input
+                      type="text"
+                      name="fin"
+                      id="fin"
+                      class="form-control"
+                      placeholder="00-00-0000"
+                    />
+                  </div>
+                  <div class="col-md-3">
+                    <label class="text-dark">Horarios</label>
+                    <input
+                      type="text"
+                      name="nombre"
+                      id="nombre"
+                      class="form-control"
+                      placeholder="De 00:00 A 00:00"
+                    />
+                  </div>
+                  <div class="col-md-3">
+                    <label class="text-dark">Costo por alumno</label>
+                    <input
+                      type="text"
+                      name="nombre"
+                      id="nombre"
+                      class="form-control"
+                      placeholder="$0.00"
+                    />
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="col-md-12">
+                    <label class="text-dark">Descripción del curso</label>
+                    <textarea
+                      name="descripcion"
+                      id="descripcion"
+                      class="form-control"
+                      cols="30"
+                      rows="4"
+                    ></textarea>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="col-md-12">
+                    <label class="text-dark">Requisitos del participante</label>
+                    <textarea
+                      name="descripcion"
+                      id="descripcion"
+                      class="form-control"
+                      cols="30"
+                      rows="2"
+                    ></textarea>
+                  </div>
+                </div>
+                <label class="text-dark">Contenidos del curso</label>
+                <div id="editor"></div>
+                <input type="hidden" name="contenidos" id="contenidos">
+                <hr>
+                <input type="submit" value="Enviar" class="form-control btn btn-primary">
+              </form>
             </div>
-            <div class="form-group">
-              <label for="mensaje">Mensaje</label>
-              <textarea class="form-control" id="mensaje" rows="3"></textarea>
-            </div>
-            <button class="btn btn-success float-right" id="btnCorreo">
-              Enviar correo
-            </button>
           </div>
         </div>
       </div>
@@ -127,4 +124,10 @@
 <script src="/static/js/jquery.mask.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-<script src="/static/js/gestor_documentos.js"></script>
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+<script src="/static/js/habil/ofertashabil.js"></script>
+<script>
+
+
+
+</script>

@@ -8,7 +8,6 @@ const pool = require("../models/db");
 const { getUserDataByToken } = require("../middlewares/auth");
 const { sendEmail } = require("../utils/mailer");
 const { upload, getFolderData } = require("../utils/s3");
-const { LexModelBuildingService } = require("aws-sdk");
 
 // Renderizar pantalla de cursos ya con programa
 cursos.cursos = async (req, res) => {
@@ -479,6 +478,7 @@ cursos.archivos = async (req, res) => {
     );
     let key = await Promise.all(promesas);
     key = key[0].key;
+    console.log(key)
     await pool.query(
       "INSERT INTO archivo_empresa_curso(s3Key, Role, id_empresa, id_curso, isEditable) VALUES(?,?,?,?,0)",
       [key, archivo, empresa, curso]
@@ -503,6 +503,7 @@ cursos.archivos = async (req, res) => {
     });
     return 0;
   } catch (error) {
+    console.log(error)
     return res.status(400).json({ status: false, error });
   }
 };
@@ -527,10 +528,9 @@ cursos.ArchivoExtra = async (req, res) => {
 };
 
 cursos.form = async (req, res) => {
-  const usuario = getUserDataByToken(req.cookies.token);
+  const data = getUserDataByToken(req.cookies.token);
   const { programa } = req.params;
-
-  res.render("./habil/addoferta.ejs", { data: usuario, programa });
+  res.render("./habil/addoferta.ejs", { data : data.data, programa });
 };
 
 module.exports = cursos;

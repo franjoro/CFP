@@ -196,7 +196,7 @@ PublicFunctions.CreateSolicitud = async (req, res) => {
     cursos.forEach((curso) => {
       ExisteSolicitud.push(
         pool.query(
-          "SELECT COUNT(*) AS Cantidad FROM union_matricula WHERE id_curso  = ? AND id_empresa = ? ",
+          "SELECT COUNT(*) AS Cantidad , tb_cursos.Nombre , tb_cursos.Horario FROM union_matricula INNER JOIN tb_cursos ON tb_cursos.Codigo_curso = union_matricula.id_curso WHERE id_curso  = ? AND id_empresa = ?",
           [curso, empresa]
         )
       );
@@ -206,7 +206,7 @@ PublicFunctions.CreateSolicitud = async (req, res) => {
 
     ExisteSolicitudPromesa.forEach((element) => {
       if (element[0].Cantidad > 0) {
-        throw "UNO O MÁS PARTICIPANTES YA ESTAN INSCRITOS EN EL CURSO";
+        throw `LA SOLICITUD EN EL CURSO YA EXISTE,  CURSO: ${element[0].Nombre}  HORARIO: ${element[0].Horario}`;
       }
     });
 
@@ -259,11 +259,26 @@ PublicFunctions.CreateSolicitud = async (req, res) => {
       [req.body.programa]
     );
 
+    const CorreoEmpresa = await pool.query(
+      "SELECT email FROM tb_empresa WHERE id_empresa = ?",
+      [empresa]
+    );
+
     cursos.forEach(async (curso) => {
       const data = await pool.query(
         "SELECT Nombre, Horario FROM tb_cursos WHERE Codigo_curso = ? ; SELECT Nombre FROM tb_empresa WHERE id_empresa = ? ",
         [curso, empresa]
       );
+      const htmlEmpresa = `<h1>Muchas gracias por tu solicitud de curso</h1> <br> 
+      <p>Notificación de solicitud: Tu curso ha sido solicitado correctamente, curso : <b>${data[0][0].Nombre}</b> <br>  </p>  
+      <small>Es posible que uno de nuestros colaboradores se ponga en contacto por cualquier situación presentada, a cualquier duda o comentario puede hacerlo respondiendo este correo</small>
+      `;
+      sendEmail(
+        CorreoEmpresa[0].email,
+        `SOLICITUD REALIZADA EN CURSO: ${curso}`,
+        htmlEmpresa
+      );
+
       correos.forEach((element) => {
         const html = `<h1>Notificación automática de sistema Razón: Solicitud de empresa creada en el curso : ${data[0][0].Nombre}</h1> <p> Nombre: ${data[0][0].Nombre} </p>  <p> Horario: ${data[0][0].Horario} </p>   <p> Cantidad de participantes: ${participantes.length}   </p>  <p> Empresa: ${data[1][0].Nombre}  </p>`;
         sendEmail(
@@ -367,20 +382,20 @@ PublicFunctions.archivos = async (req, res) => {
 
       // SUBIR Si existe cancelación
       for (let i = 0; i < CantidadCancelacion[index]; i++) {
-          ext = req.files[`cancelacion${index}${i}`].name.split(".")[1];
-          fileContent = Buffer.from(
-            req.files[`cancelacion${index}${i}`].data,
-            "binary"
-          );
-          promesas.push(
-            upload(
-              fileContent,
-              Date.now(),
-              ext,
-              empresa,
-              `cancelacion${index}${i}`
-            )
-          );
+        ext = req.files[`cancelacion${index}${i}`].name.split(".")[1];
+        fileContent = Buffer.from(
+          req.files[`cancelacion${index}${i}`].data,
+          "binary"
+        );
+        promesas.push(
+          upload(
+            fileContent,
+            Date.now(),
+            ext,
+            empresa,
+            `cancelacion${index}${i}`
+          )
+        );
       }
 
       // SUBIR Archivos de planilla
@@ -416,21 +431,21 @@ PublicFunctions.archivos = async (req, res) => {
             inserts.push(
               pool.query(
                 "INSERT INTO archivo_empresa_curso(s3key, Role, id_empresa, id_curso) VALUES(?,?,?,?) ",
-                [key,`2${i}`, empresa, curso]
+                [key, `2${i}`, empresa, curso]
               )
             );
           }
         }
         for (let i = 0; i < CantidadCancelacion[index]; i++) {
-            if (element.posicion == `cancelacion${index}${i}`) {
-              key = element.key;
-              inserts.push(
-                pool.query(
-                  "INSERT INTO archivo_empresa_curso(s3key, Role, id_empresa, id_curso) VALUES(?,?,?,?) ",
-                  [key, `3${i}`, empresa, curso]
-                )
-              );
-            }
+          if (element.posicion == `cancelacion${index}${i}`) {
+            key = element.key;
+            inserts.push(
+              pool.query(
+                "INSERT INTO archivo_empresa_curso(s3key, Role, id_empresa, id_curso) VALUES(?,?,?,?) ",
+                [key, `3${i}`, empresa, curso]
+              )
+            );
+          }
         }
 
         for (let i = 0; i < CantidadPlanilla[index]; i++) {

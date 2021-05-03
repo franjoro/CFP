@@ -12,7 +12,8 @@ const Directivas = {
             "http://cdnjs.cloudflare.com/ajax/libs/validate.js/0.13.1/validate.min.js",
             "https://cdn.datatables.net/v/bs4/dt-1.10.23/datatables.min.js",
             "https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js",
-            "https://www.googletagmanager.com/gtag/js"
+            "https://www.googletagmanager.com/gtag/js",
+            "https://cdn.quilljs.com/1.3.6/quill.js"
         ],
         connectSrc: ["'self'", "https://api.salud.gob.sv/", "https://www.google-analytics.com/"],
         styleSrc: [
@@ -23,6 +24,8 @@ const Directivas = {
             "https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css",
             "https://cdn.datatables.net/v/bs4/dt-1.10.23/datatables.min.css",
             "https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css",
+            "https://cdn.quilljs.com/1.3.6/quill.snow.css",
+            
         ],
         fontSrc: ["'self'", "fonts.gstatic.com"],
         imgSrc: [

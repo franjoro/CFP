@@ -221,7 +221,6 @@ const GenerarPdf = async (curso) => {
     });
     AlumnosParaEnviar = JSON.stringify(AlumnosParaEnviar);
     firmante = JSON.stringify(global_data_firmante);
-
     let query = await $.ajax({
       url: `/public/ficha/${global_empresa_seleccionada}/${curso} `,
       type: "POST",
@@ -231,10 +230,10 @@ const GenerarPdf = async (curso) => {
       swal.close();
       window.open(`/public/ficha/OpenFile `);
     }
-  } catch (error) {
-    console.log(error);
+  } catch (e) {
+    console.log(e);
     error(
-      "No se pudo realizar la operación, verifica la información o comuniquese con el encargado del programa o soporte "
+      "No se pudo realizar la operación, verifica la información o comuniquese con el encargado del programa o soporte"
     );
   }
 };
@@ -389,7 +388,7 @@ const ReiniciarInputs = () => {
   $("#cursos_files").html("<div></div>");
 };
 const VerificarEmpresa = () => {
-  if( !$("#primerape").val()  || !$("#segunape").val() || !$("#nombres").val()  || !$("#cargof").val()   ){
+  if( !$("#primerape").val()  ||  !$("#nombres").val()  || !$("#cargof").val()   ){
     error("<b>errcode: </b> DEBE RELLENAR LOS CAMPOS DEL FIRMANTE")
   }else{
     AsginarGlobalEmpresa();
