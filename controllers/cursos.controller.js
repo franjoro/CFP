@@ -7,7 +7,12 @@ const cursos = {};
 const pool = require("../models/db");
 const { getUserDataByToken } = require("../middlewares/auth");
 const { sendEmail } = require("../utils/mailer");
-const { upload, getFolderData } = require("../utils/s3");
+const {
+  upload,
+  getFolderData,
+  uploadImageCursos,
+  getHtmlImageFroms3,
+} = require("../utils/s3");
 
 // Renderizar pantalla de cursos ya con programa
 cursos.cursos = async (req, res) => {
@@ -18,14 +23,14 @@ cursos.cursos = async (req, res) => {
     const queries = [];
     queries.push(
       pool.query(
-        "SELECT `tb_cursos`.`Codigo_curso`, `tb_cursos`.`Nombre`, `tb_instructor`.`Nombre` AS instructor, `tb_cursos`.`Orden`, `tb_cursos`.`Agrupacion`, `tb_cursos`.`Estado` FROM `tb_cursos` LEFT JOIN `tb_instructor` ON `tb_cursos`.`id_instructor` = `tb_instructor`.`DUI` WHERE tb_cursos.id_programa = ? AND tb_cursos.Estado != 0  AND tb_cursos.Estado != 5",
+        "SELECT `tb_cursos`.`Codigo_curso`, `tb_cursos`.`Nombre`, `tb_instructor`.`Nombre` AS instructor, `tb_cursos`.`Orden`, `tb_cursos`.`Agrupacion`, `tb_cursos`.`Estado` FROM `tb_cursos` LEFT JOIN `tb_instructor` ON `tb_cursos`.`id_instructor` = `tb_instructor`.`DUI` WHERE tb_cursos.id_programa = ? AND tb_cursos.Estado != 0  AND tb_cursos.Estado != 5  AND tb_cursos.Estado !=15  AND tb_cursos.Estado !=16",
         [programa]
       )
     );
 
     queries.push(
       pool.query(
-        "SELECT CONCAT(Nombre,' - ',Horario) AS Nombre , Codigo_curso, (SELECT COUNT(*) FROM union_matricula WHERE id_curso = tb_cursos.Codigo_curso ) AS cantidadAlumnos , (SELECT COUNT(*) FROM union_curso_empresa WHERE id_curso = tb_cursos.Codigo_curso ) AS cantidadEmpresas FROM tb_cursos WHERE Estado = 5 AND id_programa=?",
+        "SELECT CONCAT(Nombre,' - ',Horario) AS Nombre , Codigo_curso, (SELECT COUNT(*) FROM union_matricula WHERE id_curso = tb_cursos.Codigo_curso ) AS cantidadAlumnos , (SELECT COUNT(*) FROM union_curso_empresa WHERE id_curso = tb_cursos.Codigo_curso ) AS cantidadEmpresas FROM tb_cursos WHERE (Estado = 5 || Estado = 15)  AND id_programa=?",
         [programa]
       )
     );
@@ -427,21 +432,23 @@ cursos.dowloadZip = (req, res) => {
 
 cursos.GestorDeDocumentos = async (req, res) => {
   const usuario = getUserDataByToken(req.cookies.token);
-  if (!req.params.curso || !req.params.empresa || !req.params.programa)
+  const {curso, empresa , programa} = req.params
+
+  if (!curso || !empresa || !programa)
     return res.status(400).json({ status: false, error: "EMPTY_PARAMS" });
 
   const query = await pool.query(
-    "SELECT id, s3key, Role, isEditable  FROM archivo_empresa_curso WHERE id_empresa=? AND id_curso = ? AND Role != 0; SELECT Nombre FROM tb_empresa WHERE id_empresa = ?",
-    [req.params.empresa, req.params.curso, req.params.empresa]
+    "SELECT id, s3key, Role, isEditable  FROM archivo_empresa_curso WHERE id_empresa=? AND id_curso = ? AND Role != 0 ORDER BY Role ASC; SELECT Nombre FROM tb_empresa WHERE id_empresa = ?  ",
+    [empresa, curso, empresa]
   );
-
-
+  const alumnos = await pool.query("SELECT tb_participante.Nombre AS Nombre , tb_participante.DUI AS DUI , tb_participante.Email , tb_participante.ISSS, tb_participante.Cargo FROM tb_participante INNER JOIN union_matricula ON union_matricula.id_participante = tb_participante.DUI WHERE id_curso = ? AND id_empresa = ? " , [curso, empresa])
   return res.render("admin/gestor_documentos", {
     data: usuario.data,
     query,
-    curso: req.params.curso,
-    programa: req.params.programa,
-    empresa: req.params.empresa,
+    curso,
+    programa,
+    empresa,
+    alumnos,
     tipo: req.params.tipo,
   });
 };
@@ -478,7 +485,7 @@ cursos.archivos = async (req, res) => {
     );
     let key = await Promise.all(promesas);
     key = key[0].key;
-    console.log(key)
+    console.log(key);
     await pool.query(
       "INSERT INTO archivo_empresa_curso(s3Key, Role, id_empresa, id_curso, isEditable) VALUES(?,?,?,?,0)",
       [key, archivo, empresa, curso]
@@ -503,7 +510,7 @@ cursos.archivos = async (req, res) => {
     });
     return 0;
   } catch (error) {
-    console.log(error)
+    console.log(error);
     return res.status(400).json({ status: false, error });
   }
 };
@@ -527,10 +534,56 @@ cursos.ArchivoExtra = async (req, res) => {
   }
 };
 
+cursos.NuevoCursoHabil = async (req, res) => {
+  if (!req.files) return res.json({ status: false, error: "FILE_NOT_EXIST" });
+  const {
+    codigo,
+    nombre,
+    inicio,
+    fin,
+    horarios,
+    costo,
+    descripcion,
+    requisitos,
+    mytextarea,
+    programa,
+  } = req.body;
+  // console.log(req.body);
+  const ext = req.files.file.name.split(".")[1];
+  const fileContent = Buffer.from(req.files.file.data, "binary");
+  const queryStatement = `INSERT INTO tb_cursos(Codigo_curso, Nombre,Date_inicio,Date_fin, Horario, CostoAlumno, id_programa, Estado) 
+  VALUES(?,?,?,?,?,?,?,15) `;
+  try {
+    const imageQuery = uploadImageCursos(fileContent, ext, codigo);
+    const queryData = pool.query(queryStatement, [
+      codigo,
+      nombre,
+      inicio,
+      fin,
+      horarios,
+      costo,
+      programa,
+    ]);
+
+    const groupPromise = await Promise.all([imageQuery, queryData]);
+    const { Location } = groupPromise[0];
+
+    if (!Location) throw new Error("ERROR_IMAGE");
+    const detalleCurso = await pool.query(
+      "INSERT INTO tb_habil_cursos(Descripcion, Requisitos, S3keyimage, Modules , Codigo_curso) VALUES(?,?,?,?,?)",
+      [descripcion, requisitos, Location, mytextarea, codigo]
+    );
+    return res.json({ status: true }).status(200);
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ status: false, error });
+  }
+};
+
 cursos.form = async (req, res) => {
   const data = getUserDataByToken(req.cookies.token);
   const { programa } = req.params;
-  res.render("./habil/addoferta.ejs", { data : data.data, programa });
+  res.render("./habil/addoferta.ejs", { data: data.data, programa });
 };
 
 module.exports = cursos;

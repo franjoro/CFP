@@ -54,17 +54,21 @@ router.put("/editOferta" ,authcheck , cursos.editOferta)
 router.delete("/deleteMatricula",authcheck , cursos.deleteMatricula);
 // Elimina la asociacion de una empresa en un curso
 router.delete("/deleteEmpresaInCourse",authcheck ,cursos.deleteEmpresaCurso);
-//Borra las ofertas y cursos
+// Borra las ofertas y cursos
 router.delete("/deleteOffer",authcheck ,cursos.delteCursoOferta);
 
 
 
 
-
+// Editar archivos en gestor de archivos
 const fileUpload = require("express-fileupload");
-router.post("/EnviarFiles" ,authcheck , fileUpload() , cursos.archivos);
-//Subir archivos extra
+router.post("/EnviarFiles" , fileUpload() , cursos.archivos);
+// Subir archivos extra
 router.post("/archivoExtra",authcheck ,fileUpload() , cursos.ArchivoExtra)
+
+
+// Subir oferta de curso para no cotizantes
+router.post("/OfertaNoCotizante", authcheck ,fileUpload() , cursos.NuevoCursoHabil)
 
 // Exportamos la configuración
 module.exports = router;

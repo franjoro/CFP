@@ -8,6 +8,12 @@ const s3 = new AWS.S3({
   apiVersion: "2006-03-01",
 });
 
+const encodeToImage = (data) => {
+  let buf = Buffer.from(data);
+  let base64 = buf.toString("base64");
+  return base64;
+};
+
 s3Functions = {};
 
 s3Functions.upload = (file, identifier, ext, empresa, posicion) =>
@@ -23,6 +29,31 @@ s3Functions.upload = (file, identifier, ext, empresa, posicion) =>
       }
     });
     return status;
+  });
+
+s3Functions.uploadImageCursos = (file, ext, curso) =>
+  new Promise((resolve, reject) => {
+    const uploadParams = { Bucket: process.env.BUCKET, Key: "", Body: file };
+    uploadParams.Key = `app/cursos/${curso}/portada.${ext}`;
+    let status = s3.upload(uploadParams, (err, data) => {
+      if (err) {
+        reject(err);
+      }
+      if (data) {
+        return resolve(data);
+      }
+    });
+    return status;
+  });
+
+s3Functions.getHtmlImageFroms3 = (Key) =>
+  new Promise(async (resolve, reject) => {
+      const uploadParams = {Bucket: process.env.BUCKET,Key};
+      s3.getObject(uploadParams, (err, data) => {
+        if (err) throw err;
+        let image=`<img src='data:image/jpeg;base64,${encodeToImage(data.Body)}'/>`;
+        resolve(image)
+        });
   });
 
 s3Functions.getFiles = (Key) =>
