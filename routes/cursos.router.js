@@ -18,8 +18,15 @@ router.post("/savezip",authcheck , cursos.getAtZipAllFiles);
 router.get("/archivo",authcheck , cursos.dowloadZip);
 //actualizar permisos de edición
 router.put("/UpdatePermisos",authcheck , cursos.UpdatePermisos)
+//actualizar permisos de edición
+router.delete("/deleteFiles3", authcheck , cursos.deleteFiles3)
 
 
+
+// Generar ZIP de todos los documentos de un curso 
+router.post("/saveZipCurso", authcheck , cursos.getZipCurso);
+//Descargar zip de archivos
+router.get("/archivoZipCurso",authcheck , cursos.dowloadZipCurso); 
 
 
 // Muestra todos los cursos de una categoria en la variable id

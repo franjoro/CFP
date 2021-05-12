@@ -4,7 +4,12 @@
   type="text/css" />
 <%- include('../partials/header.admin.ejs'); %>
   <div class="container-fluid">
-
+    <style>
+      .active {
+        background: rgb(91 126 204);
+        color: white
+      }
+    </style>
 
 
 
@@ -44,10 +49,11 @@
                   <table class="table table-bordered">
                     <thead>
                       <tr>
-                        <th>Tipo de archivo</th>
+                        <th>Nombre del archivo</th>
                         <th>Descargar</th>
                         <th>Sustituir</th>
                         <th>Visualizar</th>
+                        <th>Eliminar</th>
                         <th>¿Permitir edición a la empresa? <i style="cursor: pointer;" data-toggle="tooltip"
                             title="Permitir edición por terceros habilita a las empresas a poder sustituir este documento"
                             class="fas fa-info-circle"></i></th>
@@ -62,23 +68,30 @@
                             {archivo = "Planilla ISSS"}
                             element.isEditable == 1 ? checked1 = "checked" : checked2 = "checked";
                             %>
-                            <tr>
+                            <tr id="<%= element.id %>">
                               <td>
                                 <%= archivo %>
                               </td>
                               <td>
-                                <button class="btn btn-success btn-sm" onclick="DowloadS3File('<%=element.s3key %>')">
+                                <button class="btn btn-success btn-block"
+                                  onclick="DowloadS3File('<%=element.s3key %>' , '<%= archivo %>')">
                                   <i class="fas fa-cloud-download-alt"></i>
                                 </button>
                               <td>
-                                <button class="btn btn-info btn-sm"
+                                <button class="btn btn-info btn-block"
                                   onclick="SustituirArchivo('<%=curso %>','<%=empresa %>', '<%=element.id %>', '<%=element.Role %>')">
                                   <i class="fas fa-file-signature"></i>
                                 </button>
                               </td>
                               <td>
-                                <button class="btn btn-secondary btn-sm" onclick="SeeS3File('<%=element.s3key %>')">
+                                <button class="btn btn-primary btn-block"
+                                  onclick="SeeS3File('<%=element.s3key %>', '<%= element.id%>')">
                                   <i class="fas fa-eye"></i>
+                                </button>
+                              </td>
+                              <td>
+                                <button class="btn btn-danger btn-block" onclick="deleteS3('<%=element.s3key %>')">
+                                  <i class="fas fa-trash"></i>
                                 </button>
                               </td>
                               <td>

@@ -48,17 +48,42 @@ const createZip = async (curso, empresa) => {
 
 const deleteS3 = (id) => {
   Swal.fire({
-    title: "¿Eliminar este archivo?",
-    html: "Esto habilitara la edición del archivo para la empresa",
+    html:
+      "<h4>¿Desea borrar permanentemente este archivo?</h4> <small>Escriba <b>Eliminar</b> para confirmar, esta acción no podra revertirse</small>",
+    input: "text",
+    inputAttributes: {
+      autocapitalize: "off",
+    },
     showCancelButton: true,
+    confirmButtonText: "Eliminar",
+    showLoaderOnConfirm: true,
+    preConfirm: (text) => {
+      if (text == "eliminar" || text == "Eliminar") {
+        return $.ajax({ url: '/admin/cursos/deleteFiles3' , type:"DELETE" , data:{key:id}  })
+          .then(response => {
+            if (!response.status) {
+              throw new Error(response.statusText)
+            }
+            return response;
+          })
+          .catch(error => {
+            Swal.showValidationMessage(
+              `Request failed: ${error}`
+            )
+          })
+      }
+      Swal.showValidationMessage(`Debe escribir correctamente eliminar`);
+    },
+    allowOutsideClick: () => !Swal.isLoading(),
   }).then((result) => {
-    if (result.isConfirmed) {
-      Swal.fire("Saved!", "", "success");
+    console.log(result);
+    if (result.value.status) {
+      location.reload();
     }
   });
 };
 
-const DowloadS3File = async (key) => {
+const DowloadS3File = async (key, name) => {
   try {
     loaderFile();
     const query = await $.ajax({
@@ -66,14 +91,16 @@ const DowloadS3File = async (key) => {
       type: "POST",
       data: { key },
     });
+    console.log(query);
     if (query.status) {
-      window.open(`/public/archivo/${query.ext}`);
+      window.open(`/public/archivo/${query.ext}?Name=${name}`);
       Swal.close();
     }
   } catch (error) {}
 };
 
-const SeeS3File = async (key) => {
+let globalTrSeleccionado = null;
+const SeeS3File = async (key, id) => {
   try {
     loaderFile();
     const query = await $.ajax({
@@ -83,12 +110,19 @@ const SeeS3File = async (key) => {
     });
     if (query.status) {
       console.log(query);
-      const html = ` <iframe src="https://cfp.ricaldone.edu.sv/public/seefile/${query.ext}?date=${Date.now()}" width="100%" height="100%"></iframe>`;
+      const html = ` <iframe src="https://cfp.ricaldone.edu.sv/public/seefile/${
+        query.ext
+      }?date=${Date.now()}" width="100%" height="100%"></iframe>`;
       // const html = ` <iframe src="http://localhost:8081/public/seefile/${query.ext}?date=${Date.now()}" width="100%" height="100%"></iframe>`;
       $("#framediv").css("height", "1200px");
       $("#framediv").html(html);
-      // $("#viewer").modal("show")
+      $('html, body').animate({
+        scrollTop: $("#framediv").offset().top
+      }, 500);      
       Swal.close();
+      $(`#${globalTrSeleccionado}`).removeClass("active");
+      $(`#${id}`).addClass("active")
+      globalTrSeleccionado = id;
     }
   } catch (error) {}
 };

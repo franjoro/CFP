@@ -451,3 +451,21 @@ const ReporteAlumnos = async (id) => {
     errorMessage();
   }
 };
+
+const createZipCurso = async (curso) => {
+  try {
+    loader();
+    const create = await $.ajax({
+      url: "/admin/cursos/saveZipCurso",
+      type: "POST",
+      data: { curso },
+    });
+    if (create.status) {
+      window.open(`/admin/cursos/archivoZipCurso`);
+      Swal.close();
+    }
+  } catch (error) {
+    console.log(error);
+    errorMessage();
+  }
+};

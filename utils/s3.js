@@ -31,6 +31,19 @@ s3Functions.upload = (file, identifier, ext, empresa, posicion) =>
     return status;
   });
 
+s3Functions.deleteObject = (Key) =>
+  new Promise((resolve, reject) => {
+    const uploadParams = { Bucket: process.env.BUCKET, Key };
+    s3.deleteObject(uploadParams, function (err, data) {
+      if (err) {
+        console.log(err);
+        reject(err);
+      }
+      console.log(data);
+      resolve(data);
+    });
+  });
+
 s3Functions.uploadImageCursos = (file, ext, curso) =>
   new Promise((resolve, reject) => {
     const uploadParams = { Bucket: process.env.BUCKET, Key: "", Body: file };
@@ -48,12 +61,14 @@ s3Functions.uploadImageCursos = (file, ext, curso) =>
 
 s3Functions.getHtmlImageFroms3 = (Key) =>
   new Promise(async (resolve, reject) => {
-      const uploadParams = {Bucket: process.env.BUCKET,Key};
-      s3.getObject(uploadParams, (err, data) => {
-        if (err) throw err;
-        let image=`<img src='data:image/jpeg;base64,${encodeToImage(data.Body)}'/>`;
-        resolve(image)
-        });
+    const uploadParams = { Bucket: process.env.BUCKET, Key };
+    s3.getObject(uploadParams, (err, data) => {
+      if (err) throw err;
+      let image = `<img src='data:image/jpeg;base64,${encodeToImage(
+        data.Body
+      )}'/>`;
+      resolve(image);
+    });
   });
 
 s3Functions.getFiles = (Key) =>
@@ -78,7 +93,9 @@ s3Functions.getFiles = (Key) =>
     }
   });
 
-s3Functions.getFolderData = async (folder, keys) => {
+const AdmZip = require("adm-zip");
+
+s3Functions.getFolderData = async (folder, keys, Role) => {
   return new Promise(async (resolve, reject) => {
     const fs = require("fs");
     const join = require("path").join;
@@ -88,7 +105,76 @@ s3Functions.getFolderData = async (folder, keys) => {
       .archive({ s3, bucket: process.env.BUCKET }, folder, keys)
       .pipe(output)
       .on("finish", () => {
-        console.log("Zip created");
+        const zip = new AdmZip(output.path);
+        const zipEntries = zip.getEntries();
+        const newZip = new AdmZip();
+        zipEntries.forEach(function (zipEntry, i) {
+          let ext = keys[i].split(".");
+          let archivo = `${i + 1}_Archivo_extra`;
+          if (Role[i] == 1) {
+            archivo = `${i + 1}_Solicitud_capacitacion`;
+          }
+          if (Role[i] >= 20 && Role[i] < 30) {
+            archivo = `${i + 1}_Recibo_aportacion`;
+          }
+          if (Role[i] >= 30 && Role[i] < 40) {
+            archivo = `${i + 1}_Comprobante_pago_linea`;
+          }
+          if (Role[i] >= 40) {
+            archivo = `${i + 1}_Planilla_ISSS`;
+          }
+          var newFileName = `${archivo}.${ext[1]}`;
+          newZip.addFile(newFileName, zipEntry.getData());
+        });
+
+        newZip.writeZip(output.path);
+        resolve(true);
+      })
+      .on("error", (err) => {
+        reject({ message: `Something went wrong ${err.message}` });
+      });
+  });
+};
+
+s3Functions.getFolderDataCurso = async (folder, keys, Role, empresas) => {
+  return new Promise(async (resolve, reject) => {
+    const fs = require("fs");
+    const join = require("path").join;
+    const s3Zip = require("s3-zip");
+    const output = fs.createWriteStream(
+      join(__dirname, "archivos_de_curso.zip")
+    );
+    s3Zip
+      .archive({ s3, bucket: process.env.BUCKET }, folder, keys)
+      .pipe(output)
+      .on("finish", () => {
+        const zip = new AdmZip(output.path);
+        const zipEntries = zip.getEntries();
+        const newZip = new AdmZip();
+
+        // empresasforEach((empresa, id) => {
+          zipEntries.forEach(function (zipEntry, i) {
+            console.log(empresa)
+            // let ext = keys[i].split(".");
+            // let archivo = `${i + 1}_Archivo_extra`;
+            // if (Role[i] == 1) {
+            //   archivo = `${i + 1}_Solicitud_capacitacion`;
+            // }
+            // if (Role[i] >= 20 && Role[i] < 30) {
+            //   archivo = `${i + 1}_Recibo_aportacion`;
+            // }
+            // if (Role[i] >= 30 && Role[i] < 40) {
+            //   archivo = `${i + 1}_Comprobante_pago_linea`;
+            // }
+            // if (Role[i] >= 40) {
+            //   archivo = `${i + 1}_Planilla_ISSS`;
+            // }
+            // var newFileName = `${archivo}.${ext[1]}`;
+            // newZip.addFile(newFileName, zipEntry.getData());
+          });
+        // });
+        
+        newZip.writeZip(output.path);
         resolve(true);
       })
       .on("error", (err) => {

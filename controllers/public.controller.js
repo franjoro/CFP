@@ -489,9 +489,10 @@ PublicFunctions.AbrirFile = (req, res) => {
 };
 
 PublicFunctions.archivo = (req, res) => {
+  const {Name}  = req.query;
   const path = `./public/files/tmp/tmpfile.${req.params.file}`;
   res.contentType("application/pdf");
-  res.download(path, `archivo.${req.params.file}`);
+  res.download(path, `${Name}.${req.params.file}`);
 };
 
 PublicFunctions.SeeFile = (req, res) => {

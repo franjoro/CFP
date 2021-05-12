@@ -12,6 +12,7 @@ const {
   getFolderData,
   uploadImageCursos,
   getHtmlImageFroms3,
+  deleteObject
 } = require("../utils/s3");
 
 // Renderizar pantalla de cursos ya con programa
@@ -408,31 +409,71 @@ cursos.deleteMatricula = async (req, res) => {
 
 cursos.getAtZipAllFiles = async (req, res) => {
   const query = await pool.query(
-    "SELECT  s3key  FROM archivo_empresa_curso WHERE id_empresa=? AND id_curso = ?",
+    "SELECT  s3key, Role  FROM archivo_empresa_curso WHERE id_empresa=? AND id_curso = ? AND Role != 0",
     [req.body.empresa, req.body.curso]
   );
   const keys = [];
+  const Role = [];
   query.forEach((element) => {
     keys.push(element.s3key);
+    Role.push(element.Role);
   });
+
   if (!keys)
     return res.status(400).json({ status: false, error: "PARAMS_NOT_VALID" });
   try {
-    await getFolderData(``, keys);
+    await getFolderData(``, keys, Role);
     return res.status(200).json({ status: true });
   } catch (error) {
     console.log(error);
     return res.status(400).json({ status: false });
   }
 };
+
+
+cursos.getZipCurso = async (req, res) => {
+  const {curso} = req.body;
+
+  const queryS3Keys =  pool.query(
+    "SELECT  s3key, Role  FROM archivo_empresa_curso WHERE  id_curso = ? AND Role != 0",
+    [curso]
+  );
+
+  // const 
+
+  const keys = [];
+  const Role = [];
+  query.forEach((element) => {
+    keys.push(element.s3key);
+    Role.push(element.Role);
+  });
+
+  if (!keys)
+    return res.status(400).json({ status: false, error: "PARAMS_NOT_VALID" });
+  try {
+    // await getFolderDataCurso(``, keys, Role);
+    return res.status(200).json({ status: true });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ status: false });
+  }
+};
+
 cursos.dowloadZip = (req, res) => {
   res.contentType("application/zip");
   res.sendFile("/utils/archivos.zip", { root: "./" });
 };
 
+cursos.dowloadZipCurso = (req, res) => {
+  res.contentType("application/zip");
+  res.sendFile("/utils/archivosCurso.zip", { root: "./" });
+};
+
+
+
 cursos.GestorDeDocumentos = async (req, res) => {
   const usuario = getUserDataByToken(req.cookies.token);
-  const {curso, empresa , programa} = req.params
+  const { curso, empresa, programa } = req.params
 
   if (!curso || !empresa || !programa)
     return res.status(400).json({ status: false, error: "EMPTY_PARAMS" });
@@ -441,7 +482,7 @@ cursos.GestorDeDocumentos = async (req, res) => {
     "SELECT id, s3key, Role, isEditable  FROM archivo_empresa_curso WHERE id_empresa=? AND id_curso = ? AND Role != 0 ORDER BY Role ASC; SELECT Nombre FROM tb_empresa WHERE id_empresa = ?  ",
     [empresa, curso, empresa]
   );
-  const alumnos = await pool.query("SELECT tb_participante.Nombre AS Nombre , tb_participante.DUI AS DUI , tb_participante.Email , tb_participante.ISSS, tb_participante.Cargo FROM tb_participante INNER JOIN union_matricula ON union_matricula.id_participante = tb_participante.DUI WHERE id_curso = ? AND id_empresa = ? " , [curso, empresa])
+  const alumnos = await pool.query("SELECT tb_participante.Nombre AS Nombre , tb_participante.DUI AS DUI , tb_participante.Email , tb_participante.ISSS, tb_participante.Cargo FROM tb_participante INNER JOIN union_matricula ON union_matricula.id_participante = tb_participante.DUI WHERE id_curso = ? AND id_empresa = ? ", [curso, empresa])
   return res.render("admin/gestor_documentos", {
     data: usuario.data,
     query,
@@ -585,5 +626,20 @@ cursos.form = async (req, res) => {
   const { programa } = req.params;
   res.render("./habil/addoferta.ejs", { data: data.data, programa });
 };
+
+
+cursos.deleteFiles3 = async (req, res) => {
+  const { key } = req.body;
+  try {
+    const deleteStatus = deleteObject(key);
+    const deleteSql = pool.query("DELETE FROM archivo_empresa_curso WHERE s3key = ? ", [key]);
+    const promisesStatus = await Promise.all([deleteStatus, deleteSql]);
+    res.json({ status: true, promisesStatus }).status(200);
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ status: false, error });
+  }
+};
+
 
 module.exports = cursos;
