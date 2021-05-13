@@ -358,6 +358,28 @@ $("#updateCommentBtn").click(() => {
   }
 });
 
+const ChangeComment = (comment) =>{
+  $("#comentarios").val(comment);
+}
+
+$("#commentCompleto").click( ()=>{
+  ChangeComment("Revisión completada")
+} )
+
+$("#commentRecibo").click( ()=>{
+  ChangeComment("Pendiente entrega de recibo")
+} )
+
+$("#commentCancelacion").click( ()=>{
+  ChangeComment("Pendiente entrega de cancelación")
+} )
+
+$("#commentPlanilla").click( ()=>{
+  ChangeComment("Pendiente entrega de planilla")
+} )
+
+
+
 $(document).ready(function () {
   let commentJson = localStorage.getItem("commentJson");
   const curso = $("#curso").val();

@@ -254,7 +254,7 @@ $(document).ready(() => {
     e.preventDefault();
     const t = $(this).serialize();
     loader();
-    const curso = $("#curso").text().trim();
+    const curso = $("#curso").val();
     const dui_existente = $("#dui").val();
     const empresa = global_empresa;
     try {
@@ -469,6 +469,7 @@ const createZipCurso = async (curso) => {
     errorMessage();
   }
 };
+
 
 $(document).ready(function () {
   let commentJson = localStorage.getItem("commentJson");

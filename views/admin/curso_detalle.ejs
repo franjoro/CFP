@@ -105,13 +105,13 @@
                     </h5>
                     <a class="btn  btn-info m-1"
                       href="/admin/cursos/documentos/<%=curso.Codigo_curso%>/<%= element.id %>/<%= programa %>/<%= tipo %>"><i
-                        class="fas fa-file-alt"></i></a>
+                        class="fas fa-file-alt"></i> Documentos</a>
                     <button class="btn  btn-danger m-1"
                       onclick="desasociarEmpresa('<%= element.id %>', '<%= curso.Codigo_curso %>')"> <i
-                        class="fas fa-trash-alt"></i></button>
+                        class="fas fa-trash-alt"></i>   Desasociar Empresa</button>
                     <button class="btn  btn-success m-1"
                       onclick="MigrarAll('<%= element.id %>', '<%= curso.Codigo_curso %>' , '<%= programa %>')"><i
-                        class="fas fa-exchange-alt"></i></button> <hr>
+                        class="fas fa-exchange-alt"></i> Migrar solicitud</button> <hr>
                         <small>Cantidad de participantes :<%= element.Alumnos.length %></small>
                         <hr>
                         <small id="comment<%= element.id%>"></small>
