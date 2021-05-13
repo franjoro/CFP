@@ -10,9 +10,6 @@
         color: white
       }
     </style>
-
-
-
     <div class="row container-fluid">
       <div class="col-md-12">
         <div class="card shadow mb-4">
@@ -110,7 +107,13 @@
                             <% }) %>
                     </tbody>
                   </table>
-
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <label>Comentarios del coordinador:</label>
+                    <textarea name="comentarios" class="form-control" id="comentarios" cols="30" rows="3"></textarea>
+                    <button class="btn btn-primary float-right btn-sm mt-2" id="updateCommentBtn">Actualizar comentarios</button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -178,6 +181,10 @@
         </div>
       </div>
     </div>
+
+    <input type="hidden" id="curso" value="<%= curso %>">
+    <input type="hidden" id="empresa" value="<%= empresa %>">
+
 
     <div class="modal fade" id="modal_compartir" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
       aria-hidden="true">

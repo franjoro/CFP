@@ -59,18 +59,20 @@ const deleteS3 = (id) => {
     showLoaderOnConfirm: true,
     preConfirm: (text) => {
       if (text == "eliminar" || text == "Eliminar") {
-        return $.ajax({ url: '/admin/cursos/deleteFiles3' , type:"DELETE" , data:{key:id}  })
-          .then(response => {
+        return $.ajax({
+          url: "/admin/cursos/deleteFiles3",
+          type: "DELETE",
+          data: { key: id },
+        })
+          .then((response) => {
             if (!response.status) {
-              throw new Error(response.statusText)
+              throw new Error(response.statusText);
             }
             return response;
           })
-          .catch(error => {
-            Swal.showValidationMessage(
-              `Request failed: ${error}`
-            )
-          })
+          .catch((error) => {
+            Swal.showValidationMessage(`Request failed: ${error}`);
+          });
       }
       Swal.showValidationMessage(`Debe escribir correctamente eliminar`);
     },
@@ -116,12 +118,15 @@ const SeeS3File = async (key, id) => {
       // const html = ` <iframe src="http://localhost:8081/public/seefile/${query.ext}?date=${Date.now()}" width="100%" height="100%"></iframe>`;
       $("#framediv").css("height", "1200px");
       $("#framediv").html(html);
-      $('html, body').animate({
-        scrollTop: $("#framediv").offset().top
-      }, 500);      
+      $("html, body").animate(
+        {
+          scrollTop: $("#framediv").offset().top,
+        },
+        500
+      );
       Swal.close();
       $(`#${globalTrSeleccionado}`).removeClass("active");
-      $(`#${id}`).addClass("active")
+      $(`#${id}`).addClass("active");
       globalTrSeleccionado = id;
     }
   } catch (error) {}
@@ -279,5 +284,91 @@ $("#btnCopy").click(() => {
     });
   } catch (err) {
     console.log("Oops, unable to copy");
+  }
+});
+
+$("#updateCommentBtn").click(() => {
+  const Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 2000,
+    timerProgressBar: true,
+  });
+  const comentario = $("#comentarios").val();
+  const curso = $("#curso").val();
+  const empresa = $("#empresa").val();
+  let commentJson = localStorage.getItem("commentJson");
+
+  //Si no existe se crea el comment
+  if (commentJson == null) {
+    let comments = {};
+    let empresaarr = [];
+    let obj = {};
+    obj[empresa] = comentario;
+    empresaarr.push(obj);
+    comments[curso] = empresaarr;
+    localStorage.setItem("commentJson", JSON.stringify(comments));
+    Toast.fire({
+      icon: "success",
+      title: "Comentario agregado",
+    });
+  } else {
+    // Si existe
+    commentJson = JSON.parse(commentJson);
+    //Si ya existe el curso
+    if (commentJson[curso]) {
+      commentJson[curso].forEach((element, i) => {
+        if (element[empresa]) {
+          let obj = {};
+          obj[empresa] = comentario;
+          commentJson[curso][i] = obj;
+          Toast.fire({
+            icon: "success",
+            title: "Comentario agregado",
+          });
+          return
+        } else {
+          let obj = {};
+          obj[empresa] = comentario;
+          commentJson[curso].push(obj);
+          Toast.fire({
+            icon: "success",
+            title: "Comentario agregado",
+          });
+          return
+        }
+      });
+      localStorage.setItem("commentJson", JSON.stringify(commentJson));
+      // Si no existe el curso
+    } else {
+
+      let comments = {};
+      let empresaarr = [];
+      let obj = {};
+      obj[empresa] = comentario;
+      empresaarr.push(obj);
+      commentJson[curso] = empresaarr;
+      localStorage.setItem("commentJson", JSON.stringify(commentJson));
+      Toast.fire({
+        icon: "success",
+        title: "Comentario agregado",
+      });
+    }
+  }
+});
+
+$(document).ready(function () {
+  let commentJson = localStorage.getItem("commentJson");
+  const curso = $("#curso").val();
+  const empresa = $("#empresa").val();
+  if (commentJson != null) {
+    commentJson = JSON.parse(commentJson);
+    commentJson[curso].forEach((element, i) => { 
+      if (element[empresa]) { 
+        $("#comentarios").val(element[empresa]);
+        return
+      }
+    });
   }
 });

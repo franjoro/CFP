@@ -113,6 +113,8 @@
                       onclick="MigrarAll('<%= element.id %>', '<%= curso.Codigo_curso %>' , '<%= programa %>')"><i
                         class="fas fa-exchange-alt"></i></button> <hr>
                         <small>Cantidad de participantes :<%= element.Alumnos.length %></small>
+                        <hr>
+                        <small id="comment<%= element.id%>"></small>
                   </div>
                 </div>
               </div>
@@ -207,7 +209,7 @@
       </div>
     </div>
   </div>
-
+<input type="hidden" name="curso" id="curso" value="<%=curso.Codigo_curso%>">
   <% if(tipo=='oferta' ) { %>
         <!-- Modal Insertar curso en base a oferta -->
         <div class="modal fade" id="insertar_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"

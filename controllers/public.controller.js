@@ -136,12 +136,13 @@ PublicFunctions.main = async (req, res) => {
 };
 
 PublicFunctions.getEmpresas = async (req, res) => {
-  const PostData = req.body.searchTerm;
+  const { searchTerm } = req.body;
   let query;
-  if (PostData) {
-    query = `SELECT id_empresa AS id, Nombre AS text  FROM tb_empresa WHERE Nombre like '%${PostData}%' order By Nombre LIMIT 5`;
+  if (searchTerm) {
+    query = `SELECT id_empresa AS id, Nombre AS text  FROM tb_empresa WHERE Nombre like '%${searchTerm}%' order By Nombre LIMIT 5`;
+  } else {
+    query = `SELECT id_empresa AS id, Nombre AS text FROM tb_empresa order By Nombre LIMIT 5`;
   }
-  query = `SELECT id_empresa AS id, Nombre AS text FROM tb_empresa order By Nombre LIMIT 5`;
   try {
     const data = await pool.query(query);
     return res.json({ results: data });
@@ -489,7 +490,7 @@ PublicFunctions.AbrirFile = (req, res) => {
 };
 
 PublicFunctions.archivo = (req, res) => {
-  const {Name}  = req.query;
+  const { Name } = req.query;
   const path = `./public/files/tmp/tmpfile.${req.params.file}`;
   res.contentType("application/pdf");
   res.download(path, `${Name}.${req.params.file}`);
