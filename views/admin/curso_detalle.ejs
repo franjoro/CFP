@@ -114,7 +114,7 @@
                         class="fas fa-exchange-alt"></i> Migrar solicitud</button> <hr>
                         <small>Cantidad de participantes :<%= element.Alumnos.length %></small>
                         <hr>
-                        <small id="comment<%= element.id%>"></small>
+                        <small class="comment<%= element.id%>"></small>
                   </div>
                 </div>
               </div>
@@ -164,7 +164,7 @@
                                     class="btn btn-sm btn-warning"><i class="fas fa-exchange-alt"></i></button>
                                   <% } %>
                                     <button
-                                      onclick="quitarMatricula( '<%= alumno.DUI %>', '<%= curso.Codigo_curso  %>' )"
+                                      onclick="quitarMatricula('<%= alumno.id_matricula %>')"
                                       class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
                               </td>
                             </tr>

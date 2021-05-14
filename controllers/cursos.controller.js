@@ -12,7 +12,7 @@ const {
   getFolderData,
   uploadImageCursos,
   getHtmlImageFroms3,
-  deleteObject
+  deleteObject,
 } = require("../utils/s3");
 
 // Renderizar pantalla de cursos ya con programa
@@ -90,7 +90,7 @@ cursos.curso_detalle = async (req, res) => {
     if (tipo === "oferta") {
       typeQuery = `SELECT CONCAT(Nombre,' - ',Horario) AS Nombre , Codigo_curso  , Date_inicio , Horario, Fechas, Nombre AS CursoName , CostoAlumno AS costo FROM tb_cursos WHERE Codigo_curso  = ?`;
     }
-    const statment = `SELECT tb_empresa.Nombre,tb_empresa.id_empresa AS codigo_empresa FROM tb_empresa INNER JOIN union_curso_empresa ON tb_empresa.id_empresa = union_curso_empresa.id_empresa WHERE union_curso_empresa.id_curso = ? ;SELECT tb_participante.DUI, tb_participante.Nombre, tb_participante.Telefono, tb_participante.Email, union_matricula.id_empresa FROM tb_participante  INNER JOIN union_matricula ON union_matricula.id_participante = tb_participante.DUI WHERE union_matricula.id_curso = ? ; ${typeQuery}`;
+    const statment = `SELECT tb_empresa.Nombre,tb_empresa.id_empresa AS codigo_empresa FROM tb_empresa INNER JOIN union_curso_empresa ON tb_empresa.id_empresa = union_curso_empresa.id_empresa WHERE union_curso_empresa.id_curso = ? GROUP BY tb_empresa.id_empresa ;SELECT tb_participante.DUI, tb_participante.Nombre, tb_participante.Telefono, tb_participante.Email, union_matricula.id_empresa , union_matricula.id_matricula FROM tb_participante  INNER JOIN union_matricula ON union_matricula.id_participante = tb_participante.DUI WHERE union_matricula.id_curso = ? ; ${typeQuery}`;
 
     const empresas = await pool.query(statment, [curso, curso, curso]);
     // Formatear la informacion para que existan los alumnos adentro de un objeto de empresas
@@ -106,6 +106,7 @@ cursos.curso_detalle = async (req, res) => {
         id: element.codigo_empresa,
         Empresa: element.Nombre,
         Alumnos: AlumnosArray,
+        id_matricula : element.id_union
       };
       i += 1;
     });
@@ -391,16 +392,17 @@ cursos.MigrarTodo = async (req, res) => {
 };
 
 cursos.deleteMatricula = async (req, res) => {
-  if (!(req.body.participante || req.body.curso))
+  const { id } = req.body;
+
+  if (!id)
     return res.status(400).json({ status: false, error: "VALUES_NOT_EXIST" });
 
-  const data = [req.body.participante, req.body.curso];
   try {
     const query = await pool.query(
-      " DELETE FROM union_matricula WHERE id_participante=? AND id_curso = ? ",
-      data
+      " DELETE FROM union_matricula WHERE id_matricula= ?  ",
+      [id]
     );
-    return res.status(200).json({ status: true, query, data });
+    return res.status(200).json({ status: true, query });
   } catch (error) {
     console.log(error);
     return res.status(400).json({ status: false, error });
@@ -430,16 +432,15 @@ cursos.getAtZipAllFiles = async (req, res) => {
   }
 };
 
-
 cursos.getZipCurso = async (req, res) => {
-  const {curso} = req.body;
+  const { curso } = req.body;
 
-  const queryS3Keys =  pool.query(
+  const queryS3Keys = pool.query(
     "SELECT  s3key, Role  FROM archivo_empresa_curso WHERE  id_curso = ? AND Role != 0",
     [curso]
   );
 
-  // const 
+  // const
 
   const keys = [];
   const Role = [];
@@ -469,11 +470,9 @@ cursos.dowloadZipCurso = (req, res) => {
   res.sendFile("/utils/archivosCurso.zip", { root: "./" });
 };
 
-
-
 cursos.GestorDeDocumentos = async (req, res) => {
   const usuario = getUserDataByToken(req.cookies.token);
-  const { curso, empresa, programa } = req.params
+  const { curso, empresa, programa } = req.params;
 
   if (!curso || !empresa || !programa)
     return res.status(400).json({ status: false, error: "EMPTY_PARAMS" });
@@ -482,7 +481,10 @@ cursos.GestorDeDocumentos = async (req, res) => {
     "SELECT id, s3key, Role, isEditable  FROM archivo_empresa_curso WHERE id_empresa=? AND id_curso = ? AND Role != 0 ORDER BY Role ASC; SELECT Nombre FROM tb_empresa WHERE id_empresa = ?  ",
     [empresa, curso, empresa]
   );
-  const alumnos = await pool.query("SELECT tb_participante.Nombre AS Nombre , tb_participante.DUI AS DUI , tb_participante.Email , tb_participante.ISSS, tb_participante.Cargo FROM tb_participante INNER JOIN union_matricula ON union_matricula.id_participante = tb_participante.DUI WHERE id_curso = ? AND id_empresa = ? ", [curso, empresa])
+  const alumnos = await pool.query(
+    "SELECT tb_participante.Nombre AS Nombre , tb_participante.DUI AS DUI , tb_participante.Email , tb_participante.ISSS, tb_participante.Cargo FROM tb_participante INNER JOIN union_matricula ON union_matricula.id_participante = tb_participante.DUI WHERE id_curso = ? AND id_empresa = ? ",
+    [curso, empresa]
+  );
   return res.render("admin/gestor_documentos", {
     data: usuario.data,
     query,
@@ -627,12 +629,14 @@ cursos.form = async (req, res) => {
   res.render("./habil/addoferta.ejs", { data: data.data, programa });
 };
 
-
 cursos.deleteFiles3 = async (req, res) => {
   const { key } = req.body;
   try {
     const deleteStatus = deleteObject(key);
-    const deleteSql = pool.query("DELETE FROM archivo_empresa_curso WHERE s3key = ? ", [key]);
+    const deleteSql = pool.query(
+      "DELETE FROM archivo_empresa_curso WHERE s3key = ? ",
+      [key]
+    );
     const promisesStatus = await Promise.all([deleteStatus, deleteSql]);
     res.json({ status: true, promisesStatus }).status(200);
   } catch (error) {
@@ -640,6 +644,5 @@ cursos.deleteFiles3 = async (req, res) => {
     return res.status(400).json({ status: false, error });
   }
 };
-
 
 module.exports = cursos;

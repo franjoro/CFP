@@ -152,7 +152,7 @@ $(document).ready(() => {
     }
   };
 
-  quitarMatricula = async (participante, curso) => {
+  quitarMatricula = async (id) => {
     const alerta = await Swal.fire({
       title: "¿Borrar participación en este curso?",
       text: "Se eliminara a este participante del curso",
@@ -169,7 +169,7 @@ $(document).ready(() => {
         const data = await $.ajax({
           url: "/admin/cursos/deleteMatricula",
           type: "DELETE",
-          data: { participante, curso },
+          data: { id },
         });
         console.log(data);
         swal.close();
@@ -477,7 +477,7 @@ $(document).ready(function () {
   if (commentJson != null) {
     commentJson = JSON.parse(commentJson);
     commentJson[curso].forEach((element, i) => { 
-      $(`#comment${Object.keys(element)[0]}`).text(Object.values(element));
+      $(`.comment${Object.keys(element)[0]}`).text(Object.values(element));
     });
   }
 });
