@@ -19,12 +19,6 @@ const loader = () => {
 };
 
 let global_empresa, global_curso;
-const OpenFiles = (curso, empresa) => {
-  $("#modal_files").modal("show");
-  global_empresa = empresa;
-  global_curso = curso;
-  $("#susempresa").text($("#NameEmpresa").text());
-};
 
 $(document).ready(() => {
   $("#dui").mask("00000000-0");

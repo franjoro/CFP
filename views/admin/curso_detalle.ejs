@@ -97,10 +97,10 @@
           <div class="card-body row">
             <% datos.forEach( (element)=> { %>
 
-              <div class="col-md-3">
+              <div class="col-md-3" id="<%= element.id %>">
                 <div class="card shadow mb-3">
                   <div class="card-body">
-                    <h5 id="NameEmpresa">
+                    <h5 >
                       <%= element.Empresa %>
                     </h5>
                     <a class="btn  btn-info m-1"

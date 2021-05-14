@@ -125,8 +125,8 @@ const SeeS3File = async (key, id) => {
         500
       );
       Swal.close();
-      $(`#${globalTrSeleccionado}`).removeClass("active");
-      $(`#${id}`).addClass("active");
+      $(`#${globalTrSeleccionado}`).removeClass("actives");
+      $(`#${id}`).addClass("actives");
       globalTrSeleccionado = id;
     }
   } catch (error) {}
@@ -314,36 +314,47 @@ $("#updateCommentBtn").click(() => {
       title: "Comentario agregado",
     });
   } else {
-    // Si existe
+    // Si existe la variable en localstorage
     commentJson = JSON.parse(commentJson);
-    //Si ya existe el curso
-    if (commentJson[curso]) {
-      commentJson[curso].forEach((element, i) => {
-        if (element[empresa]) {
-          let obj = {};
-          obj[empresa] = comentario;
-          commentJson[curso][i] = obj;
-          Toast.fire({
-            icon: "success",
-            title: "Comentario agregado",
-          });
-          return
-        } else {
-          let obj = {};
-          obj[empresa] = comentario;
-          commentJson[curso].push(obj);
-          Toast.fire({
-            icon: "success",
-            title: "Comentario agregado",
-          });
-          return
-        }
-      });
-      localStorage.setItem("commentJson", JSON.stringify(commentJson));
-      // Si no existe el curso
-    } else {
+    const cursosEnLocal = Object.keys(commentJson);
+    //Si ya existe el curso en la variable
+    if (cursosEnLocal.indexOf(curso) != -1) {
+      const datosDeCursoEnLocal = Object.values(commentJson)[
+        cursosEnLocal.indexOf(curso)
+      ];
 
-      let comments = {};
+      // Verificar si ya exite comentario para sustituir
+      const it = (datosDeCursoEnLocal) => {
+        let rt = true;
+        datosDeCursoEnLocal.forEach((element, id) => {
+          const check = Object.keys(element).indexOf(empresa);
+          if (!check) {
+            const obj = {};
+            obj[empresa] = comentario;
+            datosDeCursoEnLocal[id] = obj;
+            localStorage.setItem("commentJson", JSON.stringify(commentJson));
+            rt = false;
+            Toast.fire({
+              icon: "success",
+              title: "Comentario Actualizado",
+            });
+          }
+        });
+        return rt;
+      };
+
+      if (it(datosDeCursoEnLocal)) {
+        let obj = {};
+        obj[empresa] = comentario;
+        datosDeCursoEnLocal.push(obj);
+        Toast.fire({
+          icon: "success",
+          title: "Comentario agregado",
+        });
+        localStorage.setItem("commentJson", JSON.stringify(commentJson));
+      }
+    } else {
+      // Si no existe el curso en la variable de local
       let empresaarr = [];
       let obj = {};
       obj[empresa] = comentario;
@@ -358,27 +369,25 @@ $("#updateCommentBtn").click(() => {
   }
 });
 
-const ChangeComment = (comment) =>{
+const ChangeComment = (comment) => {
   $("#comentarios").val(comment);
-}
+};
 
-$("#commentCompleto").click( ()=>{
-  ChangeComment("Revisión completada")
-} )
+$("#commentCompleto").click(() => {
+  ChangeComment("Revisión completada");
+});
 
-$("#commentRecibo").click( ()=>{
-  ChangeComment("Pendiente entrega de recibo")
-} )
+$("#commentRecibo").click(() => {
+  ChangeComment("Pendiente entrega de recibo");
+});
 
-$("#commentCancelacion").click( ()=>{
-  ChangeComment("Pendiente entrega de cancelación")
-} )
+$("#commentCancelacion").click(() => {
+  ChangeComment("Pendiente entrega de cancelación");
+});
 
-$("#commentPlanilla").click( ()=>{
-  ChangeComment("Pendiente entrega de planilla")
-} )
-
-
+$("#commentPlanilla").click(() => {
+  ChangeComment("Pendiente entrega de planilla");
+});
 
 $(document).ready(function () {
   let commentJson = localStorage.getItem("commentJson");
@@ -386,10 +395,10 @@ $(document).ready(function () {
   const empresa = $("#empresa").val();
   if (commentJson != null) {
     commentJson = JSON.parse(commentJson);
-    commentJson[curso].forEach((element, i) => { 
-      if (element[empresa]) { 
+    commentJson[curso].forEach((element, i) => {
+      if (element[empresa]) {
         $("#comentarios").val(element[empresa]);
-        return
+        return;
       }
     });
   }
