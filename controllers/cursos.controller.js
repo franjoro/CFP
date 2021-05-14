@@ -11,7 +11,7 @@ const {
   upload,
   getFolderData,
   uploadImageCursos,
-  getHtmlImageFroms3,
+  getFolderDataCurso,
   deleteObject,
 } = require("../utils/s3");
 
@@ -106,7 +106,7 @@ cursos.curso_detalle = async (req, res) => {
         id: element.codigo_empresa,
         Empresa: element.Nombre,
         Alumnos: AlumnosArray,
-        id_matricula : element.id_union
+        id_matricula: element.id_union,
       };
       i += 1;
     });
@@ -435,16 +435,14 @@ cursos.getAtZipAllFiles = async (req, res) => {
 cursos.getZipCurso = async (req, res) => {
   const { curso } = req.body;
 
-  const queryS3Keys = pool.query(
-    "SELECT  s3key, Role  FROM archivo_empresa_curso WHERE  id_curso = ? AND Role != 0",
+  const queryS3Keys = await pool.query(
+    "SELECT  archivo_empresa_curso.s3key, archivo_empresa_curso.Role , tb_empresa.Nombre FROM archivo_empresa_curso  INNER JOIN tb_empresa ON tb_empresa.id_empresa = archivo_empresa_curso.id_empresa WHERE  id_curso = ? AND Role != 0",
     [curso]
   );
 
-  // const
-
   const keys = [];
   const Role = [];
-  query.forEach((element) => {
+  queryS3Keys.forEach((element) => {
     keys.push(element.s3key);
     Role.push(element.Role);
   });
@@ -452,7 +450,7 @@ cursos.getZipCurso = async (req, res) => {
   if (!keys)
     return res.status(400).json({ status: false, error: "PARAMS_NOT_VALID" });
   try {
-    // await getFolderDataCurso(``, keys, Role);
+    await getFolderDataCurso(``, keys, Role , queryS3Keys);
     return res.status(200).json({ status: true });
   } catch (error) {
     console.log(error);
@@ -467,7 +465,7 @@ cursos.dowloadZip = (req, res) => {
 
 cursos.dowloadZipCurso = (req, res) => {
   res.contentType("application/zip");
-  res.sendFile("/utils/archivosCurso.zip", { root: "./" });
+  res.sendFile("/utils/archivos_de_curso.zip", { root: "./" });
 };
 
 cursos.GestorDeDocumentos = async (req, res) => {

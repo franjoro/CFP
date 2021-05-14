@@ -136,7 +136,7 @@ s3Functions.getFolderData = async (folder, keys, Role) => {
   });
 };
 
-s3Functions.getFolderDataCurso = async (folder, keys, Role, empresas) => {
+s3Functions.getFolderDataCurso = async (folder, keys, Role, datos) => {
   return new Promise(async (resolve, reject) => {
     const fs = require("fs");
     const join = require("path").join;
@@ -152,28 +152,35 @@ s3Functions.getFolderDataCurso = async (folder, keys, Role, empresas) => {
         const zipEntries = zip.getEntries();
         const newZip = new AdmZip();
 
-        // empresasforEach((empresa, id) => {
-          zipEntries.forEach(function (zipEntry, i) {
-            console.log(empresa)
-            // let ext = keys[i].split(".");
-            // let archivo = `${i + 1}_Archivo_extra`;
-            // if (Role[i] == 1) {
-            //   archivo = `${i + 1}_Solicitud_capacitacion`;
-            // }
-            // if (Role[i] >= 20 && Role[i] < 30) {
-            //   archivo = `${i + 1}_Recibo_aportacion`;
-            // }
-            // if (Role[i] >= 30 && Role[i] < 40) {
-            //   archivo = `${i + 1}_Comprobante_pago_linea`;
-            // }
-            // if (Role[i] >= 40) {
-            //   archivo = `${i + 1}_Planilla_ISSS`;
-            // }
-            // var newFileName = `${archivo}.${ext[1]}`;
-            // newZip.addFile(newFileName, zipEntry.getData());
+        zipEntries.forEach(function (zipEntry, i) {
+          let empresaPath;
+
+          datos.forEach((empresa, id) => {
+            let fileName = empresa.s3key.split("/");
+            fileName = fileName[3];
+            if (zipEntry.entryName == fileName) {
+              return (empresaPath = empresa.Nombre);
+            }
           });
-        // });
-        
+
+          let ext = keys[i].split(".");
+          let archivo = `${empresaPath}/${i + 1}_Archivo_extra`;
+          if (Role[i] == 1) {
+            archivo = `${empresaPath}/${i + 1}_Solicitud_capacitacion`;
+          }
+          if (Role[i] >= 20 && Role[i] < 30) {
+            archivo = `${empresaPath}/${i + 1}_Recibo_aportacion`;
+          }
+          if (Role[i] >= 30 && Role[i] < 40) {
+            archivo = `${empresaPath}/${i + 1}_Comprobante_pago_linea`;
+          }
+          if (Role[i] >= 40) {
+            archivo = `${empresaPath}/${i + 1}_Planilla_ISSS`;
+          }
+          var newFileName = `${archivo}.${ext[1]}`;
+          newZip.addFile(newFileName, zipEntry.getData());
+        });
+
         newZip.writeZip(output.path);
         resolve(true);
       })
