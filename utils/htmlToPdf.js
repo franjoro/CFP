@@ -42,7 +42,7 @@ const GenerarPdf = (data) => {
     });
 
     const options = {
-      format: "A4",
+      format: "Letter",
       path: `./public/files/tmp/${tmpName}`
     };
     const file = {
@@ -107,8 +107,11 @@ const GenerarPdf = (data) => {
             td {
               border: 2px solid black;
             }
+            .topheader{
+              padding-top:50px
+            }
           </style>
-          <div class="container-fluid">
+          <div class="container-fluid topheader">
             <img
               src="${imgSrc}"
               alt=""

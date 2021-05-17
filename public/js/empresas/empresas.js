@@ -44,7 +44,7 @@ function LoadTablaEmpresas(estado = 1) {
             row.id_empresa
           }')"  ><i class="fas fa-eye-slash"></i></button><a type="button" href="/admin/empresas/contacto/${
             row.id_empresa
-          }" class="btn btn-info"   ><i class="fa fa-user-friends"></i></a><a type="button" onclick="ChangePassword('${row.NIT.trim()}')" class="btn btn-warning"   ><i class="fas fa-key"></i></a></div >`;
+          }" class="btn btn-info"   ><i class="fa fa-user-friends"></i></a><a type="button" onclick="ChangePassword('${row.NIT}')" class="btn btn-warning"   ><i class="fas fa-key"></i></a></div >`;
           return html;
         },
       },

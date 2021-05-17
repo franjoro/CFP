@@ -24,7 +24,7 @@ cursos.cursos = async (req, res) => {
     const queries = [];
     queries.push(
       pool.query(
-        "SELECT `tb_cursos`.`Codigo_curso`, `tb_cursos`.`Nombre`, `tb_instructor`.`Nombre` AS instructor, `tb_cursos`.`Orden`, `tb_cursos`.`Agrupacion`, `tb_cursos`.`Estado` FROM `tb_cursos` LEFT JOIN `tb_instructor` ON `tb_cursos`.`id_instructor` = `tb_instructor`.`DUI` WHERE tb_cursos.id_programa = ? AND tb_cursos.Estado != 0  AND tb_cursos.Estado != 5  AND tb_cursos.Estado !=15  AND tb_cursos.Estado !=16",
+        "SELECT CONCAT(tb_cursos.Nombre,' - ', tb_cursos.Codigo_curso) AS Nombre, tb_instructor.Nombre AS instructor , tb_cursos.Horario , tb_cursos.Codigo_curso , (SELECT COUNT(*) FROM union_matricula WHERE id_curso = tb_cursos.Codigo_curso ) AS cantidadAlumnos FROM `tb_cursos` INNER JOIN `tb_instructor` ON `tb_cursos`.`id_instructor` = `tb_instructor`.`DUI` WHERE tb_cursos.id_programa = ? AND tb_cursos.Estado != 0  AND tb_cursos.Estado != 5  AND tb_cursos.Estado !=15  AND tb_cursos.Estado !=16",
         [programa]
       )
     );
@@ -414,17 +414,10 @@ cursos.getAtZipAllFiles = async (req, res) => {
     "SELECT  s3key, Role  FROM archivo_empresa_curso WHERE id_empresa=? AND id_curso = ? AND Role != 0",
     [req.body.empresa, req.body.curso]
   );
-  const keys = [];
-  const Role = [];
-  query.forEach((element) => {
-    keys.push(element.s3key);
-    Role.push(element.Role);
-  });
-
-  if (!keys)
+  if (!query)
     return res.status(400).json({ status: false, error: "PARAMS_NOT_VALID" });
   try {
-    await getFolderData(``, keys, Role);
+    await getFolderData(``, query);
     return res.status(200).json({ status: true });
   } catch (error) {
     console.log(error);
@@ -440,17 +433,10 @@ cursos.getZipCurso = async (req, res) => {
     [curso]
   );
 
-  const keys = [];
-  const Role = [];
-  queryS3Keys.forEach((element) => {
-    keys.push(element.s3key);
-    Role.push(element.Role);
-  });
-
-  if (!keys)
+  if (!queryS3Keys)
     return res.status(400).json({ status: false, error: "PARAMS_NOT_VALID" });
   try {
-    await getFolderDataCurso(``, keys, Role , queryS3Keys);
+    await getFolderDataCurso(``, queryS3Keys);
     return res.status(200).json({ status: true });
   } catch (error) {
     console.log(error);

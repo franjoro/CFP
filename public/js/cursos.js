@@ -143,3 +143,17 @@ const deleteOferta = async (id) => {
     }
   }
 };
+
+const ReporteAlumnos = async (id) => {
+  loader();
+  try {
+    const respuesta = await $.ajax(`/reportes/PartiCurso/${id}`);
+    if (respuesta.status) {
+      window.open("/reportes/download");
+    }
+    swal.close();
+  } catch (error) {
+    console.log(error);
+    errorMessage();
+  }
+};

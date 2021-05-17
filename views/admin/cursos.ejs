@@ -65,32 +65,29 @@
                       <h5>Cursos Activos:</h5>
                       <% } %>
                         <% for(var i=0; i<datos.length; i++) {%>
-                          <a href="/admin/cursos/detalle/<%= datos[i].Codigo_curso %>/<%= programa %> /curso ">
+                         
                             <div class="card shadow mb-3">
                               <div class="card-body">
-                                <h4 class="text-dark">Nombre: <%= datos[i].Nombre %>
+                                <a style="color: black;"
+                                href="/admin/cursos/detalle/<%= datos[i].Codigo_curso %>/<%= programa %> /curso ">
+                                <h4 class="text-weight-bold"><i class="fas fa-angle-double-right"></i>
+                                  <%= datos[i].Nombre %>
                                 </h4>
-                                <p class="d-inline"><b>Código del curso:</b>
-                                  <%= datos[i].Codigo_curso %> <br>
-                                    <b>Profesor:</b>
-                                    <%= datos[i].instructor %><br>
-                                      <b>Orden de inicio:</b>
-                                      <%= datos[i].Orden %> <br>
-                                        <b>Agrupación:</b>
-                                        <%= datos[i].Agrupacion %> <br>
-                                          <b>Estado:</b>
-                                          <%if(datos[i].Estado==1) {%> EN PREPARACIÓN <%}%>
-                                              <%if(datos[i].Estado==2) {%> EN CURSO <%}%>
+                                <hr>
+                                <p class="d-inline">
+                                  <b><i class="fas fa-user"></i> Instructor:</b>
+                                  <%= datos[i].instructor %> <br>
+                                  <b><i class="fas fa-users"></i> Participantes: </b> 
+                                  <%= datos[i].cantidadAlumnos %> <br>
+                                  <b><i class="fas fa-calendar"></i> Horario:</b>
+                                  <%= datos[i].Horario %> <br>
                                 </p>
-                                <!-- <button class="btn btn-success float-right d-inline"> Participantes</button> -->
+                              </a>
+                                <button class="btn btn-success float-right btn-sm d-inline" onclick="ReporteAlumnos('<%= datos[i].Codigo_curso %>')"> <i class="fas fa-file-excel"></i></button>
                               </div>
                             </div>
-                          </a>
+                         
                           <% } %>
-
-
-
-
           </div>
         </div>
       </div>
@@ -220,13 +217,14 @@
             <hr>
             <div class="row">
               <div class="col-md-6">
-                <button class="btn btn-primary btn-block" id="btn_empresas"> <i class="fas fa-building"></i> Empresas / Cotizantes
+                <button class="btn btn-primary btn-block" id="btn_empresas"> <i class="fas fa-building"></i> Empresas /
+                  Cotizantes
                   ISSS</button>
               </div>
               <div class="col-md-6">
                 <a href="/admin/cursos/form/<%= programa%>">
-                <button class="btn btn-primary btn-block"><i class="fas fa-user-friends"></i>Particulares no
-                  cotizantes</button></a>
+                  <button class="btn btn-primary btn-block"><i class="fas fa-user-friends"></i>Particulares no
+                    cotizantes</button></a>
               </div>
             </div>
           </div>

@@ -357,13 +357,12 @@ PublicFunctions.archivos = async (req, res) => {
     CantidadCancelacion,
   } = req.body;
   try {
-    const promesas = [];
-    const inserts = [];
-    let ext;
-    let fileContent;
+    const promesas = [] , inserts = [];
+    let ext , fileContent;
     cursos.forEach((curso, index) => {
       // SUBIR Ficha
-      ext = req.files[`ficha${index}`].name.split(".")[1];
+      ext = req.files[`ficha${index}`].name.split(".");
+      ext = ext[ext.length-1].toLowerCase();
       fileContent = Buffer.from(req.files[`ficha${index}`].data, "binary");
       promesas.push(
         upload(fileContent, Date.now(), ext, empresa, `ficha${index}`)
@@ -371,7 +370,8 @@ PublicFunctions.archivos = async (req, res) => {
 
       // SUBIR Recibo
       for (let i = 0; i < CantidadRecibo[index]; i++) {
-        ext = req.files[`recibo${index}${i}`].name.split(".")[1];
+        ext = req.files[`recibo${index}${i}`].name.split(".");
+        ext = ext[ext.length-1].toLowerCase();
         fileContent = Buffer.from(
           req.files[`recibo${index}${i}`].data,
           "binary"
@@ -383,7 +383,8 @@ PublicFunctions.archivos = async (req, res) => {
 
       // SUBIR Si existe cancelación
       for (let i = 0; i < CantidadCancelacion[index]; i++) {
-        ext = req.files[`cancelacion${index}${i}`].name.split(".")[1];
+        ext = req.files[`cancelacion${index}${i}`].name.split(".");
+        ext = ext[ext.length-1].toLowerCase(); 
         fileContent = Buffer.from(
           req.files[`cancelacion${index}${i}`].data,
           "binary"
@@ -401,7 +402,8 @@ PublicFunctions.archivos = async (req, res) => {
 
       // SUBIR Archivos de planilla
       for (let i = 0; i < CantidadPlanilla[index]; i++) {
-        ext = req.files[`planilla${index}${i}`].name.split(".")[1];
+        ext = req.files[`planilla${index}${i}`].name.split(".");
+        ext = ext[ext.length-1].toLowerCase();
         fileContent = Buffer.from(
           req.files[`planilla${index}${i}`].data,
           "binary"

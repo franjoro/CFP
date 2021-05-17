@@ -94,13 +94,19 @@ s3Functions.getFiles = (Key) =>
   });
 
 const AdmZip = require("adm-zip");
-
-s3Functions.getFolderData = async (folder, keys, Role) => {
+s3Functions.getFolderData = async (folder, data) => {
   return new Promise(async (resolve, reject) => {
     const fs = require("fs");
     const join = require("path").join;
     const s3Zip = require("s3-zip");
     const output = fs.createWriteStream(join(__dirname, "archivos.zip"));
+    const keys = [];
+
+    data.forEach(element =>{
+      keys.push(element.s3key);
+    })
+
+
     s3Zip
       .archive({ s3, bucket: process.env.BUCKET }, folder, keys)
       .pipe(output)
@@ -109,18 +115,27 @@ s3Functions.getFolderData = async (folder, keys, Role) => {
         const zipEntries = zip.getEntries();
         const newZip = new AdmZip();
         zipEntries.forEach(function (zipEntry, i) {
-          let ext = keys[i].split(".");
+          let ext = keys[i].split(".") , roleName;
+
+          data.forEach((query, id) => {
+            let fileName = query.s3key.split("/");
+            fileName = fileName[3];
+            if (zipEntry.entryName == fileName) {
+              return (roleName = query.Role);
+            }
+          });
+
           let archivo = `${i + 1}_Archivo_extra`;
-          if (Role[i] == 1) {
+          if (roleName == 1) {
             archivo = `${i + 1}_Solicitud_capacitacion`;
           }
-          if (Role[i] >= 20 && Role[i] < 30) {
+          if (roleName >= 20 && roleName < 30) {
             archivo = `${i + 1}_Recibo_aportacion`;
           }
-          if (Role[i] >= 30 && Role[i] < 40) {
+          if (roleName >= 30 && roleName < 40) {
             archivo = `${i + 1}_Comprobante_pago_linea`;
           }
-          if (Role[i] >= 40) {
+          if (roleName >= 40) {
             archivo = `${i + 1}_Planilla_ISSS`;
           }
           var newFileName = `${archivo}.${ext[1]}`;
@@ -136,7 +151,7 @@ s3Functions.getFolderData = async (folder, keys, Role) => {
   });
 };
 
-s3Functions.getFolderDataCurso = async (folder, keys, Role, datos) => {
+s3Functions.getFolderDataCurso = async (folder, data) => {
   return new Promise(async (resolve, reject) => {
     const fs = require("fs");
     const join = require("path").join;
@@ -144,6 +159,11 @@ s3Functions.getFolderDataCurso = async (folder, keys, Role, datos) => {
     const output = fs.createWriteStream(
       join(__dirname, "archivos_de_curso.zip")
     );
+    let keys = [];
+    data.forEach(element =>{
+      keys.push(element.s3key);
+    })
+
     s3Zip
       .archive({ s3, bucket: process.env.BUCKET }, folder, keys)
       .pipe(output)
@@ -153,28 +173,29 @@ s3Functions.getFolderDataCurso = async (folder, keys, Role, datos) => {
         const newZip = new AdmZip();
 
         zipEntries.forEach(function (zipEntry, i) {
-          let empresaPath;
+          let empresaPath , roleName; 
 
-          datos.forEach((empresa, id) => {
+          data.forEach((empresa, id) => {
             let fileName = empresa.s3key.split("/");
             fileName = fileName[3];
             if (zipEntry.entryName == fileName) {
+              roleName = empresa.Role
               return (empresaPath = empresa.Nombre);
             }
           });
 
           let ext = keys[i].split(".");
           let archivo = `${empresaPath}/${i + 1}_Archivo_extra`;
-          if (Role[i] == 1) {
+          if (roleName == 1) {
             archivo = `${empresaPath}/${i + 1}_Solicitud_capacitacion`;
           }
-          if (Role[i] >= 20 && Role[i] < 30) {
+          if (roleName >= 20 && roleName < 30) {
             archivo = `${empresaPath}/${i + 1}_Recibo_aportacion`;
           }
-          if (Role[i] >= 30 && Role[i] < 40) {
+          if (roleName >= 30 && roleName < 40) {
             archivo = `${empresaPath}/${i + 1}_Comprobante_pago_linea`;
           }
-          if (Role[i] >= 40) {
+          if (roleName >= 40) {
             archivo = `${empresaPath}/${i + 1}_Planilla_ISSS`;
           }
           var newFileName = `${archivo}.${ext[1]}`;
