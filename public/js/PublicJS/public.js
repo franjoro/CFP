@@ -263,7 +263,7 @@ $(document).ready(() => {
   });
   $("#botonAdd").on("click", () => {
     const dui = $("#dui").val();
-    const nombre = $("#nombre").val();
+    const nombre =  capitalize ($("#nombre").val());
     const isss = $("#isss").val();
     const cargo = $("#cargo").val();
     const tel = $("#tel").val();
@@ -411,3 +411,11 @@ const VerificarArchivos = () => {
     error("Debe subir los archivos obligatorios " + err);
   }
 };
+function capitalize(words) {
+  var separateWord = words.toLowerCase().split(' ');
+  for (var i = 0; i < separateWord.length; i++) {
+     separateWord[i] = separateWord[i].charAt(0).toUpperCase() +
+     separateWord[i].substring(1);
+  }
+  return separateWord.join(' ');
+}

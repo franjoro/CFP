@@ -22,10 +22,11 @@ reportes.descargar = (req, res) => {
 
 reportes.ParticipantesEnCursos = async (req, res) => {
   const { curso } = req.params;
-  const statment = `SELECT tb_empresa.Nombre AS Empresa, tb_participante.DUI, tb_participante.Nombre, tb_participante.Telefono , tb_participante.Email, tb_participante.Genero, tb_participante.ISSS , tb_participante.Cargo FROM union_matricula INNER JOIN tb_participante ON union_matricula.id_participante = tb_participante.DUI INNER JOIN tb_empresa ON union_matricula.id_empresa = tb_empresa.id_empresa WHERE union_matricula.id_curso  = ?   `;
+  const statment = `SELECT union_matricula.id_curso, tb_empresa.Nombre AS Empresa, tb_participante.DUI, tb_participante.Nombre, tb_participante.Telefono , tb_participante.Email, tb_participante.Genero, tb_participante.ISSS , tb_participante.Cargo FROM union_matricula INNER JOIN tb_participante ON union_matricula.id_participante = tb_participante.DUI INNER JOIN tb_empresa ON union_matricula.id_empresa = tb_empresa.id_empresa WHERE union_matricula.id_curso  = ?   `;
   try {
     const datos = await pool.query(statment, [curso]);
     const titulos = [
+      "Curso",
       "Empresa",
       "DUI",
       "Nombre",

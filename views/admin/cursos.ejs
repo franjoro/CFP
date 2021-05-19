@@ -68,13 +68,13 @@
                          
                             <div class="card shadow mb-3">
                               <div class="card-body">
-                                <a style="color: black;"
+                                <a  class="text-primary"
                                 href="/admin/cursos/detalle/<%= datos[i].Codigo_curso %>/<%= programa %> /curso ">
                                 <h4 class="text-weight-bold"><i class="fas fa-angle-double-right"></i>
                                   <%= datos[i].Nombre %>
                                 </h4>
                                 <hr>
-                                <p class="d-inline">
+                                <p class="d-inline" style="color: black;">
                                   <b><i class="fas fa-user"></i> Instructor:</b>
                                   <%= datos[i].instructor %> <br>
                                   <b><i class="fas fa-users"></i> Participantes: </b> 
@@ -83,7 +83,7 @@
                                   <%= datos[i].Horario %> <br>
                                 </p>
                               </a>
-                                <button class="btn btn-success float-right btn-sm d-inline" onclick="ReporteAlumnos('<%= datos[i].Codigo_curso %>')"> <i class="fas fa-file-excel"></i></button>
+                                <button class="btn btn-success float-right btn-sm d-inline" onclick="ReporteAlumnos('<%= datos[i].Codigo_curso %>')"> <i class="fas fa-file-excel"></i> Descargar participantes</button>
                               </div>
                             </div>
                          
