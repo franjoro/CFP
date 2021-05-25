@@ -11,6 +11,8 @@ const router = express.Router();
 router.get("/formulario", ec.main);
 // Devuelve el administrador de carreras y cursos
 router.get("/administrador", ec.administrador);
+// Devuelve el modelo de cronograma de una carrera
+router.get("/modelo/:idCarrera", ec.administradorModelo);
 
 
 

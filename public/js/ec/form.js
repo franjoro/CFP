@@ -584,6 +584,8 @@ const SendFormulario = async () => {
         global_json1,
         global_json2,
         global_json3,
+        Nombres: $("#nombres").val(),
+        Apellidos: $("#apellidos").val()
       };
       loader();
       await $.ajax({

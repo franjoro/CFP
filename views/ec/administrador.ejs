@@ -5,7 +5,7 @@
 
 
         <!-- Page Heading -->
-        <h1 class="h3 mb-2 d-inline text-gray-800">Administrar carreras y grupos</h1>
+        <h1 class="h3 mb-2 d-inline text-gray-800">Administrar carreras, grupos y modelo de cronograma</h1>
         <p class="mb-4 ">Directorio principal de alumnos</p>
 
 
@@ -30,13 +30,18 @@
                                 <thead>
                                     <tr>
                                         <th>Nombre</th>
+                                        <th>Ver modelo</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <% carreras.forEach( (element , id)=> { %>
+                                    <% carreras.forEach( (element)=> { %>
                                         <tr>
                                             <td>
-                                                <%= carreras[id].Nombre %>
+                                                <%= element.Nombre %>
+                                                <td> <%= JSON.stringify(element) %> </td>
+                                            </td>
+                                            <td>
+                                                <a href="/admin/ec/modelo/<%=element.id %>" class="btn btn-info btn-block">Ver Modelo</a>
                                             </td>
                                         </tr>
                                         <% } )%>
@@ -125,9 +130,9 @@
                                     placeholder="Nombre del grupo">
                             </div>
                             <div class="col">
-                                <label for="name">Nombre</label>
+                                <label for="name">Elegir carrera</label>
                                 <select class="custom-select" required name="id_carrera">
-                                    <option selected disabled >Seleccionar </option>
+                                    <option selected disabled >Seleccionar carrera </option>
                                     <% carreras.forEach( (element , id)=> { %>
                                         <option value="<%= carreras[id].id %>"><%= carreras[id].Nombre %>  </option>
                                     <%   } )%>   
