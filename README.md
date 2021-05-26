@@ -4,3 +4,5 @@ Plataforma de gestión adminitrativa para el Centro de Formación profesional Do
 Plataforma creada con Nodejs - Motor de vistas : EJS  - Mysql 
 #Empezar plataforma: 
 Comando $ npm start  
+
+Sitio oficial : https://cfp.ricaldone.edu.sv
