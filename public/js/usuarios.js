@@ -17,7 +17,7 @@ errorMessage = () => {
   });
 };
 
-table = () => {
+const table = () => {
   // DataTable Usuarios
   $("#tableUsuario").DataTable({
     ajax: "/admin/usuarios/table",
@@ -32,6 +32,9 @@ table = () => {
           } 
           if (row.Role == 5) {
             return "Empresa Centro";
+          } 
+          if (row.Role == 2) {
+            return "Instructor Empresa Centro";
           } 
             return "Coordinador";
           

@@ -16,7 +16,6 @@ usuarios.addUsuario = async (req, res) => {
       await encriptador.encriptar(req.body.paswordinput),
       req.body.role,
     ];
-    console.log(data);
     const statment =
       "INSERT INTO tb_usuarios(id_usuario,Nombre,Email,Password,Role,Estado) VALUES(?,?,?,?,?,1)";
     const query = await pool.query(statment, data);
@@ -59,7 +58,7 @@ usuarios.editUsuario = async (req, res) => {
 
 usuarios.loadTable = async (req, res) => {
   const data = await pool.query(
-    "SELECT id_usuario,Nombre,Email,Role,Estado FROM tb_usuarios WHERE id_usuario !=  'god' AND (Role = 1 OR Role = 0 OR Role = 5) "
+    "SELECT id_usuario,Nombre,Email,Role,Estado FROM tb_usuarios WHERE id_usuario !=  'god' AND (Role = 1 OR Role = 0 OR Role = 5 OR Role = 2) "
   );
   res.json({ data });
 };

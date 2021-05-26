@@ -55,14 +55,13 @@ $("#carreras").select2({
         { data: "carnet" },
         { data: "Nombres" },
         { data: "Apellidos" },
-        { data: "Sexo" },
   
-        {
-          "render": function (data, type, JsonResultRow, meta) {
-            const html =`<div class="btn-group" role = "group" aria - label="Basic example"><button type="button" class="btn btn-success" data-toggle="modal" data-target="#editModal"><i class="fas fa-edit"></i></button></div >`;
-            return html;
-          }
-        },
+        // {
+        //   "render": function (data, type, JsonResultRow, meta) {
+        //     const html =`<div class="btn-group" role = "group" aria - label="Basic example"><button type="button" class="btn btn-success" data-toggle="modal" data-target="#editModal"><i class="fas fa-edit"></i></button></div >`;
+        //     return html;
+        //   }
+        // },
       ],
     });
   };

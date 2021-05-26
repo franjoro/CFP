@@ -111,7 +111,6 @@ cursos.curso_detalle = async (req, res) => {
       i += 1;
     });
     // Responder
-    console.log(datos)
     return res.render("./admin/curso_detalle", {
       datos,
       curso: empresas[2][0],

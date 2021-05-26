@@ -6,7 +6,7 @@ errorMessage = () => {
   });
 };
 
-loader = () => {
+const loader = () => {
   Swal.fire({
     title: "Por favor, Espere",
     html: "Cargando Data",

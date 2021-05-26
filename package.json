@@ -1,6 +1,6 @@
 {
   "name": "cfp-plataforma",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Gestor de archivos actualizado",
   "main": "index.js",
   "scripts": {

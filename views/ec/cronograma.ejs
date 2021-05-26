@@ -1,0 +1,234 @@
+<link rel="stylesheet" href="/static/vendor/datatables/datatables.min.css" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"
+  type="text/css" />
+<%- include('../partials/header.admin.ejs'); %>
+  <div class="container-fluid">
+    <div class="row container-fluid">
+      <div class="col-lg-12">
+        <div class="card shadow mb-4">
+          <div class="card-header py-3">
+            <a href="/admin/ec/administrador%>" class="btn btn-success btn-sm float-left d-inline"><i
+                class="fas fa-arrow-left"></i></a>
+          </div>
+          <div class="card-body">
+            <div class="card shadow mb-3">
+              <div class="card-body">
+                <h2>Cronograma vigente</h2>
+                <h6>
+                  Grupo :
+                  <span class="font-weight-bold">
+                    <%= grupo %>
+                  </span>
+                </h6>
+                <h6>
+                  Carrera :
+                  <span class="font-weight-bold">
+                    <%= carrera %>
+                  </span>
+                </h6>
+                <hr />
+                <button class="btn btn-sm btn-success d-inline">
+                  <i class="fas fa-external-link-alt"></i> Generador de reportes
+                </button>
+              </div>
+            </div>
+            <small><span class="font-weight-bold">Nota: </span>El cronograma vigente
+              administra la fechas y profesores que imparten los contenidos</small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row container-fluid">
+      <div class="col-lg-12">
+        <div class="card shadow mb-4">
+          <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary d-inline">
+              Cronograma vigente de módulos y unidades
+            </h6>
+            <button class="btn btn-sm btn-success d-inline float-right" id="addNewModuleBtn">
+              Agregar Módulo
+            </button>
+            <p></p>
+          </div>
+          <div class="card-body row">
+            <% datos.forEach( (element)=> { %>
+              <div class="col-md-3" id="<%= // element.id %>">
+                <div class="card shadow mb-3">
+                  <div class="card-body">
+                    <h5>
+                      <%= element.modelo %>
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th>Fecha inicio</th>
+                              <th>Fecha Fin</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>
+                                <%= element.fechaInicio %>
+                              </td>
+                              <td>
+                                <%= element.fechaFin %>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <button class="btn btn-info btn-block"
+                          onclick="editActualModule('<%=element.idModelo%>', '<%= element.modelo%>', '<%= element.fechaInicio %>' , '<%= element.fechaFin %>')">
+                          <i class="fas fa-edit"></i> Editar Módulo
+                        </button>
+                        <button class="btn btn-danger btn-block" onclick="deleteModulo('<%= element.idModelo%>')">
+                          <i class="fas fa-trash-alt"></i> Eliminar Módulo
+                        </button>
+                        <button class="btn btn-success btn-block">
+                          <i class="far fa-eye"></i> Ver notas del módulo
+                        </button>
+                    </h5>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-9">
+                <div class="card shadow mb-3">
+                  <div class="card-body">
+                    <h5 class="text-dark d-inline">
+                      Unidades pertenecientes al módulo
+                    </h5>
+                    <button class="btn btn-sm btn-success d-inline float-right addNewUnitBtn"
+                      onclick="addNewUnit('<%= element.idModelo %>', '<%= element.modelo %>')">
+                      Agregar unidad
+                    </button>
+                    <hr />
+                    <div class="table-responsive">
+                      <table class="table table-bordered table-striped" width="100%" cellspacing="0">
+                        <thead>
+                          <tr>
+                            <th>Estado</th>
+                            <th>Nombre de la unidad</th>
+                            <th>Fecha Inicio</th>
+                            <th>Fecha Fin</th>
+                            <th>Profesor</th>
+                            <th>Editar unidad</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% element.unidades.forEach( (uni, id)=> { %>
+                            <tr>
+                              <td class="text-center">
+                                <% if(uni.Estado) {%>
+                                  <span class="badge badge-success">ACTIVO Y PÚBLICO</span>
+                                  <% }else{%>
+                                    <span class="badge badge-danger">PENDIENTE <br />
+                                      CONFIGURACIÓN</span>
+                                    <% }%>
+                              </td>
+                              <td>
+                                <%= uni.UnidadName %>
+                              </td>
+                              <td>
+                                <%= uni.Inicio %>
+                              </td>
+                              <td>
+                                <%= uni.Fin %>
+                              </td>
+                              <td>
+                                <%= uni.Usuario %>
+                              </td>
+                              <td style="width: 25%">
+                                <button class="btn btn-info btn-block"
+                                  onclick="editActualUnit('<%= uni.idUnidad %>','<%=uni%>')">
+                                  <i class="fas fa-edit"></i>
+                                  Editar unidad
+                                </button>
+                                <button class="btn btn-danger btn-block" onclick="deleteUnidad('<%= uni.idUnidad %>')">
+                                  <i class="fas fa-trash-alt"></i>
+                                  Eliminar unidad
+                                </button>
+                              </td>
+                            </tr>
+                            <% }); %>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <% }); %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <input type="hidden" name="carrera" id="carrera" value="<%= carreraID%>" />
+
+  <template id="newModule">
+    <swal-html>
+      <div class="row">
+        <div class="col-md-12">
+          <label>Nombre</label><input type="text" class="form-control text-uppercase" placeholder="Nombre del módulo"
+            id="MdlNombre" />
+        </div>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="col-md-6">
+          <label>Fecha Inicio</label><select class="form-control" id="MdlInicio">
+            <option value="01">Enero</option>
+            <option value="02">Febrero</option>
+            <option value="03">Marzo</option>
+            <option value="04">Abril</option>
+            <option value="05">Mayo</option>
+            <option value="06">Junio</option>
+            <option value="07">Julio</option>
+            <option value="08">Agosto</option>
+            <option value="09">Septiembre</option>
+            <option value="10">Octubre</option>
+            <option value="11">Noviembre</option>
+            <option value="12">Diciembre</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label>Fecha Fin</label><select class="form-control" id="MdlFin">
+            <option value="01">Enero</option>
+            <option value="02">Febrero</option>
+            <option value="03">Marzo</option>
+            <option value="04">Abril</option>
+            <option value="05">Mayo</option>
+            <option value="06">Junio</option>
+            <option value="07">Julio</option>
+            <option value="08">Agosto</option>
+            <option value="09">Septiembre</option>
+            <option value="10">Octubre</option>
+            <option value="11">Noviembre</option>
+            <option value="12">Diciembre</option>
+          </select>
+        </div>
+      </div>
+      <small><span class="font-weight-bold">Nota:</span> Si la fecha de inicio es
+        mayor a la de fin, el rango tomará el siguiente año en cuenta</small>
+    </swal-html>
+  </template>
+
+  <template id="newUnit">
+    <swal-html>
+      <div class="row">
+        <div class="col-md-12">
+          <label>Escriba el nombre de la unidad</label><input type="text" class="form-control text-uppercase"
+            placeholder="Nombre de la unidad" id="UnitNombre" />
+        </div>
+      </div>
+      <hr />
+    </swal-html>
+  </template>
+
+  <!-- /.container-fluid -->
+  <%- include('../partials/footer'); %>
+    <script src="/static/js/jquery.mask.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <script src="/static/js/ec/model.js"></script>

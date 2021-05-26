@@ -5,8 +5,9 @@
 
 
         <!-- Page Heading -->
-        <h1 class="h3 mb-2 d-inline text-gray-800">Administrar carreras, grupos y modelo de cronograma</h1>
-        <p class="mb-4 ">Directorio principal de alumnos</p>
+        <h1 class="h3 mb-2 d-inline text-gray-800">Administrar carreras, grupos y cronogramas</h1>
+        <p class="mb-4 "> <span class="font-weight-bold">Información: </span> El cronograma modelo es una plantilla que
+            se genera a cada grupo creado</p>
 
 
         <!-- DataTales Example -->
@@ -15,14 +16,14 @@
                 <a href="/admin/ec" class="btn btn-success btn-sm float-left d-inline">
                     <i class="fas fa-arrow-left"></i></a>
                 <button class="btn btn-success btn-sm float-right m-1 d-inline" data-toggle="modal"
-                data-target="#gruposmodal">Agregar Grupo</button>
+                    data-target="#gruposmodal">Crear nuevo grupo</button>
                 <button class="btn btn-success btn-sm float-right m-1 d-inline" data-toggle="modal"
-                    data-target="#carreramodal">Agregar carrera</button>
+                    data-target="#carreramodal">Crear nueva carrera</button>
 
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                         <div class="table-responsive">
                             <h4 class="text-secundary">Carreras agregadas</h4>
                             <table class="table table-bordered table-striped" id="tableParticipantes" width="100%"
@@ -38,10 +39,11 @@
                                         <tr>
                                             <td>
                                                 <%= element.Nombre %>
-                                                <td> <%= JSON.stringify(element) %> </td>
                                             </td>
                                             <td>
-                                                <a href="/admin/ec/modelo/<%=element.id %>" class="btn btn-info btn-block">Ver Modelo</a>
+                                                <a href="/admin/ec/modelo/<%=element.id %>"
+                                                    class="btn btn-info btn-sm"><i class="fas fa-tools"></i> Cronograma
+                                                    modelo</a>
                                             </td>
                                         </tr>
                                         <% } )%>
@@ -49,14 +51,16 @@
                             </table>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-7">
                         <div class="table-responsive">
                             <h4 class="text-secundary">Grupos agregados</h4>
-                            <table class="table table-bordered table-striped" id="tableParticipantes" width="100%" cellspacing="0">
+                            <table class="table table-bordered table-striped" id="tableParticipantes" width="100%"
+                                cellspacing="0">
                                 <thead>
                                     <tr>
                                         <th>Carrera a la que pertenece</th>
                                         <th>Nombre del grupo</th>
+                                        <th>Modelo de módulos y unidades</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -67,6 +71,11 @@
                                             </td>
                                             <td>
                                                 <%= grupos[id].Nombre %>
+                                            </td>
+                                            <td>
+                                                <a href="/admin/ec/cronograma/<%=element.id %>"
+                                                    class="btn btn-primary btn-sm"><i class="fas fa-tools"></i>
+                                                    Cronograma vigente</a>
                                             </td>
                                         </tr>
                                         <% } )%>
@@ -132,17 +141,34 @@
                             <div class="col">
                                 <label for="name">Elegir carrera</label>
                                 <select class="custom-select" required name="id_carrera">
-                                    <option selected disabled >Seleccionar carrera </option>
+                                    <option selected disabled>Seleccionar carrera </option>
                                     <% carreras.forEach( (element , id)=> { %>
-                                        <option value="<%= carreras[id].id %>"><%= carreras[id].Nombre %>  </option>
-                                    <%   } )%>   
+                                        <option value="<%= carreras[id].id %>">
+                                            <%= carreras[id].Nombre %>
+                                        </option>
+                                        <% } )%>
                                 </select>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-12">
+                                <p class="font-weight-bold">Información importante a considerar: </p>
+                                <ul>
+                                    <li>Antes de crear un grupo se debe verificar el cronograma modelo de la carrera,
+                                        que sea acorde al cronograma vigente.</li>
+                                    <li>En la creación de un grupo se clona todos los módulos y unidades del cronograma
+                                        modelo de la carrera.</li>
+                                    <li>Se tomarán las fechas del modelo y se aplicara el año actual.</li>
+                                    <li>Las fechas de las unidades deben ser ingresadas conjunto al profesor que
+                                        ingresara las notas.</li>
+                                </ul>
                             </div>
                         </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <input type="submit" class="btn btn-primary">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <input type="submit" class="btn btn-primary" value="He leído la información y deseo continuar">
                 </div>
                 </form>
             </div>
@@ -157,11 +183,23 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
         <!-- Page level custom scripts -->
         <script>
+
+            loader = () => {
+                Swal.fire({
+                    title: "Por favor, Espere",
+                    html: "Cargando Data",
+                    allowOutsideClick: !1,
+                    showConfirmButton: false,
+                    willOpen: () => {
+                        Swal.showLoading();
+                    },
+                });
+            };
             $("#formcarrera").submit(async function (e) {
                 e.preventDefault();
                 const t = $(this).serialize();
                 try {
-                    await $.ajax({url :  ' /admin/ec/nuevacarrera'  , type:"POST"  , data : t })
+                    await $.ajax({ url: ' /admin/ec/nuevacarrera', type: "POST", data: t })
                     location.reload();
                 } catch (error) {
                     console.log(error)
@@ -171,8 +209,11 @@
                 e.preventDefault();
                 const t = $(this).serialize();
                 try {
-                    await $.ajax({url :  ' /admin/ec/nuevogrupo'  , type:"POST"  , data : t })
-                    location.reload();
+                    loader();
+                    const datos = await $.ajax({ url: ' /admin/ec/nuevogrupo', type: "POST", data: t })
+                    if(datos.status){
+                        location.reload();
+                    }
                 } catch (error) {
                     console.log(error)
                 }

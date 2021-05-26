@@ -11,8 +11,6 @@ const router = express.Router();
 router.get("/formulario", ec.main);
 // Devuelve el administrador de carreras y cursos
 router.get("/administrador", ec.administrador);
-// Devuelve el modelo de cronograma de una carrera
-router.get("/modelo/:idCarrera", ec.administradorModelo);
 
 
 
@@ -33,6 +31,28 @@ router.post("/form" , ec.form);
 router.post("/nuevacarrera" , ec.addCarrera);
 // Ingresar nuevo grupo
 router.post("/nuevogrupo" , ec.addGrupo);
+
+
+
+// Modelos 
+// Devuelve el modelo de cronograma de una carrera
+router.get("/modelo/:idCarrera", ec.administradorModelo);
+// Ingresar nuevo Módulo
+router.post("/addModelo" , ec.addModelo);
+// Ingresar nueva unidad
+router.post("/addUnidad" , ec.addUnidad);
+// Eliminar Modulo
+router.delete("/deleteModelo" , ec.deleteModelo);
+// Eliminar Unidad
+router.delete("/deleteUnidad" , ec.deleteUnidad);
+// Editar unidad
+router.put("/editUnidad" , ec.editUnidad)
+// Editar modulo
+router.put("/editModulo" , ec.editModulo)
+// Cronogram vigente 
+// Devuelve el cronograma de un grupo
+router.get("/cronograma/:idGrupo", ec.administradorCronogramaVigente);
+// Cambia la configuración y el estado del módulo
 
 // Exportamos la configuración
 module.exports = router;

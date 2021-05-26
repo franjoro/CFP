@@ -96,11 +96,70 @@ ec.addCarrera = async (req, res) => {
 
 ec.addGrupo = async (req, res) => {
   const { nombregrupo, id_carrera } = req.body;
+  const year = new Date().getFullYear();
+  const lastday = function (m, n) {
+    return `${new Date(year, m, 0).getDate()}/${m}/${year+n}`;
+  };
   try {
-    await pool.query(
+    const {
+      insertId,
+    } = await pool.query(
       "INSERT INTO tb_ec_grupo(Nombre , id_carrera) VALUES (?, ? )",
       [nombregrupo, id_carrera]
     );
+    let modulos = pool.query(
+      "SELECT id , Nombre, fechaInicio, fechaFin FROM tb_ec_modulos WHERE isModel = 1 AND  idCarrera = ?",
+      id_carrera
+    );
+    let unidades = pool.query(
+      "SELECT id , Nombre, idModulo FROM tb_ec_unidades WHERE isModel = 1 AND  idCarrera = ?",
+      id_carrera
+    );
+    const query = await Promise.all([modulos, unidades]);
+    modulos = query[0];
+    unidades = query[1];
+    const datosModeloOrdenado = [];
+    modulos.forEach((element, id) => {
+      const arrModelo = [];
+      const obj = {};
+      unidades.forEach((unidad) => {
+        if (unidad.idModulo == element.id) {
+          let obj = {};
+          obj["UnidadName"] = unidad.Nombre;
+          obj["idUnidad"] = unidad.id;
+          obj["Inicio"] = unidad.fechaInicio;
+          obj["Fin"] = unidad.fechaFin;
+          arrModelo.push(obj);
+        }
+      });
+      obj["modelo"] = element.Nombre;
+      obj["unidades"] = arrModelo;
+      obj["idModelo"] = element.id;
+      obj["fechaInicio"] = element.fechaInicio;
+      obj["fechaFin"] = element.fechaFin;
+      datosModeloOrdenado[id] = obj;
+    });
+    const promesasUnidades = [];
+    datosModeloOrdenado.forEach(async (element) => {
+      let FechaFin = lastday(`${element.fechaFin}` ,0);
+      if(element.fechaInicio >= element.fechaFin){
+        FechaFin = lastday(`${element.fechaFin}`, 1);
+      }
+      let FechaInicio = `01/${element.fechaInicio}/${year}`;
+      const idM = await pool.query(
+        "INSERT INTO tb_ec_modulos(Nombre,fechaInicio,fechaFin,Estado,isModel,idCarrera,idGrupo) VALUES(?,?,?,1,0,?,?)",
+        [element.modelo, FechaInicio, FechaFin, id_carrera, insertId]
+      );
+      element.unidades.forEach((e) => {
+        promesasUnidades.push(
+          pool.query(
+            "INSERT INTO tb_ec_unidades(Nombre, isModel, idModulo, idCarrera, idGrupo)  VALUES(?,0,?,?,?)",
+            [e.UnidadName, idM.insertId, id_carrera, insertId]
+          )
+        );
+      });
+    });
+    await Promise.all(promesasUnidades);
     res.json({ status: true });
   } catch (error) {
     console.log(error);
@@ -108,10 +167,82 @@ ec.addGrupo = async (req, res) => {
   }
 };
 
+ec.addModelo = async (req, res) => {
+  const { Nombre, Inicio, Fin, idCarrera } = req.body;
+  try {
+    await pool.query(
+      "INSERT INTO tb_ec_modulos(Nombre, fechaInicio, fechaFin, Estado, isModel, idCarrera) VALUES (?, ? ,? , 1 , 1 ,? )",
+      [Nombre, Inicio, Fin, idCarrera]
+    );
+    res.json({ status: true });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json(error);
+  }
+};
+ec.addUnidad = async (req, res) => {
+  const { Nombre, idModulo, idCarrera } = req.body;
+  try {
+    await pool.query(
+      "INSERT INTO tb_ec_unidades(Nombre, isModel, idModulo, idCarrera) VALUES (?, 1 ,? ,?)",
+      [Nombre, idModulo, idCarrera]
+    );
+    res.json({ status: true });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json(error);
+  }
+};
+ec.deleteModelo = async (req, res) => {
+  const { idModelo } = req.body;
+  try {
+    await pool.query("DELETE FROM tb_ec_modulos WHERE id = ? ", [idModelo]);
+    res.json({ status: true });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json(error);
+  }
+};
+ec.deleteUnidad = async (req, res) => {
+  const { idUnidad } = req.body;
+  try {
+    await pool.query("DELETE FROM tb_ec_unidades WHERE id = ? ", [idUnidad]);
+    res.json({ status: true });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json(error);
+  }
+};
+ec.editUnidad = async (req, res) => {
+  const { idUnidad, unidad } = req.body;
+  try {
+    await pool.query("UPDATE tb_ec_unidades SET Nombre=? WHERE id=?  ", [
+      unidad,
+      idUnidad,
+    ]);
+    res.json({ status: true });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json(error);
+  }
+};
+ec.editModulo = async (req, res) => {
+  const { idModulo, Nombre, Inicio, Fin } = req.body;
+  try {
+    await pool.query(
+      "UPDATE tb_ec_modulos SET Nombre=?  , fechaInicio=?, fechaFin = ?  WHERE id=?  ",
+      [Nombre, Inicio, Fin, idModulo]
+    );
+    res.json({ status: true });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json(error);
+  }
+};
 ec.tabla = async (req, res) => {
   const { idgrupo } = req.params;
   const data = await pool.query(
-    `SELECT carnet ,  JSON_UNQUOTE( JSON_EXTRACT ( json1 , "$.Nombres" ) ) AS Nombres , JSON_UNQUOTE( JSON_EXTRACT ( json1 , "$.Apellidos" ) ) AS Apellidos, JSON_UNQUOTE( JSON_EXTRACT ( json1 , "$.Sexo" ) ) AS Sexo    FROM tb_ec_alumno WHERE id_grupo = ?`,
+    `SELECT carnet ,  Nombres , Apellidos FROM tb_ec_alumno WHERE id_grupo = ?`,
     [idgrupo]
   );
   res.json({ data });
@@ -154,14 +285,17 @@ ec.administradorModelo = async (req, res) => {
     const datosModeloOrdenado = [];
     modulos.forEach((element, id) => {
       const arrModelo = [];
+      const arrModeloIds = [];
       const obj = {};
       unidades.forEach((unidad) => {
         if (unidad.idModulo == element.id) {
           arrModelo.push(unidad.Nombre);
+          arrModeloIds.push(unidad.id);
         }
       });
       obj["modelo"] = element.Nombre;
       obj["unidades"] = arrModelo;
+      obj["unidadesID"] = arrModeloIds;
       obj["idModelo"] = element.id;
       obj["fechaInicio"] = getMonth(element.fechaInicio);
       obj["fechaFin"] = getMonth(element.fechaFin);
@@ -171,6 +305,65 @@ ec.administradorModelo = async (req, res) => {
       data: usuario.data,
       datos: datosModeloOrdenado,
       carrera,
+      carreraID: idCarrera,
+    });
+  } catch (error) {
+    console.log(error);
+    res.json({ status: false, error }).status(400);
+  }
+};
+ec.administradorCronogramaVigente = async (req, res) => {
+  const usuario = getUserDataByToken(req.cookies.token);
+  const { idGrupo } = req.params;
+  try {
+    let carrera = pool.query(
+      "SELECT tb_ec_grupo.Nombre AS Grupo , tb_ec_carrera.Nombre AS Carrera FROM tb_ec_grupo INNER JOIN tb_ec_carrera ON tb_ec_carrera.id = tb_ec_grupo.id_carrera WHERE tb_ec_grupo.id = ?",
+      idGrupo
+    );
+    let modulos = pool.query(
+      "SELECT id , Nombre, fechaInicio, fechaFin FROM tb_ec_modulos WHERE isModel = 0 AND  idGrupo = ?",
+      idGrupo
+    );
+    let unidades = pool.query(
+      "SELECT tb_ec_unidades.id , tb_ec_unidades.Nombre, tb_ec_unidades.idModulo , tb_ec_unidades.fechaInicio, tb_ec_unidades.fechaFin, tb_ec_unidades.Estado , (SELECT Nombre FROM tb_usuarios WHERE id_usuario = tb_ec_unidades.id_usuario) AS Usuario FROM tb_ec_unidades WHERE isModel = 0 AND  idGrupo = ?",
+      idGrupo
+    );
+    let grupo;
+    const query = await Promise.all([carrera, modulos, unidades]);
+
+    carrera = query[0][0].Carrera;
+    grupo = query[0][0].Grupo;
+    modulos = query[1];
+    unidades = query[2];
+    const datosModeloOrdenado = [];
+    modulos.forEach((element, id) => {
+      const arrModelo = [];
+      const obj = {};
+      unidades.forEach((unidad) => {
+        if (unidad.idModulo == element.id) {
+          let obj = {};
+          obj["UnidadName"] = unidad.Nombre;
+          obj["idUnidad"] = unidad.id;
+          obj["Inicio"] = unidad.fechaInicio;
+          obj["Fin"] = unidad.fechaFin;
+          obj["Estado"] = unidad.Estado;
+          obj["Usuario"] = unidad.Usuario;
+          arrModelo.push(obj);
+        }
+      });
+      obj["modelo"] = element.Nombre;
+      obj["unidades"] = arrModelo;
+      obj["idModelo"] = element.id;
+      obj["fechaInicio"] = element.fechaInicio;
+      obj["fechaFin"] = element.fechaFin;
+      datosModeloOrdenado[id] = obj;
+    });
+    res.render("ec/cronograma", {
+      data: usuario.data,
+      datos: datosModeloOrdenado,
+      carrera,
+      grupo,
+      carreraID: idGrupo,
     });
   } catch (error) {
     console.log(error);
