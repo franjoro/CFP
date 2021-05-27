@@ -56,9 +56,10 @@
             <% datos.forEach( (element)=> { %>
               <div class="col-md-3" id="<%= // element.id %>">
                 <div class="card shadow mb-3">
-                  <div class="card-body">
+                  <div class="card-body ">
                     <h5>
                       <%= element.modelo %>
+                      <div class="table-responsive">
                         <table class="table table-striped">
                           <thead>
                             <tr>
@@ -77,8 +78,9 @@
                             </tr>
                           </tbody>
                         </table>
+                      </div>
                         <button class="btn btn-info btn-block"
-                          onclick="editActualModule('<%=element.idModelo%>', '<%= element.modelo%>', '<%= element.fechaInicio %>' , '<%= element.fechaFin %>')">
+                          onclick="editActualModuleVigente('<%=element.idModelo%>', '<%= element.modelo%>', '<%= element.fechaInicio %>' , '<%= element.fechaFin %>')">
                           <i class="fas fa-edit"></i> Editar Módulo
                         </button>
                         <button class="btn btn-danger btn-block" onclick="deleteModulo('<%= element.idModelo%>')">
@@ -139,7 +141,7 @@
                               </td>
                               <td style="width: 25%">
                                 <button class="btn btn-info btn-block"
-                                  onclick="editActualUnit('<%= uni.idUnidad %>','<%=uni%>')">
+                                  onclick="editActualUnitVigente('<%= uni.idUnidad %>','<%=uni.UnidadName %>', ' <%= element.fechaInicio %>', ' <%= element.fechaFin %>' , '<%= uni.Inicio %>' , '<%= uni.Fin %>'  , '<%= uni.Usuario %>'  )">
                                   <i class="fas fa-edit"></i>
                                   Editar unidad
                                 </button>
@@ -162,9 +164,7 @@
       </div>
     </div>
   </div>
-
   <input type="hidden" name="carrera" id="carrera" value="<%= carreraID%>" />
-
   <template id="newModule">
     <swal-html>
       <div class="row">
@@ -176,40 +176,14 @@
       <hr />
       <div class="row">
         <div class="col-md-6">
-          <label>Fecha Inicio</label><select class="form-control" id="MdlInicio">
-            <option value="01">Enero</option>
-            <option value="02">Febrero</option>
-            <option value="03">Marzo</option>
-            <option value="04">Abril</option>
-            <option value="05">Mayo</option>
-            <option value="06">Junio</option>
-            <option value="07">Julio</option>
-            <option value="08">Agosto</option>
-            <option value="09">Septiembre</option>
-            <option value="10">Octubre</option>
-            <option value="11">Noviembre</option>
-            <option value="12">Diciembre</option>
-          </select>
+          <label>Fecha Inicio</label><input type="text" class="form-control text-uppercase" placeholder="Inicio"
+          id="MdlInicio" />
         </div>
         <div class="col-md-6">
-          <label>Fecha Fin</label><select class="form-control" id="MdlFin">
-            <option value="01">Enero</option>
-            <option value="02">Febrero</option>
-            <option value="03">Marzo</option>
-            <option value="04">Abril</option>
-            <option value="05">Mayo</option>
-            <option value="06">Junio</option>
-            <option value="07">Julio</option>
-            <option value="08">Agosto</option>
-            <option value="09">Septiembre</option>
-            <option value="10">Octubre</option>
-            <option value="11">Noviembre</option>
-            <option value="12">Diciembre</option>
-          </select>
+          <label>Fecha Fin</label><input type="text" class="form-control text-uppercase" placeholder="FIN"
+          id="MdlFin" />
         </div>
       </div>
-      <small><span class="font-weight-bold">Nota:</span> Si la fecha de inicio es
-        mayor a la de fin, el rango tomará el siguiente año en cuenta</small>
     </swal-html>
   </template>
 
@@ -219,6 +193,27 @@
         <div class="col-md-12">
           <label>Escriba el nombre de la unidad</label><input type="text" class="form-control text-uppercase"
             placeholder="Nombre de la unidad" id="UnitNombre" />
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-4">
+            <label>Seleccione instructor</label>
+            <select id="UnitProfesor" class="form-control">
+              <option selected disabled value="0">Seleccione</option>
+              <% profesores.forEach( (e)=> {   %>
+              <option value="<%= e.id_usuario  %>"><%=e.Nombre %></option>
+              <%})%>
+            </select>
+        </div>
+        <div class="col-md-4">
+          <label>Seleccione fecha inicio</label>
+          <input type="text" class="form-control text-uppercase"
+            placeholder="Fecha Inicio" id="UnitInicio" />
+        </div>
+        <div class="col-md-4">
+          <label>Seleccione fecha fin</label>
+          <input type="text" class="form-control text-uppercase"
+            placeholder="Fecha Fin" id="UnitFin" />
         </div>
       </div>
       <hr />

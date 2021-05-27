@@ -49,10 +49,11 @@ router.delete("/deleteUnidad" , ec.deleteUnidad);
 router.put("/editUnidad" , ec.editUnidad)
 // Editar modulo
 router.put("/editModulo" , ec.editModulo)
+
 // Cronogram vigente 
 // Devuelve el cronograma de un grupo
 router.get("/cronograma/:idGrupo", ec.administradorCronogramaVigente);
-// Cambia la configuración y el estado del módulo
-
+// Cambia la configuración y el estado de la unidad
+router.put("/ConfigUnit", ec.editUnidadVigente)
 // Exportamos la configuración
 module.exports = router;

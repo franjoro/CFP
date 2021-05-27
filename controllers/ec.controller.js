@@ -328,13 +328,14 @@ ec.administradorCronogramaVigente = async (req, res) => {
       "SELECT tb_ec_unidades.id , tb_ec_unidades.Nombre, tb_ec_unidades.idModulo , tb_ec_unidades.fechaInicio, tb_ec_unidades.fechaFin, tb_ec_unidades.Estado , (SELECT Nombre FROM tb_usuarios WHERE id_usuario = tb_ec_unidades.id_usuario) AS Usuario FROM tb_ec_unidades WHERE isModel = 0 AND  idGrupo = ?",
       idGrupo
     );
+    let profesores = pool.query("SELECT id_usuario, Nombre FROM tb_usuarios WHERE Role = 2");
     let grupo;
-    const query = await Promise.all([carrera, modulos, unidades]);
-
+    const query = await Promise.all([carrera, modulos, unidades, profesores]);
     carrera = query[0][0].Carrera;
     grupo = query[0][0].Grupo;
     modulos = query[1];
     unidades = query[2];
+    profesores = query[3];
     const datosModeloOrdenado = [];
     modulos.forEach((element, id) => {
       const arrModelo = [];
@@ -364,10 +365,27 @@ ec.administradorCronogramaVigente = async (req, res) => {
       carrera,
       grupo,
       carreraID: idGrupo,
+      profesores
     });
   } catch (error) {
     console.log(error);
     res.json({ status: false, error }).status(400);
+  }
+};
+ec.editUnidadVigente = async (req, res) => {
+  const { idUnidad, unidad , inicio, fin, profesor } = req.body;
+  try {
+    await pool.query("UPDATE tb_ec_unidades SET Nombre=?, fechaInicio = ?, fechaFin =? , Estado = 1  , id_usuario=? WHERE id=?  ", [
+      unidad,
+      inicio, 
+      fin,
+      profesor,
+      idUnidad
+    ]);
+    res.json({ status: true });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json(error);
   }
 };
 module.exports = ec;

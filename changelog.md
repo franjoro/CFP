@@ -7,6 +7,12 @@
     - Al ingresar una solicitud enviar correo a los participantes para verificar validez
     - Terminar funcionalidades del cronograma vigente de empresa centro
 
+    ## [1.0.5] - 27/05/2021
+    ### Added
+    - Actualización de funciones del cronograma vigente
+    - Activación de unidades en cronograma vigente
+
+
     ## [1.0.4] - 26/05/2021
     ### Added
     - Agregada opción de  cronograma modelos para las carreras de ec : modulos, unidades insertar, modificar eliminar en ambos
