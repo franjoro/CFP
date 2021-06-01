@@ -1,222 +1,229 @@
 <link rel="stylesheet" href="/static/vendor/datatables/datatables.min.css" />
-<link
-  rel="stylesheet"
-  href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
-/>
-<link
-  href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css"
-  rel="stylesheet"
-  type="text/css"
-/>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"
+  type="text/css" />
 <%- include('../partials/header.admin.ejs'); %>
-<div class="container-fluid">
-  <div class="row container-fluid">
-    <div class="col-lg-12">
-      <div class="card shadow mb-4">
-        <div class="card-header py-3">
-          <a
-            href="/admin/ec/administrador%>"
-            class="btn btn-success btn-sm float-left d-inline"
-            ><i class="fas fa-arrow-left"></i
-          ></a>
-        </div>
-        <div class="card-body">
-          <div class="card shadow mb-3">
-            <div class="card-body">
-              <h5>
-                Cronograma modelo
-                <span class="font-weight-bold"> <%= carrera %> </span>
-              </h5>
-            </div>
+  <div class="container-fluid">
+    <div class="row container-fluid">
+      <div class="col-lg-12">
+        <div class="card shadow mb-4">
+          <div class="card-header py-3">
+            <a href="/admin/ec/administrador%>" class="btn btn-success btn-sm float-left d-inline"><i
+                class="fas fa-arrow-left"></i></a>
           </div>
-          <small
-            ><span class="font-weight-bold">Nota: </span>El modelo actúal se
-            replicara en cada grupo creado</small
-          >
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="row container-fluid">
-    <div class="col-lg-12">
-      <div class="card shadow mb-4">
-        <div class="card-header py-3">
-          <h6 class="m-0 font-weight-bold text-primary d-inline">
-            Modelo de módulos y unidades
-          </h6>
-          <button
-            class="btn btn-sm btn-success d-inline float-right"
-            id="addNewModuleBtn"
-          >
-            Agregar Módulo
-          </button>
-          <p></p>
-        </div>
-        <div class="card-body row">
-          <% datos.forEach( (element)=> { %>
-          <div class="col-md-4" id="<%= // element.id %>">
+          <div class="card-body">
             <div class="card shadow mb-3">
               <div class="card-body">
                 <h5>
-                  <%= element.modelo %>
-                  <table class="table table-striped">
-                    <thead>
-                      <tr>
-                        <th>Fecha inicio</th>
-                        <th>Fecha Fin</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td><%= element.fechaInicio %></td>
-                        <td><%= element.fechaFin %></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <button class="btn btn-info btn-block" onclick="editActualModule('<%=element.idModelo%>', '<%= element.modelo%>', '<%= element.fechaInicio %>' , '<%= element.fechaFin %>')">
-                    <i class="fas fa-edit"></i> Editar Módulo
-                  </button>
-                  <button
-                    class="btn btn-danger btn-block"
-                    onclick="deleteModulo('<%= element.idModelo%>')"
-                  >
-                    <i class="fas fa-trash-alt"></i> Eliminar Módulo
-                  </button>
+                  Cronograma modelo
+                  <span class="font-weight-bold">
+                    <%= carrera %>
+                  </span>
                 </h5>
               </div>
             </div>
+            <small><span class="font-weight-bold">Nota: </span>El modelo actúal se
+              replicara en cada grupo creado</small>
           </div>
-          <div class="col-md-8">
-            <div class="card shadow mb-3">
-              <div class="card-body">
-                <h5 class="text-dark d-inline">
-                  Unidades pertenecientes al módulo
-                </h5>
-                <button
-                  class="btn btn-sm btn-success d-inline float-right addNewUnitBtn"
-                  onclick="addNewUnit('<%= element.idModelo %>', '<%= element.modelo %>')">
-                  Agregar unidad
-                </button>
-                <hr />
-                <div class="table-responsive">
-                  <table
-                    class="table table-bordered table-striped table-sm"
-                    width="100%"
-                    cellspacing="0">
-                    <thead>
-                      <tr>
-                        <th>Nombre de la unidad</th>
-                        <th>Editar unidad</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <% element.unidades.forEach( (uni, id)=> { %>
-                      <tr>
-                        <td>
-                          <small> <%= uni %> </small>
-                        </td>
-                        <td style="width: 25%">
-                          <button class="btn btn-info btn-sm" onclick="editActualUnit('<%=element.unidadesID[id]%>','<%=uni%>')">Editar</button>
-                          <button class="btn btn-danger btn-sm" onclick="deleteUnidad('<%=element.unidadesID[id]%>')">
-                            Eliminar
-                          </button>
-                        </td>
-                      </tr>
-                      <% }); %>
-                    </tbody>
-                  </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="row container-fluid">
+      <div class="col-lg-12">
+        <div class="card shadow mb-4">
+          <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary d-inline">
+              Modelo de módulos y unidades
+            </h6>
+            <button class="btn btn-sm btn-success d-inline float-right" id="addNewModuleBtn">
+              Agregar Módulo
+            </button>
+            <p></p>
+          </div>
+          <div class="card-body row">
+            <% datos.forEach( (element)=> { %>
+              <div class="col-md-4" id="<%= // element.id %>">
+                <div class="card shadow mb-3">
+                  <div class="card-body">
+                    <h5>
+                      <%= element.modelo %>
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th>Fecha inicio</th>
+                              <th>Fecha Fin</th>
+                              <th>Horas</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>
+                                <%= element.fechaInicio %>
+                              </td>
+                              <td>
+                                <%= element.fechaFin %>
+                              </td>
+                              <td>
+                                <%= element.horas %>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <hr>
+                        <% if(element.horas == element.totalHorasUnidades) {%>
+                          <p><span class="badge badge-success"><i class="fas fa-check"></i> HORAS CONCUERDAN</span></p>
+                        <% }else{%>
+                          <p><span class="badge badge-warning"><i class="fas fa-exclamation-triangle"></i> HORAS NO CONCUERDAN</span></p>
+                        <% }%>
+                        
+                        <button class="btn btn-info btn-block"
+                          onclick="editActualModule('<%=element.idModelo%>', '<%= element.modelo%>', '<%= element.fechaInicio %>' , '<%= element.fechaFin %>' , '<%= element.horas %>')">
+                          <i class="fas fa-edit"></i> Editar Módulo
+                        </button>
+                        <button class="btn btn-danger btn-block" onclick="deleteModulo('<%= element.idModelo%>')">
+                          <i class="fas fa-trash-alt"></i> Eliminar Módulo
+                        </button>
+                    </h5>
+                  </div>
                 </div>
               </div>
-            </div>
+              <div class="col-md-8">
+                <div class="card shadow mb-3">
+                  <div class="card-body">
+                    <h5 class="text-dark d-inline">
+                      Unidades pertenecientes al módulo
+                    </h5>
+                    <button class="btn btn-sm btn-success d-inline float-right addNewUnitBtn"
+                      onclick="addNewUnit('<%= element.idModelo %>', '<%= element.modelo %>')">
+                      Agregar unidad
+                    </button>
+                    <hr />
+                    <div class="table-responsive">
+                      <table class="table table-bordered table-striped table-sm" width="100%" cellspacing="0">
+                        <thead>
+                          <tr>
+                            <th>Nombre de la unidad</th>
+                            <th>Horas</th>
+                            <th>Editar unidad</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% element.unidades.forEach( (uni, id)=> { %>
+                            <tr>
+                              <td>
+                                <small>
+                                  <%= uni.UnidadName %>
+                                </small>
+                              </td>
+                              <td>
+                                <small>
+                                  <%= uni.horas %>
+                                </small>
+                              </td>
+                              <td style="width: 25%">
+                                <button class="btn btn-info btn-sm"
+                                  onclick="editActualUnit('<%=uni.UnidadID %>','<%=uni.UnidadName%>' ,'<%=uni.horas%>')">Editar</button>
+                                <button class="btn btn-danger btn-sm" onclick="deleteUnidad('<%=uni.UnidadID %>')">
+                                  Eliminar
+                                </button>
+                              </td>
+                            </tr>
+                            <% }); %>
+                            <tr>
+                              <td colspan="2"> 
+                                <p class="text-right">Total Horas <%=element.totalHorasUnidades %></p>
+                              </td>
+                            </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <% }); %>
           </div>
-          <% }); %>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<input type="hidden" name="carrera" id="carrera" value="<%= carreraID%>" />
+  <input type="hidden" name="carrera" id="carrera" value="<%= carreraID%>" />
 
-<template id="newModule">
-  <swal-html>
-    <div class="row">
-      <div class="col-md-12">
-        <label>Nombre</label
-        ><input
-          type="text"
-          class="form-control text-uppercase"
-          placeholder="Nombre del módulo"
-          id="MdlNombre"
-        />
+  <template id="newModule">
+    <swal-html>
+      <div class="row">
+        <div class="col-md-12">
+          <label>Nombre</label><input type="text" class="form-control text-uppercase" placeholder="Nombre del módulo"
+            id="MdlNombre" />
+        </div>
       </div>
-    </div>
-    <hr />
-    <div class="row">
-      <div class="col-md-6">
-        <label>Fecha Inicio</label
-        ><select class="form-control" id="MdlInicio">
-          <option value="01">Enero</option>
-          <option value="02">Febrero</option>
-          <option value="03">Marzo</option>
-          <option value="04">Abril</option>
-          <option value="05">Mayo</option>
-          <option value="06">Junio</option>
-          <option value="07">Julio</option>
-          <option value="08">Agosto</option>
-          <option value="09">Septiembre</option>
-          <option value="10">Octubre</option>
-          <option value="11">Noviembre</option>
-          <option value="12">Diciembre</option>
-        </select>
+      <hr />
+      <div class="row">
+        <div class="col-md-4">
+          <label>Fecha Inicio</label><select class="form-control" id="MdlInicio">
+            <option value="01">Enero</option>
+            <option value="02">Febrero</option>
+            <option value="03">Marzo</option>
+            <option value="04">Abril</option>
+            <option value="05">Mayo</option>
+            <option value="06">Junio</option>
+            <option value="07">Julio</option>
+            <option value="08">Agosto</option>
+            <option value="09">Septiembre</option>
+            <option value="10">Octubre</option>
+            <option value="11">Noviembre</option>
+            <option value="12">Diciembre</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label>Fecha Fin</label><select class="form-control" id="MdlFin">
+            <option value="01">Enero</option>
+            <option value="02">Febrero</option>
+            <option value="03">Marzo</option>
+            <option value="04">Abril</option>
+            <option value="05">Mayo</option>
+            <option value="06">Junio</option>
+            <option value="07">Julio</option>
+            <option value="08">Agosto</option>
+            <option value="09">Septiembre</option>
+            <option value="10">Octubre</option>
+            <option value="11">Noviembre</option>
+            <option value="12">Diciembre</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label>Horas totales del módulo</label>
+          <input type="number" name="MdlHoras" class="form-control" id="MdlHoras" placeholder="0" min="0" step="1"
+            oninput="this.value = Math.round(this.value);">
+        </div>
       </div>
-      <div class="col-md-6">
-        <label>Fecha Fin</label
-        ><select class="form-control" id="MdlFin">
-          <option value="01">Enero</option>
-          <option value="02">Febrero</option>
-          <option value="03">Marzo</option>
-          <option value="04">Abril</option>
-          <option value="05">Mayo</option>
-          <option value="06">Junio</option>
-          <option value="07">Julio</option>
-          <option value="08">Agosto</option>
-          <option value="09">Septiembre</option>
-          <option value="10">Octubre</option>
-          <option value="11">Noviembre</option>
-          <option value="12">Diciembre</option>
-        </select>
-      </div>
-    </div>
-    <small
-      ><span class="font-weight-bold">Nota:</span> Si la fecha de inicio es
-      mayor a la de fin, el rango tomará el siguiente año en cuenta</small
-    >
-  </swal-html>
-</template>
+      <small><span class="font-weight-bold">Nota:</span> Si la fecha de inicio es
+        mayor a la de fin, el rango tomará el siguiente año en cuenta</small>
+    </swal-html>
+  </template>
 
-<template id="newUnit">
-  <swal-html>
-    <div class="row">
-      <div class="col-md-12">
-        <label>Escriba el nombre de la unidad</label
-        ><input
-          type="text"
-          class="form-control text-uppercase"
-          placeholder="Nombre de la unidad"
-          id="UnitNombre"
-        />
+  <template id="newUnit">
+    <swal-html>
+      <div class="row">
+        <div class="col-md-10">
+          <label>Escriba el nombre de la unidad</label><input type="text" class="form-control text-uppercase"
+            placeholder="Nombre de la unidad" id="UnitNombre" />
+        </div>
+        <div class="col-md-2">
+          <label>Horas</label>
+          <input type="number" name="MdlHoras" class="form-control" id="UnitHoras" placeholder="0" min="0" step="1"
+            oninput="this.value = Math.round(this.value);">
+        </div>
       </div>
-    </div>
-    <hr />
-  </swal-html>
-</template>
+      <hr />
+    </swal-html>
+  </template>
 
-<!-- /.container-fluid -->
-<%- include('../partials/footer'); %>
-<script src="/static/js/jquery.mask.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
-<script src="/static/js/ec/model.js"></script>
+  <!-- /.container-fluid -->
+  <%- include('../partials/footer'); %>
+    <script src="/static/js/jquery.mask.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <script src="/static/js/ec/model.js"></script>

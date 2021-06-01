@@ -9,7 +9,7 @@ const loader = () => {
     },
   });
 };
-
+// AGREGAR NUEVO MODULO EN MODELO
 const addNewModel = async () => {
   try {
     const { value: formValues } = await Swal.fire({
@@ -22,10 +22,12 @@ const addNewModel = async () => {
       allowOutsideClick: false,
       preConfirm: () => {
         if (!$("#MdlNombre").val()) return false;
+        if (!$("#MdlHoras").val()) return false;
         return [
           $("#MdlNombre").val(),
           $("#MdlInicio").val(),
           $("#MdlFin").val(),
+          $("#MdlHoras").val()
         ];
       },
     });
@@ -35,7 +37,9 @@ const addNewModel = async () => {
         Inicio: formValues[1],
         Fin: formValues[2],
         idCarrera: $("#carrera").val(),
+        horas : formValues[3]
       };
+      console.log(data);
       const query = await $.ajax({
         type: "POST",
         url: "/admin/ec/addModelo",
@@ -50,7 +54,7 @@ const addNewModel = async () => {
     Swal.fire(`Error : ${error}`);
   }
 };
-
+// AGREGAR NUEVA UNIDAD EN MODELO
 const addNewUnit = async (idModulo, modulo) => {
   try {
     const { value: formValues } = await Swal.fire({
@@ -63,12 +67,14 @@ const addNewUnit = async (idModulo, modulo) => {
       allowOutsideClick: false,
       preConfirm: () => {
         if (!$("#UnitNombre").val()) return false;
-        return [$("#UnitNombre").val()];
+        if (!$("#UnitHoras").val()) return false;
+        return [$("#UnitNombre").val(), $("#UnitHoras").val()];
       },
     });
     if (formValues) {
       const data = {
         Nombre: formValues[0],
+        horas: formValues[1],
         idModulo,
         idCarrera: $("#carrera").val(),
       };
@@ -86,8 +92,8 @@ const addNewUnit = async (idModulo, modulo) => {
     Swal.fire(`Error : ${error}`);
   }
 };
-
-const editActualUnit = async (idUnidad, unidad) => {
+// EDITAR UNIDAD EN MODELO
+const editActualUnit = async (idUnidad, unidad, horas) => {
   try {
     const { value: formValues } = await Swal.fire({
       title: `Editar nombre de unidad`,
@@ -99,15 +105,17 @@ const editActualUnit = async (idUnidad, unidad) => {
       allowOutsideClick: false,
       didOpen: () => {
         $("#UnitNombre").val(unidad);
+        $("#UnitHoras").val(horas);
       },
       preConfirm: () => {
         if (!$("#UnitNombre").val()) return false;
-        return [$("#UnitNombre").val()];
+        return [$("#UnitNombre").val() , $("#UnitHoras").val()];
       },
     });
     if (formValues) {
       const data = {
         unidad: formValues[0],
+        horas : formValues[1],
         idUnidad,
       };
       const query = await $.ajax({
@@ -124,8 +132,8 @@ const editActualUnit = async (idUnidad, unidad) => {
     Swal.fire(`Error : ${error}`);
   }
 };
-
-const editActualModule = async (idModulo, modulo, inicio, fin) => {
+// EDITAR MODULO EN MODELO
+const editActualModule = async (idModulo, modulo, inicio, fin , horas) => {
   try {
     const { value: formValues } = await Swal.fire({
       title: `Editar nombre del módulo`,
@@ -137,6 +145,8 @@ const editActualModule = async (idModulo, modulo, inicio, fin) => {
       allowOutsideClick: false,
       didOpen: () => {
         $("#MdlNombre").val(modulo);
+        $("#MdlHoras").val(horas);
+
         $("#MdlInicio option")
           .filter(function () {
             return $(this).text() == inicio;
@@ -151,7 +161,12 @@ const editActualModule = async (idModulo, modulo, inicio, fin) => {
       },
       preConfirm: () => {
         if (!$("#MdlNombre").val()) return false;
-        return [$("#MdlNombre").val(), $("#MdlInicio").val() , $("#MdlFin").val()];
+        return [
+          $("#MdlNombre").val(),
+          $("#MdlInicio").val(),
+          $("#MdlFin").val(),
+          $("#MdlHoras").val()
+        ];
       },
     });
     if (formValues) {
@@ -159,7 +174,8 @@ const editActualModule = async (idModulo, modulo, inicio, fin) => {
         Nombre: formValues[0],
         Inicio: formValues[1],
         Fin: formValues[2],
-        idModulo
+        horas: formValues[3],
+        idModulo,
       };
       const query = await $.ajax({
         type: "PUT",
@@ -259,9 +275,7 @@ const editActualModuleVigente = async (idModulo, modulo, inicio, fin) => {
       didOpen: () => {
         $("#MdlNombre").val(modulo);
         $("#MdlInicio").val(inicio).datepicker({ dateFormat: "dd/mm/yy" });
-        $("#MdlFin")
-          .val(fin)
-          .datepicker({ dateFormat: "dd/mm/yy", autoSize: true });
+        $("#MdlFin").val(fin).datepicker({ dateFormat: "dd/mm/yy" });
       },
       preConfirm: () => {
         if (!$("#MdlNombre").val()) return false;
@@ -282,6 +296,105 @@ const editActualModuleVigente = async (idModulo, modulo, inicio, fin) => {
       const query = await $.ajax({
         type: "PUT",
         url: "/admin/ec/editModulo",
+        data,
+      });
+      if (query) {
+        location.reload();
+      }
+    }
+  } catch (error) {
+    console.log(error);
+    Swal.fire(`Error : ${error}`);
+  }
+};
+
+const addNewModelVigente = async () => {
+  try {
+    const { value: formValues } = await Swal.fire({
+      title: "Agregar nuevo módulo",
+      template: "#newModule",
+      focusConfirm: false,
+      width: 800,
+      showLoaderOnConfirm: true,
+      showCancelButton: true,
+      allowOutsideClick: false,
+      didOpen: () => {
+        $("#MdlInicio").datepicker({ dateFormat: "dd/mm/yy" });
+        $("#MdlFin").datepicker({ dateFormat: "dd/mm/yy" });
+      },
+      preConfirm: () => {
+        if (!$("#MdlNombre").val()) return false;
+        if (!$("#MdlInicio").val()) return false;
+        if (!$("#MdlFin").val()) return false;
+        return [
+          $("#MdlNombre").val(),
+          $("#MdlInicio").val(),
+          $("#MdlFin").val(),
+        ];
+      },
+    });
+    if (formValues) {
+      const data = {
+        Nombre: formValues[0],
+        Inicio: formValues[1],
+        Fin: formValues[2],
+        idGrupo: $("#grupo").val(),
+      };
+      const query = await $.ajax({
+        type: "POST",
+        url: "/admin/ec/addModeloVigente",
+        data,
+      });
+      if (query) {
+        location.reload();
+      }
+    }
+  } catch (error) {
+    console.log(error);
+    Swal.fire(`Error : ${error}`);
+  }
+};
+const addNewUnitVigente = async (idModulo, modulo) => {
+  try {
+    const { value: formValues } = await Swal.fire({
+      title: `Agregar nueva unidad en módulo : ${modulo}`,
+      template: "#newUnit",
+      focusConfirm: false,
+      width: 800,
+      showLoaderOnConfirm: true,
+      showCancelButton: true,
+      allowOutsideClick: false,
+      didOpen: () => {
+        $("#UnitInicio").datepicker({ dateFormat: "dd/mm/yy" });
+        $("#UnitFin").datepicker({ dateFormat: "dd/mm/yy" });
+      },
+      preConfirm: () => {
+        if (!$("#UnitNombre").val()) return false;
+        if (!$("#UnitProfesor").val()) return false;
+        if (!$("#UnitInicio").val()) return false;
+        if (!$("#UnitFin").val()) return false;
+
+        return [
+          $("#UnitNombre").val(),
+          $("#UnitProfesor").val(),
+          $("#UnitInicio").val(),
+          $("#UnitFin").val(),
+        ];
+      },
+    });
+    if (formValues) {
+      const data = {
+        Nombre: formValues[0],
+        profesor : formValues[1],
+        inicio: formValues[2],
+        fin: formValues[3],
+        idModulo,
+        idGrupo: $("#grupo").val(),
+      };
+      console.log(data);
+      const query = await $.ajax({
+        type: "POST",
+        url: "/admin/ec/addUnidadVigente",
         data,
       });
       if (query) {
@@ -357,6 +470,12 @@ const deleteUnidad = async (id) => {
 $("#addNewModuleBtn").click(() => {
   addNewModel();
 });
+
+$("#addNewModuleBtnVigente").click(() => {
+  addNewModelVigente();
+});
+
+
 
 $("body").on("keyup", ".text-uppercase", function () {
   $(this).val($(this).val().toUpperCase());

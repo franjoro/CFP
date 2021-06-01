@@ -20,6 +20,11 @@ router.get("/archivo",authcheck , cursos.dowloadZip);
 router.put("/UpdatePermisos",authcheck , cursos.UpdatePermisos)
 //actualizar permisos de edición
 router.delete("/deleteFiles3", authcheck , cursos.deleteFiles3)
+// editar comentario
+router.put("/UpdateComment",authcheck , cursos.UpdateComment)
+// Enviar notificacion a empresas por correo 
+router.post("/sendNotificacion",authcheck , cursos.sendNotificacion);
+
 
 
 

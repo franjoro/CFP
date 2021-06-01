@@ -85,12 +85,12 @@ cursos.curso_detalle = async (req, res) => {
     // Traer de bd Las empresas que estan matriculadas al curso y los alumnos asociados
     let typeQuery;
     if (tipo === "curso") {
-      typeQuery = `SELECT  tb_cursos . Codigo_curso ,  tb_cursos . Nombre ,  tb_cursos . Date_inicio ,  tb_cursos . Date_fin ,  tb_cursos . Orden ,  tb_cursos . Agrupacion ,  tb_cursos . Horario ,  tb_cursos . CostoAlumno ,  tb_cursos . Factura ,  tb_instructor . Nombre AS instructor , tb_cursos.Modalidad , tb_cursos.id_modalidad, tb_cursos.Documento , tb_cursos.id_documento , tb_cursos.Fechas  FROM  tb_instructor  INNER JOIN  tb_cursos  ON  tb_cursos . id_instructor  =  tb_instructor . DUI  WHERE tb_cursos . Codigo_curso  = ?  GROUP BY tb_cursos.Codigo_curso`;
+      typeQuery = `SELECT  tb_cursos . Codigo_curso ,  tb_cursos . Nombre ,  tb_cursos . Date_inicio ,  tb_cursos . Date_fin ,  tb_cursos . Orden ,  tb_cursos . Agrupacion ,  tb_cursos . Horario ,  tb_cursos . CostoAlumno ,  tb_cursos . Factura ,  tb_instructor . Nombre AS instructor ,  tb_instructor . DUI AS Instructor_id , tb_cursos.Modalidad , tb_cursos.id_modalidad, tb_cursos.Documento , tb_cursos.id_documento , tb_cursos.Fechas   FROM  tb_instructor  INNER JOIN  tb_cursos  ON  tb_cursos . id_instructor  =  tb_instructor . DUI  WHERE tb_cursos . Codigo_curso  = ?  GROUP BY tb_cursos.Codigo_curso`;
     }
     if (tipo === "oferta") {
-      typeQuery = `SELECT CONCAT(Nombre,' - ',Horario) AS Nombre , Codigo_curso  , Date_inicio , Horario, Fechas, Nombre AS CursoName , CostoAlumno AS costo FROM tb_cursos WHERE Codigo_curso  = ?`;
+      typeQuery = `SELECT CONCAT(Nombre,' - ',Horario) AS Nombre , Codigo_curso  , Date_inicio , Horario, Fechas, Nombre AS CursoName , CostoAlumno AS costo  FROM tb_cursos WHERE Codigo_curso  = ?`;
     }
-    const statment = `SELECT tb_empresa.Nombre,tb_empresa.id_empresa AS codigo_empresa FROM tb_empresa INNER JOIN union_curso_empresa ON tb_empresa.id_empresa = union_curso_empresa.id_empresa WHERE union_curso_empresa.id_curso = ? GROUP BY tb_empresa.id_empresa ;SELECT tb_participante.DUI, tb_participante.Nombre, tb_participante.Telefono, tb_participante.Email, union_matricula.id_empresa , union_matricula.id_matricula FROM tb_participante  INNER JOIN union_matricula ON union_matricula.id_participante = tb_participante.DUI WHERE union_matricula.id_curso = ? ; ${typeQuery}`;
+    const statment = `SELECT tb_empresa.Nombre,tb_empresa.id_empresa AS codigo_empresa, union_curso_empresa.comentario AS comentario  FROM tb_empresa INNER JOIN union_curso_empresa ON tb_empresa.id_empresa = union_curso_empresa.id_empresa WHERE union_curso_empresa.id_curso = ? GROUP BY tb_empresa.id_empresa ;SELECT tb_participante.DUI, tb_participante.Nombre, tb_participante.Telefono, tb_participante.Email, union_matricula.id_empresa , union_matricula.id_matricula FROM tb_participante  INNER JOIN union_matricula ON union_matricula.id_participante = tb_participante.DUI WHERE union_matricula.id_curso = ? ; ${typeQuery}`;
 
     const empresas = await pool.query(statment, [curso, curso, curso]);
     // Formatear la informacion para que existan los alumnos adentro de un objeto de empresas
@@ -106,11 +106,13 @@ cursos.curso_detalle = async (req, res) => {
         id: element.codigo_empresa,
         Empresa: element.Nombre,
         Alumnos: AlumnosArray,
+        comentario: element.comentario,
         id_matricula: element.id_union,
       };
       i += 1;
     });
     // Responder
+
     return res.render("./admin/curso_detalle", {
       datos,
       curso: empresas[2][0],
@@ -297,10 +299,11 @@ cursos.edit = async (req, res) => {
       req.body.modalidad_id,
       req.body.Documento,
       req.body.documento_id,
+      req.body.instructor,
       req.body.id,
     ];
     const statment =
-      "UPDATE tb_cursos SET Nombre = ? ,Date_inicio = ?, Date_fin = ?,  Agrupacion =  ? , Orden = ?, Horario = ?, CostoAlumno = ?, Factura = ?   , Modalidad = ? , id_modalidad= ?, Documento=?, id_documento=?    WHERE Codigo_curso = ? ";
+      "UPDATE tb_cursos SET Nombre = ? ,Date_inicio = ?, Date_fin = ?,  Agrupacion =  ? , Orden = ?, Horario = ?, CostoAlumno = ?, Factura = ?   , Modalidad = ? , id_modalidad= ?, Documento=?, id_documento=? , id_instructor = ?   WHERE Codigo_curso = ? ";
     await pool.query(statment, data);
     return res.status(200).json({ status: true });
   } catch (err) {
@@ -457,18 +460,35 @@ cursos.dowloadZipCurso = (req, res) => {
 cursos.GestorDeDocumentos = async (req, res) => {
   const usuario = getUserDataByToken(req.cookies.token);
   const { curso, empresa, programa } = req.params;
-
+  const promesas = [];
   if (!curso || !empresa || !programa)
     return res.status(400).json({ status: false, error: "EMPTY_PARAMS" });
+  promesas.push(
+    pool.query(
+      "SELECT id, s3key, Role, isEditable  FROM archivo_empresa_curso WHERE id_empresa=? AND id_curso = ? AND Role != 0 ORDER BY Role ASC",
+      [empresa, curso]
+    )
+  );
+  promesas.push(
+    pool.query("SELECT Nombre FROM tb_empresa WHERE id_empresa = ? ", [empresa])
+  );
+  promesas.push(
+    pool.query(
+      "SELECT tb_participante.Nombre AS Nombre , tb_participante.DUI AS DUI , tb_participante.Email , tb_participante.ISSS, tb_participante.Cargo FROM tb_participante INNER JOIN union_matricula ON union_matricula.id_participante = tb_participante.DUI WHERE id_curso = ? AND id_empresa = ?",
+      [curso, empresa]
+    )
+  );
 
-  const query = await pool.query(
-    "SELECT id, s3key, Role, isEditable  FROM archivo_empresa_curso WHERE id_empresa=? AND id_curso = ? AND Role != 0 ORDER BY Role ASC; SELECT Nombre FROM tb_empresa WHERE id_empresa = ?  ",
-    [empresa, curso, empresa]
+  promesas.push(
+    pool.query(
+      "SELECT comentario FROM union_curso_empresa WHERE id_empresa  = ? AND id_curso = ? ",
+      [empresa, curso]
+    )
   );
-  const alumnos = await pool.query(
-    "SELECT tb_participante.Nombre AS Nombre , tb_participante.DUI AS DUI , tb_participante.Email , tb_participante.ISSS, tb_participante.Cargo FROM tb_participante INNER JOIN union_matricula ON union_matricula.id_participante = tb_participante.DUI WHERE id_curso = ? AND id_empresa = ? ",
-    [curso, empresa]
-  );
+  const promisesResult = await Promise.all(promesas);
+  const query = [promisesResult[0], promisesResult[1]];
+  const alumnos = promisesResult[2];
+  const comentario = promisesResult[3][0].comentario;
   return res.render("admin/gestor_documentos", {
     data: usuario.data,
     query,
@@ -476,6 +496,7 @@ cursos.GestorDeDocumentos = async (req, res) => {
     programa,
     empresa,
     alumnos,
+    comentario,
     tipo: req.params.tipo,
   });
 };
@@ -496,6 +517,42 @@ cursos.UpdatePermisos = async (req, res) => {
     return res.status(400).json({ status: false, error });
   }
 };
+
+cursos.UpdateComment = async (req, res) => {
+  const { valor, id_curso, id_empresa } = req.body;
+  if (!valor || !id_curso || !id_empresa)
+    return res
+      .status(400)
+      .json({ status: false, error: "PARAMS_NOT_COMPLETE" });
+  try {
+    await pool.query(
+      "UPDATE union_curso_empresa SET comentario = ? WHERE id_curso  = ? AND id_empresa=? ",
+      [valor, id_curso, id_empresa]
+    );
+    return res.status(200).json({ status: true });
+  } catch (error) {
+    return res.status(400).json({ status: false, error });
+  }
+};
+
+cursos.sendNotificacion = async (req, res) => {
+  const { id_empresa, id_curso } = req.body;
+  const promesas = [
+    pool.query("SELECT email FROM tb_empresa WHERE id_empresa = ? ", [
+      id_empresa,
+    ]),
+    pool.query("SELECT Nombre FROM tb_cursos WHERE Codigo_curso  = ? ", [
+      id_curso,
+    ]),
+  ];
+  const promisesResult = await Promise.all(promesas);
+  const email = promisesResult[0][0].email;
+  const curso = promisesResult[1][0].Nombre;
+  const html = `<h3>REVISIÓN EXITOSA DE DOCUMENTOS: Sus documentos han sido recibidos satisfactoriamente; estaremos notificando los inicios correspondientes durante la semana previa a la fecha de inicio programada. <br> Notificación correspondiente al curso : <b>${curso}</b></h3> `;
+  sendEmail(email, `DOCUMENTACIÓN APROBADA EN CURSO: ${curso}`, html);
+  res.json({ promisesResult });
+};
+
 cursos.archivos = async (req, res) => {
   if (!req.files) return res.json({ status: false, error: "FILE_NOT_EXIST" });
   const { empresa, curso, archivo, id } = req.body;

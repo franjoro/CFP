@@ -55,5 +55,13 @@ router.put("/editModulo" , ec.editModulo)
 router.get("/cronograma/:idGrupo", ec.administradorCronogramaVigente);
 // Cambia la configuración y el estado de la unidad
 router.put("/ConfigUnit", ec.editUnidadVigente)
+router.post("/addModeloVigente", ec.addModeloVigente);
+router.post("/addUnidadVigente", ec.addUnidadVigente);
+
+
+// Instructores
+router.get("/instructor", ec.instructor);
+
+
 // Exportamos la configuración
 module.exports = router;

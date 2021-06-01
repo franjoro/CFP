@@ -1,3 +1,4 @@
+
 const errorMessage = () => {
   Swal.fire({
     icon: "error",
@@ -27,6 +28,13 @@ const loaderFile = () => {
     },
   });
 };
+const Toast = Swal.mixin({
+  toast: true,
+  position: "top-end",
+  showConfirmButton: false,
+  timer: 2000,
+  timerProgressBar: true,
+});
 
 const createZip = async (curso, empresa) => {
   try {
@@ -287,94 +295,62 @@ $("#btnCopy").click(() => {
   }
 });
 
-$("#updateCommentBtn").click(() => {
-  const Toast = Swal.mixin({
-    toast: true,
-    position: "top-end",
-    showConfirmButton: false,
-    timer: 2000,
-    timerProgressBar: true,
+const updateCommentFunction =async (comentario, curso, empresa) =>{
+  await $.ajax({
+    url: "/admin/cursos/UpdateComment",
+    type: "PUT",
+    data: {valor : comentario, id_curso: curso , id_empresa :empresa }
   });
-  const comentario = $("#comentarios").val();
-  const curso = $("#curso").val();
-  const empresa = $("#empresa").val();
-  let commentJson = localStorage.getItem("commentJson");
-
-  //Si no existe se crea el comment
-  if (commentJson == null) {
-    let comments = {};
-    let empresaarr = [];
-    let obj = {};
-    obj[empresa] = comentario;
-    empresaarr.push(obj);
-    comments[curso] = empresaarr;
-    localStorage.setItem("commentJson", JSON.stringify(comments));
     Toast.fire({
       icon: "success",
       title: "Comentario agregado",
     });
-  } else {
-    // Si existe la variable en localstorage
-    commentJson = JSON.parse(commentJson);
-    const cursosEnLocal = Object.keys(commentJson);
-    //Si ya existe el curso en la variable
-    if (cursosEnLocal.indexOf(curso) != -1) {
-      const datosDeCursoEnLocal = Object.values(commentJson)[
-        cursosEnLocal.indexOf(curso)
-      ];
+}
+const enviarNotificacion = async(empresa, curso)=>{
+  await $.ajax({
+    url: "/admin/cursos/sendNotificacion",
+    type: "POST",
+    data: {id_curso: curso , id_empresa :empresa }
+  });
+}
 
-      // Verificar si ya exite comentario para sustituir
-      const it = (datosDeCursoEnLocal) => {
-        let rt = true;
-        datosDeCursoEnLocal.forEach((element, id) => {
-          const check = Object.keys(element).indexOf(empresa);
-          if (!check) {
-            const obj = {};
-            obj[empresa] = comentario;
-            datosDeCursoEnLocal[id] = obj;
-            localStorage.setItem("commentJson", JSON.stringify(commentJson));
-            rt = false;
-            Toast.fire({
-              icon: "success",
-              title: "Comentario Actualizado",
-            });
-          }
-        });
-        return rt;
-      };
 
-      if (it(datosDeCursoEnLocal)) {
-        let obj = {};
-        obj[empresa] = comentario;
-        datosDeCursoEnLocal.push(obj);
-        Toast.fire({
-          icon: "success",
-          title: "Comentario agregado",
-        });
-        localStorage.setItem("commentJson", JSON.stringify(commentJson));
-      }
-    } else {
-      // Si no existe el curso en la variable de local
-      let empresaarr = [];
-      let obj = {};
-      obj[empresa] = comentario;
-      empresaarr.push(obj);
-      commentJson[curso] = empresaarr;
-      localStorage.setItem("commentJson", JSON.stringify(commentJson));
-      Toast.fire({
-        icon: "success",
-        title: "Comentario agregado",
-      });
-    }
-  }
+$("#updateCommentBtn").click( async() => { 
+  const comentario = $("#comentarios").val();
+  const curso = $("#curso").val();
+  const empresa = $("#empresa").val();
+  updateCommentFunction(comentario, curso, empresa);
 });
+
 
 const ChangeComment = (comment) => {
   $("#comentarios").val(comment);
 };
 
 $("#commentCompleto").click(() => {
-  ChangeComment("Revisión completada");
+  Swal.fire({
+    title: '¿Estas seguro?',
+    text: "Se notificara a la empresa confirmando la aprobación de sus documentos",
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Si, notificar y guardar comentario!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+     ChangeComment("Revisión completada");
+     const comentario = $("#comentarios").val();
+     const curso = $("#curso").val();
+     const empresa = $("#empresa").val();
+     updateCommentFunction(comentario, curso, empresa);
+     enviarNotificacion(empresa, curso)
+      Swal.fire(
+        'Deleted!',
+        'Your file has been deleted.',
+        'success'
+      )
+    }
+  })
 });
 
 $("#commentRecibo").click(() => {

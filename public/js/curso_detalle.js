@@ -402,7 +402,7 @@ $("#form_curso").submit(async function (e) {
         "Vuelva atrás para verificar",
         "success"
       );
-      $("#insertar_modal").modal('hide');
+      $("#insertar_modal").modal("hide");
     }
   } catch (error) {
     swal.close();
@@ -463,15 +463,3 @@ const createZipCurso = async (curso) => {
     errorMessage();
   }
 };
-
-
-$(document).ready(function () {
-  let commentJson = localStorage.getItem("commentJson");
-  const curso = $("#curso").val();
-  if (commentJson != null) {
-    commentJson = JSON.parse(commentJson);
-    commentJson[curso].forEach((element, i) => { 
-      $(`.comment${Object.keys(element)[0]}`).text(Object.values(element));
-    });
-  }
-});

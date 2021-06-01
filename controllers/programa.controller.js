@@ -4,6 +4,7 @@ const programa = {};
 
 // Requerimos pool de base de datos si es necesario
 const pool = require("../models/db");
+const { getUserDataByToken } = require("../middlewares/auth");
 
 // Agregar un nuevo programa
 programa.addPrograma = async (req, res) => {
@@ -46,6 +47,8 @@ programa.loadTable = async (req, res) => {
 // Tabla de un encargado con un programa
 programa.renderTablaUnion = async (req, res) => {
   try {
+     const usuario = getUserDataByToken(req.cookies.token);
+
     // Requerir id de parametro
     const { id } = req.params;
     // Hacer consultas para validar si el programa existe; para llamar a los encargados existentes; llamar a los que no son encargados
@@ -63,6 +66,7 @@ programa.renderTablaUnion = async (req, res) => {
       e: c[1],
       t: c[2],
       id,
+      data: usuario.data
     });
   } catch (error) {
     console.log(error);

@@ -47,7 +47,7 @@
             <h6 class="m-0 font-weight-bold text-primary d-inline">
               Cronograma vigente de módulos y unidades
             </h6>
-            <button class="btn btn-sm btn-success d-inline float-right" id="addNewModuleBtn">
+            <button class="btn btn-sm btn-success d-inline float-right" id="addNewModuleBtnVigente">
               Agregar Módulo
             </button>
             <p></p>
@@ -100,7 +100,7 @@
                       Unidades pertenecientes al módulo
                     </h5>
                     <button class="btn btn-sm btn-success d-inline float-right addNewUnitBtn"
-                      onclick="addNewUnit('<%= element.idModelo %>', '<%= element.modelo %>')">
+                      onclick="addNewUnitVigente('<%= element.idModelo %>', '<%= element.modelo %>')">
                       Agregar unidad
                     </button>
                     <hr />
@@ -164,7 +164,7 @@
       </div>
     </div>
   </div>
-  <input type="hidden" name="carrera" id="carrera" value="<%= carreraID%>" />
+  <input type="hidden" name="grupo" id="grupo" value="<%= grupoID%>" />
   <template id="newModule">
     <swal-html>
       <div class="row">

@@ -1,6 +1,6 @@
 {
   "name": "cfp-plataforma",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Gestor de archivos actualizado",
   "main": "index.js",
   "scripts": {
@@ -19,6 +19,7 @@
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
+    "dayjs": "^1.10.5",
     "dotenv": "^8.2.0",
     "ejs": "^3.1.6",
     "excel4node": "^1.7.2",
