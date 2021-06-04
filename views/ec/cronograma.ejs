@@ -63,12 +63,16 @@
                         <table class="table table-striped">
                           <thead>
                             <tr>
-                              <th>Fecha inicio</th>
+                              <th>Horas</th>
+                              <th>Inicio</th>
                               <th>Fecha Fin</th>
                             </tr>
                           </thead>
                           <tbody>
                             <tr>
+                              <td>
+                                <%= element.horas %>
+                              </td>
                               <td>
                                 <%= element.fechaInicio %>
                               </td>
@@ -79,14 +83,21 @@
                           </tbody>
                         </table>
                       </div>
+                      <hr>
+                      <% if(element.horas == element.horasUnidad) {%>
+                        <p><span class="badge badge-success"><i class="fas fa-check"></i> HORAS CONCUERDAN</span></p>
+                      <% }else{%>
+                        <p><span class="badge badge-warning"><i class="fas fa-exclamation-triangle"></i> HORAS NO CONCUERDAN</span></p>
+                      <% }%>
+                      <hr>
                         <button class="btn btn-info btn-block"
-                          onclick="editActualModuleVigente('<%=element.idModelo%>', '<%= element.modelo%>', '<%= element.fechaInicio %>' , '<%= element.fechaFin %>')">
+                          onclick="editActualModuleVigente('<%=element.idModelo%>', '<%= element.modelo%>', '<%= element.fechaInicio %>' , '<%= element.fechaFin %>', '<%=element.horas %>')">
                           <i class="fas fa-edit"></i> Editar Módulo
                         </button>
                         <button class="btn btn-danger btn-block" onclick="deleteModulo('<%= element.idModelo%>')">
                           <i class="fas fa-trash-alt"></i> Eliminar Módulo
                         </button>
-                        <button class="btn btn-success btn-block">
+                        <button class="btn btn-secondary btn-block">
                           <i class="far fa-eye"></i> Ver notas del módulo
                         </button>
                     </h5>
@@ -113,7 +124,8 @@
                             <th>Fecha Inicio</th>
                             <th>Fecha Fin</th>
                             <th>Profesor</th>
-                            <th>Editar unidad</th>
+                            <th>Horas</th>
+                            <th>Opciones</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -121,7 +133,7 @@
                             <tr>
                               <td class="text-center">
                                 <% if(uni.Estado) {%>
-                                  <span class="badge badge-success">ACTIVO Y PÚBLICO</span>
+                                  <span class="badge badge-success">OK</span>
                                   <% }else{%>
                                     <span class="badge badge-danger">PENDIENTE <br />
                                       CONFIGURACIÓN</span>
@@ -139,20 +151,28 @@
                               <td>
                                 <%= uni.Usuario %>
                               </td>
+                              <td>
+                                <%= uni.horas %>
+                              </td>
                               <td style="width: 25%">
-                                <button class="btn btn-info btn-block"
-                                  onclick="editActualUnitVigente('<%= uni.idUnidad %>','<%=uni.UnidadName %>', ' <%= element.fechaInicio %>', ' <%= element.fechaFin %>' , '<%= uni.Inicio %>' , '<%= uni.Fin %>'  , '<%= uni.Usuario %>'  )">
+                                <button class="btn btn-info btn-sm m-1"
+                                  onclick="editActualUnitVigente('<%= uni.idUnidad %>','<%=uni.UnidadName %>', ' <%= element.fechaInicio %>', ' <%= element.fechaFin %>' , '<%= uni.Inicio %>' , '<%= uni.Fin %>'  , '<%= uni.Usuario %>'   , '<%= uni.horas %>'  )">
                                   <i class="fas fa-edit"></i>
-                                  Editar unidad
+                                  Editar 
                                 </button>
-                                <button class="btn btn-danger btn-block" onclick="deleteUnidad('<%= uni.idUnidad %>')">
+                                <button class="btn btn-danger btn-sm m-1" onclick="deleteUnidad('<%= uni.idUnidad %>')">
                                   <i class="fas fa-trash-alt"></i>
-                                  Eliminar unidad
+                                  Eliminar
                                 </button>
                               </td>
                             </tr>
                             <% }); %>
                         </tbody>
+                        <tfoot>
+                          <tr>
+                            <td colspan="6" class="text-right"> <span class="font-weight-bold">Total Horas:</span> <%=element.horasUnidad%> </td>
+                          </tr>
+                        </tfoot>
                       </table>
                     </div>
                   </div>
@@ -175,13 +195,18 @@
       </div>
       <hr />
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
           <label>Fecha Inicio</label><input type="text" class="form-control text-uppercase" placeholder="Inicio"
           id="MdlInicio" />
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
           <label>Fecha Fin</label><input type="text" class="form-control text-uppercase" placeholder="FIN"
           id="MdlFin" />
+        </div>
+        <div class="col-md-4">
+          <label>Horas totales del módulo</label>
+          <input type="number" name="MdlHoras" class="form-control" id="MdlHoras" placeholder="0" min="0" step="1"
+            oninput="this.value = Math.round(this.value);">
         </div>
       </div>
     </swal-html>
@@ -196,7 +221,7 @@
         </div>
       </div>
       <div class="row mt-3">
-        <div class="col-md-4">
+        <div class="col-md-3">
             <label>Seleccione instructor</label>
             <select id="UnitProfesor" class="form-control">
               <option selected disabled value="0">Seleccione</option>
@@ -205,15 +230,20 @@
               <%})%>
             </select>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
           <label>Seleccione fecha inicio</label>
           <input type="text" class="form-control text-uppercase"
             placeholder="Fecha Inicio" id="UnitInicio" />
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
           <label>Seleccione fecha fin</label>
           <input type="text" class="form-control text-uppercase"
             placeholder="Fecha Fin" id="UnitFin" />
+        </div>
+        <div class="col-md-3">
+          <label>Horas totales del módulo</label>
+          <input type="number" name="UniHora" class="form-control" id="UniHora" placeholder="0" min="0" step="1"
+            oninput="this.value = Math.round(this.value);">
         </div>
       </div>
       <hr />

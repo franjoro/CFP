@@ -1,0 +1,69 @@
+<link rel="stylesheet" href="/static/vendor/datatables/datatables.min.css" />
+<%- include('../../partials/header.admin.ejs'); %>
+    <style>
+        .nota {
+            width: 4rem;
+        }
+    </style>
+    <div class="container-fluid">
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between">
+            <h4 class="mb-0 text-gray-800">Ingreso de notas</h4>
+        </div>
+        <p><span class="font-weight-bold"> Indicaciones: </span> A continuación se mostraran los alumnos y las notas
+            ingresadas </p>
+        <div class="card shadow mb-3">
+            <div class="card-header">
+             <a href="/admin/ec/evaluaciones/<%= unidad %>/<%= grupo %>" class="btn btn-sm btn-info"><i class="fas fa-arrow-left"></i> Atrás</a>
+            </div>
+            <div class="card-body table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Nota</th>
+                            <th>Comentario</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%dataOrdenada.forEach( (nota, id)=> {
+                            %>
+                            <tr>
+                                <td>
+                                    <%= id+1 %>
+                                </td>
+                                <td>
+                                    <%= nota.Nombre %>
+                                </td>
+                                <td>
+                                    <%= nota.Apellidos %>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control form-control-sm nota" data-alumno="<%=nota.idAlumno%>" data-isexist="<%=nota.isExist%>" data-evaluacion="<%=evaluacion%>"  data-idnota="<%=nota.idNota%>"   name="notas[]" id="nota<%=id%>" value="<%= nota.Nota %>">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control-sm form-control" name="comentario[]"  value="<%= nota.Comentario %>" id="comment<%=id%>">
+                                </td>
+                            </tr>
+                            <%}) %>
+                    </tbody>
+                </table>
+                <hr>
+                <div class="row">
+                    <div class="col-md-12">
+                        <button class="btn btn-success float-right" id="btnEnviar">Ingresar y actualizar notas</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container-fluid -->
+    <%- include('../../partials/footer'); %>
+    <script src="/static/js/jquery.mask.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="/static/js/ec/notas.js"></script>
+
+    

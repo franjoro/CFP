@@ -116,7 +116,6 @@ s3Functions.getFolderData = async (folder, data) => {
         const newZip = new AdmZip();
         zipEntries.forEach(function (zipEntry, i) {
           let ext = keys[i].split(".") , roleName;
-
           data.forEach((query, id) => {
             let fileName = query.s3key.split("/");
             fileName = fileName[3];
@@ -138,7 +137,7 @@ s3Functions.getFolderData = async (folder, data) => {
           if (roleName >= 40) {
             archivo = `${i + 1}_Planilla_ISSS`;
           }
-          var newFileName = `${archivo}.${ext[1]}`;
+          let newFileName = `${archivo}.${ext[1]}`;
           newZip.addFile(newFileName, zipEntry.getData());
         });
 
@@ -163,7 +162,6 @@ s3Functions.getFolderDataCurso = async (folder, data) => {
     data.forEach(element =>{
       keys.push(element.s3key);
     })
-
     s3Zip
       .archive({ s3, bucket: process.env.BUCKET }, folder, keys)
       .pipe(output)
@@ -171,10 +169,8 @@ s3Functions.getFolderDataCurso = async (folder, data) => {
         const zip = new AdmZip(output.path);
         const zipEntries = zip.getEntries();
         const newZip = new AdmZip();
-
         zipEntries.forEach(function (zipEntry, i) {
           let empresaPath , roleName; 
-
           data.forEach((empresa, id) => {
             let fileName = empresa.s3key.split("/");
             fileName = fileName[3];
@@ -183,7 +179,6 @@ s3Functions.getFolderDataCurso = async (folder, data) => {
               return (empresaPath = empresa.Nombre);
             }
           });
-
           let ext = keys[i].split(".");
           let archivo = `${empresaPath}/${i + 1}_Archivo_extra`;
           if (roleName == 1) {
@@ -198,7 +193,7 @@ s3Functions.getFolderDataCurso = async (folder, data) => {
           if (roleName >= 40) {
             archivo = `${empresaPath}/${i + 1}_Planilla_ISSS`;
           }
-          var newFileName = `${archivo}.${ext[1]}`;
+          let newFileName = `${archivo}.${ext[1]}`;
           newZip.addFile(newFileName, zipEntry.getData());
         });
 

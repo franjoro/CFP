@@ -3,14 +3,16 @@
 const express = require('express');
 // Cargamos el controlador
 const ec = require('../controllers/ec.controller');
+const { authcheck } = require('../middlewares/auth');
 // Llamamos al router
 const router = express.Router();
+
 // Creamos una ruta para los métodos que tenemos en nuestros controladores
 
 // Devuelve el formulario
-router.get("/formulario", ec.main);
+router.get("/formulario", authcheck, ec.main);
 // Devuelve el administrador de carreras y cursos
-router.get("/administrador", ec.administrador);
+router.get("/administrador", authcheck, ec.administrador);
 
 
 
@@ -19,48 +21,61 @@ router.get("/administrador", ec.administrador);
 // Devuelve las carreras
 router.get("/carreras", ec.carreras);
 // Devuelve los grupos pertenicientes a la carrera
-router.get("/:carrera/grupos", ec.grupos);
+router.get("/:carrera/grupos",  ec.grupos);
 // Devuelve table
-router.get("/tabla/:idgrupo", ec.tabla)
+router.get("/tabla/:idgrupo",   ec.tabla)
 
 
 
 // Ingresar nuevo registro
-router.post("/form" , ec.form);
+router.post("/form" , authcheck, ec.form);
 // Ingresar nueva carrera
-router.post("/nuevacarrera" , ec.addCarrera);
-// Ingresar nuevo grupo
-router.post("/nuevogrupo" , ec.addGrupo);
+router.post("/nuevacarrera" , authcheck, ec.addCarrera);
+// Ingresar nuevo grupo y copia el modelo en el cronograma vigente
+router.post("/nuevogrupo" , authcheck, ec.addGrupo);
 
 
 
 // Modelos 
 // Devuelve el modelo de cronograma de una carrera
-router.get("/modelo/:idCarrera", ec.administradorModelo);
+router.get("/modelo/:idCarrera", authcheck, ec.administradorModelo);
 // Ingresar nuevo Módulo
-router.post("/addModelo" , ec.addModelo);
+router.post("/addModelo" ,  authcheck,ec.addModelo);
 // Ingresar nueva unidad
-router.post("/addUnidad" , ec.addUnidad);
+router.post("/addUnidad" ,  authcheck, ec.addUnidad);
 // Eliminar Modulo
-router.delete("/deleteModelo" , ec.deleteModelo);
+router.delete("/deleteModelo" , authcheck, ec.deleteModelo);
 // Eliminar Unidad
-router.delete("/deleteUnidad" , ec.deleteUnidad);
+router.delete("/deleteUnidad" ,  authcheck, ec.deleteUnidad);
 // Editar unidad
-router.put("/editUnidad" , ec.editUnidad)
+router.put("/editUnidad" ,authcheck, ec.editUnidad)
 // Editar modulo
-router.put("/editModulo" , ec.editModulo)
+router.put("/editModulo" , authcheck, ec.editModulo)
 
 // Cronogram vigente 
 // Devuelve el cronograma de un grupo
-router.get("/cronograma/:idGrupo", ec.administradorCronogramaVigente);
+router.get("/cronograma/:idGrupo", authcheck, ec.administradorCronogramaVigente);
 // Cambia la configuración y el estado de la unidad
-router.put("/ConfigUnit", ec.editUnidadVigente)
-router.post("/addModeloVigente", ec.addModeloVigente);
-router.post("/addUnidadVigente", ec.addUnidadVigente);
+router.put("/ConfigUnit",  authcheck, ec.editUnidadVigente)
+// Agrega un nuevo modulo en cronograma vigente
+router.post("/addModeloVigente", authcheck, ec.addModeloVigente);
+// Agrega una nueva unidad en cronograma vigente
+router.post("/addUnidadVigente",  authcheck, ec.addUnidadVigente);
 
 
 // Instructores
-router.get("/instructor", ec.instructor);
+// Devuelve las unidades asignadas al instructor tomando en cuenta las fechas actuales
+router.get("/instructor",authcheck , ec.instructor);
+// Devuelve las actividades asignadas a la unidad
+router.get("/evaluaciones/:unidad/:grupo", authcheck , ec.contenidos);
+// Agregar nueva evaluación
+router.post("/newEv", authcheck , ec.newEva);
+// Elimina las evaluaciones y notas asociadas
+router.delete("/deleteEva" , authcheck , ec.deteleEva)
+// Devuelve las notas de los alumnos
+router.get("/notas/:evaluacion/:grupo", authcheck , ec.notas);
+router.post("/notas" , authcheck , ec.notasP)
+
 
 
 // Exportamos la configuración

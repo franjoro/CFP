@@ -1,0 +1,91 @@
+<link rel="stylesheet" href="/static/vendor/datatables/datatables.min.css" />
+<%- include('../../partials/header.admin.ejs'); %>
+    <div class="container-fluid">
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between">
+            <h4 class="mb-0 text-gray-800">Ingreso de evaluaciones</h4>
+        </div>
+        <p>
+            <span class="font-weight-bold"> Indicaciones: </span> A continuación se
+            mostraran las actividades o contenidos evaluados, usted puede agregar una evaluación en el botón verde con el
+            icono : <i class="fas fa-plus"></i>
+        </p>
+
+        <div class="card shadow mb-3">
+            <div class="card-header">
+                <a  href="/admin/ec/instructor" class="btn btn-sm btn-info"><i class="fas fa-arrow-left"></i> Atrás</a>
+                <button id="btnAddEva" class="btn btn-sm btn-success float-right"><i class="fas fa-plus"></i> Ingresar nueva evaluación</button>
+
+            </div>
+            <div class="card-body table-responsive">
+                <h5 class="text-secondary">Evaluaciones de la unidad:</h5>
+               <% if(!evaluaciones.length){ %>
+                <div class="alert alert-info" role="alert">
+                    No existe evaluaciones ingresadas para esta unidad. Por favor registre una nueva evaluación.
+                  </div>
+              <% }else{ %>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Descripción</th>
+                            <th>Tipo de evaluación</th>
+                            <th>Ver notas</th>
+                            <th>Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%evaluaciones.forEach( evaluacion=> {
+                            let tipo = 'Teórica';
+                            if(evaluacion.Tipo == 2) tipo = 'Práctica' ;
+                            %>
+                            <tr>
+                                <td>
+                                    <%= evaluacion.Descripcion %>
+                                </td>
+                                <td>
+                                    <%= tipo %>
+                                </td>
+                                <td>
+                                    <a href="/admin/ec/notas/<%= evaluacion.id %>/<%= grupo%>?unidad=<%= idUnidad%>" class="btn btn-info btn-block btn-sm"> <i class="fas fa-book"></i> Notas</a>
+                                </td>
+                                <td>
+                                    <button class="btn btn-danger btn-block btn-sm btnDeleteEva" onclick="deleteModulo('<%= evaluacion.id %> ')"><i class="fas fa-trash"></i> Eliminar</button>
+                                </td>
+                            </tr>
+                            <%}) %>
+                    </tbody>
+                </table>
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+<input type="hidden" id="idUnidad"  value="<%= idUnidad%>">
+
+    <template id="newEvaluacion">
+        <swal-html>
+          <div class="row">
+            <div class="col-md-12">
+              <label>Descripción de la evaluación</label>
+              <textarea name="EvaNombre"  class="form-control text-uppercase" placeholder="Descripción de la actividad" id="EvaNombre" cols="3" rows="3" maxlength="250"></textarea>
+            </div>
+          </div>
+          <hr />
+          <div class="row">
+            <div class="col-md-12">
+              <label>Tipo de actividad a evaluar</label><select class="form-control" id="EvaTipo">
+                <option value="0" selected disabled> Seleccione tipo de evaluación</option>
+                <option value="1">Teórica</option>
+                <option value="2">Práctica</option>
+              </select>
+            </div>
+          </div>
+        </swal-html>
+      </template>
+
+
+    <!-- /.container-fluid -->
+    <%- include('../../partials/footer'); %>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="/static/js/ec/instructores.js"></script>
+

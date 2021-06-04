@@ -24,7 +24,7 @@ auth.authcheckEmpresas = (req, res, next) => {
   let token = req.cookies.token;
   try {
     const data = jwt.verify(token, process.env.JWTPASS);
-    if (data.data.Role !== 4 )
+    if (data.data.Role !== 4  )
       throw new Error("ROLE_INVALID");
     next();
   } catch (error) {

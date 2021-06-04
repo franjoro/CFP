@@ -5,6 +5,25 @@
     - Visualización del historial de cursos de participantes y empresas
     - Al ingresar una solicitud enviar correo a los participantes para verificar validez (PENDIENTE DE APROBACION)
 
+    ## [1.0.7] - 04/06/2021
+    ### Added
+    - Cronograma gestionando horas agregado en modelo de carreras. 
+    - Cronograma vigente gestionando horas. 
+    - Agregada opción de editar horas en modelo
+    - Creación de role en el JS de Auth para redireccionar a la vista del instructor 
+    - Agregada validación de usuario en empresa centro para instructor y administradores
+    - Funciones Agregar, eliminar de evaluaciones dependiendo de la unidad 
+    - Alerta de evaluaciones no existentes
+    - Vista de notas por grupo imprimiendo cada alumno
+    - Agregar o editar evaluaciones en las unidades activas para instructores
+    - Agregar o editar notas de las evaluaciones en instructores.
+
+    
+    ### Changed
+    - Agregados trycatch en funciones ec 
+
+    ### Bug Fixed
+    - Agregado role de maestros de empresa centro al editar el usuario 
 
     ## [1.0.6] - 01/06/2021
     ### Added

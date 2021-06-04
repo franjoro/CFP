@@ -23,11 +23,11 @@ $("#loginForm").submit(async function (e) {
   loader();
   try {
     const data = await $.ajax({ url: "/signin", type: "POST", data: t });
-    console.log(data);
     if(data.status){
         // CAMBIAR RUTAS
-        if(data.role  === 1) window.location.replace('/admin/');
         if(data.role  === 0) window.location.replace('/admin/cursos');
+        if(data.role  === 1) window.location.replace('/admin/');
+        if(data.role  === 2) window.location.replace('/admin/ec/instructor');
         if(data.role  === 3) window.location.replace('/public/rechazado');
         if(data.role  === 4) window.location.replace('/public/');
         if(data.role  === 5) window.location.replace('/admin/ec');
