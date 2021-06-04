@@ -5,6 +5,10 @@
     - Visualización del historial de cursos de participantes y empresas
     - Al ingresar una solicitud enviar correo a los participantes para verificar validez (PENDIENTE DE APROBACION)
 
+    ## [1.0.71] - 04/06/2021
+    ### Bug Fixed
+    - Correción de error al entrar a la vista  de instructor sin unidades disponible 
+
     ## [1.0.7] - 04/06/2021
     ### Added
     - Cronograma gestionando horas agregado en modelo de carreras. 
@@ -17,7 +21,6 @@
     - Vista de notas por grupo imprimiendo cada alumno
     - Agregar o editar evaluaciones en las unidades activas para instructores
     - Agregar o editar notas de las evaluaciones en instructores.
-
     
     ### Changed
     - Agregados trycatch en funciones ec 

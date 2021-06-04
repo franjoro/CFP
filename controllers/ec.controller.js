@@ -457,14 +457,16 @@ ec.instructor = async (req, res) => {
       )
     );
     const query = await Promise.all(promesas);
+    // console.log(query)
     let unidades = query[1],
       carreras = query[0],
       unidadesValidas = [];
     unidades.forEach((element) => {
       const fechaInicio = dayjs(element.fechaInicio, format),
         fechaFin = dayjs(element.fechaFin, format);
-      if (today.isBetween(fechaInicio, fechaFin.add(1, "day"), null, "[]"))
+      if (today.isBetween(fechaInicio, fechaFin.add(1, "day"), null, "[]")) {
         unidadesValidas.push(element);
+      }
     });
     const dataOrdenada = [];
     carreras.forEach((carrera) => {

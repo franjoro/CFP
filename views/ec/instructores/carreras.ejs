@@ -9,6 +9,9 @@
      
             <% dataOrdenada.forEach( element=> { %>
 
+
+
+              <%  if(typeof  element.Carrera !== 'undefined'){ %>
               <div class="card shadow mb-3">
                 <div class="card-body table-responsive">
                   <h4 class="text-secondary">
@@ -16,7 +19,7 @@
                   </h4>
                   <hr>
                   <div class="row">
-                    <% element.unidades.forEach( unidad=> { %>
+                    <%  element.unidades.forEach( unidad=> { %>
                       <div class="col-md-4">
                         <div class="card shadow mb-3">
                           <div class="card-body ">
@@ -29,12 +32,15 @@
                           </div>
                         </div>
                       </div>
-                      <%})%>
+                      <%}) %>
                   </div>
                 </div>
               </div>
-              <%})%>
-       
+              <%}else{ %>
+                <div class="alert alert-info" role="alert">
+                  No existen unidades asignadas. Por favor contacte al administrador.
+                </div>
+              <%} }) %>
   </div>
   <!-- /.container-fluid -->
   <%- include('../../partials/footer'); %>
