@@ -5,6 +5,52 @@
     - Visualización del historial de cursos de participantes y empresas
     - Al ingresar una solicitud enviar correo a los participantes para verificar validez (PENDIENTE DE APROBACION)
 
+    ### Bug Fixed
+    - Solucionado bug de suma de  horas en modelo de modulos y unidades al cambiar de enteros a duouble
+    - Solucionado bug de suma de  horas en cronograma vigente de modulos y unidades al cambiar de enteros a duouble
+
+    ## [1.0.8] - 08/06/2021
+    ### Added
+    - Funciones de editar carrera y grupos agregada
+    - Funcion de deshabilitar los grupos
+    - Se agregan más campos de información de grupos y carreras
+    - En modelo de cronograma se agrego en la vista la información de horas totales, basicas y de alternancia
+    
+    ### Changed
+    - Cambios de diseño en carrera y grupos
+    - Validar estado de modulos y unidades en instructor
+    
+    ### Database Changes
+    * tb_ec_grupo ************************************************************
+    - [Add][tb_ec_grupo] Columna de Contrato.
+    - [Add][tb_ec_grupo] Columna de Oferta
+    - [Add][tb_ec_grupo] Columna de Fecha Inicio
+    - [Add][tb_ec_grupo] Columna de Fecha Fin
+    - [Change][tb_ec_grupo]    Columna de ID Grupo pasa a ser varchar
+    - [Change][tb_ec_alumno]   Columna de ID Grupo pasa a ser varchar
+    - [Change][tb_ec_unidades] Columna de ID Grupo pasa a ser varchar
+    - [Change][tb_ec_modulos]  Columna de ID Grupo pasa a ser varchar
+    - [Add][tb_ec_grupo] Columna de Instructor titular
+    - [Add][tb_ec_grupo] Columna de # Garantía
+    - [Add][tb_ec_grupo] Columna de Fecha Inicio Garantía
+    - [Add][tb_ec_grupo] Columna de Fecha Fin Garantía
+    - [Add][tb_ec_grupo] Columna de estado para activar o desactivar el grupo.
+    - [Add][tb_ec_grupo] Relación creada en grupos
+    * tb_ec_carrera **********************************************************
+    - [Add][tb_ec_carrera] Horas Totales = Horas Básicas + Horas de alternancía 
+    - [Add][tb_ec_carrera] Horas Básicas 
+    - [Add][tb_ec_carrera] Horas de alternancía
+    - [Change][tb_ec_modulos]  Columna de ID Carrera pasa a ser varchar
+    - [Change][tb_ec_grupos]   Columna de ID Carrera pasa a ser varchar
+    - [Change][tb_ec_unidades] Columna de ID Carrera pasa a ser varchar
+    * tb_ec_modulos **********************************************************
+    - [Change] hora pasa a ser double(5,2)
+    - [Change] Estado predeterminado a 1
+    * tb_ec_unidades **********************************************************
+    - [Change] hora pasa a ser double(5,2)
+    - [Change] Estado predeterminado a 1
+
+   
     ## [1.0.71] - 04/06/2021
     ### Bug Fixed
     - Correción de error al entrar a la vista  de instructor sin unidades disponible 

@@ -1,49 +1,79 @@
-<link rel="stylesheet" href="/static/vendor/datatables/datatables.min.css">
+<link rel="stylesheet" href="/static/vendor/datatables/datatables.min.css" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
 <%- include('../partials/header.admin.ejs'); %>
     <!-- Begin Page Content -->
     <div class="container-fluid">
-
-
         <!-- Page Heading -->
-        <h1 class="h3 mb-2 d-inline text-gray-800">Administrar carreras, grupos y cronogramas</h1>
-        <p class="mb-4 "> <span class="font-weight-bold">Información: </span> El cronograma modelo es una plantilla que
-            se genera a cada grupo creado</p>
-
-
+        <h1 class="h3 mb-2 d-inline text-gray-800">
+            Administrar carreras, grupos y cronogramas
+        </h1>
+        <p class="mb-4">
+            <span class="font-weight-bold">Información: </span> El cronograma modelo es
+            una plantilla que se genera a cada grupo creado
+        </p>
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <a href="/admin/ec" class="btn btn-success btn-sm float-left d-inline">
                     <i class="fas fa-arrow-left"></i></a>
-                <button class="btn btn-success btn-sm float-right m-1 d-inline" data-toggle="modal"
-                    data-target="#gruposmodal">Crear nuevo grupo</button>
-                <button class="btn btn-success btn-sm float-right m-1 d-inline" data-toggle="modal"
-                    data-target="#carreramodal">Crear nueva carrera</button>
-
+                <button class="btn btn-success btn-sm float-right m-1 d-inline" id="btnAddGrupo">
+                    Crear nuevo grupo
+                </button>
+                <button class="btn btn-success btn-sm float-right m-1 d-inline" id="btnAddCarrera">
+                    Crear nueva carrera
+                </button>
             </div>
             <div class="card-body">
-                <div class="row">
-                    <div class="col-md-5">
+                <div class="card shadow mb-4">
+                    <div class="card-body">
                         <div class="table-responsive">
-                            <h4 class="text-secundary">Carreras agregadas</h4>
+                            <h3 class="h3 mb-2 d-inline text-gray-800">Administrar carreras</h3>
+                            <p class="mb-4">
+                                <span class="font-weight-bold">Información: </span>gestiona la
+                                información de las carreras agregadas
+                            </p>
                             <table class="table table-bordered table-striped" id="tableParticipantes" width="100%"
                                 cellspacing="0">
                                 <thead>
                                     <tr>
+                                        <th>Código</th>
                                         <th>Nombre</th>
-                                        <th>Ver modelo</th>
+                                        <th>Horas Totales</th>
+                                        <th>H. Formación Básica</th>
+                                        <th>H. Formación Alternancia</th>
+                                        <th>Modelo</th>
+                                        <th>Editar</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <% carreras.forEach( (element)=> { %>
                                         <tr>
                                             <td>
+                                                <%= element.id %>
+                                            </td>
+                                            <td>
                                                 <%= element.Nombre %>
                                             </td>
                                             <td>
+                                                <%= element.horasTotales %>
+                                            </td>
+                                            <td>
+                                                <%= element.horasBasica %>
+                                            </td>
+                                            <td>
+                                                <%= element.horasAlter %>
+                                            </td>
+                                            <td>
                                                 <a href="/admin/ec/modelo/<%=element.id %>"
-                                                    class="btn btn-info btn-sm"><i class="fas fa-tools"></i> Cronograma
-                                                    modelo</a>
+                                                    class="btn btn-sm btn-info"><i class="fas fa-tools"></i>Modelo</a>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-sm btn-secondary btnEditCarrera"
+                                                    data-id="<%= element.id%>" data-nombre="<%= element.Nombre %>"
+                                                    data-totales="<%= element.horasTotales %>"
+                                                    data-basicas="<%= element.horasBasica %>"
+                                                    data-alternancia="<%= element.horasAlter %>"><i
+                                                        class="fas fa-edit"></i> Editar</a>
                                             </td>
                                         </tr>
                                         <% } )%>
@@ -51,31 +81,73 @@
                             </table>
                         </div>
                     </div>
-                    <div class="col-md-7">
+                </div>
+                <div class="card shadow mb-4">
+                    <div class="card-body">
                         <div class="table-responsive">
-                            <h4 class="text-secundary">Grupos agregados</h4>
+                            <h3 class="h3 mb-2 d-inline text-gray-800">Administrar Grupos</h3>
+                            <p class="mb-4">
+                                <span class="font-weight-bold">Información: </span>gestiona la
+                                información de los grupos y su cronograma de evaluación y
+                                profesores
+                            </p>
                             <table class="table table-bordered table-striped" id="tableParticipantes" width="100%"
                                 cellspacing="0">
                                 <thead>
                                     <tr>
-                                        <th>Carrera a la que pertenece</th>
-                                        <th>Nombre del grupo</th>
-                                        <th>Modelo de módulos y unidades</th>
+                                        <th>Código</th>
+                                        <th>Carrera</th>
+                                        <th>Nombre</th>
+                                        <th>Fecha Inicio</th>
+                                        <th>Fecha Fin</th>
+                                        <th>Cronograma</th>
+                                        <th>Editar</th>
+                                        <th>Deshabilitar</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <% grupos.forEach( (element , id)=> { %>
                                         <tr>
                                             <td>
-                                                <%= grupos[id].carrera %>
+                                                <%= element.id %>
                                             </td>
                                             <td>
-                                                <%= grupos[id].Nombre %>
+                                                <%= element.id_carrera %>
+                                            </td>
+                                            <td>
+                                                <%= element.Nombre %>
+                                            </td>
+                                            <td>
+                                                <%= element.dateInicio %>
+                                            </td>
+                                            <td>
+                                                <%= element.dateFin %>
                                             </td>
                                             <td>
                                                 <a href="/admin/ec/cronograma/<%=element.id %>"
-                                                    class="btn btn-primary btn-sm"><i class="fas fa-tools"></i>
-                                                    Cronograma vigente</a>
+                                                    class="btn btn-primary btn-sm"><i class="fas fa-tools"></i> <br />
+                                                    Cronograma</a>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-sm btn-secondary btnEditGrupo"
+                                                    data-codigo="<%= element.id %>" data-nombre="<%= element.Nombre %>"
+                                                    data-carrera="<%= element.id_carrera %>"
+                                                    data-instructor="<%= element.id_instructor %>"
+                                                    data-contrato="<%= element.Contrato %>"
+                                                    data-oferta="<%= element.Oferta %>"
+                                                    data-garantia="<%= element.Garantia %>"
+                                                    data-inicio="<%= element.dateInicio %>"
+                                                    data-fin="<%= element.dateFin %>"
+                                                    data-iniciog="<%= element.dateGInicio %>"
+                                                    data-fing="<%= element.dateGFin %>"><i class="fas fa-edit"></i>
+                                                    <br />
+                                                    Editar</a>
+                                            </td>
+                                            <td>
+                                                <a data-id="<%= element.id%>"
+                                                    class="btn btn-sm btn-danger btnEliminarG"><i
+                                                        class="fas fa-trash"></i> <br />
+                                                    Deshabilitar</a>
                                             </td>
                                         </tr>
                                         <% } )%>
@@ -87,137 +159,129 @@
             </div>
         </div>
     </div>
-
-
-    <!-- Modal Carreras-->
-    <div class="modal " id="carreramodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">AGREGAR NUEVA CARRERA</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+    <template id="newCarrera">
+        <swal-html>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Escriba el código de la carrera</label><input type="text" class="form-control"
+                        placeholder="CÓDIGO DE LA CARRERA" id="carCodigo" />
                 </div>
-                <div class="modal-body">
-                    <form id="formcarrera">
-                        <div class="form-row">
-                            <div class="col">
-                                <label for="name">Nombre</label>
-                                <input type="text" id="nombrecarrera" name="nombrecarrera" required class="form-control"
-                                    placeholder="Nombre de la carrera">
-                            </div>
-                        </div>
+                <div class="col-md-6">
+                    <label>Escriba el nombre de la carrera</label><input type="text" class="form-control text-uppercase"
+                        placeholder="Nombre de la CARRERA" id="carNombre" />
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <input type="submit" class="btn btn-primary">
-                </div>
-                </form>
             </div>
-        </div>
-    </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Horas formación básica</label>
+                    <input type="number" name="carHB" id="carHB" class="form-control" placeholder="0" min="0" step="1"
+                        oninput="this.value = Math.round(this.value);" />
+                </div>
 
-    <!-- Modal Grupos-->
-    <div class="modal " id="gruposmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">AGREGAR NUEVO GRUPO</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                <div class="col-md-6">
+                    <label>Horas de alternancia</label>
+                    <input type="number" name="CarHA" id="CarHA" class="form-control" placeholder="0" min="0" step="1"
+                        oninput="this.value = Math.round(this.value);" />
                 </div>
-                <div class="modal-body">
-                    <form id="formgrupo">
-                        <div class="form-row">
-                            <div class="col">
-                                <label for="name">Nombre</label>
-                                <input type="text" name="nombregrupo" required class="form-control"
-                                    placeholder="Nombre del grupo">
-                            </div>
-                            <div class="col">
-                                <label for="name">Elegir carrera</label>
-                                <select class="custom-select" required name="id_carrera">
-                                    <option selected disabled>Seleccionar carrera </option>
-                                    <% carreras.forEach( (element , id)=> { %>
-                                        <option value="<%= carreras[id].id %>">
-                                            <%= carreras[id].Nombre %>
-                                        </option>
-                                        <% } )%>
-                                </select>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-12">
-                                <p class="font-weight-bold">Información importante a considerar: </p>
-                                <ul>
-                                    <li>Antes de crear un grupo se debe verificar el cronograma modelo de la carrera,
-                                        que sea acorde al cronograma vigente.</li>
-                                    <li>En la creación de un grupo se clona todos los módulos y unidades del cronograma
-                                        modelo de la carrera.</li>
-                                    <li>Se tomarán las fechas del modelo y se aplicara el año actual.</li>
-                                    <li>Las fechas de las unidades deben ser ingresadas conjunto al profesor que
-                                        ingresara las notas.</li>
-                                </ul>
-                            </div>
-                        </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <input type="submit" class="btn btn-primary" value="He leído la información y deseo continuar">
-                </div>
-                </form>
             </div>
-        </div>
-    </div>
+        </swal-html>
+    </template>
+
+    <template id="newGrupo">
+        <swal-html>
+            <div class="row text-justify" id="instrucciones">
+                <div class="col-12">
+                    <p class="font-weight-bold">Información importante a considerar:</p>
+                    <ul>
+                        <li>
+                            Antes de crear un grupo se debe verificar el cronograma modelo de la
+                            carrera.
+                        </li>
+                        <li>
+                            En la creación de un grupo se clonan todos los módulos y unidades
+                            del cronograma modelo.
+                        </li>
+                        <li>Se tomarán las fechas del modelo y se aplicara el año actual.</li>
+                        <li>
+                            Las fechas de las unidades deben ser ingresadas conjunto al profesor
+                            que ingresara las notas.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-3">
+                    <label>Escriba el código del grupo</label><input type="text" class="form-control"
+                        placeholder="CÓDIGO DEL GRUPO" id="gruCodigo" />
+                </div>
+                <div class="col-md-3">
+                    <label>Escriba el nombre del grupo</label><input type="text" class="form-control text-uppercase"
+                        placeholder="Nombre del grupo" id="gruNombre" />
+                </div>
+                <div class="col-md-3">
+                    <label>Elegir carrera </label>
+                    <select class="custom-select" required name="gruCarrera" id="gruCarrera">
+                        <option selected disabled>Seleccionar carrera</option>
+                        <% carreras.forEach( (element , id)=> { %>
+                            <option value="<%= carreras[id].id %>">
+                                <%= carreras[id].Nombre %>
+                            </option>
+                            <% } )%>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label>Elegir instructor titular</label>
+                    <select class="custom-select" required name="gruInstructor" id="gruInstructor">
+                        <option selected disabled>Seleccionar carrera</option>
+                        <% instructores.forEach( (element , id)=> { %>
+                            <option value="<%= element.id_usuario %>">
+                                <%= element.Nombre %>
+                            </option>
+                            <% } )%>
+                    </select>
+                </div>
+            </div>
+            <hr />
+            <div class="row mt-3">
+                <div class="col-md-4">
+                    <label>Identificador de contrato</label><input type="text" class="form-control"
+                        placeholder="Contrato" id="gruContrato" />
+                </div>
+                <div class="col-md-4">
+                    <label>Identificador de oferta</label><input type="text" class="form-control text-uppercase"
+                        placeholder="Oferta" id="gruOferta" />
+                </div>
+                <div class="col-md-4">
+                    <label>Identificador de garantía</label><input type="text" class="form-control text-uppercase"
+                        placeholder="Garantía" id="grupoGarantia" />
+                </div>
+            </div>
+            <hr />
+            <div class="row mt-3">
+                <div class="col-md-3">
+                    <label>Fecha inicio del grupo</label><input type="date" class="form-control" id="grupoInicio" />
+                </div>
+                <div class="col-md-3">
+                    <label>Fecha fin del grupo</label><input type="date" class="form-control" id="grupoFin" />
+                </div>
+                <div class="col-md-3">
+                    <label>Fecha inicio garantía</label><input type="date" class="form-control"
+                        id="grupoInicioGarantia" />
+                </div>
+                <div class="col-md-3">
+                    <label>Fecha fin garantía</label><input type="date" class="form-control" id="grupoFinGarantia" />
+                </div>
+            </div>
+        </swal-html>
+    </template>
 
     <!-- /.container-fluid -->
     <%- include('../partials/footer'); %>
         <!-- Page level plugins -->
         <script src="/static/js/jquery.mask.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script src="/static/vendor/datatables/datatables.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-        <!-- Page level custom scripts -->
-        <script>
-
-            loader = () => {
-                Swal.fire({
-                    title: "Por favor, Espere",
-                    html: "Cargando Data",
-                    allowOutsideClick: !1,
-                    showConfirmButton: false,
-                    willOpen: () => {
-                        Swal.showLoading();
-                    },
-                });
-            };
-            $("#formcarrera").submit(async function (e) {
-                e.preventDefault();
-                const t = $(this).serialize();
-                try {
-                    await $.ajax({ url: ' /admin/ec/nuevacarrera', type: "POST", data: t })
-                    location.reload();
-                } catch (error) {
-                    console.log(error)
-                }
-            })
-            $("#formgrupo").submit(async function (e) {
-                e.preventDefault();
-                const t = $(this).serialize();
-                try {
-                    loader();
-                    const datos = await $.ajax({ url: ' /admin/ec/nuevogrupo', type: "POST", data: t })
-                    if(datos.status){
-                        location.reload();
-                    }
-                } catch (error) {
-                    console.log(error)
-                }
-            })
-
-
-        </script>
+        <script src="/static/js/ec/administrador.js"></script>

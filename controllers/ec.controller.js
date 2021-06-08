@@ -19,19 +19,36 @@ ec.administrador = async (req, res) => {
   try {
     const carreras = pool.query("SELECT * FROM tb_ec_carrera"),
       grupos = pool.query(
-        "SELECT tb_ec_grupo.id , tb_ec_carrera.Nombre AS carrera ,tb_ec_grupo.Nombre FROM tb_ec_grupo INNER JOIN tb_ec_carrera ON tb_ec_carrera.id = tb_ec_grupo.id_carrera"
-      );
-    const query = await Promise.all([carreras, grupos]);
+        "SELECT * FROM tb_ec_grupo WHERE Estado = 1"
+      ),
+      instructores = pool.query("SELECT  id_usuario, Nombre FROM tb_usuarios WHERE Role = 2");
+    const query = await Promise.all([carreras, grupos, instructores]);
     res.render("ec/administrador", {
       data: usuario.data,
       carreras: query[0],
       grupos: query[1],
+      instructores: query[2],
     });
   } catch (error) {
     console.log(error);
     res.json({ status: false, error }).status(400);
   }
 };
+
+ec.changeEstadoGrupo = async (req, res) => {
+  const { idGrupo } = req.body;
+  try {
+    const grupo = pool.query("UPDATE tb_ec_grupo SET Estado = 0 WHERE id = ?", [idGrupo]);
+    const modulos = pool.query("UPDATE tb_ec_modulos SET Estado = 0 WHERE idGrupo = ?", [idGrupo]);
+    const unidades = pool.query("UPDATE tb_ec_unidades SET Estado = 0  WHERE idGrupo = ?", [idGrupo]);
+    await Promise.all([grupo, modulos, unidades])
+    res.json({ status: true }).status(200);
+  } catch (error) {
+    console.log(error);
+    res.json({ status: false, error }).status(400);
+  }
+};
+
 ec.carreras = async (req, res) => {
   try {
     const carrera = await pool.query("SELECT * FROM tb_ec_carrera");
@@ -45,7 +62,7 @@ ec.grupos = async (req, res) => {
   try {
     const { carrera } = req.params;
     const grupos = await pool.query(
-      "SELECT * FROM tb_ec_grupo WHERE id_carrera = ?",
+      "SELECT * FROM tb_ec_grupo WHERE id_carrera = ? WHERE Estado = 1",
       [carrera]
     );
     res.json(grupos).status(200);
@@ -78,29 +95,67 @@ ec.form = async (req, res) => {
   }
 };
 ec.addCarrera = async (req, res) => {
-  const { nombrecarrera } = req.body;
+  const { Alter, Basica, Id, Nombre, Total } = req.body;
   try {
-    await pool.query("INSERT INTO tb_ec_carrera(Nombre) VALUES (?)", [
-      nombrecarrera,
-    ]);
+    if (!Alter || !Basica || !Id || !Nombre || !Total) throw "PARAMS_NOT_COMPLETED";
+    await pool.query(
+      "INSERT INTO tb_ec_carrera(id , Nombre, horasTotales, horasBasica, horasAlter) VALUES (?,?,?,?,?)",
+      [Id.trim(), Nombre, Total, Basica, Alter]
+    );
     res.json({ status: true });
   } catch (error) {
     console.log(error);
     res.status(400).json(error);
   }
 };
+ec.editcarrera = async (req, res) => {
+  const { Alter, Basica, Id, Nombre, Total, IdActual } = req.body;
+  try {
+    if (!Alter || !Basica || !Id || !Nombre || !Total) throw "PARAMS_NOT_COMPLETED";
+    await pool.query("UPDATE tb_ec_carrera SET id=?, Nombre= ? , horasTotales = ? , horasBasica = ? , horasAlter = ? WHERE id=?", [Id, Nombre, Total, Basica, Alter, IdActual]);
+    res.json({ status: true });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json(error);
+  }
+};
+
+ec.editgrupo = async (req, res) => {
+  const { id, Nombre,  Instructor, Contrato, Oferta, Garantia, Inicio, Fin, InicioG, FinG, oldId } = req.body;
+  try {
+    if (!id || !oldId) throw "PARAMS_NOT_COMPLETED";
+    await pool.query("UPDATE tb_ec_grupo SET  id = ?, Nombre = ? , Contrato = ? , Oferta = ? , dateInicio = ? , dateFin = ? , id_instructor = ? , Garantia = ? , dateGInicio = ?, dateGFin = ?  WHERE id = ? ", [id, Nombre, Contrato , Oferta, Inicio , Fin , Instructor , Garantia, InicioG , FinG , oldId ]);
+    res.json({ status: true });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json(error);
+  }
+};
+
 ec.addGrupo = async (req, res) => {
-  const { nombregrupo, id_carrera } = req.body;
+  const { id, Nombre, Carrera, Instructor, Contrato, Oferta, Garantia, Inicio, Fin, InicioG, FinG } = req.body;
+  const id_carrera = Carrera;
   const year = new Date().getFullYear();
   const lastday = function (m, n) {
     return `${new Date(year, m, 0).getDate()}/${m}/${year + n}`;
   };
+  const insertId = id;
   try {
-    const {
-      insertId,
-    } = await pool.query(
-      "INSERT INTO tb_ec_grupo(Nombre , id_carrera) VALUES (?, ? )",
-      [nombregrupo, id_carrera]
+    await pool.query(
+      "INSERT INTO tb_ec_grupo(id, Nombre, Contrato, Oferta, dateInicio, dateFin, id_instructor, Garantia, dateGInicio , dateGFin, Estado, id_carrera ) VALUES (?, ? , ? , ? , ? , ? , ? ,? ,? ,? ,1 , ?)",
+      [
+        id,
+        Nombre,
+        Contrato,
+        Oferta,
+        Inicio,
+        Fin,
+        Instructor,
+        Garantia,
+        InicioG,
+        FinG,
+        Carrera
+      ]
     );
     let modulos = pool.query(
       "SELECT id , Nombre, fechaInicio, fechaFin , horas FROM tb_ec_modulos WHERE isModel = 1 AND  idCarrera = ?",
@@ -256,7 +311,7 @@ ec.administradorModelo = async (req, res) => {
   const { idCarrera } = req.params;
   try {
     let carrera = pool.query(
-      "SELECT Nombre FROM tb_ec_carrera WHERE id = ?",
+      "SELECT Nombre , horasTotales, horasBasica, horasAlter FROM tb_ec_carrera WHERE id = ?",
       idCarrera
     );
     let modulos = pool.query(
@@ -282,10 +337,11 @@ ec.administradorModelo = async (req, res) => {
       if (number == "11") return "Noviembre";
       if (number == "12") return "Diciembre";
     };
-    carrera = query[0][0].Nombre;
+    carrera = query[0][0];
     modulos = query[1];
     unidades = query[2];
     const datosModeloOrdenado = [];
+    let horasTodosModulos = 0;
     modulos.forEach((element, id) => {
       const arrModelo = [];
       const obj = {};
@@ -297,7 +353,7 @@ ec.administradorModelo = async (req, res) => {
           obj["UnidadID"] = unidad.id;
           obj["horas"] = unidad.horas;
           arrModelo.push(obj);
-          totalHorasUnidades = totalHorasUnidades + unidad.horas;
+          totalHorasUnidades = totalHorasUnidades + Number(unidad.horas);
         }
       });
       obj["modelo"] = element.Nombre;
@@ -306,6 +362,7 @@ ec.administradorModelo = async (req, res) => {
       obj["fechaInicio"] = getMonth(element.fechaInicio);
       obj["fechaFin"] = getMonth(element.fechaFin);
       obj["horas"] = element.horas;
+      horasTodosModulos = horasTodosModulos + Number(element.horas);
       obj["totalHorasUnidades"] = totalHorasUnidades;
       datosModeloOrdenado[id] = obj;
     });
@@ -314,6 +371,7 @@ ec.administradorModelo = async (req, res) => {
       datos: datosModeloOrdenado,
       carrera,
       carreraID: idCarrera,
+      horasTodosModulos
     });
   } catch (error) {
     console.log(error);
@@ -362,7 +420,7 @@ ec.administradorCronogramaVigente = async (req, res) => {
           obj["Usuario"] = unidad.Usuario;
           obj["horas"] = unidad.horas;
           arrModelo.push(obj);
-          horasTotalesUnidades = horasTotalesUnidades + unidad.horas;
+          horasTotalesUnidades = horasTotalesUnidades + Number(unidad.horas);
         }
       });
       obj["modelo"] = element.Nombre;
@@ -446,13 +504,13 @@ ec.instructor = async (req, res) => {
       format = "DD/MM/YYYY";
     promesas.push(
       pool.query(
-        "SELECT tb_ec_carrera.Nombre AS Carrera , tb_ec_unidades.idCarrera AS idCarrera, tb_ec_grupo.Nombre AS Grupo, tb_ec_grupo.id AS idGrupo    FROM `tb_ec_unidades` INNER JOIN tb_ec_carrera ON tb_ec_carrera.id = tb_ec_unidades.idCarrera INNER JOIN tb_ec_grupo ON tb_ec_grupo.id = tb_ec_unidades.idGrupo WHERE id_usuario = ? GROUP BY idGrupo",
+        "SELECT tb_ec_carrera.Nombre AS Carrera , tb_ec_unidades.idCarrera AS idCarrera, tb_ec_grupo.Nombre AS Grupo, tb_ec_grupo.id AS idGrupo    FROM `tb_ec_unidades` INNER JOIN tb_ec_carrera ON tb_ec_carrera.id = tb_ec_unidades.idCarrera INNER JOIN tb_ec_grupo ON tb_ec_grupo.id = tb_ec_unidades.idGrupo WHERE id_usuario = ?  AND tb_ec_unidades.Estado = 1 Estado GROUP BY idGrupo ",
         [instructor]
       )
     );
     promesas.push(
       pool.query(
-        "SELECT tb_ec_unidades.id , tb_ec_modulos.Nombre AS modulo , tb_ec_unidades.Nombre , tb_ec_unidades.fechaInicio , tb_ec_unidades.fechaFin  , tb_ec_unidades.idCarrera , tb_ec_unidades.idGrupo FROM `tb_ec_unidades` INNER JOIN tb_ec_modulos ON tb_ec_modulos.id = tb_ec_unidades.idModulo WHERE tb_ec_unidades.id_usuario = ? AND tb_ec_unidades.isModel = 0",
+        "SELECT tb_ec_unidades.id , tb_ec_modulos.Nombre AS modulo , tb_ec_unidades.Nombre , tb_ec_unidades.fechaInicio , tb_ec_unidades.fechaFin  , tb_ec_unidades.idCarrera , tb_ec_unidades.idGrupo FROM `tb_ec_unidades` INNER JOIN tb_ec_modulos ON tb_ec_modulos.id = tb_ec_unidades.idModulo WHERE tb_ec_unidades.id_usuario = ? AND tb_ec_unidades.isModel = 0 AND tb_ec_unidades.Estado = 1",
         [instructor]
       )
     );

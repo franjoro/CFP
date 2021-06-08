@@ -17,9 +17,19 @@
                 <h5>
                   Cronograma modelo
                   <span class="font-weight-bold">
-                    <%= carrera %>
+                    <%= carrera.Nombre %>
                   </span>
                 </h5>
+                <p class="m-0">Horas totales:  <span class="font-weight-bold">  <%= carrera.horasTotales %> </span> </p>
+                <p class="m-0">Horas Horas de formación básica:  <span class="font-weight-bold">  <%= carrera.horasBasica %> </span> </p>
+                <p class="m-0">Horas de alternancia:  <span class="font-weight-bold">  <%= carrera.horasAlter %> </span> </p>
+                <hr>
+                <p>Horas de módulos ingresados :  <span class="font-weight-bold">  <%=horasTodosModulos%> </span> </p>
+                <% if(carrera.horasTotales == horasTodosModulos) {%>
+                  <p><span class="badge badge-success"><i class="fas fa-check"></i> HORAS GLOBALES CONCUERDAN</span></p>
+                <% }else{%>
+                  <p><span class="badge badge-warning"><i class="fas fa-exclamation-triangle"></i> HORAS GLOBALES NO CONCUERDAN</span></p>
+                <% }%>
               </div>
             </div>
             <small><span class="font-weight-bold">Nota: </span>El modelo actúal se
@@ -109,6 +119,14 @@
                           </tr>
                         </thead>
                         <tbody>
+                          <!-- <tr>
+                            <td data-toggle="collapse" data-target="#accordion" class="clickable" colspan="3"> Lorem ipsum dolor s </td>
+                          </tr>
+                          <tr>
+                            <td colspan="3">
+                                <div id="accordion" class="collapse show ">Hidden by default</div>
+                            </td> -->
+                        </tr>
                           <% element.unidades.forEach( (uni, id)=> { %>
                             <tr>
                               <td>
@@ -121,12 +139,13 @@
                                   <%= uni.horas %>
                                 </small>
                               </td>
-                              <td style="width: 25%">
+                              <td >
                                 <button class="btn btn-info btn-sm"
                                   onclick="editActualUnit('<%=uni.UnidadID %>','<%=uni.UnidadName%>' ,'<%=uni.horas%>')">Editar</button>
                                 <button class="btn btn-danger btn-sm" onclick="deleteUnidad('<%=uni.UnidadID %>')">
                                   Eliminar
                                 </button>
+                                <button class="btn btn-success btn-sm">Agregar sub-unidad</button>     
                               </td>
                             </tr>
                             <% }); %>
@@ -194,8 +213,7 @@
         </div>
         <div class="col-md-4">
           <label>Horas totales del módulo</label>
-          <input type="number" name="MdlHoras" class="form-control" id="MdlHoras" placeholder="0" min="0" step="1"
-            oninput="this.value = Math.round(this.value);">
+          <input type="number" name="MdlHoras" class="form-control" id="MdlHoras" placeholder="0" min="0" step="1">
         </div>
       </div>
       <small><span class="font-weight-bold">Nota:</span> Si la fecha de inicio es
@@ -212,8 +230,7 @@
         </div>
         <div class="col-md-2">
           <label>Horas</label>
-          <input type="number" name="MdlHoras" class="form-control" id="UnitHoras" placeholder="0" min="0" step="1"
-            oninput="this.value = Math.round(this.value);">
+          <input type="number" name="MdlHoras" class="form-control" id="UnitHoras" placeholder="0" min="0" step="1">
         </div>
       </div>
       <hr />

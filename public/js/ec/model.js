@@ -13,7 +13,7 @@ const loader = () => {
 const addNewModel = async () => {
   try {
     const { value: formValues } = await Swal.fire({
-      title: "Agregar nuevo módulo",
+      title: "Agregar nueva carrera",
       template: "#newModule",
       focusConfirm: false,
       width: 800,

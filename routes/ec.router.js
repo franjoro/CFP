@@ -26,15 +26,19 @@ router.get("/:carrera/grupos",  ec.grupos);
 router.get("/tabla/:idgrupo",   ec.tabla)
 
 
-
-// Ingresar nuevo registro
+// Administrador 
+// Ingresar nuevo alumno en situacional
 router.post("/form" , authcheck, ec.form);
 // Ingresar nueva carrera
 router.post("/nuevacarrera" , authcheck, ec.addCarrera);
+// Editar carrera
+router.put("/editcarrera" , authcheck, ec.editcarrera);
 // Ingresar nuevo grupo y copia el modelo en el cronograma vigente
 router.post("/nuevogrupo" , authcheck, ec.addGrupo);
-
-
+// Desactivar carrera
+router.put("/disabledGrupo" , authcheck , ec.changeEstadoGrupo)
+// Editar un grupo
+router.put("/editgrupo" , authcheck, ec.editgrupo);
 
 // Modelos 
 // Devuelve el modelo de cronograma de una carrera
@@ -74,6 +78,7 @@ router.post("/newEv", authcheck , ec.newEva);
 router.delete("/deleteEva" , authcheck , ec.deteleEva)
 // Devuelve las notas de los alumnos
 router.get("/notas/:evaluacion/:grupo", authcheck , ec.notas);
+// Ingresar notas
 router.post("/notas" , authcheck , ec.notasP)
 
 
