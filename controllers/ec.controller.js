@@ -121,10 +121,10 @@ ec.editcarrera = async (req, res) => {
 };
 
 ec.editgrupo = async (req, res) => {
-  const { id, Nombre,  Instructor, Contrato, Oferta, Garantia, Inicio, Fin, InicioG, FinG, oldId } = req.body;
+  const { id, Nombre, Instructor, Contrato, Oferta, Garantia, Inicio, Fin, InicioG, FinG, oldId } = req.body;
   try {
     if (!id || !oldId) throw "PARAMS_NOT_COMPLETED";
-    await pool.query("UPDATE tb_ec_grupo SET  id = ?, Nombre = ? , Contrato = ? , Oferta = ? , dateInicio = ? , dateFin = ? , id_instructor = ? , Garantia = ? , dateGInicio = ?, dateGFin = ?  WHERE id = ? ", [id, Nombre, Contrato , Oferta, Inicio , Fin , Instructor , Garantia, InicioG , FinG , oldId ]);
+    await pool.query("UPDATE tb_ec_grupo SET  id = ?, Nombre = ? , Contrato = ? , Oferta = ? , dateInicio = ? , dateFin = ? , id_instructor = ? , Garantia = ? , dateGInicio = ?, dateGFin = ?  WHERE id = ? ", [id, Nombre, Contrato, Oferta, Inicio, Fin, Instructor, Garantia, InicioG, FinG, oldId]);
     res.json({ status: true });
   } catch (error) {
     console.log(error);
@@ -171,24 +171,26 @@ ec.addGrupo = async (req, res) => {
     const datosModeloOrdenado = [];
     modulos.forEach((element, id) => {
       const arrModelo = [];
-      const obj = {};
       unidades.forEach((unidad) => {
         if (unidad.idModulo == element.id) {
-          let obj = {};
-          obj["UnidadName"] = unidad.Nombre;
-          obj["idUnidad"] = unidad.id;
-          obj["Inicio"] = unidad.fechaInicio;
-          obj["Fin"] = unidad.fechaFin;
-          obj["horas"] = unidad.horas;
+          let obj = {
+            UnidadName: unidad.Nombre,
+            idUnidad: unidad.id,
+            Inicio: unidad.fechaInicio,
+            Fin: unidad.fechaFin,
+            horas: unidad.horas
+          };
           arrModelo.push(obj);
         }
       });
-      obj["modelo"] = element.Nombre;
-      obj["unidades"] = arrModelo;
-      obj["idModelo"] = element.id;
-      obj["fechaInicio"] = element.fechaInicio;
-      obj["fechaFin"] = element.fechaFin;
-      obj["horas"] = element.horas;
+      const obj = {
+        modelo: element.Nombre,
+        unidades: arrModelo,
+        idModelo: element.id,
+        fechaInicio: element.fechaInicio,
+        fechaFin: element.fechaFin,
+        horas: element.horas
+      };
       datosModeloOrdenado[id] = obj;
     });
     const promesasUnidades = [];
@@ -251,6 +253,20 @@ ec.addUnidad = async (req, res) => {
     res.status(400).json(error);
   }
 };
+ec.addSubUnidad = async (req, res) => {
+  const { Nombre, idUnidad, horas, idCarrera } = req.body;
+  console.log(req.body);
+  try {
+    await pool.query(
+      "INSERT INTO tb_ec_subunidades(Nombre, isModel, horas , idUnidad, idCarrera) VALUES (?, 1 ,? ,? , ?)",
+      [Nombre, horas, idUnidad, idCarrera]
+    );
+    res.json({ status: true });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json(error);
+  }
+};
 ec.deleteModelo = async (req, res) => {
   const { idModelo } = req.body;
   try {
@@ -271,12 +287,35 @@ ec.deleteUnidad = async (req, res) => {
     res.status(400).json(error);
   }
 };
+ec.deleteSubUnidad = async (req, res) => {
+  const { idSubUnidad } = req.body;
+  try {
+    await pool.query("DELETE FROM tb_ec_subunidades WHERE id = ? ", [idSubUnidad]);
+    res.json({ status: true });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json(error);
+  }
+};
 ec.editUnidad = async (req, res) => {
   const { idUnidad, unidad, horas } = req.body;
   try {
     await pool.query(
       "UPDATE tb_ec_unidades SET Nombre=? , horas=? WHERE id=?  ",
       [unidad, horas, idUnidad]
+    );
+    res.json({ status: true });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json(error);
+  }
+};
+ec.editSubUnidad = async (req, res) => {
+  const { idSubUnidad, unidad, horas } = req.body;
+  try {
+    await pool.query(
+      "UPDATE tb_ec_subunidades SET Nombre = ? , horas = ? WHERE id = ?  ",
+      [unidad, horas, idSubUnidad]
     );
     res.json({ status: true });
   } catch (error) {
@@ -305,6 +344,20 @@ ec.tabla = async (req, res) => {
   );
   res.json({ data });
 };
+const getMonth = (number) => {
+  if (number == "01") return "Enero";
+  if (number == "02") return "Febrero";
+  if (number == "03") return "Marzo";
+  if (number == "04") return "Abril";
+  if (number == "05") return "Mayo";
+  if (number == "06") return "Junio";
+  if (number == "07") return "Julio";
+  if (number == "08") return "Agosto";
+  if (number == "09") return "Septiembre";
+  if (number == "10") return "Octubre";
+  if (number == "11") return "Noviembre";
+  if (number == "12") return "Diciembre";
+};
 
 ec.administradorModelo = async (req, res) => {
   const usuario = getUserDataByToken(req.cookies.token);
@@ -322,49 +375,58 @@ ec.administradorModelo = async (req, res) => {
       "SELECT id , Nombre, idModulo , horas FROM tb_ec_unidades WHERE isModel = 1 AND  idCarrera = ?",
       idCarrera
     );
-    const query = await Promise.all([carrera, modulos, unidades]);
-    const getMonth = (number) => {
-      if (number == "01") return "Enero";
-      if (number == "02") return "Febrero";
-      if (number == "03") return "Marzo";
-      if (number == "04") return "Abril";
-      if (number == "05") return "Mayo";
-      if (number == "06") return "Junio";
-      if (number == "07") return "Julio";
-      if (number == "08") return "Agosto";
-      if (number == "09") return "Septiembre";
-      if (number == "10") return "Octubre";
-      if (number == "11") return "Noviembre";
-      if (number == "12") return "Diciembre";
-    };
+    let subunidades = pool.query(
+      "SELECT id , Nombre, idUnidad , horas FROM tb_ec_subunidades WHERE isModel = 1 AND  idCarrera = ?",
+      idCarrera
+    );
+    const query = await Promise.all([carrera, modulos, unidades, subunidades]);
     carrera = query[0][0];
     modulos = query[1];
     unidades = query[2];
+    subunidades = query[3];
     const datosModeloOrdenado = [];
     let horasTodosModulos = 0;
     modulos.forEach((element, id) => {
       const arrModelo = [];
-      const obj = {};
       let totalHorasUnidades = 0;
       unidades.forEach((unidad) => {
         if (unidad.idModulo == element.id) {
-          let obj = {};
-          obj["UnidadName"] = unidad.Nombre;
-          obj["UnidadID"] = unidad.id;
-          obj["horas"] = unidad.horas;
-          arrModelo.push(obj);
+          const arrSubUni = [];
+          let hasSubUnidades = false;
+          let horasSubUnidades = 0;
+
+          subunidades.forEach(subUni => {
+            if (subUni.idUnidad == unidad.id) {
+              arrSubUni.push({
+                id: subUni.id,
+                Nombre: subUni.Nombre,
+                horas: subUni.horas,
+              });
+              hasSubUnidades = true;
+              horasSubUnidades = horasSubUnidades + Number(subUni.horas);
+            }
+          });
+          arrModelo.push({
+            UnidadName: unidad.Nombre,
+            UnidaId: unidad.id,
+            horas: unidad.horas,
+            subunidades: arrSubUni,
+            hasSubUnidades,
+            horasSubUnidades
+          });
           totalHorasUnidades = totalHorasUnidades + Number(unidad.horas);
         }
       });
-      obj["modelo"] = element.Nombre;
-      obj["unidades"] = arrModelo;
-      obj["idModelo"] = element.id;
-      obj["fechaInicio"] = getMonth(element.fechaInicio);
-      obj["fechaFin"] = getMonth(element.fechaFin);
-      obj["horas"] = element.horas;
+      datosModeloOrdenado[id] = {
+        modelo: element.Nombre,
+        unidades: arrModelo,
+        idModelo: element.id,
+        fechaInicio: getMonth(element.fechaInicio),
+        fechaFin: getMonth(element.fechaFin),
+        horas: element.horas,
+        totalHorasUnidades
+      };
       horasTodosModulos = horasTodosModulos + Number(element.horas);
-      obj["totalHorasUnidades"] = totalHorasUnidades;
-      datosModeloOrdenado[id] = obj;
     });
     res.render("ec/ModeloCurso", {
       data: usuario.data,
@@ -373,6 +435,7 @@ ec.administradorModelo = async (req, res) => {
       carreraID: idCarrera,
       horasTodosModulos
     });
+
   } catch (error) {
     console.log(error);
     res.json({ status: false, error }).status(400);
@@ -407,30 +470,30 @@ ec.administradorCronogramaVigente = async (req, res) => {
     const datosModeloOrdenado = [];
     modulos.forEach((element, id) => {
       const arrModelo = [];
-      const obj = {};
       let horasTotalesUnidades = 0;
       unidades.forEach((unidad) => {
         if (unidad.idModulo == element.id) {
           let obj = {
-            UnidadName :  unidad.Nombre ,
-            idUnidad :  unidad.id ,
-            Inicio :  unidad.fechaInicio ,
-            Fin :  unidad.fechaFin ,
-            Estado :  unidad.Estado ,
-            Usuario :  unidad.Usuario ,
-            horas :  unidad.horas 
+            UnidadName: unidad.Nombre,
+            idUnidad: unidad.id,
+            Inicio: unidad.fechaInicio,
+            Fin: unidad.fechaFin,
+            Estado: unidad.Estado,
+            Usuario: unidad.Usuario,
+            horas: unidad.horas
           };
           arrModelo.push(obj);
           horasTotalesUnidades = horasTotalesUnidades + Number(unidad.horas);
         }
       });
-      obj["modelo"] = element.Nombre;
-      obj["unidades"] = arrModelo;
-      obj["idModelo"] = element.id;
-      obj["fechaInicio"] = element.fechaInicio;
-      obj["fechaFin"] = element.fechaFin;
-      obj["horas"] = element.horas;
-      obj["horasUnidad"] = horasTotalesUnidades;
+      const obj = {};
+      obj.modelo = element.Nombre;
+      obj.unidades = arrModelo;
+      obj.idModelo = element.id;
+      obj.fechaInicio = element.fechaInicio;
+      obj.fechaFin = element.fechaFin;
+      obj.horas = element.horas;
+      obj.horasUnidad = horasTotalesUnidades;
       datosModeloOrdenado[id] = obj;
     });
     res.render("ec/cronograma", {
@@ -535,11 +598,11 @@ ec.instructor = async (req, res) => {
         if (unidad.idGrupo == carrera.idGrupo) {
           unidades.push(unidad);
         }
-        obj["unidades"] = unidades;
-        obj["Carrera"] = carrera.Carrera;
-        obj["idCarrera"] = carrera.idCarrera;
-        obj["grupo"] = carrera.Grupo;
-        obj["idGrupo"] = carrera.idGrupo;
+        obj.unidades = unidades;
+        obj.Carrera = carrera.Carrera;
+        obj.idCarrera = carrera.idCarrera;
+        obj.grupo = carrera.Grupo;
+        obj.idGrupo = carrera.idGrupo;
       });
       dataOrdenada.push(obj);
     });
@@ -628,13 +691,13 @@ ec.notas = async (req, res) => {
       dataOrdenada = [];
     alumnos.forEach((alumno, id) => {
       let notaObtenida = {};
-      notaObtenida["Nota"] = 0;
-      notaObtenida["Comentario"] = "";
-      notaObtenida["Nombre"] = alumno.Nombres;
-      notaObtenida["Apellidos"] = alumno.Apellidos;
-      notaObtenida["idAlumno"] = alumno.id;
-      notaObtenida["isExist"] = false;
-      notaObtenida["idNota"] = false;
+      notaObtenida.Nota = 0;
+      notaObtenida.Comentario = "";
+      notaObtenida.Nombre = alumno.Nombres;
+      notaObtenida.Apellidos = alumno.Apellidos;
+      notaObtenida.idAlumno = alumno.id;
+      notaObtenida.isExist = false;
+      notaObtenida.idNota = false;
       if (nota) {
         let itnNota;
         if (
@@ -646,10 +709,10 @@ ec.notas = async (req, res) => {
             return false;
           })
         ) {
-          notaObtenida["Nota"] = nota[itnNota].Nota;
-          notaObtenida["isExist"] = true;
-          notaObtenida["idNota"] = nota[itnNota].id;
-          notaObtenida["Comentario"] = nota[itnNota].comentario;
+          notaObtenida.Nota = nota[itnNota].Nota;
+          notaObtenida.isExist = true;
+          notaObtenida.idNota = nota[itnNota].id;
+          notaObtenida.Comentario = nota[itnNota].comentario;
         }
       }
       dataOrdenada.push(notaObtenida);

@@ -460,6 +460,7 @@ const deleteModulo = async (id) => {
     }
   }
 };
+
 const deleteUnidad = async (id) => {
   console.log(id);
   const alerta = await Swal.fire({
@@ -491,6 +492,130 @@ const deleteUnidad = async (id) => {
   }
 };
 
+// SUB UNIDADES
+const addNewSubUnit = async (idUnidad, modulo, idCarrera) => {
+  try {
+    const { value: formValues } = await Swal.fire({
+      title: `Agregar nueva sub-unidad en : ${modulo}`,
+      template: "#newSubUnit",
+      focusConfirm: false,
+      width: 1000,
+      showLoaderOnConfirm: true,
+      showCancelButton: true,
+      allowOutsideClick: false,
+      preConfirm: () => {
+        if (!$("#SubUnidadNombre").val()) return false;
+        if (!$("#SubUnidadHoras").val()) return false;
+        return [
+          $("#SubUnidadNombre").val(),
+          $("#SubUnidadHoras").val()
+        ];
+      },
+    });
+    if (formValues) {
+      const data = {
+        Nombre: formValues[0],
+        horas: formValues[1],
+        idUnidad ,
+        idCarrera 
+      };
+      const query = await $.ajax({
+        type: "POST",
+        url: "/admin/ec/addSubUnidad",
+        data,
+      });
+      if (query) {
+        location.reload();
+      }
+    }
+  } catch (error) {
+    console.log(error);
+    Swal.fire(`Error : ${error}`);
+  }
+};
+
+// EDITAR UNIDAD EN MODELO
+const editActualSubUnit = async (idSubUnidad, unidad, horas) => {
+  try {
+    const { value: formValues } = await Swal.fire({
+      title: `Editar nombre de Sub-unidad`,
+      template: "#newSubUnit",
+      focusConfirm: false,
+      width: 800,
+      showLoaderOnConfirm: true,
+      showCancelButton: true,
+      allowOutsideClick: false,
+      didOpen: () => {
+        $("#SubUnidadNombre").val(unidad);
+        $("#SubUnidadHoras").val(horas);
+      },
+      preConfirm: () => {
+        if (!$("#SubUnidadNombre").val()) return false;
+        if (!$("#SubUnidadHoras").val()) return false;
+        return [$("#SubUnidadNombre").val(), $("#SubUnidadHoras").val()];
+      },
+    });
+    if (formValues) {
+      const data = {
+        unidad: formValues[0],
+        horas: formValues[1],
+        idSubUnidad,
+      };
+      const query = await $.ajax({
+        type: "PUT",
+        url: "/admin/ec/editSubUnidad",
+        data,
+      });
+      if (query) {
+        location.reload();
+      }
+    }
+  } catch (error) {
+    console.log(error);
+    Swal.fire(`Error : ${error}`);
+  }
+};
+
+
+const deleteSubUnidad = async (id) => {
+  console.log(id);
+  const alerta = await Swal.fire({
+    title: "¿Eliminar la Sub-unidad selecionada?",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Si, borrar",
+  });
+
+  if (alerta.isConfirmed) {
+    try {
+      loader();
+      const query = await $.ajax({
+        url: "/admin/ec/deleteSubUnidad",
+        type: "DELETE",
+        data: { idSubUnidad: id },
+      });
+      if (query.status) {
+        swal.close();
+        location.reload();
+      }
+    } catch (error) {
+      swal.close();
+      console.log(error);
+      errorMessage();
+    }
+  }
+};
+
+$(".btnAddSubUnit").on("click", async function () {
+  const {id, nombre , carrera} = $(this).data();
+  console.log(id, nombre, carrera);
+  addNewSubUnit(id, nombre , carrera);
+});
+
+
+
 $("#addNewModuleBtn").click(() => {
   addNewModel();
 });
@@ -498,6 +623,8 @@ $("#addNewModuleBtn").click(() => {
 $("#addNewModuleBtnVigente").click(() => {
   addNewModelVigente();
 });
+
+
 
 $("body").on("keyup", ".text-uppercase", function () {
   $(this).val($(this).val().toUpperCase());

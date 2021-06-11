@@ -31,17 +31,17 @@ $(".nota").focusout(function () {
 });
 
 $("#btnEnviar").click(() => {
-    const datos = []
+    const datos = [];
     $("input[name='notas[]']").map(function (i) {
         let obj ={};
-        obj["Nota"] = $(this).val();
-        obj["alumnoId"] = $(this).data("alumno");
-        obj["isExist"] = $(this).data("isexist");
-        obj["evaluacion"] = $(this).data("evaluacion");
-        obj["idNota"] = $(this).data("idnota");
-        obj["comentario"] = $(`#comment${i}`).val();
+        obj.Nota  = $(this).val();
+        obj.alumnoId  = $(this).data("alumno");
+        obj.isExist = $(this).data("isexist");
+        obj.evaluacion  = $(this).data("evaluacion");
+        obj.idNota = $(this).data("idnota");
+        obj.comentario = $(`#comment${i}`).val();
         datos.push(obj);
-    })
+    });
     let datosJsonString = JSON.stringify(datos); 
     Swal.fire({
         title: '¿Ingresar notas?',
@@ -53,7 +53,7 @@ $("#btnEnviar").click(() => {
         confirmButtonText: 'Si actualizar'
       }).then( async(result) => {
         if (result.isConfirmed) {
-            loader()
+            loader();
             const query = await $.ajax({
                 url: "/admin/ec/notas",
                 type: "POST",
@@ -65,8 +65,8 @@ $("#btnEnviar").click(() => {
                     '¡Perfecto!',
                     'Notas actualizadas correctamente',
                     'success'
-                  )
+                  );
             }
         }
-      })
-})
+      });
+});

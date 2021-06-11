@@ -303,7 +303,7 @@ $(document).ready(() => {
     });
     $('input[type="text"]').val("");
     if (!global_estado_participante) {
-      data = { dui, name: nombre, tel, email, genero, tel, isss, cargo };
+      data = { dui, name: nombre, tel, email, genero,  isss, cargo };
       $.ajax({
         url: "/admin/participantes/add",
         type: "POST",
@@ -389,7 +389,7 @@ const ReiniciarInputs = () => {
 };
 const VerificarEmpresa = () => {
   if( !$("#primerape").val()  ||  !$("#nombres").val()  || !$("#cargof").val()   ){
-    error("<b>errcode: </b> DEBE RELLENAR LOS CAMPOS DEL FIRMANTE")
+    error("<b>errcode: </b> DEBE RELLENAR LOS CAMPOS DEL FIRMANTE");
   }else{
     AsginarGlobalEmpresa();
     stepper1.next();

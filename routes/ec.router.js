@@ -55,6 +55,12 @@ router.delete("/deleteUnidad" ,  authcheck, ec.deleteUnidad);
 router.put("/editUnidad" ,authcheck, ec.editUnidad);
 // Editar modulo
 router.put("/editModulo" , authcheck, ec.editModulo);
+// Ingresar nueva SUB-UNIDAD
+router.post("/addSubUnidad" ,  authcheck, ec.addSubUnidad);
+// Editar SUB-unidad
+router.put("/editSubUnidad" ,authcheck, ec.editSubUnidad);
+// Eliminar SUB-Unidad
+router.delete("/deleteSubUnidad" ,  authcheck, ec.deleteSubUnidad);
 
 // Cronogram vigente 
 // Devuelve el cronograma de un grupo

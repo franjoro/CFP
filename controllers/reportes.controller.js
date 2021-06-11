@@ -37,7 +37,7 @@ reportes.ParticipantesEnCursos = async (req, res) => {
       "Cargo",
     ];
     await CreateNewExcel(titulos,datos);
-    res.status(200).json({status:true, path:"/reportes/download"})
+    res.status(200).json({status:true, path:"/reportes/download"});
 
   } catch (error) {
     res.send("ERROR API: " + error);

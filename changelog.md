@@ -1,13 +1,18 @@
-# Changelog 
+# Changelog
+
     Creación de Changelog a partir de la primera versión estable de la plataforma APP CFP, 1.0.2
 
     ## [Unreleased]
     - Visualización del historial de cursos de participantes y empresas
     - Al ingresar una solicitud enviar correo a los participantes para verificar validez (PENDIENTE DE APROBACION)
 
-    ### Bug Fixed
-    - Solucionado bug de suma de  horas en modelo de modulos y unidades al cambiar de enteros a duouble
-    - Solucionado bug de suma de  horas en cronograma vigente de modulos y unidades al cambiar de enteros a duouble
+    ## [1.0.9] - 11/06/2021
+    ### Added
+    - Agregado el rediseño para subunidades en modelo de carreras
+    - Agregado eliminar, y editar 
+    - Agregado el rediseño de horas y adaptación de alertas
+    
+    ### Database Changes
 
     ## [1.0.8] - 08/06/2021
     ### Added
@@ -15,11 +20,16 @@
     - Funcion de deshabilitar los grupos
     - Se agregan más campos de información de grupos y carreras
     - En modelo de cronograma se agrego en la vista la información de horas totales, basicas y de alternancia
-    
+
+
+    ### Bug Fixed
+    - Solucionado bug de suma de  horas en modelo de modulos y unidades al cambiar de enteros a duouble
+    - Solucionado bug de suma de  horas en cronograma vigente de modulos y unidades al cambiar de enteros a duouble
+
     ### Changed
     - Cambios de diseño en carrera y grupos
     - Validar estado de modulos y unidades en instructor
-    
+
     ### Database Changes
     * tb_ec_grupo ************************************************************
     - [Add][tb_ec_grupo] Columna de Contrato.
@@ -37,8 +47,8 @@
     - [Add][tb_ec_grupo] Columna de estado para activar o desactivar el grupo.
     - [Add][tb_ec_grupo] Relación creada en grupos
     * tb_ec_carrera **********************************************************
-    - [Add][tb_ec_carrera] Horas Totales = Horas Básicas + Horas de alternancía 
-    - [Add][tb_ec_carrera] Horas Básicas 
+    - [Add][tb_ec_carrera] Horas Totales = Horas Básicas + Horas de alternancía
+    - [Add][tb_ec_carrera] Horas Básicas
     - [Add][tb_ec_carrera] Horas de alternancía
     - [Change][tb_ec_modulos]  Columna de ID Carrera pasa a ser varchar
     - [Change][tb_ec_grupos]   Columna de ID Carrera pasa a ser varchar
@@ -50,35 +60,35 @@
     - [Change] hora pasa a ser double(5,2)
     - [Change] Estado predeterminado a 1
 
-   
+
     ## [1.0.71] - 04/06/2021
     ### Bug Fixed
-    - Correción de error al entrar a la vista  de instructor sin unidades disponible 
+    - Correción de error al entrar a la vista  de instructor sin unidades disponible
 
     ## [1.0.7] - 04/06/2021
     ### Added
-    - Cronograma gestionando horas agregado en modelo de carreras. 
-    - Cronograma vigente gestionando horas. 
+    - Cronograma gestionando horas agregado en modelo de carreras.
+    - Cronograma vigente gestionando horas.
     - Agregada opción de editar horas en modelo
-    - Creación de role en el JS de Auth para redireccionar a la vista del instructor 
+    - Creación de role en el JS de Auth para redireccionar a la vista del instructor
     - Agregada validación de usuario en empresa centro para instructor y administradores
-    - Funciones Agregar, eliminar de evaluaciones dependiendo de la unidad 
+    - Funciones Agregar, eliminar de evaluaciones dependiendo de la unidad
     - Alerta de evaluaciones no existentes
     - Vista de notas por grupo imprimiendo cada alumno
     - Agregar o editar evaluaciones en las unidades activas para instructores
     - Agregar o editar notas de las evaluaciones en instructores.
-    
+
     ### Changed
-    - Agregados trycatch en funciones ec 
+    - Agregados trycatch en funciones ec
 
     ### Bug Fixed
-    - Agregado role de maestros de empresa centro al editar el usuario 
+    - Agregado role de maestros de empresa centro al editar el usuario
 
     ## [1.0.6] - 01/06/2021
     ### Added
     - Finalizados las funciones del cronograma vigente Editar eliminar y agregar
     - Agregada vista de instructores de empresa centro
-    - Agregada posiblidad de editar instructor en curso 
+    - Agregada posiblidad de editar instructor en curso
     - Agregado comentario desde base de datos
     - Envio de correo a empresas para notificar aprobación de documentos
 
@@ -108,17 +118,17 @@
     - Tabla de alumnos de EC obtiene los datos de columnas y no de json
 
     ### Bug Fixed
-    - Corregido error en la tabla de alumnos de empresa centro 
+    - Corregido error en la tabla de alumnos de empresa centro
 
 
     ## [1.0.3] - 24/05/2021
     ### Added
     - Vistas de modelo empresa Centro
-    
+
     ### Remove
     - Base de datos
-    - Slinter 
+    - Slinter
 
     ### Changed
     - Administrador de cursos y grupos de empresa centro
-    - Guardar el nombre del alumno de EC en columnas y en JSON para facilitar el proceso de obtener datos y usar la tabla para notas 
+    - Guardar el nombre del alumno de EC en columnas y en JSON para facilitar el proceso de obtener datos y usar la tabla para notas
