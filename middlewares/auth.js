@@ -34,9 +34,9 @@ auth.authcheckEmpresas = (req, res, next) => {
 };
 
 auth.CloseSession = (req, res,next) =>{
-  res.clearCookie("token")
+  res.clearCookie("token");
   next();
-}
+};
 
 
 

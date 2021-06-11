@@ -26,7 +26,7 @@ app.set("view engine", "ejs");
 // Seteamos carpeta de archivos estaticos
 app.use("/static", express.static(`${__dirname}/public`));
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }))
+app.use(express.urlencoded({ extended: true }));
 // Cargamos las rutas
 
 // Router principal de admin y sus controladores

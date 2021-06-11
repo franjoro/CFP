@@ -17,7 +17,7 @@ router.get("/table", authcheck, programa.loadTable);
 router.post("/add", authcheck, fileUpload(),  programa.addPrograma);
 router.post("/EncargadoAdd",authcheck,programa.addEncargado);
 router.delete("/deleteinstructor", authcheck ,programa.deleteinstructor);
-router.put("/updateprograma", authcheck,programa.updatePrograma)
+router.put("/updateprograma", authcheck,programa.updatePrograma);
 
 
 

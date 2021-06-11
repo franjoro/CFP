@@ -41,7 +41,7 @@ ec.changeEstadoGrupo = async (req, res) => {
     const grupo = pool.query("UPDATE tb_ec_grupo SET Estado = 0 WHERE id = ?", [idGrupo]);
     const modulos = pool.query("UPDATE tb_ec_modulos SET Estado = 0 WHERE idGrupo = ?", [idGrupo]);
     const unidades = pool.query("UPDATE tb_ec_unidades SET Estado = 0  WHERE idGrupo = ?", [idGrupo]);
-    await Promise.all([grupo, modulos, unidades])
+    await Promise.all([grupo, modulos, unidades]);
     res.json({ status: true }).status(200);
   } catch (error) {
     console.log(error);
@@ -411,14 +411,15 @@ ec.administradorCronogramaVigente = async (req, res) => {
       let horasTotalesUnidades = 0;
       unidades.forEach((unidad) => {
         if (unidad.idModulo == element.id) {
-          let obj = {};
-          obj["UnidadName"] = unidad.Nombre;
-          obj["idUnidad"] = unidad.id;
-          obj["Inicio"] = unidad.fechaInicio;
-          obj["Fin"] = unidad.fechaFin;
-          obj["Estado"] = unidad.Estado;
-          obj["Usuario"] = unidad.Usuario;
-          obj["horas"] = unidad.horas;
+          let obj = {
+            UnidadName :  unidad.Nombre ,
+            idUnidad :  unidad.id ,
+            Inicio :  unidad.fechaInicio ,
+            Fin :  unidad.fechaFin ,
+            Estado :  unidad.Estado ,
+            Usuario :  unidad.Usuario ,
+            horas :  unidad.horas 
+          };
           arrModelo.push(obj);
           horasTotalesUnidades = horasTotalesUnidades + Number(unidad.horas);
         }

@@ -11,17 +11,17 @@ const router = express.Router();
 
 // = = = = = = = = Gestor de documentos
 //Main
-router.get("/documentos/:curso/:empresa/:programa/:tipo" ,cursos.GestorDeDocumentos)
+router.get("/documentos/:curso/:empresa/:programa/:tipo" ,cursos.GestorDeDocumentos);
 // Guardar archivo en zip
 router.post("/savezip",authcheck , cursos.getAtZipAllFiles);
 //Descargar zip de archivos
 router.get("/archivo",authcheck , cursos.dowloadZip);
 //actualizar permisos de edición
-router.put("/UpdatePermisos",authcheck , cursos.UpdatePermisos)
+router.put("/UpdatePermisos",authcheck , cursos.UpdatePermisos);
 //actualizar permisos de edición
-router.delete("/deleteFiles3", authcheck , cursos.deleteFiles3)
+router.delete("/deleteFiles3", authcheck , cursos.deleteFiles3);
 // editar comentario
-router.put("/UpdateComment",authcheck , cursos.UpdateComment)
+router.put("/UpdateComment",authcheck , cursos.UpdateComment);
 // Enviar notificacion a empresas por correo 
 router.post("/sendNotificacion",authcheck , cursos.sendNotificacion);
 
@@ -39,7 +39,7 @@ router.get("/:id?",authcheck , cursos.cursos);
 // Muestra los finalizados de la categoria ID
 router.get("/finalizados/:id",authcheck , cursos.cursosFinalizados);
 // Muestra el formulario para ofertas habil o  personas no cotizantes 
-router.get("/form/:programa" , authcheck, cursos.form)
+router.get("/form/:programa" , authcheck, cursos.form);
 // Muestra el detalle de cada curso con empresas y alumnos
 router.get("/detalle/:id/:programa/:tipo",authcheck ,  cursos.curso_detalle);
 // Devuelve todos los instructores para select
@@ -61,7 +61,7 @@ router.put("/ChangeMatriculaCurso",authcheck , cursos.ChangeMatriculaCurso);
 // migrar bloque entero de solicitud
 router.put("/migrarall",authcheck , cursos.MigrarTodo);
 // Editar oferta
-router.put("/editOferta" ,authcheck , cursos.editOferta)
+router.put("/editOferta" ,authcheck , cursos.editOferta);
 // Borrar matricula de participante en  detalles de curso
 router.delete("/deleteMatricula",authcheck , cursos.deleteMatricula);
 // Elimina la asociacion de una empresa en un curso
@@ -76,11 +76,11 @@ router.delete("/deleteOffer",authcheck ,cursos.delteCursoOferta);
 const fileUpload = require("express-fileupload");
 router.post("/EnviarFiles" , fileUpload() , cursos.archivos);
 // Subir archivos extra
-router.post("/archivoExtra",authcheck ,fileUpload() , cursos.ArchivoExtra)
+router.post("/archivoExtra",authcheck ,fileUpload() , cursos.ArchivoExtra);
 
 
 // Subir oferta de curso para no cotizantes
-router.post("/OfertaNoCotizante", authcheck ,fileUpload() , cursos.NuevoCursoHabil)
+router.post("/OfertaNoCotizante", authcheck ,fileUpload() , cursos.NuevoCursoHabil);
 
 // Exportamos la configuración
 module.exports = router;

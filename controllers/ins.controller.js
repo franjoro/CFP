@@ -2,7 +2,7 @@
 const instructor = {};
 
 // Requerimos pool de base de datos si es necesario
-const pool = require('../models/db')
+const pool = require('../models/db');
 
 // const mailer = require ('../utils/mailer');
 
@@ -20,7 +20,7 @@ instructor.table = async (req, res) => {
     } catch (error) {
       return res.status(400).json({ error });
     }
-}
+};
 // Cambiar estado de activo a inactivo
 instructor.changeEstado = async (req, res) => {
     // validar codigo y estado

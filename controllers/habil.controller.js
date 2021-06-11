@@ -9,7 +9,7 @@ const ec = {};
 
 ec.main = (req,res) =>{
     res.render('habil/formulario');
-}
+};
 
 
 

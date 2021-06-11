@@ -23,7 +23,7 @@ router.get("/carreras", ec.carreras);
 // Devuelve los grupos pertenicientes a la carrera
 router.get("/:carrera/grupos",  ec.grupos);
 // Devuelve table
-router.get("/tabla/:idgrupo",   ec.tabla)
+router.get("/tabla/:idgrupo",   ec.tabla);
 
 
 // Administrador 
@@ -36,7 +36,7 @@ router.put("/editcarrera" , authcheck, ec.editcarrera);
 // Ingresar nuevo grupo y copia el modelo en el cronograma vigente
 router.post("/nuevogrupo" , authcheck, ec.addGrupo);
 // Desactivar carrera
-router.put("/disabledGrupo" , authcheck , ec.changeEstadoGrupo)
+router.put("/disabledGrupo" , authcheck , ec.changeEstadoGrupo);
 // Editar un grupo
 router.put("/editgrupo" , authcheck, ec.editgrupo);
 
@@ -52,15 +52,15 @@ router.delete("/deleteModelo" , authcheck, ec.deleteModelo);
 // Eliminar Unidad
 router.delete("/deleteUnidad" ,  authcheck, ec.deleteUnidad);
 // Editar unidad
-router.put("/editUnidad" ,authcheck, ec.editUnidad)
+router.put("/editUnidad" ,authcheck, ec.editUnidad);
 // Editar modulo
-router.put("/editModulo" , authcheck, ec.editModulo)
+router.put("/editModulo" , authcheck, ec.editModulo);
 
 // Cronogram vigente 
 // Devuelve el cronograma de un grupo
 router.get("/cronograma/:idGrupo", authcheck, ec.administradorCronogramaVigente);
 // Cambia la configuración y el estado de la unidad
-router.put("/ConfigUnit",  authcheck, ec.editUnidadVigente)
+router.put("/ConfigUnit",  authcheck, ec.editUnidadVigente);
 // Agrega un nuevo modulo en cronograma vigente
 router.post("/addModeloVigente", authcheck, ec.addModeloVigente);
 // Agrega una nueva unidad en cronograma vigente
@@ -75,11 +75,11 @@ router.get("/evaluaciones/:unidad/:grupo", authcheck , ec.contenidos);
 // Agregar nueva evaluación
 router.post("/newEv", authcheck , ec.newEva);
 // Elimina las evaluaciones y notas asociadas
-router.delete("/deleteEva" , authcheck , ec.deteleEva)
+router.delete("/deleteEva" , authcheck , ec.deteleEva);
 // Devuelve las notas de los alumnos
 router.get("/notas/:evaluacion/:grupo", authcheck , ec.notas);
 // Ingresar notas
-router.post("/notas" , authcheck , ec.notasP)
+router.post("/notas" , authcheck , ec.notasP);
 
 
 

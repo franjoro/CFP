@@ -11,7 +11,7 @@ const port = process.env.PORT;
 
 app.listen(port, async  () => {
     console.log(`servidor corriendo en http://localhost:${  port}`);
-})
+});
 
 
 

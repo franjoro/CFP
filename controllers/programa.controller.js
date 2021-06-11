@@ -62,7 +62,7 @@ programa.renderTablaUnion = async (req, res) => {
     const flag = { exist: c[0][0].c, name: c[0][0].Nombre };
     // Renderizar y mandar respuesta
     return res.render("admin/union_programa_encargado", {
-      data: flag,
+      // data: flag,
       e: c[1],
       t: c[2],
       id,
