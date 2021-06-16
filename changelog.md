@@ -6,6 +6,18 @@
     - Visualización del historial de cursos de participantes y empresas
     - Al ingresar una solicitud enviar correo a los participantes para verificar validez (PENDIENTE DE APROBACION)
 
+    ## [1.0.10] - 16/06/2021
+    ### Added
+    - Validación para usuarios de empresa para permitir uniamente un solo usuario
+    - Agregado control de horas de cursos en la ofertas
+
+    ### Changed
+    - Cambios en horas del formulario y cambio en costo de alumno
+
+    ### Database Changes
+    - Agregado en la tabla de cursos la columna horas
+    
+
     ## [1.0.9] - 11/06/2021
     ### Added
     - Agregado el rediseño para subunidades en modelo de carreras

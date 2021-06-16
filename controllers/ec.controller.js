@@ -62,7 +62,7 @@ ec.grupos = async (req, res) => {
   try {
     const { carrera } = req.params;
     const grupos = await pool.query(
-      "SELECT * FROM tb_ec_grupo WHERE id_carrera = ? WHERE Estado = 1",
+      "SELECT * FROM tb_ec_grupo WHERE id_carrera = ? AND Estado = 1",
       [carrera]
     );
     res.json(grupos).status(200);

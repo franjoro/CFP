@@ -18,13 +18,13 @@ const loader = () => {
   });
 };
 $("#btn_empresas").click(() => {
-  $("#form_oferta_empresas").css("display", "block")
-  $("#menu").css("display", "none")
+  $("#form_oferta_empresas").css("display", "block");
+  $("#menu").css("display", "none");
 });
 
 $("#btn_back_menu").click(() => {
-  $("#form_oferta_empresas").css("display", "none")
-  $("#menu").css("display", "block")
+  $("#form_oferta_empresas").css("display", "none");
+  $("#menu").css("display", "block");
 });
 
 $(document).ready(() => {
@@ -94,6 +94,7 @@ $(document).ready(() => {
       programa: $("#programa_oferta").val(),
       fechas: $("#horario_fecha").val(),
       fechaL: $("#fecha_limite").val(),
+      horas: $("#horas").val(),
     };
     try {
       const query = await $.ajax({

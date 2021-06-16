@@ -8,22 +8,22 @@ const GenerarPdf = (data) => {
     let empresa = data.data[0][0];
     let nit = data.data[0][0].NIT.split("-");
     const d = new Date();
-    const {firmante} = data;
-    
-    const {Horario, Nombre, programa, Fechas} = data.data[1][0] 
-    const {NombreContacto,  EmailContacto} = data.data[2][0] 
+    const { firmante } = data;
+
+    const { Horario, Nombre, programa, Fechas, horas, CostoAlumno } = data.data[1][0];
+    const { NombreContacto, EmailContacto } = data.data[2][0];
     itineracion = "";
     data.alumnos.forEach((element, index) => {
       let h = "", m = "";
-      if(element[8] === 'Hombre'){
+      if (element[8] === 'Hombre') {
         h = "checked";
       }
-      if(element[8] === 'Mujer'){
+      if (element[8] === 'Mujer') {
         m = "checked";
 
       }
       itineracion +=
-           `
+        `
           <tr>
             <td>${index + 1}</td>
             <td>${element[1]}</td>
@@ -38,7 +38,7 @@ const GenerarPdf = (data) => {
             </td>
           </tr>
            `;
-           
+
     });
 
     const options = {
@@ -131,7 +131,7 @@ const GenerarPdf = (data) => {
                 <input
                   type="text"
                   class="date d-inline"
-                  value="${d.getMonth() + 1 }"
+                  value="${d.getMonth() + 1}"
                 />-
                 <input
                   type="text"
@@ -277,7 +277,7 @@ const GenerarPdf = (data) => {
                   type="text"
                   value="Asociación Institución Salesiana/ITR"
                   style="width: 30%"
-                /><input type="text" value="42.47" /><input
+                /><input type="text" value="${CostoAlumno}" /><input
                   type="text"
                   value="ONLINE"
                 />
@@ -294,7 +294,7 @@ const GenerarPdf = (data) => {
                 <p style="margin-left: -20px;">HORARIO (S):</p>
               </div>
               <div class="cuerpo">
-                <input type="text" style="width: 8%" value="20 Horas" />
+                <input type="text" style="width: 8%" value="${horas} Horas" />
                 <input type="text" style="width: 60%" value="${Fechas} " />
                 <input type="text" style="width: 20%" value="${Horario} " />
               </div>

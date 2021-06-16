@@ -46,11 +46,9 @@ $("#Register").submit(async function (e) {
   fd.append("TelR", TelR);
   fd.append("password", password);
   fd.append("file", file[0]);
-
   if (Email !== $("#EmailConfirmacion").val()) {
     return errorM("Parece que los correos ingresados no coiciden");
   }
-
   if (
     !file ||
     !Nombre ||
@@ -69,18 +67,23 @@ $("#Register").submit(async function (e) {
   ) {
     return errorM("Debe rellenar toda la información para continuar");
   }
-
   try {
     loader();
-    await $.ajax({
+    const query = await $.ajax({
       url: "/public/register",
       type: "POST",
       data: fd,
       processData: false,
       contentType: false,
     });
-    $("#modalSuccess").modal("show");
-    Swal.close();
+    if(query.status){
+      $("#modalSuccess").modal("show");
+      Swal.close();
+    }else{
+      if(query.error == "USER_EXIST"){
+        errorM("El NIT ingresado ya pertenece a un usuario, comunicate con soporte_cfp@ricaldone.edu.sv para obtener más información o asistencia");
+      }
+    }
   } catch (error) {
     console.log(error);
     errorMessage();
@@ -92,7 +95,6 @@ $("#TelR").mask("0000-0000");
 $("#Aportacion").mask("000,000,000,000,000.00", {
   reverse: true,
 });
-
 $('input[type="file"]').on("change", function () {
   let ext = $(this).val().split(".").pop();
   ext = ext.toLowerCase();

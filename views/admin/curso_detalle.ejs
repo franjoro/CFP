@@ -70,8 +70,7 @@
                     <h5> Oferta : <%= curso.Nombre %>
                     </h5>
                     <p> <b>Última fecha de recepción documentos:</b>
-                      <%= curso.Date_inicio %>
-                    </p>
+                      <%= curso.Date_inicio %> <br> <b>Horas :</b><%= curso.horas %> </p>
                     <hr>
                     <button class="btn btn-info btn-sm d-inline" data-toggle="modal"
                       data-target="#modificar_modal_oferta">Editar oferta</button>
@@ -343,12 +342,16 @@
                   <label for="costo">Fechas</label>
                   <input type="text" class="form-control" name="fecha" value="<%= curso.Fechas %>" id="fecha">
                 </div>
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-4">
                   <label for="horario">Horario</label>
                   <input type="text" class="form-control" name="horario" value="<%= curso.Horario %> " id="horario">
                 </div>
+                <div class="form-group col-md-2">
+                  <label for="horas">Horas</label>
+                  <input type="number" min="0" class="form-control" name="horas" value="<%= curso.horas %>" id="horas">
+                </div>
                 <div class="form-group col-md-6">
-                  <label for="date_inicio">Fecha de inicio</label>
+                  <label for="date_inicio">Fecha de finalización de recepción de archivos</label>
                   <input type="text" class="form-control" value="<%= curso.Date_inicio %>" name="date_inicio_oferta"
                     id="date_inicio_oferta">
                 </div>

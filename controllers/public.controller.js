@@ -322,7 +322,7 @@ PublicFunctions.FichaRegistro = async (req, res) => {
 
     queries.push(
       pool.query(
-        "SELECT Horario, Nombre, Fechas, (SELECT Nombre FROM tb_programa WHERE id_programa = tb_cursos.id_programa ) AS programa  FROM tb_cursos WHERE Codigo_curso = ? ",
+        "SELECT Horario, Nombre, Fechas, (SELECT Nombre FROM tb_programa WHERE id_programa = tb_cursos.id_programa ) AS programa , horas, CostoAlumno FROM tb_cursos WHERE Codigo_curso = ? ",
         [cursos]
       )
     );
@@ -333,7 +333,6 @@ PublicFunctions.FichaRegistro = async (req, res) => {
         [empresa]
       )
     );
-
     alumnos = JSON.parse(alumnos);
     firmante = JSON.parse(firmante);
     const MainQuery = await Promise.all(queries);
@@ -567,6 +566,9 @@ PublicFunctions.RegisterPost = async (req, res) => {
     password,
   } = req.body;
   try {
+    let ifExist = await pool.query("SELECT COUNT(*)  AS status FROM `tb_usuarios` WHERE id_usuario = ? ", Nit);
+    ifExist = ifExist[0].status;
+    if(ifExist) return res.json({status: false, error: "USER_EXIST"}).status(400);
     const {
       insertId,
     } = await pool.query(
