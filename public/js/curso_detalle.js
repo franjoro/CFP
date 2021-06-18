@@ -117,6 +117,37 @@ $(document).ready(() => {
     }
   });
 
+
+  $("#btnFinalizarCurso").click( async ()=> {
+    const codigoCurso = $("#CodigoCurso").val();
+    const programa = $("#programa").val();
+    const alerta = await Swal.fire({
+      title: "¿Finalizar este curso?",
+      text: "Se movera el curso a estado finalizado",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, mover",
+    });
+    if (alerta.isConfirmed) {
+      try {
+        loader();
+        const data = await $.ajax({
+          url: "/admin/cursos/finalizarCurso",
+          type: "PUT",
+          data: { id_curso: codigoCurso },
+        });
+        console.log(data);
+        swal.close();
+        window.location.replace('/admin/cursos/'+programa);
+      } catch (error) {
+        console.log(error);
+        errorMessage();
+      }
+    }
+  });
+
   desasociarEmpresa = async (empresa, curso) => {
     const alerta = await Swal.fire({
       title: "¿Borrar participación de empresa en este curso?",

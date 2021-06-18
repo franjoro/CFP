@@ -189,6 +189,7 @@ $(document).ready(() => {
       .data();
     id = $(this).data().id_contacto;
     $("#name_editar").val(data[0]);
+    $("#name_editar").val(data[0]);
     $("#tel_editar").val(data[1]);
     $("#cel_editar").val(data[2]);
     $("#puesto_editar").val(data[3]);
@@ -201,7 +202,10 @@ $(document).ready(() => {
       .DataTable()
       .row($(this).parents("tr"))
       .data();
+      console.log(data);
     $("#name_edit").val(data.Nombre);
+    $("#nit_editar").val(data.NIT); 
+    $("#nit_actual").val(data.NIT); 
     $("#tel_edit").val(data.Tel);
     $("#actividad_edit").val(data.Actividad_eco);
     $("#direccion_edit").val(data.Direccion);
@@ -212,6 +216,7 @@ $(document).ready(() => {
     $("#aportacion_edit").val(data.Aportacion_insaforp);
   });
 
+  $("#nit_editar").mask("0000-000000-000-0");
 
 
   $("#actividad").select2({

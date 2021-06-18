@@ -356,12 +356,16 @@ PublicFunctions.archivos = async (req, res) => {
     CantidadCancelacion,
   } = req.body;
   try {
-    const promesas = [] , inserts = [];
-    let ext , fileContent;
+    const promesas = [], inserts = [];
+    let ext, fileContent;
+    const formatExtension = (ext)=>{
+     ext = ext[ext.length - 1].toLowerCase();
+     if(ext == "jpg") ext = "jpeg";
+     return ext;
+    };
     cursos.forEach((curso, index) => {
       // SUBIR Ficha
-      ext = req.files[`ficha${index}`].name.split(".");
-      ext = ext[ext.length-1].toLowerCase();
+      ext = formatExtension(req.files[`ficha${index}`].name.split("."));
       fileContent = Buffer.from(req.files[`ficha${index}`].data, "binary");
       promesas.push(
         upload(fileContent, Date.now(), ext, empresa, `ficha${index}`)
@@ -369,8 +373,7 @@ PublicFunctions.archivos = async (req, res) => {
 
       // SUBIR Recibo
       for (let i = 0; i < CantidadRecibo[index]; i++) {
-        ext = req.files[`recibo${index}${i}`].name.split(".");
-        ext = ext[ext.length-1].toLowerCase();
+        ext = formatExtension(req.files[`recibo${index}${i}`].name.split(".") );
         fileContent = Buffer.from(
           req.files[`recibo${index}${i}`].data,
           "binary"
@@ -382,8 +385,7 @@ PublicFunctions.archivos = async (req, res) => {
 
       // SUBIR Si existe cancelación
       for (let i = 0; i < CantidadCancelacion[index]; i++) {
-        ext = req.files[`cancelacion${index}${i}`].name.split(".");
-        ext = ext[ext.length-1].toLowerCase(); 
+        ext = formatExtension(req.files[`cancelacion${index}${i}`].name.split("."));
         fileContent = Buffer.from(
           req.files[`cancelacion${index}${i}`].data,
           "binary"
@@ -401,8 +403,7 @@ PublicFunctions.archivos = async (req, res) => {
 
       // SUBIR Archivos de planilla
       for (let i = 0; i < CantidadPlanilla[index]; i++) {
-        ext = req.files[`planilla${index}${i}`].name.split(".");
-        ext = ext[ext.length-1].toLowerCase();
+        ext = formatExtension(req.files[`planilla${index}${i}`].name.split("."));
         fileContent = Buffer.from(
           req.files[`planilla${index}${i}`].data,
           "binary"
@@ -498,10 +499,11 @@ PublicFunctions.archivo = (req, res) => {
 };
 
 PublicFunctions.SeeFile = (req, res) => {
-  const file = fs.readFileSync(`./public/files/tmp/tmpfile.${req.params.file}`);
-  if (req.params.file == "png") res.contentType("image/png");
-  if (req.params.file == "pdf") res.contentType("application/pdf");
-  if (req.params.file == "jpeg") res.contentType("image/jpeg");
+  let { file: extension } = req.params;
+  if (extension == "png") res.contentType("image/png");
+  if (extension == "pdf") res.contentType("application/pdf");
+  if (extension == "jpeg") res.contentType("image/jpeg");
+  const file = fs.readFileSync(`./public/files/tmp/tmpfile.${extension}`);
   res.send(file);
 };
 
@@ -568,7 +570,7 @@ PublicFunctions.RegisterPost = async (req, res) => {
   try {
     let ifExist = await pool.query("SELECT COUNT(*)  AS status FROM `tb_usuarios` WHERE id_usuario = ? ", Nit);
     ifExist = ifExist[0].status;
-    if(ifExist) return res.json({status: false, error: "USER_EXIST"}).status(400);
+    if (ifExist) return res.json({ status: false, error: "USER_EXIST" }).status(400);
     const {
       insertId,
     } = await pool.query(

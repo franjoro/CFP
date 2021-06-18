@@ -10,14 +10,15 @@
           <div class="card-header py-3">
             <a href="/admin/cursos/<%= programa %>" class="btn btn-success btn-sm float-left d-inline"><i
                 class="fas fa-arrow-left"></i></a>
-
             <% if(tipo=='curso' ) { %>
-              <button class="btn btn-warning btn-sm float-right d-inline" data-toggle="modal"
+              <button class="btn btn-warning btn-sm float-right d-inline m-1" data-toggle="modal"
                 data-target="#modificar_modal">
                 Editar
               </button>
+              <button class="btn btn-danger btn-sm float-right d-inline m-1" id="btnFinalizarCurso">
+              Finalizar curso
+            </button>
               <% } %>
-
           </div>
           <div class="card-body">
             <div class="card shadow mb-3">
@@ -66,6 +67,7 @@
                       class="fas fa-file-excel"></i> Descargar participantes</button>
                   <button class="btn btn-primary btn-sm d-inline" onclick="createZipCurso('<%=curso.Codigo_curso%>')"><i
                       class="fas fa-file-archive"></i> Descargar ZIP de documentos</button>
+                      
                   <%} else{ %>
                     <h5> Oferta : <%= curso.Nombre %>
                     </h5>
@@ -200,7 +202,7 @@
         </div>
         <div class="modal-body">
           <form id="newEmpresa">
-            <input type="hidden" name="curso" value="<%= curso.Codigo_curso  %>">
+            <input type="hidden" id="CodigoCurso" name="curso" value="<%= curso.Codigo_curso  %>">
             <select class="custom-select" id="select_empresa" name="select_add_empresa">
               <option value="0">- Buscar empresa -</option>
             </select>
@@ -216,6 +218,8 @@
     </div>
   </div>
   <input type="hidden" name="curso" id="curso" value="<%=curso.Codigo_curso%>">
+  <input type="hidden" name="programa" id="programa" value="<%= programa%>">
+
   <% if(tipo=='oferta' ) { %>
     <!-- Modal Insertar curso en base a oferta -->
     <div class="modal fade" id="insertar_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -230,7 +234,7 @@
           </div>
           <div class="modal-body">
             <form id="form_curso">
-              <input type="hidden" name="programa" value="<%= programa%>">
+              <input type="hidden" name="programa" id="programa" value="<%= programa%>">
               <div class="form-row">
                 <div class="form-group col-md-4">
                   <label for="codigo_curso">Código de curso*</label>

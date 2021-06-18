@@ -14,6 +14,8 @@ const encodeToImage = (data) => {
   return base64;
 };
 
+
+
 s3Functions = {};
 
 s3Functions.upload = (file, identifier, ext, empresa, posicion) =>
@@ -101,29 +103,27 @@ s3Functions.getFolderData = async (folder, data) => {
     const s3Zip = require("s3-zip");
     const output = fs.createWriteStream(join(__dirname, "archivos.zip"));
     const keys = [];
-
     data.forEach(element =>{
       keys.push(element.s3key);
-    })
-
-
+    });
     s3Zip
       .archive({ s3, bucket: process.env.BUCKET }, folder, keys)
       .pipe(output)
       .on("finish", () => {
+        console.log("finish");
         const zip = new AdmZip(output.path);
         const zipEntries = zip.getEntries();
         const newZip = new AdmZip();
         zipEntries.forEach(function (zipEntry, i) {
           let ext = keys[i].split(".") , roleName;
-          data.forEach((query, id) => {
+          data.forEach((query) => {
             let fileName = query.s3key.split("/");
             fileName = fileName[3];
             if (zipEntry.entryName == fileName) {
+              ext = query.s3key.split(".");
               return (roleName = query.Role);
             }
           });
-
           let archivo = `${i + 1}_Archivo_extra`;
           if (roleName == 1) {
             archivo = `${i + 1}_Solicitud_capacitacion`;
@@ -161,7 +161,7 @@ s3Functions.getFolderDataCurso = async (folder, data) => {
     let keys = [];
     data.forEach(element =>{
       keys.push(element.s3key);
-    })
+    });
     s3Zip
       .archive({ s3, bucket: process.env.BUCKET }, folder, keys)
       .pipe(output)
@@ -175,11 +175,11 @@ s3Functions.getFolderDataCurso = async (folder, data) => {
             let fileName = empresa.s3key.split("/");
             fileName = fileName[3];
             if (zipEntry.entryName == fileName) {
-              roleName = empresa.Role
+              roleName = empresa.Role;
+              ext = empresa.s3key.split(".");
               return (empresaPath = empresa.Nombre);
             }
           });
-          let ext = keys[i].split(".");
           let archivo = `${empresaPath}/${i + 1}_Archivo_extra`;
           if (roleName == 1) {
             archivo = `${empresaPath}/${i + 1}_Solicitud_capacitacion`;

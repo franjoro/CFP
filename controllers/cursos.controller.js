@@ -313,6 +313,20 @@ cursos.edit = async (req, res) => {
   }
 };
 
+cursos.edit = async (req, res) => {
+  try {
+    const {id_curso} = req.body;
+    if (!id_curso) throw new Error("EMPTY_ID");
+    const statment =
+      "UPDATE tb_cursos SET Estado = 0  WHERE Codigo_curso = ? ";
+    await pool.query(statment, id_curso);
+    return res.status(200).json({ status: true });
+  } catch (err) {
+    if (err) console.log(err);
+    return res.status(400).json({ status: false, error: err });
+  }
+};
+
 // agregar nueva matricula
 cursos.matricula = async (req, res) => {
   if (!req.body.participante || !req.body.empresa || !req.body.curso)
@@ -554,10 +568,16 @@ cursos.sendNotificacion = async (req, res) => {
   res.json({ promisesResult });
 };
 
+const formatExtension = (ext)=>{
+  ext = ext[ext.length - 1].toLowerCase();
+  if(ext == "jpg") ext = "jpeg";
+  return ext;
+ };
+
 cursos.archivos = async (req, res) => {
   if (!req.files) return res.json({ status: false, error: "FILE_NOT_EXIST" });
   const { empresa, curso, archivo, id } = req.body;
-  const ext = req.files.file.name.split(".")[1];
+  let ext = formatExtension(req.files.file.name.split("."));
   const fileContent = Buffer.from(req.files.file.data, "binary");
   const promesas = [];
   try {
@@ -570,7 +590,6 @@ cursos.archivos = async (req, res) => {
     );
     let key = await Promise.all(promesas);
     key = key[0].key;
-    console.log(key);
     await pool.query(
       "INSERT INTO archivo_empresa_curso(s3Key, Role, id_empresa, id_curso, isEditable) VALUES(?,?,?,?,0)",
       [key, archivo, empresa, curso]

@@ -46,13 +46,14 @@ participantes.edit = async (req, res) => {
   try {
     if (isEmpty(req.body.duiEdit)) throw new Error("Empty");
     const data = [
+      req.body.duiNew,
       req.body.nameEdit,
       req.body.emailEdit,
       req.body.telEdit,
       req.body.duiEdit,
     ];
     const statment =
-      "UPDATE tb_participante SET Nombre = ? , Email = ?, Telefono = ?  WHERE DUI= ? ";
+      "UPDATE tb_participante SET dui = ? , Nombre = ? , Email = ?, Telefono = ?  WHERE DUI= ? ";
     const query = await pool.query(statment, data);
     return res.json(query);
   } catch (err) {

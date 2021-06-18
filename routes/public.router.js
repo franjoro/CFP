@@ -60,7 +60,7 @@ router.get("/", authcheckEmpresas, public_.home);
 // Carga el formulario principal con la iformación del programa
 router.get("/form/:id?", authcheckEmpresas, public_.main);
 //Página de agradecimiento
-router.get("/gracias", CloseSession, public_.thanks);
+router.get("/gracias", authcheckEmpresas, public_.thanks);
 //Perfil empresarial
 router.get("/profile", authcheckEmpresas, public_.profile);
 //Ofertas inscritas

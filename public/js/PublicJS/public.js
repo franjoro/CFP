@@ -182,7 +182,7 @@ const SendFiles = async () => {
         title: "Solicitud enviada correctamente",
         showConfirmButton: false,
       });
-      window.location.href = "/public/gracias";
+      window.location.href = "/public/gracias";  
   } catch (e) {
     console.log(e);
     error(

@@ -6,6 +6,21 @@
     - Visualización del historial de cursos de participantes y empresas
     - Al ingresar una solicitud enviar correo a los participantes para verificar validez (PENDIENTE DE APROBACION)
 
+    ## [1.0.11] - 18/06/2021
+    
+    ### Added
+    - Agregada opción para editar DUI en participantes
+    - Agregada opción para editar NIT en empresas
+
+    ### Changed
+    - La pantalla de gracias en solicitud no cierra la sesión.
+
+    ### Bug Fixed
+    - Los archivos jpg son convertidos a jpeg
+    - Extensiones al descargar zip de archivos se mezclaban al ser de diferentes tipos
+    - Extensiones al sustituir archivos desde el gestor de documentos
+
+
     ## [1.0.10] - 16/06/2021
     ### Added
     - Validación para usuarios de empresa para permitir uniamente un solo usuario

@@ -13,8 +13,8 @@
     <div class="container-fluid">
         <!-- Page Heading -->
         <h1 class="h3 mb-2 d-inline text-gray-800">Empresas registradas</h1>
-        <button type="button" class="btn btn-primary float-right d-inline" data-toggle="modal"
-            data-target="#exampleModal">+ Agregar nueva empresa</button>
+        <!-- <button type="button" class="btn btn-primary float-right d-inline" data-toggle="modal"
+            data-target="#exampleModal">+ Agregar nueva empresa</button> -->
 
         <p class="mb-4 ">Directorio principal de empresas</a></p>
 
@@ -37,11 +37,8 @@
                                 <th>NIT</th>
                                 <th>Telefóno</th>
                                 <th>Email</th>
-
                                 <th>Estado</th>
                                 <th>Opciones</th>
-
-
                                 <th>ID</th>
                                 <th>Dirección</th>
                                 <th>Aportación Insaforp</th>
@@ -104,7 +101,7 @@
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">EDITAR empresa</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Editar información empresarial</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -112,6 +109,11 @@
                 <div class="modal-body">
                     <form id="formEmpresasEditar">
                         <div class="form-row">
+                            <div class="col">
+                                <label for="name">NIT</label>
+                                <input type="text" id="nit_editar" name="nit_editar" required class="form-control"
+                                    placeholder="Nombre de empresa">
+                            </div>
                             <div class="col">
                                 <label for="name">Nombre *requerido*</label>
                                 <input type="text" id="name_edit" name="name_edit" required class="form-control"
@@ -151,6 +153,7 @@
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <input type="submit" class="btn btn-primary">
                 </div>
+                <input type="hidden" name="nit_actual" id="nit_actual" >
                 </form>
             </div>
         </div>

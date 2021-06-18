@@ -48,7 +48,6 @@ $("#formparticipantes").submit(async function (e) {
     $("#tableParticipantes").DataTable().destroy();
     table();
     swal.close();
-    console.log(data)
     $("#exampleModal").modal("toggle");
   //  $("#formparticipantes")[0].reset();
   } catch (error) {
@@ -82,12 +81,13 @@ $("#formEdit").submit(async function (e) {
 $(document).ready(() => {
   $("#dui").mask("00000000-0");
   $("#tel").mask("0000-0000");
-
-  
+  $("#duiNew").mask("00000000-0");
+ 
   table();
   $('#tableParticipantes tbody').on( 'click', 'button', function () {
     const data = $("#tableParticipantes").DataTable().row( $(this).parents('tr') ).data();
     $("#duiEdit").val(data.DUI);
+    $("#duiNew").val(data.DUI);
     $("#emailEdit").val(data.Email);
     $("#nameEdit").val(data.Nombre);
     $('#telEdit').val(data.Telefono);

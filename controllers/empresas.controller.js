@@ -34,7 +34,9 @@ empresas.add = async (req, res) => {
 empresas.editar_empresa = async (req, res) => {
   if (!req.body.name_edit)
     return res.status(400).json({ status: false, error: "empty_name" });
+    const {nit_actual, nit_editar} = req.body;
   const data = [
+    req.body.nit_editar,
     req.body.name_edit,
     req.body.actividad_edit,
     req.body.tel_edit,
@@ -46,9 +48,10 @@ empresas.editar_empresa = async (req, res) => {
   ];
   try {
     await pool.query(
-      "UPDATE tb_empresa SET Nombre = ? , Actividad_eco= ? , Tel = ?  , email = ? , Num_Empleados = ? , Aportacion_insaforp = ? , Direccion = ? WHERE id_empresa = ?",
+      "UPDATE tb_empresa SET  NIT = ?  , Nombre = ? , Actividad_eco= ? , Tel = ?  , email = ? , Num_Empleados = ? , Aportacion_insaforp = ? , Direccion = ? WHERE id_empresa = ?",
       data
     );
+    await pool.query("UPDATE tb_usuarios SET id_usuario =? WHERE id_usuario = ?" , [nit_editar, nit_actual]);
     return res.json({ status: true });
   } catch (error) {
     return res.status(400).json({ status: false, error });

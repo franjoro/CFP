@@ -305,14 +305,14 @@ const updateCommentFunction =async (comentario, curso, empresa) =>{
       icon: "success",
       title: "Comentario agregado",
     });
-}
+};
 const enviarNotificacion = async(empresa, curso)=>{
   await $.ajax({
     url: "/admin/cursos/sendNotificacion",
     type: "POST",
     data: {id_curso: curso , id_empresa :empresa }
   });
-}
+};
 
 
 $("#updateCommentBtn").click( async() => { 
@@ -343,14 +343,14 @@ $("#commentCompleto").click(() => {
      const curso = $("#curso").val();
      const empresa = $("#empresa").val();
      updateCommentFunction(comentario, curso, empresa);
-     enviarNotificacion(empresa, curso)
+     enviarNotificacion(empresa, curso);
       Swal.fire(
         'Deleted!',
         'Your file has been deleted.',
         'success'
-      )
+      );
     }
-  })
+  });
 });
 
 $("#commentRecibo").click(() => {

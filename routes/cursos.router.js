@@ -68,7 +68,8 @@ router.delete("/deleteMatricula",authcheck , cursos.deleteMatricula);
 router.delete("/deleteEmpresaInCourse",authcheck ,cursos.deleteEmpresaCurso);
 // Borra las ofertas y cursos
 router.delete("/deleteOffer",authcheck ,cursos.delteCursoOferta);
-
+router.put("/finalizarCurso",authcheck ,cursos.edit);
+// Cambiar participante de curso en detalles de curso
 
 
 
