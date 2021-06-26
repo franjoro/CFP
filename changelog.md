@@ -6,6 +6,22 @@
     - Visualización del historial de cursos de participantes y empresas
     - Al ingresar una solicitud enviar correo a los participantes para verificar validez (PENDIENTE DE APROBACION)
 
+    ## [1.0.12] - 23/06/2021
+
+    ### Added
+    - Se clonan las subunidades al crear un grupo nuevo.
+    - Diseño de interfaz en cronograma vigente para subunidades
+    - Validación de 2 evaluaciones por teorico , práctico al mes
+    - Rediseño en el sitio principal de empresa Centro
+    - Administrador de notas 
+    - Posibilidad de agregar notas y actualizarlas.
+
+
+    ### Database Changes
+    - en subunidades agregada la columna de llave foranea con grupo para traerlo en el cronograma vigente
+    - en evaluaciones guardar el mes y año
+
+    
     ## [1.0.11] - 18/06/2021
     
     ### Added

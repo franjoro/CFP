@@ -214,7 +214,7 @@ const addNewGrupo = async () => {
 
 // EDITAR GRUPO
 const editGrupo = async (data) => {
-  const { codigo, nombre , carrera, instructor , contrato , oferta, garantia, inicio, fin , iniciog, fing  } = data;
+  const { codigo, nombre , carrera, instructor , contrato , oferta, garantia, inicio, fin , iniciog , fing  } = data;
   try {
     const { value: formValues } = await Swal.fire({
       title: "Editar grupo",
@@ -225,7 +225,7 @@ const editGrupo = async (data) => {
       showCancelButton: true,
       allowOutsideClick: false,
       didOpen: () => {
-        $("#instrucciones").addClass("d-none")
+        $("#instrucciones").addClass("d-none");
         $("#gruCarrera").prop('disabled', 'disabled');
         $("#gruCodigo").val(codigo),
         $("#gruNombre").val(nombre),
@@ -237,7 +237,7 @@ const editGrupo = async (data) => {
         $("#grupoInicio").val(inicio),
         $("#grupoFin").val(fin),
         $("#grupoInicioGarantia").val(iniciog),
-        $("#grupoFinGarantia").val(fing)
+        $("#grupoFinGarantia").val(fing);
       },
       preConfirm: () => {
         if (!$("#gruCodigo").val()) { console.log("Código")  ; return false;}
@@ -284,7 +284,6 @@ const editGrupo = async (data) => {
         url: "/admin/ec/editgrupo",
         data,
       });
-      console.log(query)
       if (query) {
         location.reload();
       }
@@ -311,8 +310,7 @@ $(".btnEditCarrera").on("click", function () {
 
 $(".btnEditGrupo").on("click", function () {
   const data  = $(this).data();
-  console.log(data);
-  editGrupo(data)
+  editGrupo(data);
 });
 
 
@@ -338,7 +336,7 @@ const setDatePicker = () => {
     changeMonth: true,
     changeYear: true,
   });
-}
+};
 
 $(".btnEliminarG").on("click", async  function ()  {
   const id = $(this).data().id;
@@ -370,4 +368,4 @@ $(".btnEliminarG").on("click", async  function ()  {
       errorMessage();
     }
   }
-} )
+} );

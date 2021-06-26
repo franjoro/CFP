@@ -29,8 +29,7 @@
                         <tr>
                             <th>Descripción</th>
                             <th>Tipo de evaluación</th>
-                            <th>Ver notas</th>
-                            <th>Eliminar</th>
+                            <th>Opciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -46,10 +45,8 @@
                                     <%= tipo %>
                                 </td>
                                 <td>
-                                    <a href="/admin/ec/notas/<%= evaluacion.id %>/<%= grupo%>?unidad=<%= idUnidad%>" class="btn btn-info btn-block btn-sm"> <i class="fas fa-book"></i> Notas</a>
-                                </td>
-                                <td>
-                                    <button class="btn btn-danger btn-block btn-sm btnDeleteEva" onclick="deleteModulo('<%= evaluacion.id %> ')"><i class="fas fa-trash"></i> Eliminar</button>
+                                    <a href="/admin/ec/notas/<%= evaluacion.id %>/<%= grupo%>?unidad=<%= idUnidad%>" class="btn btn-info "> <i class="fas fa-book"></i> Ver Notas</a>
+                                    <button class="btn btn-danger btnDeleteEva" onclick="deleteModulo('<%= evaluacion.id %> ')"><i class="fas fa-trash"></i> Eliminar</button>
                                 </td>
                             </tr>
                             <%}) %>

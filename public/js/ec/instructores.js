@@ -1,3 +1,12 @@
+const errorMessage = (error) => {
+  Swal.fire({
+    icon: "error",
+    title: "Oops...",
+    text: error,
+  });
+};
+
+
 // AGREGAR NUEVA EVALUACION
 const addNewEva = async () => {
     try {
@@ -29,19 +38,16 @@ const addNewEva = async () => {
           url: "/admin/ec/newEv",
           data,
         });
-        if (query) {
-          location.reload();
+        if (query.status) {
+         return location.reload();
         }
       }
     } catch (error) {
       console.log(error);
-      Swal.fire(`Error : ${error}`);
+      return errorMessage("Parece que ha alcanzado el número máximo de actividades de este tipo en el mes");
     }
   };
-
-
   // ELIMINAR EVALUACION 
-
   const deleteModulo = async (id) => {
     const alerta = await Swal.fire({
       title: "¿Eliminar evaluación ?",
@@ -71,17 +77,9 @@ const addNewEva = async () => {
       }
     }
   };
-
-
-
-
-
   $("#btnAddEva").click( ()=> {
     addNewEva();
-  } )
-
-
-  
+  } ); 
 $("body").on("keyup", ".text-uppercase", function () {
     $(this).val($(this).val().toUpperCase());
   });

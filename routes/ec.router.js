@@ -15,8 +15,6 @@ router.get("/formulario", authcheck, ec.main);
 router.get("/administrador", authcheck, ec.administrador);
 
 
-
-
 // API
 // Devuelve las carreras
 router.get("/carreras", ec.carreras);
@@ -86,6 +84,15 @@ router.delete("/deleteEva" , authcheck , ec.deteleEva);
 router.get("/notas/:evaluacion/:grupo", authcheck , ec.notas);
 // Ingresar notas
 router.post("/notas" , authcheck , ec.notasP);
+
+
+// Administrador de notas
+router.get("/notasAdmin" , authcheck, ec.notasadmin);
+// Devuelve las actividades filtradas por mes o año
+router.get("/getActividades/:year/:month" , authcheck, ec.getActividades);
+// Devuelve el gestor de notas
+router.get("/getNotasAdmin/:evaluacion/:grupo" , authcheck, ec.NotasAdmin);
+
 
 
 

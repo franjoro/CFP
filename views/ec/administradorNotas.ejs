@@ -1,124 +1,91 @@
 <link rel="stylesheet" href="/static/vendor/datatables/datatables.min.css">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"
-    type="text/css" />
 <%- include('../partials/header.admin.ejs'); %>
     <!-- Begin Page Content -->
     <div class="container-fluid">
-
-
         <!-- Page Heading -->
-        <h1 class="h3 mb-2 d-inline text-gray-800">Administración - Empresa Centro Ricaldone</h1>
-        <p class="mb-4 ">Directorio de opciones</p>
-        <div class="row">
-            <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-primary shadow h-100 py-2">
-                    <a href="/admin/ec/formulario">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">Registrar formulario situacional
-                                    </div>
-
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-users fa-2x text-gray-300"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <!-- Earnings (Annual) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-success shadow h-100 py-2">
-                    <a href="/admin/ec/administrador">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">Administrador de cronogramas
-                                    </div>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-layer-group fa-2x text-gray-300"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <!-- Tasks Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-info shadow h-100 py-2">
-                    <a href="/admin/ec/notasAdmin">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">Administrar notas</div>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-book fa-2x text-gray-300"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Pending Requests Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-warning shadow h-100 py-2">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">Administrar asistencia (Pendiente)
-                                </div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-user-tag fa-2x text-gray-300"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        <h1 class="h3 mb-2 d-inline text-gray-800">Administración de notas - Empresa Centro</h1>
+        <p class="mb-4 "></p>
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <!-- <h6 class="m-0 font-weight-bold text-primary">Tabla de participantes</h6> -->
+                <!-- <h6 class="m-0 font-weight-bold text-primary">Tabla de actividades</h6> -->
+                <h6 class="m-0"> <b>Ayuda: </b> Puede cambiar los siguientes filtros de búsqueda</h6>
             </div>
             <div class="card-body">
-                <div class="table-responsive">
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p class="mb-4 ">Seleccione carrera</p>
-                            <select name="" id="carreras" class="custom-select">
-                                <option selected disabled> Seleccione </option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <p class="mb-4 ">Seleccione grupo</p>
-                            <select name="" id="grupos" class="custom-select">
-                                <option selected disabled> Seleccione </option>
-                            </select>
-                        </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="mb-4 ">Seleccione el mes</p>
+                        <select name="mes" id="mes" class="custom-select filtro">
+                            <option selected disabled> Seleccione </option>
+                            <option value="0">Enero</option>     
+                            <option value="1">Febrero</option>     
+                            <option value="2">Marzo</option>     
+                            <option value="3">Abril</option>     
+                            <option value="4">Mayo</option>     
+                            <option value="5">Junio</option>     
+                            <option value="6">Julio</option>     
+                            <option value="7">Agosto</option>     
+                            <option value="8">Septiembre</option>     
+                            <option value="9">Octubre</option>     
+                            <option value="10">Noviembre</option>     
+                            <option value="11">Diciembre</option>     
+                        </select>
                     </div>
-                    <hr>
-                    <table class="table table-bordered" id="tablaEmpresa" width="100%" cellspacing="0">
-                        <thead>
-                            <tr>
-                                <th>DUI</th>
-                                <th>Nombres</th>
-                                <th>Apellidos</th>
-                            </tr>
-                        </thead>
-                    </table>
+                    <div class="col-md-6">
+                        <p class="mb-4 ">Seleccione Año</p>
+                        <select name="year" id="year" class="custom-select filtro">
+                            <option selected disabled> Seleccione </option>
+                            <option value="2021">2021</option>
+                            <option value="2022">2022</option>
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+                            <option value="2026">2026</option>
+                            <option value="2027">2027</option>
+                            <option value="2028">2028</option>
+                        </select>
+                    </div>
                 </div>
+                <hr>
+                <table class="table table-bordered" id="tablaEmpresa" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Grupo</th>
+                            <th>Módulo</th>
+                            <th>Unidad</th>
+                            <th>Tipo de evaluación</th>
+                            <th>Actividad</th>
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+                </table>
             </div>
         </div>
     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <!-- Modal Ingresar-->
     <div class="modal " id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -173,11 +140,8 @@
             </div>
         </div>
     </div>
-
-
-
     <!-- Modal Editar-->
-    <div class="modal " id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <!-- <div class="modal " id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -215,9 +179,7 @@
                 </form>
             </div>
         </div>
-    </div>
-
-
+    </div> -->
 
     <!-- /.container-fluid -->
     <%- include('../partials/footer'); %>
@@ -227,6 +189,4 @@
         <script src="/static/vendor/datatables/datatables.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
         <!-- Page level custom scripts -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
-
-        <script src="/static/js/ec/ec.js"></script>
+        <script src="/static/js/ec/adminNotas.js"></script>
