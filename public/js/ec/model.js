@@ -253,7 +253,7 @@ const editActualUnitVigente = async (
         inicio: formValues[2],
         fin: formValues[3],
         idUnidad,
-        horas : formValues[4]
+        horas: formValues[4]
       };
       const query = await $.ajax({
         type: "PUT",
@@ -516,8 +516,8 @@ const addNewSubUnit = async (idUnidad, modulo, idCarrera) => {
       const data = {
         Nombre: formValues[0],
         horas: formValues[1],
-        idUnidad ,
-        idCarrera 
+        idUnidad,
+        idCarrera
       };
       const query = await $.ajax({
         type: "POST",
@@ -534,7 +534,7 @@ const addNewSubUnit = async (idUnidad, modulo, idCarrera) => {
   }
 };
 
-// EDITAR UNIDAD EN MODELO
+// EDITAR SUBUNIDAD EN MODELO
 const editActualSubUnit = async (idSubUnidad, unidad, horas) => {
   try {
     const { value: formValues } = await Swal.fire({
@@ -608,14 +608,150 @@ const deleteSubUnidad = async (id) => {
   }
 };
 
+// ADD Contenido
+const addNewContenido = async (idUnidad, modulo, idCarrera) => {
+  try {
+    const { value: formValues } = await Swal.fire({
+      title: `Agregar nuevo contenido en : ${modulo}`,
+      template: "#newContenido",
+      focusConfirm: false,
+      width: 1000,
+      showLoaderOnConfirm: true,
+      showCancelButton: true,
+      allowOutsideClick: false,
+      preConfirm: () => {
+        if (!$("#ContenidoText").val()) return false;
+        return [
+          $("#ContenidoText").val(),
+        ];
+      },
+    });
+    if (formValues) {
+      const data = {
+        Nombre: formValues[0],
+        idUnidad,
+        idCarrera
+      };
+      const query = await $.ajax({
+        type: "POST",
+        url: "/admin/ec/addNewContenido",
+        data,
+      });
+      if (query) {
+        location.reload();
+      }
+    }
+  } catch (error) {
+    console.log(error);
+    Swal.fire(`Error : ${error}`);
+  }
+};
+
+// EDITAR Contenido 
+const editContenido = async (idContenido, Nombre) => {
+  try {
+    const { value: formValues } = await Swal.fire({
+      title: `Editar texto de contenido`,
+      template: "#newContenido",
+      focusConfirm: false,
+      width: 800,
+      showLoaderOnConfirm: true,
+      showCancelButton: true,
+      allowOutsideClick: false,
+      didOpen: () => {
+        $("#ContenidoText").val(Nombre);
+      },
+      preConfirm: () => {
+        if (!$("#ContenidoText").val()) return false;
+        return [$("#ContenidoText").val()];
+      },
+    });
+    if (formValues) {
+      const data = {
+        Nombre: formValues[0],
+        idContenido,
+      };
+      const query = await $.ajax({
+        type: "PUT",
+        url: "/admin/ec/editContenido",
+        data,
+      });
+      if (query) {
+        location.reload();
+      }
+    }
+  } catch (error) {
+    console.log(error);
+    Swal.fire(`Error : ${error}`);
+  }
+};
+// Eliminar contenido
+const deleteContenido = async (id) => {
+  const alerta = await Swal.fire({
+    title: "¿Eliminar el contenido selecionado?",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Si, borrar",
+  });
+
+  if (alerta.isConfirmed) {
+    try {
+      loader();
+      const query = await $.ajax({
+        url: "/admin/ec/deteleContenido",
+        type: "DELETE",
+        data: { idContenido: id },
+      });
+      if (query.status) {
+        swal.close();
+        location.reload();
+      }
+    } catch (error) {
+      swal.close();
+      console.log(error);
+      errorMessage();
+    }
+  }
+};
 $(".btnAddSubUnit").on("click", async function () {
-  const {id, nombre , carrera} = $(this).data();
+  const { id, nombre, carrera } = $(this).data();
   console.log(id, nombre, carrera);
-  addNewSubUnit(id, nombre , carrera);
+  addNewSubUnit(id, nombre, carrera);
 });
 
-
-
+$(".btnContenidos").on("click", async function () {
+  const { id, nombre, carrera } = $(this).data();
+  console.log(id, nombre, carrera);
+  addNewSubUnit(id, nombre, carrera);
+});
+$(".contenido").on("click", async function () {
+  const { statusopen } = $(this).data();
+  if (!statusopen) {
+    $(this).removeClass("btn-dark");
+    $(this).addClass("btn-success");
+    $(this).data("statusopen", true);
+  }
+  if(statusopen){ 
+    $(this).removeClass("btn-success");
+    $(this).addClass("btn-dark");
+    $(this).data("statusopen", false);
+  }
+});
+$(".suUnidades").on("click", async function () {
+  const { statusopen } = $(this).data();
+  if (!statusopen) {
+    $(this).removeClass("btn-dark");
+    $(this).addClass("btn-success");
+    $(this).data("statusopen", true);
+  }
+  if(statusopen){ 
+    $(this).removeClass("btn-success");
+    $(this).addClass("btn-dark");
+    $(this).data("statusopen", false);
+  }
+});
 $("#addNewModuleBtn").click(() => {
   addNewModel();
 });

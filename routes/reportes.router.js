@@ -9,7 +9,18 @@ const router = express.Router();
 
 router.get("/",  reportes.main);
 router.get("/download" , reportes.descargar);
-
 router.get("/PartiCurso/:curso" , reportes.ParticipantesEnCursos);
+
+
+
+
+
+// Reportes de Empresa centro - estado situacional.
+
+router.get("/ec", reportes.ec);
+
+
+
+
 // Exportamos la configuración
 module.exports = router;

@@ -12,6 +12,7 @@
                 <h6 class="m-0"> <b>Ayuda: </b> Puede cambiar los siguientes filtros de búsqueda</h6>
             </div>
             <div class="card-body">
+                <p class="font-weight-bold">Filtros de búsqueda</p>
                 <div class="row">
                     <div class="col-md-6">
                         <p class="mb-4 ">Seleccione el mes</p>
@@ -47,6 +48,8 @@
                     </div>
                 </div>
                 <hr>
+                
+
                 <table class="table table-bordered" id="tablaEmpresa" width="100%" cellspacing="0">
                     <thead>
                         <tr>
@@ -59,32 +62,46 @@
                         </tr>
                     </thead>
                 </table>
+                <hr>
+                <p class="font-weight-bold">Generación de reportes</p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="mb-4 ">Reporte de unidad mensual</p>
+                        <select name="mes" id="mes" class="custom-select filtro">
+                            <option selected disabled> Seleccione </option>
+                            <option value="0">Enero</option>     
+                            <option value="1">Febrero</option>     
+                            <option value="2">Marzo</option>     
+                            <option value="3">Abril</option>     
+                            <option value="4">Mayo</option>     
+                            <option value="5">Junio</option>     
+                            <option value="6">Julio</option>     
+                            <option value="7">Agosto</option>     
+                            <option value="8">Septiembre</option>     
+                            <option value="9">Octubre</option>     
+                            <option value="10">Noviembre</option>     
+                            <option value="11">Diciembre</option>     
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="mb-4 ">Reporte de módulo mensual</p>
+                        <select name="year" id="year" class="custom-select filtro">
+                            <option selected disabled> Seleccione </option>
+                            <option value="2021">2021</option>
+                            <option value="2022">2022</option>
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+                            <option value="2026">2026</option>
+                            <option value="2027">2027</option>
+                            <option value="2028">2028</option>
+                        </select>
+                    </div>
+                </div>
+                <hr>
             </div>
         </div>
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     <!-- Modal Ingresar-->

@@ -44,4 +44,15 @@ reportes.ParticipantesEnCursos = async (req, res) => {
   }
 };
 
+
+reportes.ec = async (req, res) => {
+  try {
+    const query = await pool.query("SELECT carnet, json1 , json2, json3 FROM tb_ec_alumno WHERE carnet = 'ATEI01821'");
+    res.json(query);
+    console.log(JSON.parse(query[0].json1));
+  } catch (error) {
+    res.send("ERROR API: " + error);
+  }
+};
+
 module.exports = reportes;

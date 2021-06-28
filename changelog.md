@@ -3,8 +3,22 @@
     Creación de Changelog a partir de la primera versión estable de la plataforma APP CFP, 1.0.2
 
     ## [Unreleased]
-    - Visualización del historial de cursos de participantes y empresas
-    - Al ingresar una solicitud enviar correo a los participantes para verificar validez (PENDIENTE DE APROBACION)
+
+    ## [1.0.13] - 28/06/2021
+    ### Added
+    - Cambios en el diseño del administrador general de empresa centro.
+    - Cambios en el diseño del administrador de modelo empresa centro.
+    - Posibilidad de agregar contenidos en el modelo.
+    - Visualizar contenidos en el modelo empresa centro desplegables.
+    - Posibilidad de eliminar el contenido en modelo.
+    - Posibilidad de editar el contenido en modelo.
+
+    ### Changed
+    - Orden de modulos ascendente en modelo y cronograma vigente
+    - Orden de cursos ascendente en modelo y cronograma vigente
+
+    ### Database Changes
+    - Creación de nueva tabla de contenidos con estructura similar a sub-unidades exeptuando por horas.
 
     ## [1.0.12] - 23/06/2021
 

@@ -59,6 +59,13 @@ router.post("/addSubUnidad" ,  authcheck, ec.addSubUnidad);
 router.put("/editSubUnidad" ,authcheck, ec.editSubUnidad);
 // Eliminar SUB-Unidad
 router.delete("/deleteSubUnidad" ,  authcheck, ec.deleteSubUnidad);
+// Ingresar nuevo contenido
+router.post("/addNewContenido" ,  authcheck, ec.addNewContenido);
+// Editar contenido
+router.put("/editContenido" ,authcheck, ec.editContenido);
+// Eliminar contenido
+router.delete("/deteleContenido" ,  authcheck, ec.deleteContenido);
+
 
 // Cronogram vigente 
 // Devuelve el cronograma de un grupo

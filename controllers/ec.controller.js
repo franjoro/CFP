@@ -280,6 +280,20 @@ ec.addSubUnidad = async (req, res) => {
     res.status(400).json(error);
   }
 };
+ec.addNewContenido = async (req, res) => {
+  const { Nombre, idUnidad, idCarrera } = req.body;
+  try {
+    await pool.query(
+      "INSERT INTO tb_ec_contenidos(Nombre, isModel, idUnidad, idCarrera) VALUES (?, 1 ,? , ?)",
+      [Nombre, idUnidad, idCarrera]
+    );
+    res.json({ status: true });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json(error);
+  }
+};
+
 ec.deleteModelo = async (req, res) => {
   const { idModelo } = req.body;
   try {
@@ -310,6 +324,17 @@ ec.deleteSubUnidad = async (req, res) => {
     res.status(400).json(error);
   }
 };
+ec.deleteContenido = async (req, res) => {
+  const { idContenido } = req.body;
+  try {
+    await pool.query("DELETE FROM tb_ec_contenidos WHERE id = ? ", [idContenido]);
+    res.json({ status: true });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json(error);
+  }
+};
+
 ec.editUnidad = async (req, res) => {
   const { idUnidad, unidad, horas } = req.body;
   try {
@@ -336,6 +361,20 @@ ec.editSubUnidad = async (req, res) => {
     res.status(400).json(error);
   }
 };
+ec.editContenido = async (req, res) => {
+  const { idContenido, Nombre } = req.body;
+  try {
+    await pool.query(
+      "UPDATE tb_ec_contenidos SET Nombre = ? WHERE id = ?  ",
+      [Nombre, idContenido]
+    );
+    res.json({ status: true });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json(error);
+  }
+};
+
 ec.editModulo = async (req, res) => {
   const { idModulo, Nombre, Inicio, Fin, horas } = req.body;
   try {
@@ -381,7 +420,7 @@ ec.administradorModelo = async (req, res) => {
       idCarrera
     );
     let modulos = pool.query(
-      "SELECT id , Nombre, fechaInicio, fechaFin, horas FROM tb_ec_modulos WHERE isModel = 1 AND  idCarrera = ?",
+      "SELECT id , Nombre, fechaInicio, fechaFin, horas FROM tb_ec_modulos WHERE isModel = 1 AND  idCarrera = ? ORDER BY Nombre ASC",
       idCarrera
     );
     let unidades = pool.query(
@@ -392,11 +431,16 @@ ec.administradorModelo = async (req, res) => {
       "SELECT id , Nombre, idUnidad , horas FROM tb_ec_subunidades WHERE isModel = 1 AND  idCarrera = ?",
       idCarrera
     );
-    const query = await Promise.all([carrera, modulos, unidades, subunidades]);
+    let contenidos = pool.query(
+      "SELECT id , Nombre, idUnidad  FROM tb_ec_contenidos WHERE isModel = 1 AND  idCarrera = ?",
+      idCarrera
+    );
+    const query = await Promise.all([carrera, modulos, unidades, subunidades , contenidos]);
     carrera = query[0][0];
     modulos = query[1];
     unidades = query[2];
     subunidades = query[3];
+    contenidos = query[4];
     const datosModeloOrdenado = [];
     let horasTodosModulos = 0;
     modulos.forEach((element, id) => {
@@ -405,6 +449,7 @@ ec.administradorModelo = async (req, res) => {
       unidades.forEach((unidad) => {
         if (unidad.idModulo == element.id) {
           const arrSubUni = [];
+          const arrContenidos = [];
           let hasSubUnidades = false;
           let horasSubUnidades = 0;
 
@@ -419,11 +464,20 @@ ec.administradorModelo = async (req, res) => {
               horasSubUnidades = horasSubUnidades + Number(subUni.horas);
             }
           });
+          contenidos.forEach(contenido => {
+            if (contenido.idUnidad == unidad.id) {
+              arrContenidos.push({
+                id: contenido.id,
+                Nombre: contenido.Nombre,
+              });
+            }
+          });
           arrModelo.push({
             UnidadName: unidad.Nombre,
             UnidaId: unidad.id,
             horas: unidad.horas,
             subunidades: arrSubUni,
+            contenidos : arrContenidos,
             hasSubUnidades,
             horasSubUnidades
           });
@@ -448,7 +502,6 @@ ec.administradorModelo = async (req, res) => {
       carreraID: idCarrera,
       horasTodosModulos
     });
-
   } catch (error) {
     console.log(error);
     res.json({ status: false, error }).status(400);
@@ -463,7 +516,7 @@ ec.administradorCronogramaVigente = async (req, res) => {
       idGrupo
     );
     let modulos = pool.query(
-      "SELECT id , Nombre, fechaInicio, fechaFin, horas FROM tb_ec_modulos WHERE isModel = 0 AND  idGrupo = ?",
+      "SELECT id , Nombre, fechaInicio, fechaFin, horas FROM tb_ec_modulos WHERE isModel = 0 AND  idGrupo = ?  ORDER BY Nombre ASC",
       idGrupo
     );
     let unidades = pool.query(

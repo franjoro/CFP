@@ -24,7 +24,7 @@ cursos.cursos = async (req, res) => {
     const queries = [];
     queries.push(
       pool.query(
-        "SELECT CONCAT(tb_cursos.Nombre,' - ', tb_cursos.Codigo_curso) AS Nombre, tb_instructor.Nombre AS instructor , tb_cursos.Horario , tb_cursos.Codigo_curso , (SELECT COUNT(*) FROM union_matricula WHERE id_curso = tb_cursos.Codigo_curso ) AS cantidadAlumnos FROM `tb_cursos` INNER JOIN `tb_instructor` ON `tb_cursos`.`id_instructor` = `tb_instructor`.`DUI` WHERE tb_cursos.id_programa = ? AND tb_cursos.Estado != 0  AND tb_cursos.Estado != 5  AND tb_cursos.Estado !=15  AND tb_cursos.Estado !=16",
+        "SELECT CONCAT(tb_cursos.Codigo_curso,' - ', tb_cursos.Nombre) AS Nombre, tb_instructor.Nombre AS instructor , tb_cursos.Horario , tb_cursos.Codigo_curso , (SELECT COUNT(*) FROM union_matricula WHERE id_curso = tb_cursos.Codigo_curso ) AS cantidadAlumnos FROM `tb_cursos` INNER JOIN `tb_instructor` ON `tb_cursos`.`id_instructor` = `tb_instructor`.`DUI` WHERE tb_cursos.id_programa = ? AND tb_cursos.Estado != 0  AND tb_cursos.Estado != 5  AND tb_cursos.Estado !=15  AND tb_cursos.Estado !=16 ORDER BY tb_cursos.Codigo_curso ASC",
         [programa]
       )
     );
