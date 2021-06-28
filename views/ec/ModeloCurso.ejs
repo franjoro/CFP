@@ -217,13 +217,13 @@
                             <tr class="bg-light collapse accordionContenidos<%=uni.UnidaId %>">
                               <td colspan="5" class="text-center font-weight-bold">CONTENIDOS DE LA UNIDAD: "<%= uni.UnidadName
                                   %>"
-                                  <button class="btn btn-success btn-sm btnAddContenido float-right" data-id="<%= uni.UnidaId %>"
+                                  <button class="btn btn-success btn-sm btnContenidos float-right" data-id="<%= uni.UnidaId %>"
                                     data-nombre="<%= uni.UnidadName%>" data-carrera="<%= carreraID%>"><i
                                       class="fas fa-plus-circle"></i> Contenidos</button>
                               </td>
                             </tr>
                             <% uni.contenidos.forEach( contenido=> { %>
-                              <tr style="background: #a680cad1;" class="text-white collapse accordionContenidos<%=uni.UnidaId %>">
+                              <tr style="background: #3a3b45;" class="text-white collapse accordionContenidos<%=uni.UnidaId %>">
                                 <td colspan="2"> <i class="fas fa-angle-right"></i>
                                   <%= contenido.Nombre %>
                                 </td>

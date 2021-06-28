@@ -717,15 +717,15 @@ const deleteContenido = async (id) => {
 };
 $(".btnAddSubUnit").on("click", async function () {
   const { id, nombre, carrera } = $(this).data();
-  console.log(id, nombre, carrera);
   addNewSubUnit(id, nombre, carrera);
 });
 
 $(".btnContenidos").on("click", async function () {
   const { id, nombre, carrera } = $(this).data();
-  console.log(id, nombre, carrera);
-  addNewSubUnit(id, nombre, carrera);
+  addNewContenido(id, nombre, carrera);
 });
+
+
 $(".contenido").on("click", async function () {
   const { statusopen } = $(this).data();
   if (!statusopen) {
