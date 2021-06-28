@@ -609,7 +609,7 @@ const deleteSubUnidad = async (id) => {
 };
 
 // ADD Contenido
-const addNewContenido = async (idUnidad, modulo, idCarrera) => {
+const addNewContenido = async (idUnidad, modulo, idCarrera , openac) => {
   try {
     const { value: formValues } = await Swal.fire({
       title: `Agregar nuevo contenido en : ${modulo}`,
@@ -638,7 +638,7 @@ const addNewContenido = async (idUnidad, modulo, idCarrera) => {
         data,
       });
       if (query) {
-        location.reload();
+        gotoItem(openac);
       }
     }
   } catch (error) {
@@ -721,10 +721,9 @@ $(".btnAddSubUnit").on("click", async function () {
 });
 
 $(".btnContenidos").on("click", async function () {
-  const { id, nombre, carrera } = $(this).data();
-  addNewContenido(id, nombre, carrera);
+  const { id, nombre, carrera , openac} = $(this).data();
+  addNewContenido(id, nombre, carrera, openac);
 });
-
 
 $(".contenido").on("click", async function () {
   const { statusopen } = $(this).data();
@@ -760,8 +759,18 @@ $("#addNewModuleBtnVigente").click(() => {
   addNewModelVigente();
 });
 
-
-
 $("body").on("keyup", ".text-uppercase", function () {
   $(this).val($(this).val().toUpperCase());
 });
+
+const openCollapse = () =>{
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString).get("url");
+  $(`.${urlParams}`).collapse();
+};
+function gotoItem( item ){
+  var url = window.location.href;    
+  url += (url.indexOf('?') > -1)?"&":"?" + "url=" + encodeURIComponent(item);
+  window.location.href = url;
+}
+openCollapse();
