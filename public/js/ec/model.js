@@ -638,7 +638,7 @@ const addNewContenido = async (idUnidad, modulo, idCarrera , openac) => {
         data,
       });
       if (query) {
-        gotoItem(openac);
+        location.reload();
       }
     }
   } catch (error) {
@@ -725,6 +725,7 @@ $(".btnContenidos").on("click", async function () {
   addNewContenido(id, nombre, carrera, openac);
 });
 
+
 $(".contenido").on("click", async function () {
   const { statusopen } = $(this).data();
   if (!statusopen) {
@@ -738,6 +739,7 @@ $(".contenido").on("click", async function () {
     $(this).data("statusopen", false);
   }
 });
+
 $(".suUnidades").on("click", async function () {
   const { statusopen } = $(this).data();
   if (!statusopen) {
@@ -751,6 +753,8 @@ $(".suUnidades").on("click", async function () {
     $(this).data("statusopen", false);
   }
 });
+
+
 $("#addNewModuleBtn").click(() => {
   addNewModel();
 });
@@ -763,14 +767,3 @@ $("body").on("keyup", ".text-uppercase", function () {
   $(this).val($(this).val().toUpperCase());
 });
 
-const openCollapse = () =>{
-  const queryString = window.location.search;
-  const urlParams = new URLSearchParams(queryString).get("url");
-  $(`.${urlParams}`).collapse();
-};
-function gotoItem( item ){
-  var url = window.location.href;    
-  url += (url.indexOf('?') > -1)?"&":"?" + "url=" + encodeURIComponent(item);
-  window.location.href = url;
-}
-openCollapse();

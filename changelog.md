@@ -4,6 +4,22 @@
 
     ## [Unreleased]
 
+    ## [1.0.14] - 29/06/2021
+    ### Added
+    - Duplicar contenidos al crear grupo de una carrera en empresa centro.
+    - Mostrar contenidos grupos .
+    - Editar contenidos en grupos.
+    - Eliminar contenidos en grupos.
+    - Agregar contenidos vistos en evaluaciones
+    - Rediseño de evaluaciones para instructores
+    - Mostrar contenidos de la unidad en la evaluación
+    - Asignar contenidos a las evaluaciones.
+    - Reporte de directorio de empresas
+
+    ### Database Changes
+    - Se creo la tabla para asignar contenidos en actividades evaluadas
+
+
     ## [1.0.13] - 28/06/2021
     ### Added
     - Cambios en el diseño del administrador general de empresa centro.

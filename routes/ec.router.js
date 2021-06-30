@@ -83,6 +83,8 @@ router.post("/addUnidadVigente",  authcheck, ec.addUnidadVigente);
 router.get("/instructor",authcheck , ec.instructor);
 // Devuelve las actividades asignadas a la unidad
 router.get("/evaluaciones/:unidad/:grupo", authcheck , ec.contenidos);
+// Devuelve los contenidos evaluados
+router.get("/contenidos/:evaluacion/:unidad/:grupo", authcheck , ec.contenidosEvaluados);
 // Agregar nueva evaluación
 router.post("/newEv", authcheck , ec.newEva);
 // Elimina las evaluaciones y notas asociadas
@@ -91,7 +93,8 @@ router.delete("/deleteEva" , authcheck , ec.deteleEva);
 router.get("/notas/:evaluacion/:grupo", authcheck , ec.notas);
 // Ingresar notas
 router.post("/notas" , authcheck , ec.notasP);
-
+// Ingresar contenidos
+router.post("/contenidos" , authcheck , ec.addContenidos);
 
 // Administrador de notas
 router.get("/notasAdmin" , authcheck, ec.notasadmin);

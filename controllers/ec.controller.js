@@ -17,10 +17,10 @@ ec.administrador = async (req, res) => {
   const usuario = getUserDataByToken(req.cookies.token);
   try {
     const carreras = pool.query("SELECT * FROM tb_ec_carrera"),
-      grupos = pool.query(
-        "SELECT * FROM tb_ec_grupo WHERE Estado = 1"
-      ),
-      instructores = pool.query("SELECT  id_usuario, Nombre FROM tb_usuarios WHERE Role = 2");
+      grupos = pool.query("SELECT * FROM tb_ec_grupo WHERE Estado = 1"),
+      instructores = pool.query(
+        "SELECT  id_usuario, Nombre FROM tb_usuarios WHERE Role = 2"
+      );
     const query = await Promise.all([carreras, grupos, instructores]);
     res.render("ec/administrador", {
       data: usuario.data,
@@ -37,9 +37,17 @@ ec.administrador = async (req, res) => {
 ec.changeEstadoGrupo = async (req, res) => {
   const { idGrupo } = req.body;
   try {
-    const grupo = pool.query("UPDATE tb_ec_grupo SET Estado = 0 WHERE id = ?", [idGrupo]);
-    const modulos = pool.query("UPDATE tb_ec_modulos SET Estado = 0 WHERE idGrupo = ?", [idGrupo]);
-    const unidades = pool.query("UPDATE tb_ec_unidades SET Estado = 0  WHERE idGrupo = ?", [idGrupo]);
+    const grupo = pool.query("UPDATE tb_ec_grupo SET Estado = 0 WHERE id = ?", [
+      idGrupo,
+    ]);
+    const modulos = pool.query(
+      "UPDATE tb_ec_modulos SET Estado = 0 WHERE idGrupo = ?",
+      [idGrupo]
+    );
+    const unidades = pool.query(
+      "UPDATE tb_ec_unidades SET Estado = 0  WHERE idGrupo = ?",
+      [idGrupo]
+    );
     await Promise.all([grupo, modulos, unidades]);
     res.json({ status: true }).status(200);
   } catch (error) {
@@ -96,7 +104,8 @@ ec.form = async (req, res) => {
 ec.addCarrera = async (req, res) => {
   const { Alter, Basica, Id, Nombre, Total } = req.body;
   try {
-    if (!Alter || !Basica || !Id || !Nombre || !Total) throw "PARAMS_NOT_COMPLETED";
+    if (!Alter || !Basica || !Id || !Nombre || !Total)
+      throw "PARAMS_NOT_COMPLETED";
     await pool.query(
       "INSERT INTO tb_ec_carrera(id , Nombre, horasTotales, horasBasica, horasAlter) VALUES (?,?,?,?,?)",
       [Id.trim(), Nombre, Total, Basica, Alter]
@@ -110,8 +119,12 @@ ec.addCarrera = async (req, res) => {
 ec.editcarrera = async (req, res) => {
   const { Alter, Basica, Id, Nombre, Total, IdActual } = req.body;
   try {
-    if (!Alter || !Basica || !Id || !Nombre || !Total) throw "PARAMS_NOT_COMPLETED";
-    await pool.query("UPDATE tb_ec_carrera SET id=?, Nombre= ? , horasTotales = ? , horasBasica = ? , horasAlter = ? WHERE id=?", [Id, Nombre, Total, Basica, Alter, IdActual]);
+    if (!Alter || !Basica || !Id || !Nombre || !Total)
+      throw "PARAMS_NOT_COMPLETED";
+    await pool.query(
+      "UPDATE tb_ec_carrera SET id=?, Nombre= ? , horasTotales = ? , horasBasica = ? , horasAlter = ? WHERE id=?",
+      [Id, Nombre, Total, Basica, Alter, IdActual]
+    );
     res.json({ status: true });
   } catch (error) {
     console.log(error);
@@ -120,10 +133,37 @@ ec.editcarrera = async (req, res) => {
 };
 
 ec.editgrupo = async (req, res) => {
-  const { id, Nombre, Instructor, Contrato, Oferta, Garantia, Inicio, Fin, InicioG, FinG, oldId } = req.body;
+  const {
+    id,
+    Nombre,
+    Instructor,
+    Contrato,
+    Oferta,
+    Garantia,
+    Inicio,
+    Fin,
+    InicioG,
+    FinG,
+    oldId,
+  } = req.body;
   try {
     if (!id || !oldId) throw "PARAMS_NOT_COMPLETED";
-    await pool.query("UPDATE tb_ec_grupo SET  id = ?, Nombre = ? , Contrato = ? , Oferta = ? , dateInicio = ? , dateFin = ? , id_instructor = ? , Garantia = ? , dateGInicio = ?, dateGFin = ?  WHERE id = ? ", [id, Nombre, Contrato, Oferta, Inicio, Fin, Instructor, Garantia, InicioG, FinG, oldId]);
+    await pool.query(
+      "UPDATE tb_ec_grupo SET  id = ?, Nombre = ? , Contrato = ? , Oferta = ? , dateInicio = ? , dateFin = ? , id_instructor = ? , Garantia = ? , dateGInicio = ?, dateGFin = ?  WHERE id = ? ",
+      [
+        id,
+        Nombre,
+        Contrato,
+        Oferta,
+        Inicio,
+        Fin,
+        Instructor,
+        Garantia,
+        InicioG,
+        FinG,
+        oldId,
+      ]
+    );
     res.json({ status: true });
   } catch (error) {
     console.log(error);
@@ -132,7 +172,19 @@ ec.editgrupo = async (req, res) => {
 };
 
 ec.addGrupo = async (req, res) => {
-  const { id, Nombre, Carrera, Instructor, Contrato, Oferta, Garantia, Inicio, Fin, InicioG, FinG } = req.body;
+  const {
+    id,
+    Nombre,
+    Carrera,
+    Instructor,
+    Contrato,
+    Oferta,
+    Garantia,
+    Inicio,
+    Fin,
+    InicioG,
+    FinG,
+  } = req.body;
   const id_carrera = Carrera;
   const year = new Date().getFullYear();
   const lastday = function (m, n) {
@@ -153,7 +205,7 @@ ec.addGrupo = async (req, res) => {
         Garantia,
         InicioG,
         FinG,
-        Carrera
+        Carrera,
       ]
     );
     let modulos = pool.query(
@@ -168,28 +220,45 @@ ec.addGrupo = async (req, res) => {
       "SELECT id , Nombre, idUnidad , horas FROM tb_ec_subunidades WHERE isModel = 1 AND  idCarrera = ?",
       id_carrera
     );
-    const query = await Promise.all([modulos, unidades, subUnidades]);
+    let contenidos = pool.query(
+      "SELECT id , Nombre, idUnidad  FROM tb_ec_contenidos WHERE isModel = 1 AND  idCarrera = ?",
+      id_carrera
+    );
+    const query = await Promise.all([
+      modulos,
+      unidades,
+      subUnidades,
+      contenidos,
+    ]);
     modulos = query[0];
     unidades = query[1];
     subUnidades = query[2];
+    contenidos = query[3];
     const datosModeloOrdenado = [];
     modulos.forEach((element, id) => {
       const arrModelo = [];
       unidades.forEach((unidad) => {
-        arrSubunidades = [];
+        const arrSubunidades = [];
+        const arrContenidos = [];
         if (unidad.idModulo == element.id) {
           subUnidades.forEach((subunidad) => {
             if (unidad.id == subunidad.idUnidad) {
               arrSubunidades.push(subunidad);
             }
           });
+          contenidos.forEach((contenido) => {
+            if (unidad.id == contenido.idUnidad) {
+              arrContenidos.push(contenido);
+            }
+          });
           let obj = {
             UnidadName: unidad.Nombre,
             idUnidad: unidad.id,
             subUnidades: arrSubunidades,
+            contenidos: arrContenidos,
             Inicio: unidad.fechaInicio,
             Fin: unidad.fechaFin,
-            horas: unidad.horas
+            horas: unidad.horas,
           };
           arrModelo.push(obj);
         }
@@ -200,11 +269,11 @@ ec.addGrupo = async (req, res) => {
         idModelo: element.id,
         fechaInicio: element.fechaInicio,
         fechaFin: element.fechaFin,
-        horas: element.horas
+        horas: element.horas,
       };
       datosModeloOrdenado[id] = obj;
     });
-    const promesasUnidades = [];
+    const promesas = [];
     datosModeloOrdenado.forEach(async (element) => {
       let FechaFin = lastday(`${element.fechaFin}`, 0);
       if (element.fechaInicio >= element.fechaFin) {
@@ -223,17 +292,23 @@ ec.addGrupo = async (req, res) => {
         ]
       );
       element.unidades.forEach(async (e) => {
-        const { insertId: newidUnidad } = await pool.query(
+        const {
+          insertId: newidUnidad,
+        } = await pool.query(
           "INSERT INTO tb_ec_unidades(Nombre, horas, isModel, idModulo, idCarrera, idGrupo)  VALUES(?,?,0,?,?,?)",
           [e.UnidadName, e.horas, idM.insertId, id_carrera, insertId]
         );
-        e.subUnidades.forEach(sub => {
-          const statment = `INSERT INTO tb_ec_subunidades(Nombre, isModel, horas, idUnidad, idCarrera, idGrupo) VALUES('${sub.Nombre}' , 0 , ${sub.horas} , ${newidUnidad} , '${id_carrera}' , '${insertId}')`;
-          promesasUnidades.push(pool.query(statment));
+        e.subUnidades.forEach((sub) => {
+          const statmentSubUnidades = `INSERT INTO tb_ec_subunidades(Nombre, isModel, horas, idUnidad, idCarrera, idGrupo) VALUES('${sub.Nombre}' , 0 , ${sub.horas} , ${newidUnidad} , '${id_carrera}' , '${insertId}')`;
+          promesas.push(pool.query(statmentSubUnidades));
+        });
+        e.contenidos.forEach(async (contenido) => {
+          const statmentContenidos = `INSERT INTO tb_ec_contenidos(Nombre, isModel, idUnidad, idCarrera, idGrupo) VALUES('${contenido.Nombre}' , 0 , ${newidUnidad} , '${id_carrera}' , '${insertId}')`;
+          promesas.push(pool.query(statmentContenidos));
         });
       });
     });
-    await Promise.all(promesasUnidades);
+    await Promise.all(promesas);
     res.json({ status: true });
   } catch (error) {
     console.log(error);
@@ -317,7 +392,9 @@ ec.deleteUnidad = async (req, res) => {
 ec.deleteSubUnidad = async (req, res) => {
   const { idSubUnidad } = req.body;
   try {
-    await pool.query("DELETE FROM tb_ec_subunidades WHERE id = ? ", [idSubUnidad]);
+    await pool.query("DELETE FROM tb_ec_subunidades WHERE id = ? ", [
+      idSubUnidad,
+    ]);
     res.json({ status: true });
   } catch (error) {
     console.log(error);
@@ -327,7 +404,9 @@ ec.deleteSubUnidad = async (req, res) => {
 ec.deleteContenido = async (req, res) => {
   const { idContenido } = req.body;
   try {
-    await pool.query("DELETE FROM tb_ec_contenidos WHERE id = ? ", [idContenido]);
+    await pool.query("DELETE FROM tb_ec_contenidos WHERE id = ? ", [
+      idContenido,
+    ]);
     res.json({ status: true });
   } catch (error) {
     console.log(error);
@@ -364,10 +443,10 @@ ec.editSubUnidad = async (req, res) => {
 ec.editContenido = async (req, res) => {
   const { idContenido, Nombre } = req.body;
   try {
-    await pool.query(
-      "UPDATE tb_ec_contenidos SET Nombre = ? WHERE id = ?  ",
-      [Nombre, idContenido]
-    );
+    await pool.query("UPDATE tb_ec_contenidos SET Nombre = ? WHERE id = ?  ", [
+      Nombre,
+      idContenido,
+    ]);
     res.json({ status: true });
   } catch (error) {
     console.log(error);
@@ -419,7 +498,10 @@ ec.administradorModelo = async (req, res) => {
       "SELECT Nombre , horasTotales, horasBasica, horasAlter FROM tb_ec_carrera WHERE id = ?",
       idCarrera
     );
-    let modulos = pool.query("SELECT id , Nombre, fechaInicio, fechaFin, horas , CAST(SUBSTRING_INDEX(Nombre , '.', 1 ) AS INT)  AS orden FROM tb_ec_modulos WHERE isModel = 1 AND  idCarrera = ?  ORDER BY orden ASC ", idCarrera);
+    let modulos = pool.query(
+      "SELECT id , Nombre, fechaInicio, fechaFin, horas , CAST(SUBSTRING_INDEX(Nombre , '.', 1 ) AS INT)  AS orden FROM tb_ec_modulos WHERE isModel = 1 AND  idCarrera = ?  ORDER BY orden ASC ",
+      idCarrera
+    );
     let unidades = pool.query(
       "SELECT id , Nombre, idModulo , horas FROM tb_ec_unidades WHERE isModel = 1 AND  idCarrera = ?",
       idCarrera
@@ -432,7 +514,13 @@ ec.administradorModelo = async (req, res) => {
       "SELECT id , Nombre, idUnidad  FROM tb_ec_contenidos WHERE isModel = 1 AND  idCarrera = ?",
       idCarrera
     );
-    const query = await Promise.all([carrera, modulos, unidades, subunidades, contenidos]);
+    const query = await Promise.all([
+      carrera,
+      modulos,
+      unidades,
+      subunidades,
+      contenidos,
+    ]);
     carrera = query[0][0];
     modulos = query[1];
     unidades = query[2];
@@ -450,7 +538,7 @@ ec.administradorModelo = async (req, res) => {
           let hasSubUnidades = false;
           let horasSubUnidades = 0;
 
-          subunidades.forEach(subUni => {
+          subunidades.forEach((subUni) => {
             if (subUni.idUnidad == unidad.id) {
               arrSubUni.push({
                 id: subUni.id,
@@ -461,7 +549,7 @@ ec.administradorModelo = async (req, res) => {
               horasSubUnidades = horasSubUnidades + Number(subUni.horas);
             }
           });
-          contenidos.forEach(contenido => {
+          contenidos.forEach((contenido) => {
             if (contenido.idUnidad == unidad.id) {
               arrContenidos.push({
                 id: contenido.id,
@@ -476,7 +564,7 @@ ec.administradorModelo = async (req, res) => {
             subunidades: arrSubUni,
             contenidos: arrContenidos,
             hasSubUnidades,
-            horasSubUnidades
+            horasSubUnidades,
           });
           totalHorasUnidades = totalHorasUnidades + Number(unidad.horas);
         }
@@ -488,7 +576,7 @@ ec.administradorModelo = async (req, res) => {
         fechaInicio: getMonth(element.fechaInicio),
         fechaFin: getMonth(element.fechaFin),
         horas: element.horas,
-        totalHorasUnidades
+        totalHorasUnidades,
       };
       horasTodosModulos = horasTodosModulos + Number(element.horas);
     });
@@ -497,7 +585,7 @@ ec.administradorModelo = async (req, res) => {
       datos: datosModeloOrdenado,
       carrera,
       carreraID: idCarrera,
-      horasTodosModulos
+      horasTodosModulos,
     });
   } catch (error) {
     console.log(error);
@@ -527,14 +615,26 @@ ec.administradorCronogramaVigente = async (req, res) => {
     let profesores = pool.query(
       "SELECT id_usuario, Nombre FROM tb_usuarios WHERE Role = 2"
     );
+    let contenidos = pool.query(
+      "SELECT id , Nombre, idUnidad FROM tb_ec_contenidos WHERE isModel = 0 AND  idGrupo = ?",
+      idGrupo
+    );
     let grupo;
-    const query = await Promise.all([carrera, modulos, unidades, profesores, subUnidades]);
+    const query = await Promise.all([
+      carrera,
+      modulos,
+      unidades,
+      profesores,
+      subUnidades,
+      contenidos,
+    ]);
     carrera = query[0][0].Carrera;
     grupo = query[0][0].Grupo;
     modulos = query[1];
     unidades = query[2];
     profesores = query[3];
     subUnidades = query[4];
+    contenidos = query[5];
     const datosModeloOrdenado = [];
     modulos.forEach((element, id) => {
       const arrModelo = [];
@@ -542,11 +642,18 @@ ec.administradorCronogramaVigente = async (req, res) => {
       unidades.forEach((unidad) => {
         if (unidad.idModulo == element.id) {
           const arrSubUni = [];
+          const arrContenidos = [];
           let totalSubUnidad = 0;
-          subUnidades.forEach(sub => {
+
+          subUnidades.forEach((sub) => {
             if (sub.idUnidad == unidad.id) {
               arrSubUni.push(sub);
               totalSubUnidad = totalSubUnidad + Number(sub.horas);
+            }
+          });
+          contenidos.forEach((contenido) => {
+            if (contenido.idUnidad == unidad.id) {
+              arrContenidos.push(contenido);
             }
           });
           let obj = {
@@ -558,7 +665,8 @@ ec.administradorCronogramaVigente = async (req, res) => {
             Usuario: unidad.Usuario,
             horas: unidad.horas,
             subUnidades: arrSubUni,
-            totalSubUnidad
+            contenidos: arrContenidos,
+            totalSubUnidad,
           };
           arrModelo.push(obj);
           horasTotalesUnidades = horasTotalesUnidades + Number(unidad.horas);
@@ -700,7 +808,7 @@ ec.contenidos = async (req, res) => {
   const { $y: year, $M: month } = dayjs();
   try {
     const evaluaciones = await pool.query(
-      "SELECT id, Descripcion, Tipo  FROM tb_ec_evaluaciones WHERE idUnidad = ?  AND Month = ? AND Year  = ?  ORDER BY Tipo",
+      "SELECT id, Descripcion, Tipo, (SELECT COUNT(*) FROM union_evaluaciones_contenidos WHERE idEvaluacion= tb_ec_evaluaciones.id ) AS isExist  FROM tb_ec_evaluaciones WHERE idUnidad = ?  AND Month = ? AND Year  = ?  ORDER BY Tipo",
       [unidad, month, year]
     );
     res.render("ec/instructores/contenidos", {
@@ -715,15 +823,47 @@ ec.contenidos = async (req, res) => {
   }
 };
 
+ec.contenidosEvaluados = async (req, res) => {
+  const { unidad, evaluacion, grupo } = req.params;
+  const usuario = getUserDataByToken(req.cookies.token);
+  try {
+    let contenidos = pool.query(
+      "SELECT id, Nombre, (SELECT COUNT(*) FROM union_evaluaciones_contenidos WHERE idContenido =  tb_ec_contenidos.id AND idEvaluacion = ?) AS exist  FROM tb_ec_contenidos WHERE idUnidad = ?",
+      [evaluacion, unidad]
+    );
+    let descripcionEvaluacion = pool.query(
+      "SELECT Descripcion  FROM tb_ec_evaluaciones WHERE id = ?",
+      [evaluacion]
+    );
+    const query = await Promise.all([contenidos, descripcionEvaluacion]);
+    contenidos = query[0];
+    descripcionEvaluacion = query[1][0].Descripcion;
+    res.render("ec/instructores/contenidosEvaluados", {
+      data: usuario.data,
+      contenidos,
+      idUnidad: unidad,
+      evaluacion,
+      grupo,
+      descripcion: descripcionEvaluacion,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json(error);
+  }
+};
+
 ec.newEva = async (req, res) => {
   const { Nombre, Tipo, idUnidad } = req.body;
   const { $y: year, $M: month } = dayjs();
   try {
     if (!Nombre || !Tipo || !idUnidad) throw "PARAMS_NOT_COMPLETE";
-    let cantidad = await pool.query("SELECT COUNT(*) as cantidad FROM  tb_ec_evaluaciones WHERE Tipo = ? AND Month = ?  AND Year = ? AND idUnidad = ? ",
-      [Tipo, month, year, idUnidad]);
+    let cantidad = await pool.query(
+      "SELECT COUNT(*) as cantidad FROM  tb_ec_evaluaciones WHERE Tipo = ? AND Month = ?  AND Year = ? AND idUnidad = ? ",
+      [Tipo, month, year, idUnidad]
+    );
     cantidad = cantidad[0].cantidad;
-    if (cantidad > 1) return res.status(400).json({ status: false, error: "LIMIT" });
+    if (cantidad > 1)
+      return res.status(400).json({ status: false, error: "LIMIT" });
     await pool.query(
       "INSERT INTO tb_ec_evaluaciones(Descripcion, Tipo, Month, Year, idUnidad) VALUES (? , ? , ? , ? , ?) ",
       [Nombre, Tipo, month, year, idUnidad]
@@ -812,7 +952,25 @@ ec.notas = async (req, res) => {
     res.status(400).json(error);
   }
 };
-
+ec.addContenidos = async (req, res) => {
+  let { contenido , idEvaluacion } = req.body;
+  contenido = JSON.parse(contenido);
+  const arrConsultas = [];
+  contenido.forEach((content) => {
+    if(content.isCheck && !content.status){
+      arrConsultas.push(pool.query("INSERT INTO union_evaluaciones_contenidos(idEvaluacion, idContenido) VALUES(?,?)", [idEvaluacion, content.id]));
+    }if(!content.isCheck && content.status){
+      arrConsultas.push(pool.query("DELETE FROM union_evaluaciones_contenidos WHERE idEvaluacion = ? AND idContenido = ? ", [idEvaluacion, content.id]));
+    }
+  });
+  try {
+    await Promise.all(arrConsultas);
+    res.json({status: true});
+  } catch (error) {
+    console.log(error);
+    res.status(400).json(error);
+  }
+};
 ec.notasP = async (req, res) => {
   const { notas } = req.body;
   try {
@@ -845,7 +1003,9 @@ ec.notasP = async (req, res) => {
 ec.notasadmin = async (req, res) => {
   const { data } = getUserDataByToken(req.cookies.token);
   try {
-    const grupos = await pool.query("SELECT id, Nombre FROM `tb_ec_grupo` WHERE Estado = 1");
+    const grupos = await pool.query(
+      "SELECT id, Nombre FROM `tb_ec_grupo` WHERE Estado = 1"
+    );
     res.render("./ec/administradorNotas", { data, grupos });
   } catch (error) {
     console.log(error);
@@ -853,18 +1013,19 @@ ec.notasadmin = async (req, res) => {
   }
 };
 
-
 ec.getActividades = async (req, res) => {
   try {
     const { year, month } = req.params;
-    const data = await pool.query("SELECT ( SELECT id  FROM tb_ec_grupo WHERE id =( SELECT idGrupo FROM tb_ec_unidades WHERE id = tb_ec_evaluaciones.idUnidad ) ) AS  idGrupo , ( SELECT Nombre  FROM tb_ec_grupo WHERE id =( SELECT idGrupo FROM tb_ec_unidades WHERE id = tb_ec_evaluaciones.idUnidad ) ) AS  Grupo, ( SELECT Nombre FROM tb_ec_modulos WHERE id =( SELECT idModulo FROM tb_ec_unidades WHERE id = tb_ec_evaluaciones.idUnidad ) ) AS NombreModulo, ( SELECT Nombre FROM tb_ec_unidades WHERE id = tb_ec_evaluaciones.idUnidad ) AS NombreUnidad , Tipo, Month , Year, Descripcion , id FROM tb_ec_evaluaciones WHERE Month = ? AND Year = ? ", [month, year]);
+    const data = await pool.query(
+      "SELECT ( SELECT id  FROM tb_ec_grupo WHERE id =( SELECT idGrupo FROM tb_ec_unidades WHERE id = tb_ec_evaluaciones.idUnidad ) ) AS  idGrupo , ( SELECT Nombre  FROM tb_ec_grupo WHERE id =( SELECT idGrupo FROM tb_ec_unidades WHERE id = tb_ec_evaluaciones.idUnidad ) ) AS  Grupo, ( SELECT Nombre FROM tb_ec_modulos WHERE id =( SELECT idModulo FROM tb_ec_unidades WHERE id = tb_ec_evaluaciones.idUnidad ) ) AS NombreModulo, ( SELECT Nombre FROM tb_ec_unidades WHERE id = tb_ec_evaluaciones.idUnidad ) AS NombreUnidad , Tipo, Month , Year, Descripcion , id FROM tb_ec_evaluaciones WHERE Month = ? AND Year = ? ",
+      [month, year]
+    );
     res.json({ data });
   } catch (error) {
     console.log(error);
     res.status(400).json(error);
   }
 };
-
 
 ec.NotasAdmin = async (req, res) => {
   const { evaluacion, grupo } = req.params,

@@ -35,6 +35,13 @@
             </div>
             <small><span class="font-weight-bold">Nota: </span>El cronograma vigente
               administra la fechas y profesores que imparten los contenidos</small>
+              <div class="row pt-2">
+                <div class="col-md-6"><small><span class="font-weight-bold">Leyenda:</span></small>
+                  <small><i class="fas fa-edit"></i> Editar | <i class="fas fa-plus-circle"></i> Agregar  | <i
+                      class="fas fa-trash"></i> Eliminar| <i class="fas fa-book-open"></i> Contenidos | <i class="fas fa-expand-alt"></i> Sub-Unidades
+                  </small> 
+                </div>
+              </div>
           </div>
         </div>
       </div>
@@ -48,7 +55,7 @@
               Cronograma vigente de módulos y unidades
             </h6>
             <button class="btn btn-sm btn-success d-inline float-right" id="addNewModuleBtnVigente">
-              Agregar Módulo
+              <i class="fas fa-plus-circle"></i> Agregar Módulo
             </button>
             <p></p>
           </div>
@@ -117,7 +124,7 @@
                     </h5>
                     <button class="btn btn-sm btn-success d-inline float-right addNewUnitBtn"
                       onclick="addNewUnitVigente('<%= element.idModelo %>', '<%= element.modelo %>')">
-                      Agregar unidad
+                      <i class="fas fa-plus-circle"></i>   Agregar unidad
                     </button>
                     <hr />
                     <div class="table-responsive">
@@ -167,20 +174,28 @@
                                 </button>
                                 <button class="btn btn-danger btn-sm " onclick="deleteUnidad('<%= uni.idUnidad %>')">
                                   <i class="fas fa-trash-alt"></i>
-
                                 </button>
-                                <button class="btn btn-light btn-sm " data-toggle="collapse"
+                                <!-- Sub Unidades  -->
+                                <button class="btn btn-dark btn-sm contenido"  data-statusopen="false" data-toggle="collapse"
                                   data-target=".accordion<%=uni.idUnidad %>" aria-expanded="true"
                                   aria-controls="collapseOne"><i class="fas fa-expand-alt"></i></button>
+                                <!-- Contenidos -->
+                                <button class="btn btn-dark btn-sm suUnidades"  data-statusopen="false" data-toggle="collapse"
+                                data-target=".accordionContenidos<%=uni.idUnidad %>" aria-expanded="true"
+                                aria-controls="collapseOne"><i class="fas fa-book-open"></i></button>
                               </td>
                             </tr>
+
+
+
+
+                            <!-- sub unidades -->
                             <tr class="bg-light collapse accordion<%=uni.idUnidad %>">
                               <td colspan="8" class="text-center font-weight-bold">SUB-UNIDADES DE "<%= uni.UnidadName
                                   %>" </td>
-                            </tr>
-
+                            </tr> 
                             <% uni.subUnidades.forEach( subUnidad=> { %>
-                              <tr style="background: #25426fb8;"
+                              <tr style="background: #1874ffb8;"
                                 class="text-white collapse accordion<%=uni.idUnidad %>">
                                 <td colspan="2"> <i class="fas fa-angle-right"></i>
                                   <%= subUnidad.Nombre %>
@@ -197,17 +212,36 @@
                                 </td>
                               </tr>
                               <% } )%>
-
-
-
-
                                 <tr class=" bg-light font-weight-bold collapse accordion<%=uni.idUnidad %>">
                                   <td>Total</td>
                                   <td colspan="8" class="text-right">
                                     <%= uni.totalSubUnidad %> horas
                                   </td>
                                 </tr>
-
+                                <!-- FIN sub unidades -->
+                                
+          
+                            <!-- Contenidos -->
+                            <tr class="bg-light collapse accordionContenidos<%=uni.idUnidad %>">
+                              <td colspan="8" class="text-center font-weight-bold">CONTENIDOS DE:  "<%= uni.UnidadName
+                                  %>" </td>
+                            </tr> 
+                            <% uni.contenidos.forEach( contenido=> { %>
+                              <tr style="background: #3a3b45;"
+                                class="text-white collapse accordionContenidos<%=uni.idUnidad %>">
+                                <td colspan="4"> <i class="fas fa-angle-right"></i>
+                                  <%= contenido.Nombre %>
+                                </td>
+                                <td colspan="4">
+                                  <button class="btn btn-info btn-sm"
+                                    onclick="editContenido('<%=contenido.id %>','<%=contenido.Nombre%>')"><i
+                                      class="fas fa-edit"></i> Editar</button>
+                                  <button class="btn btn-danger btn-sm" onclick="deleteContenido('<%=contenido.id %>')">
+                                    <i class="fas fa-trash"></i> Eliminar</button>
+                                </td>
+                              </tr>
+                              <% } )%>
+                            <!-- FIN Contenidos -->
                                 <% }); %>
                         </tbody>
                         <tfoot>
@@ -307,7 +341,17 @@
       <hr />
     </swal-html>
   </template>
-
+  <template id="newContenido">
+    <swal-html>
+      <div class="row">
+        <div class="col-md-12">
+          <label>Escriba el contenido</label><input type="text" class="form-control text-uppercase"
+            placeholder="Contenido" id="ContenidoText" />
+        </div>
+      </div>
+      <hr />
+    </swal-html>
+  </template>
   <!-- /.container-fluid -->
   <%- include('../partials/footer'); %>
     <script src="/static/js/jquery.mask.min.js"></script>

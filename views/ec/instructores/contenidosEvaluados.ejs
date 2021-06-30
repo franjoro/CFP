@@ -1,0 +1,67 @@
+<%- include('../../partials/header.admin.ejs'); %>
+    <div class="container-fluid">
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between">
+            <h4 class="mb-0 text-gray-800">Ingreso de evaluaciones</h4>
+        </div>
+        <p>
+            <span class="font-weight-bold"> Indicaciones: </span> A continuación se
+            mostraran los contenidos de la unidad, usted debe registrar los contenidos vistos en la evaluación seleccionada
+            el
+            icono : <i class="fas fa-plus"></i>
+        </p>
+
+        <div class="card shadow mb-3">
+            <div class="card-header">
+                <a href="/admin/ec/evaluaciones/<%= idUnidad %>/<%= grupo %>" class="btn btn-sm btn-info"><i
+                        class="fas fa-arrow-left"></i> Atrás</a>
+            </div>
+            <div class="card-body table-responsive">
+                <h5 class="text-secondary">Contenidos vistos en la evaluación: <%= descripcion%></h5>
+                    <div class="alert alert-info" role="alert">
+                        Por favor active los contenidos vistos en la evaluación y guarde los cambios
+                        <hr>
+                        <% contenidos.forEach( (contenido)=>
+                        {let ckd = "";if(contenido.exist) ckd ="checked";%>
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" <%= ckd %>  class="custom-control-input switch" data-id="<%=contenido.id%>" data-status="<%=contenido.exist%>"  id="Switch<%=contenido.id%>">
+                            <label class="custom-control-label" for="Switch<%=contenido.id%>"> <%= contenido.Nombre%> </label>
+                        </div>
+                        <%})%>
+                    </div>
+                    <button class="btn btn-success float-right" id="btnSave">Guardar información</button>
+            </div>
+        </div>
+    </div>
+
+    <input type="hidden" id="idUnidad" value="<%= idUnidad%>">
+    <input type="hidden" id="idEvaluacion" value="<%= evaluacion %>">
+
+    <template id="newEvaluacion">
+        <swal-html>
+            <div class="row">
+                <div class="col-md-12">
+                    <label>Descripción de la evaluación</label>
+                    <textarea name="EvaNombre" class="form-control text-uppercase"
+                        placeholder="Descripción de la actividad" id="EvaNombre" cols="3" rows="3"
+                        maxlength="250"></textarea>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-12">
+                    <label>Tipo de actividad a evaluar</label><select class="form-control" id="EvaTipo">
+                        <option value="0" selected disabled> Seleccione tipo de evaluación</option>
+                        <option value="1">Teórica</option>
+                        <option value="2">Práctica</option>
+                    </select>
+                </div>
+            </div>
+        </swal-html>
+    </template>
+
+
+    <!-- /.container-fluid -->
+    <%- include('../../partials/footer'); %>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+        <script src="/static/js/ec/instructores.js"></script>

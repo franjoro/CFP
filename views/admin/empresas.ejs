@@ -1,23 +1,13 @@
 <link rel="stylesheet" href="/static/vendor/datatables/datatables.min.css">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"
     type="text/css" />
-<style>
-    .imgTabla {
-        width: 100px;
-    }
-
-    ;
-</style>
 <%- include('../partials/header.admin.ejs'); %>
     <!-- Begin Page Content -->
     <div class="container-fluid">
         <!-- Page Heading -->
         <h1 class="h3 mb-2 d-inline text-gray-800">Empresas registradas</h1>
-        <!-- <button type="button" class="btn btn-primary float-right d-inline" data-toggle="modal"
-            data-target="#exampleModal">+ Agregar nueva empresa</button> -->
-
+        <button type="button" class="btn btn-success btn-sm float-right d-inline"  id="btnReporte"> <i class="fas fa-file-excel"></i> Descargar directorio de empresas</button>
         <p class="mb-4 ">Directorio principal de empresas</a></p>
-
         <select class="custom-select mb-3" id="selector">
             <option value="1">Empresas activas</option>
             <option value="0">Empresas inactivas</option>

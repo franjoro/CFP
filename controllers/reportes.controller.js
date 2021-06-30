@@ -44,6 +44,22 @@ reportes.ParticipantesEnCursos = async (req, res) => {
   }
 };
 
+reportes.directorioEmpresas = async (req, res) => {
+  const statment = `SELECT Nombre, Direccion , Tel , email FROM tb_empresa`;
+  try {
+    const datos = await pool.query(statment);
+    const titulos = [
+      "Nombre",
+      "Dirección",
+      "Tel",
+      "Email"
+    ];
+    await CreateNewExcel(titulos,datos);
+    res.status(200).json({status:true, path:"/reportes/download"});
+  } catch (error) {
+    res.send("ERROR API: " + error);
+  }
+};
 
 reportes.ec = async (req, res) => {
   try {

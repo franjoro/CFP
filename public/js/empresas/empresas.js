@@ -245,3 +245,12 @@ $(document).ready(() => {
 $("#tel_edit").mask("0000-0000");
 $("#aportacion_edit").mask("000,000,000,000,000.00", { reverse: true });
 
+$("#btnReporte").click( async ()=> {
+  loader();
+  const query = await $.ajax({
+    type: "GET",
+    url: "/reportes/directorioEmpresas",
+  });
+  Swal.close();
+  if(query.status) window.location.replace('/reportes/download');
+});
