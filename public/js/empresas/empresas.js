@@ -252,5 +252,6 @@ $("#btnReporte").click( async ()=> {
     url: "/reportes/directorioEmpresas",
   });
   Swal.close();
-  if(query.status) window.location.replace('/reportes/download');
+  if(query.status) window.open("/reportes/download");
+
 });
