@@ -137,17 +137,17 @@
           </div>
           <div class="card-body row">
             <div id="accordion" class="container">
-              <% datos.forEach( (element, id)=> { %>
+              <% datos.forEach( (element, idModulo)=> { %>
                 <div class="card">
                   <div class="card-header" id="headingTwo">
                     <h5 class="mb-0">
                       <button class="btn btn-link collapsed" data-toggle="collapse"
-                        data-target="#collapseModule<%= id %>" aria-expanded="false" aria-controls="collapseTwo">
+                        data-target="#collapseModule<%= idModulo %>" aria-expanded="false" aria-controls="collapseTwo">
                         Módulo:  <%= element.modelo %>
                       </button>
                     </h5>
                   </div>
-                  <div id="collapseModule<%= id %>" class="collapse" aria-labelledby="headingTwo"
+                  <div id="collapseModule<%= idModulo %>" class="collapse" aria-labelledby="headingTwo"
                     data-parent="#accordion">
                     <div class="card-body">
                       <!-- Cuerpo del Módulo -->
@@ -209,7 +209,7 @@
                           <div class="card-header" id="headingThree">
                             <h5 class="mb-0">
                               <button class="btn btn-link text-danger collapsed" data-toggle="collapse"
-                                data-target="#collapseCuerpoUnidad<%= id %>" aria-expanded="false" aria-controls="collapseCuerpoUnidad<%= id %>">
+                                data-target="#collapseCuerpoUnidad<%= id+idModulo%>" aria-expanded="false" aria-controls="collapseCuerpoUnidad<%= id+idModulo %>">
                                 <i class="fas fa-chevron-right"></i> Unidad : <%=uni.UnidadName%> - Horas : <%=uni.horas%> 
                                 
                                 <button class="btn btn-info btn-sm float-right"
@@ -223,7 +223,7 @@
                               </button>
                             </h5>
                           </div>
-                          <div id="collapseCuerpoUnidad<%= id %>" class="collapse" aria-labelledby="headingThree"
+                          <div id="collapseCuerpoUnidad<%= id+idModulo %>" class="collapse" aria-labelledby="headingThree"
                             data-parent="#headingTwo">
                             <div class="card-body">
                               <!-- Cuerpo unidad -->
@@ -232,8 +232,8 @@
                               <div class="card-header" id="headingThree">
                                 <h5 class="mb-0">
                                   <button class="btn btn-link text-info collapsed" data-toggle="collapse"
-                                    data-target="#collapseContenidos<%= id %>" aria-expanded="false"
-                                    aria-controls="collapseContenidos<%= id %>">
+                                    data-target="#collapseContenidos<%= id+idModulo %>" aria-expanded="false"
+                                    aria-controls="collapseContenidos<%= id+idModulo %>">
                                     Contenidos
 
                                     <button class="btn btn-success btn-sm btnContenidos float-right"
@@ -245,7 +245,7 @@
                                   </button>
                                 </h5>
                               </div>
-                              <div id="collapseContenidos<%= id %>" class="collapse" aria-labelledby="headingThree"
+                              <div id="collapseContenidos<%= id+idModulo %>" class="collapse" aria-labelledby="headingThree"
                                 data-parent="#headingTwo">
                                 <div class="card-body">
                                   <% uni.contenidos.forEach( contenido=> { %>
@@ -253,13 +253,11 @@
                                       <tr>
                                         <td>
                                           <%= contenido.Nombre %>
-                                        </td>
-                                        <td>
-                                          <button class="btn btn-info btn-sm"
+                                          <button class="btn btn-info btn-sm float-right"
                                           onclick="editContenido('<%=contenido.id %>','<%=contenido.Nombre%>')">
                                           <i class="fas fa-edit"></i> Editar
                                         </button>
-                                        <button class="btn btn-danger btn-sm"
+                                        <button class="btn btn-danger btn-sm float-right"
                                           onclick="deleteContenido('<%=contenido.id %>')">
                                           <i class="fas fa-trash"></i> Eliminar
                                         </button>
@@ -295,13 +293,11 @@
                                         </td>
                                         <td>
                                           <%= subUnidad.horas %>
-                                        </td>
-                                        <td>
-                                          <button class="btn btn-info btn-sm"
+                                          <button class="btn btn-info btn-sm float-right"
                                           onclick="editActualSubUnit('<%=subUnidad.id %>','<%=subUnidad.Nombre%>' ,'<%=subUnidad.horas%>')">
                                           <i class="fas fa-edit"></i> Editar
                                         </button>
-                                        <button class="btn btn-danger btn-sm" onclick="deleteSubUnidad('<%=subUnidad.id %>')">
+                                        <button class="btn btn-danger btn-sm float-right" onclick="deleteSubUnidad('<%=subUnidad.id %>')">
                                           <i class="fas fa-trash"></i> Eliminar
                                         </button>
                                         </td>
