@@ -767,3 +767,12 @@ $("body").on("keyup", ".text-uppercase", function () {
   $(this).val($(this).val().toUpperCase());
 });
 
+$("#btnBloques").click(() => {
+  $("#lista").addClass("d-none");
+  $("#bloques").removeClass("d-none");
+});
+
+$("#btnLista").click(() => {
+  $("#bloques").addClass("d-none");
+  $("#lista").removeClass("d-none");
+});

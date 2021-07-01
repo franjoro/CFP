@@ -20,42 +20,71 @@
                     <%= carrera.Nombre %>
                   </span>
                 </h5>
-                <p class="m-0">Horas totales: <span class="font-weight-bold">
+                <p class="m-0">
+                  Horas totales:
+                  <span class="font-weight-bold">
                     <%= carrera.horasTotales %>
-                  </span> </p>
-                <p class="m-0">Horas Horas de formación básica: <span class="font-weight-bold">
+                  </span>
+                </p>
+                <p class="m-0">
+                  Horas Horas de formación básica:
+                  <span class="font-weight-bold">
                     <%= carrera.horasBasica %>
-                  </span> </p>
-                <p class="m-0">Horas de alternancia: <span class="font-weight-bold">
+                  </span>
+                </p>
+                <p class="m-0">
+                  Horas de alternancia:
+                  <span class="font-weight-bold">
                     <%= carrera.horasAlter %>
-                  </span> </p>
-                <hr>
-                <p>Horas de módulos ingresados : <span class="font-weight-bold">
+                  </span>
+                </p>
+                <hr />
+                <p>
+                  Horas de módulos ingresados :
+                  <span class="font-weight-bold">
                     <%=horasTodosModulos%>
-                  </span> </p>
+                  </span>
+                </p>
                 <% if(carrera.horasTotales==horasTodosModulos) {%>
-                  <p><span class="badge badge-success"><i class="fas fa-check"></i> HORAS GLOBALES CONCUERDAN</span></p>
+                  <p>
+                    <span class="badge badge-success"><i class="fas fa-check"></i> HORAS GLOBALES CONCUERDAN</span>
+                  </p>
                   <% }else{%>
-                    <p><span class="badge badge-warning"><i class="fas fa-exclamation-triangle"></i> HORAS GLOBALES NO
-                        CONCUERDAN</span></p>
+                    <p>
+                      <span class="badge badge-warning"><i class="fas fa-exclamation-triangle"></i> HORAS GLOBALES NO
+                        CONCUERDAN</span>
+                    </p>
                     <% }%>
               </div>
             </div>
             <small><span class="font-weight-bold">Nota: </span>El modelo actúal se
               replicara en cada grupo creado</small>
             <div class="row pt-2">
-              <div class="col-md-6"><small><span class="font-weight-bold">Leyenda:</span></small>
-                <small><i class="fas fa-edit"></i> Editar | <i class="fas fa-plus-circle"></i> Agregar  | <i
-                    class="fas fa-trash"></i> Eliminar| <i class="fas fa-book-open"></i> Contenidos | <i class="fas fa-expand-alt"></i> Sub-Unidades
-                </small> 
+              <div class="col-md-10">
+                <small><span class="font-weight-bold">Leyenda:</span></small>
+                <small><i class="fas fa-edit"></i> Editar |
+                  <i class="fas fa-plus-circle"></i> Agregar |
+                  <i class="fas fa-trash"></i> Eliminar|
+                  <i class="fas fa-book-open"></i> Contenidos |
+                  <i class="fas fa-expand-alt"></i> Sub-Unidades
+                </small>
+              </div>
+              <div class="col-md-2">
+                <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
+                  <label class="btn btn-secondary active">
+                    <input type="radio" name="options" autocomplete="off" id="btnBloques" checked> <i class="fas fa-th-large"></i>
+                  </label>
+                  <label class="btn btn-secondary">
+                    <input type="radio" name="options" autocomplete="off" id="btnLista"> <i class="fas fa-list-ul"></i>
+                  </label>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-
-    <div class="row container-fluid">
+    <div class="row container-fluid d-none" id="lista" >
       <div class="col-lg-12">
         <div class="card shadow mb-4">
           <div class="card-header py-3">
@@ -63,8 +92,137 @@
               Modelo de módulos y unidades
             </h6>
             <button class="btn btn-sm btn-success d-inline float-right" id="addNewModuleBtn">
-              <i
-              class="fas fa-plus-circle"></i>    Agregar Módulo
+              <i class="fas fa-plus-circle"></i> Agregar Módulo
+            </button>
+          </div>
+          <div class="card-body row">
+            <div id="accordion" class="container">
+              <% datos.forEach( (element, id)=> { %>
+                <div class="card">
+                  <div class="card-header" id="headingTwo">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link collapsed" data-toggle="collapse"
+                        data-target="#collapseModule<%= id %>" aria-expanded="false" aria-controls="collapseTwo">
+                        Módulo:  <%= element.modelo %>
+                      </button>
+                    </h5>
+                  </div>
+                  <div id="collapseModule<%= id %>" class="collapse" aria-labelledby="headingTwo"
+                    data-parent="#accordion">
+                    <div class="card-body">
+                      <!-- Cuerpo del Módulo -->
+                      <h6 class="text-secondary">Información del módulo : <%= element.modelo %>
+                      </h6>
+                      <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th>Fecha inicio</th>
+                            <th>Fecha Fin</th>
+                            <th>Horas</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>
+                              <%= element.fechaInicio %>
+                            </td>
+                            <td>
+                              <%= element.fechaFin %>
+                            </td>
+                            <td>
+                              <%= element.horas %>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <h6 class="text-secondary">Unidades</h6>
+                      <div class="card">
+
+                        <% element.unidades.forEach( (uni, id)=> { %>
+                          <div class="card-header" id="headingThree">
+                            <h5 class="mb-0">
+                              <button class="btn btn-link text-danger collapsed" data-toggle="collapse"
+                                data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                <i class="fas fa-chevron-right"></i> Unidad : <%=uni.UnidadName%> - Horas : <%=uni.horas%>
+                              </button>
+                            </h5>
+                          </div>
+                          <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+                            data-parent="#headingTwo">
+                            <div class="card-body">
+                              <!-- Cuerpo unidad -->
+                              <!-- Contenidos -->
+                              <h6 class="text-secondary"></h6>
+                              <div class="card-header" id="headingThree">
+                                <h5 class="mb-0">
+                                  <button class="btn btn-link text-info collapsed" data-toggle="collapse"
+                                    data-target="#collapseContenidos<%= id %>" aria-expanded="false"
+                                    aria-controls="collapseContenidos<%= id %>">
+                                    Contenidos
+                                  </button>
+                                </h5>
+                              </div>
+                              <div id="collapseContenidos<%= id %>" class="collapse" aria-labelledby="headingThree"
+                                data-parent="#headingTwo">
+                                <div class="card-body">
+                                  <% uni.contenidos.forEach( contenido=> { %>
+                                    <table class="table table-striped">
+                                      <tr>
+                                        <td>
+                                          <%= contenido.Nombre %>
+                                        </td>
+                                      </tr>
+                                    </table>
+                                    <% }); %>
+                                </div>
+                              </div>
+                              <!-- Sub Unidades -->
+                              <div class="card-header" id="headingThree">
+                                <h5 class="mb-0">
+                                  <button class="btn btn-link text-info collapsed" data-toggle="collapse"
+                                    data-target="#collapseSubUnidades<%= id %>" aria-expanded="false" aria-controls="collapseSubUnidades<%= id %>">
+                                    Sub-Unidades
+                                  </button>
+                                </h5>
+                              </div>
+                              <div id="collapseSubUnidades<%= id %>" class="collapse" aria-labelledby="headingThree"
+                                data-parent="#headingTwo">
+                                <div class="card-body">
+                                  <% uni.subunidades.forEach( subUnidad=> { %>
+                                    <table class="table table-striped">
+                                      <tr>
+                                        <td>
+                                          <%= subUnidad.Nombre %>
+                                        </td>
+                                      </tr>
+                                    </table>
+                                    <% }); %>
+                                </div>
+                              </div>
+
+
+                            </div>
+                          </div>
+                          <% }); %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <% }); %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row container-fluid" id="bloques">
+      <div class="col-lg-12">
+        <div class="card shadow mb-4">
+          <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary d-inline">
+              Modelo de módulos y unidades
+            </h6>
+            <button class="btn btn-sm btn-success d-inline float-right" id="addNewModuleBtn">
+              <i class="fas fa-plus-circle"></i> Agregar Módulo
             </button>
           </div>
           <div class="card-body row">
@@ -96,12 +254,16 @@
                             </tr>
                           </tbody>
                         </table>
-                        <hr>
+                        <hr />
                         <% if(element.horas==element.totalHorasUnidades) {%>
-                          <p><span class="badge badge-success"><i class="fas fa-check"></i> HORAS CONCUERDAN</span></p>
+                          <p>
+                            <span class="badge badge-success"><i class="fas fa-check"></i> HORAS CONCUERDAN</span>
+                          </p>
                           <% }else{%>
-                            <p><span class="badge badge-warning"><i class="fas fa-exclamation-triangle"></i> HORAS NO
-                                CONCUERDAN</span></p>
+                            <p>
+                              <span class="badge badge-warning"><i class="fas fa-exclamation-triangle"></i> HORAS NO
+                                CONCUERDAN</span>
+                            </p>
                             <% }%>
                               <button class="btn btn-info btn-block"
                                 onclick="editActualModule('<%=element.idModelo%>', '<%= element.modelo%>', '<%= element.fechaInicio %>' , '<%= element.fechaFin %>' , '<%= element.horas %>')">
@@ -139,7 +301,7 @@
                           <% element.unidades.forEach( (uni, id)=> { %>
                             <tr>
                               <td>
-                                <small style="cursor: pointer;" data-toggle="collapse"
+                                <small style="cursor: pointer" data-toggle="collapse"
                                   data-target=".accordion<%=uni.UnidaId %>" aria-expanded="true"
                                   aria-controls="collapseOne">
                                   <%= uni.UnidadName %>
@@ -152,44 +314,54 @@
                               </td>
                               <td>
                                 <button class="btn btn-info btn-sm"
-                                  onclick="editActualUnit('<%=uni.UnidaId %>','<%=uni.UnidadName%>' ,'<%=uni.horas%>')"><i
-                                    class="fas fa-edit"></i></button>
+                                  onclick="editActualUnit('<%=uni.UnidaId %>','<%=uni.UnidadName%>' ,'<%=uni.horas%>')">
+                                  <i class="fas fa-edit"></i>
+                                </button>
                                 <button class="btn btn-danger btn-sm" onclick="deleteUnidad('<%=uni.UnidaId %>')">
                                   <i class="fas fa-trash"></i>
                                 </button>
                                 <!-- Contenidos -->
-                                <button class="btn btn-dark btn-sm contenido" data-statusopen="false" data-toggle="collapse"
-                                  data-target=".accordionContenidos<%=uni.UnidaId %>" aria-expanded="true"
-                                  aria-controls="collapseOne"><i class="fas fa-book-open"></i></button>
+                                <button class="btn btn-dark btn-sm contenido" data-statusopen="false"
+                                  data-toggle="collapse" data-target=".accordionContenidos<%=uni.UnidaId %>"
+                                  aria-expanded="true" aria-controls="collapseOne">
+                                  <i class="fas fa-book-open"></i>
+                                </button>
                                 <!-- Sub-Unidades -->
-                                <button class="btn btn-dark btn-sm suUnidades" data-statusopen="false" data-toggle="collapse"
-                                  data-target=".accordion<%=uni.UnidaId %>" aria-expanded="true"
-                                  aria-controls="collapseOne"><i class="fas fa-expand-alt"></i></button>
+                                <button class="btn btn-dark btn-sm suUnidades" data-statusopen="false"
+                                  data-toggle="collapse" data-target=".accordion<%=uni.UnidaId %>" aria-expanded="true"
+                                  aria-controls="collapseOne">
+                                  <i class="fas fa-expand-alt"></i>
+                                </button>
                               </td>
                               <td>
                                 <% if(uni.horas==uni.horasSubUnidades || !uni.horasSubUnidades ) {%>
-                                  <p><span class="badge badge-success"><i class="fas fa-check"></i></span></p>
+                                  <p>
+                                    <span class="badge badge-success"><i class="fas fa-check"></i></span>
+                                  </p>
                                   <% }else{%>
-                                    <p><span class="badge badge-warning"><i class="fas fa-exclamation-triangle"></i>
-                                      </span></p>
+                                    <p>
+                                      <span class="badge badge-warning"><i class="fas fa-exclamation-triangle"></i>
+                                      </span>
+                                    </p>
                                     <% }%>
                               </td>
                             </tr>
 
-
-
                             <!-- Sub Unidades -->
                             <tr class="bg-light collapse accordion<%=uni.UnidaId %>">
-                              <td colspan="5" class="text-center font-weight-bold">SUB-UNIDADES DE "<%= uni.UnidadName
-                                  %>"
-                                  <button class="btn btn-success btn-sm btnAddSubUnit float-right" data-id="<%= uni.UnidaId %>"
-                                    data-nombre="<%= uni.UnidadName%>" data-carrera="<%= carreraID%>"><i
-                                      class="fas fa-plus-circle"></i> Sub-unidad</button>
+                              <td colspan="5" class="text-center font-weight-bold">
+                                SUB-UNIDADES DE "<%= uni.UnidadName %>"
+                                  <button class="btn btn-success btn-sm btnAddSubUnit float-right"
+                                    data-id="<%= uni.UnidaId %>" data-nombre="<%= uni.UnidadName%>"
+                                    data-carrera="<%= carreraID%>">
+                                    <i class="fas fa-plus-circle"></i> Sub-unidad
+                                  </button>
                               </td>
                             </tr>
                             <% uni.subunidades.forEach( subUnidad=> { %>
-                              <tr style="background: #1874ffb8;" class="text-white collapse accordion<%=uni.UnidaId %>">
-                                <td> <i class="fas fa-angle-right"></i>
+                              <tr style="background: #1874ffb8" class="text-white collapse accordion<%=uni.UnidaId %>">
+                                <td>
+                                  <i class="fas fa-angle-right"></i>
                                   <%= subUnidad.Nombre %>
                                 </td>
                                 <td>
@@ -197,58 +369,69 @@
                                 </td>
                                 <td colspan="2">
                                   <button class="btn btn-info btn-sm"
-                                    onclick="editActualSubUnit('<%=subUnidad.id %>','<%=subUnidad.Nombre%>' ,'<%=subUnidad.horas%>')"><i
-                                      class="fas fa-edit"></i> Editar</button>
+                                    onclick="editActualSubUnit('<%=subUnidad.id %>','<%=subUnidad.Nombre%>' ,'<%=subUnidad.horas%>')">
+                                    <i class="fas fa-edit"></i> Editar
+                                  </button>
                                   <button class="btn btn-danger btn-sm" onclick="deleteSubUnidad('<%=subUnidad.id %>')">
-                                    <i class="fas fa-trash"></i> Eliminar</button>
+                                    <i class="fas fa-trash"></i> Eliminar
+                                  </button>
                                 </td>
                               </tr>
                               <% } )%>
 
-                              <tr class=" bg-light font-weight-bold collapse accordion<%=uni.UnidaId %>">
-                                <td>Total</td>
-                                <td colspan="4" class="text-right">
-                                  <%= uni.horasSubUnidades %>
-                                </td>
-                              </tr>
-                            <!--  Fin Sub Unidades -->
+                                <tr class="bg-light font-weight-bold collapse accordion<%=uni.UnidaId %>">
+                                  <td>Total</td>
+                                  <td colspan="4" class="text-right">
+                                    <%= uni.horasSubUnidades %>
+                                  </td>
+                                </tr>
+                                <!--  Fin Sub Unidades -->
 
-                            <!-- Contenidos -->
-                            <tr class="bg-light collapse accordionContenidos<%=uni.UnidaId %>">
-                              <td colspan="5" class="text-center font-weight-bold">CONTENIDOS DE LA UNIDAD: "<%= uni.UnidadName
-                                  %>"
-                                  <button class="btn btn-success btn-sm btnContenidos float-right" data-id="<%= uni.UnidaId %>"
-                                    data-nombre="<%= uni.UnidadName%>" data-carrera="<%= carreraID%>"  data-openac="accordionContenidos<%= uni.UnidaId%>"  ><i
-                                      class="fas fa-plus-circle"></i> Contenidos</button>
-                              </td>
-                            </tr>
-                            <% uni.contenidos.forEach( contenido=> { %>
-                              <tr style="background: #3a3b45;" class="text-white collapse accordionContenidos<%=uni.UnidaId %>">
-                                <td colspan="2"> <i class="fas fa-angle-right"></i>
-                                  <%= contenido.Nombre %>
-                                </td>
-                                <td colspan="2">
-                                  <button class="btn btn-info btn-sm"
-                                    onclick="editContenido('<%=contenido.id %>','<%=contenido.Nombre%>')"><i
-                                      class="fas fa-edit"></i> Editar</button>
-                                  <button class="btn btn-danger btn-sm" onclick="deleteContenido('<%=contenido.id %>')">
-                                    <i class="fas fa-trash"></i> Eliminar</button>
-                                </td>
-                              </tr>
-                              <% } )%>
-                              <tr class=" bg-light font-weight-bold collapse accordionContenidos<%=uni.UnidaId %>">
-                                <td colspan="3"></td>
-                              </tr>
-                            <!-- Fin Contenidos -->
-                            <% }); %>
+                                <!-- Contenidos -->
+                                <tr class="bg-light collapse accordionContenidos<%=uni.UnidaId %>">
+                                  <td colspan="5" class="text-center font-weight-bold">
+                                    CONTENIDOS DE LA UNIDAD: "<%= uni.UnidadName %>"
+                                      <button class="btn btn-success btn-sm btnContenidos float-right"
+                                        data-id="<%= uni.UnidaId %>" data-nombre="<%= uni.UnidadName%>"
+                                        data-carrera="<%= carreraID%>"
+                                        data-openac="accordionContenidos<%= uni.UnidaId%>">
+                                        <i class="fas fa-plus-circle"></i> Contenidos
+                                      </button>
+                                  </td>
+                                </tr>
+                                <% uni.contenidos.forEach( contenido=> { %>
+                                  <tr style="background: #3a3b45"
+                                    class="text-white collapse accordionContenidos<%=uni.UnidaId %>">
+                                    <td colspan="2">
+                                      <i class="fas fa-angle-right"></i>
+                                      <%= contenido.Nombre %>
+                                    </td>
+                                    <td colspan="2">
+                                      <button class="btn btn-info btn-sm"
+                                        onclick="editContenido('<%=contenido.id %>','<%=contenido.Nombre%>')">
+                                        <i class="fas fa-edit"></i> Editar
+                                      </button>
+                                      <button class="btn btn-danger btn-sm"
+                                        onclick="deleteContenido('<%=contenido.id %>')">
+                                        <i class="fas fa-trash"></i> Eliminar
+                                      </button>
+                                    </td>
+                                  </tr>
+                                  <% } )%>
+                                    <tr class="bg-light font-weight-bold collapse accordionContenidos<%=uni.UnidaId %>">
+                                      <td colspan="3"></td>
+                                    </tr>
+                                    <!-- Fin Contenidos -->
+                                    <% }); %>
                         </tbody>
                         <tfoot>
-                            <tr>
-                              <td colspan="2">
-                                <p class="text-right">Total Horas <%=element.totalHorasUnidades %>
-                                </p>
-                              </td>
-                            </tr>
+                          <tr>
+                            <td colspan="2">
+                              <p class="text-right">
+                                Total Horas <%=element.totalHorasUnidades %>
+                              </p>
+                            </td>
+                          </tr>
                         </tfoot>
                       </table>
                     </div>
@@ -308,7 +491,7 @@
         </div>
         <div class="col-md-4">
           <label>Horas totales del módulo</label>
-          <input type="number" name="MdlHoras" class="form-control" id="MdlHoras" placeholder="0" min="0" step="1">
+          <input type="number" name="MdlHoras" class="form-control" id="MdlHoras" placeholder="0" min="0" step="1" />
         </div>
       </div>
       <small><span class="font-weight-bold">Nota:</span> Si la fecha de inicio es
@@ -325,7 +508,7 @@
         </div>
         <div class="col-md-2">
           <label>Horas</label>
-          <input type="number" name="MdlHoras" class="form-control" id="UnitHoras" placeholder="0" min="0" step="1">
+          <input type="number" name="MdlHoras" class="form-control" id="UnitHoras" placeholder="0" min="0" step="1" />
         </div>
       </div>
       <hr />
@@ -342,7 +525,7 @@
         <div class="col-md-2">
           <label>Horas</label>
           <input type="number" name="SubUnidadHoras" class="form-control" id="SubUnidadHoras" placeholder="0" min="0"
-            step="1">
+            step="1" />
         </div>
       </div>
       <hr />

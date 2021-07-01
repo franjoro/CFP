@@ -39,9 +39,7 @@
                                     let tipo = 'Teórica', alerta = 'success' , isDisabled = "";
                                     if(evaluacion.Tipo == 2) {tipo = 'Práctica'; alerta='info' } ;
                                     if(!evaluacion.isExist) isDisabled = "disabled" ;
-
                                     %>
-                                    <%= isDisabled %>
                                     <tr>
                                         <td>
                                             <%= evaluacion.Descripcion %>
