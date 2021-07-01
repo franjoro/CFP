@@ -84,6 +84,46 @@
         </div>
       </div>
     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <div class="row container-fluid d-none" id="lista" >
       <div class="col-lg-12">
         <div class="card shadow mb-4">
@@ -111,14 +151,21 @@
                     data-parent="#accordion">
                     <div class="card-body">
                       <!-- Cuerpo del Módulo -->
-                      <h6 class="text-secondary">Información del módulo : <%= element.modelo %>
+                      <h6 class="text-secondary d-inline">Información del módulo : <%= element.modelo %>
                       </h6>
+                      <button class="btn btn-sm btn-success d-inline float-right addNewUnitBtn mb-1"
+                      onclick="addNewUnit('<%= element.idModelo %>', '<%= element.modelo %>')">
+                      <i class="fas fa-plus-circle"></i> Agregar unidad </button>
+                      <hr>
+                      <div class="table-responsive">
                       <table class="table table-striped">
                         <thead>
                           <tr>
                             <th>Fecha inicio</th>
                             <th>Fecha Fin</th>
-                            <th>Horas</th>
+                            <th>Horas del módulo</th>
+                            <th>Estado</th>
+                            <th>Opciones</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -129,29 +176,58 @@
                             <td>
                               <%= element.fechaFin %>
                             </td>
-                            <td>
+                            <td class="text-success">
                               <%= element.horas %>
+                            </td>
+                            <td>
+                              <% if(element.horas==element.totalHorasUnidades) {%>
+                                <p>
+                                  <span class="badge badge-success"><i class="fas fa-check"></i> HORAS DEL MÓDULO CONCUERDAN</span>
+                                </p>
+                            <% }else{%>
+                                <p>
+                                  <span class="badge badge-warning"><i class="fas fa-exclamation-triangle"></i> HORAS DEL MÓDULO NO CONCUERDAN</span>
+                                </p>
+                            <% }%>
+                            </td>
+                            <td>
+                              <button class="btn btn-info btn-block btn-sm"
+                              onclick="editActualModule('<%=element.idModelo%>', '<%= element.modelo%>', '<%= element.fechaInicio %>' , '<%= element.fechaFin %>' , '<%= element.horas %>')">
+                              <i class="fas fa-edit"></i> Editar Módulo
+                            </button>
+                            <button class="btn btn-danger btn-block btn-sm" onclick="deleteModulo('<%= element.idModelo%>')">
+                              <i class="fas fa-trash-alt"></i> Eliminar Módulo
+                            </button>
                             </td>
                           </tr>
                         </tbody>
                       </table>
+                    </div>
                       <h6 class="text-secondary">Unidades</h6>
                       <div class="card">
-
                         <% element.unidades.forEach( (uni, id)=> { %>
                           <div class="card-header" id="headingThree">
                             <h5 class="mb-0">
                               <button class="btn btn-link text-danger collapsed" data-toggle="collapse"
-                                data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                <i class="fas fa-chevron-right"></i> Unidad : <%=uni.UnidadName%> - Horas : <%=uni.horas%>
+                                data-target="#collapseCuerpoUnidad<%= id %>" aria-expanded="false" aria-controls="collapseCuerpoUnidad<%= id %>">
+                                <i class="fas fa-chevron-right"></i> Unidad : <%=uni.UnidadName%> - Horas : <%=uni.horas%> 
+                                
+                                <button class="btn btn-info btn-sm float-right"
+                                onclick="editActualUnit('<%=uni.UnidaId %>','<%=uni.UnidadName%>' ,'<%=uni.horas%>')">
+                                <i class="fas fa-edit"></i>
+                              </button>
+
+                              <button class="btn btn-danger btn-sm float-right" onclick="deleteUnidad('<%=uni.UnidaId %>')">
+                                <i class="fas fa-trash"></i>
+                              </button>
                               </button>
                             </h5>
                           </div>
-                          <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+                          <div id="collapseCuerpoUnidad<%= id %>" class="collapse" aria-labelledby="headingThree"
                             data-parent="#headingTwo">
                             <div class="card-body">
                               <!-- Cuerpo unidad -->
-                              <!-- Contenidos -->
+                              <!-- Contenidos Accordion Up -->
                               <h6 class="text-secondary"></h6>
                               <div class="card-header" id="headingThree">
                                 <h5 class="mb-0">
@@ -159,6 +235,13 @@
                                     data-target="#collapseContenidos<%= id %>" aria-expanded="false"
                                     aria-controls="collapseContenidos<%= id %>">
                                     Contenidos
+
+                                    <button class="btn btn-success btn-sm btnContenidos float-right"
+                                    data-id="<%= uni.UnidaId %>" data-nombre="<%= uni.UnidadName%>"
+                                    data-carrera="<%= carreraID%>"
+                                    data-openac="accordionContenidos<%= uni.UnidaId%>">
+                                    <i class="fas fa-plus-circle"></i> Contenidos
+                                  </button>
                                   </button>
                                 </h5>
                               </div>
@@ -171,17 +254,32 @@
                                         <td>
                                           <%= contenido.Nombre %>
                                         </td>
+                                        <td>
+                                          <button class="btn btn-info btn-sm"
+                                          onclick="editContenido('<%=contenido.id %>','<%=contenido.Nombre%>')">
+                                          <i class="fas fa-edit"></i> Editar
+                                        </button>
+                                        <button class="btn btn-danger btn-sm"
+                                          onclick="deleteContenido('<%=contenido.id %>')">
+                                          <i class="fas fa-trash"></i> Eliminar
+                                        </button>
+                                        </td>
                                       </tr>
                                     </table>
                                     <% }); %>
                                 </div>
                               </div>
-                              <!-- Sub Unidades -->
+                              <!-- Sub Unidades Accordion Up -->
                               <div class="card-header" id="headingThree">
                                 <h5 class="mb-0">
                                   <button class="btn btn-link text-info collapsed" data-toggle="collapse"
                                     data-target="#collapseSubUnidades<%= id %>" aria-expanded="false" aria-controls="collapseSubUnidades<%= id %>">
                                     Sub-Unidades
+                                    <button class="btn btn-success btn-sm btnAddSubUnit float-right"
+                                    data-id="<%= uni.UnidaId %>" data-nombre="<%= uni.UnidadName%>"
+                                    data-carrera="<%= carreraID%>">
+                                    <i class="fas fa-plus-circle"></i> Sub-unidad
+                                  </button>
                                   </button>
                                 </h5>
                               </div>
@@ -189,22 +287,35 @@
                                 data-parent="#headingTwo">
                                 <div class="card-body">
                                   <% uni.subunidades.forEach( subUnidad=> { %>
+                                    <!-- tabla de sub unidades up -->
                                     <table class="table table-striped">
                                       <tr>
                                         <td>
                                           <%= subUnidad.Nombre %>
+                                        </td>
+                                        <td>
+                                          <%= subUnidad.horas %>
+                                        </td>
+                                        <td>
+                                          <button class="btn btn-info btn-sm"
+                                          onclick="editActualSubUnit('<%=subUnidad.id %>','<%=subUnidad.Nombre%>' ,'<%=subUnidad.horas%>')">
+                                          <i class="fas fa-edit"></i> Editar
+                                        </button>
+                                        <button class="btn btn-danger btn-sm" onclick="deleteSubUnidad('<%=subUnidad.id %>')">
+                                          <i class="fas fa-trash"></i> Eliminar
+                                        </button>
                                         </td>
                                       </tr>
                                     </table>
                                     <% }); %>
                                 </div>
                               </div>
-
-
                             </div>
                           </div>
                           <% }); %>
-                      </div>
+                        </div>
+                        <hr>
+                        <p>Total de horas en unidades: <span  class="text-success"> <%=element.totalHorasUnidades %> </span> </p>
                     </div>
                   </div>
                 </div>
@@ -214,6 +325,51 @@
         </div>
       </div>
     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <div class="row container-fluid" id="bloques">
       <div class="col-lg-12">
         <div class="card shadow mb-4">
@@ -256,15 +412,14 @@
                         </table>
                         <hr />
                         <% if(element.horas==element.totalHorasUnidades) {%>
-                          <p>
-                            <span class="badge badge-success"><i class="fas fa-check"></i> HORAS CONCUERDAN</span>
-                          </p>
-                          <% }else{%>
                             <p>
-                              <span class="badge badge-warning"><i class="fas fa-exclamation-triangle"></i> HORAS NO
-                                CONCUERDAN</span>
+                              <span class="badge badge-success"><i class="fas fa-check"></i> HORAS CONCUERDAN</span>
                             </p>
-                            <% }%>
+                        <% }else{%>
+                            <p>
+                              <span class="badge badge-warning"><i class="fas fa-exclamation-triangle"></i> HORAS NO CONCUERDAN</span>
+                            </p>
+                        <% }%>
                               <button class="btn btn-info btn-block"
                                 onclick="editActualModule('<%=element.idModelo%>', '<%= element.modelo%>', '<%= element.fechaInicio %>' , '<%= element.fechaFin %>' , '<%= element.horas %>')">
                                 <i class="fas fa-edit"></i> Editar Módulo
