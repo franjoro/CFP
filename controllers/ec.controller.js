@@ -358,11 +358,11 @@ ec.addSubUnidad = async (req, res) => {
 ec.addNewContenido = async (req, res) => {
   const { Nombre, idUnidad, idCarrera } = req.body;
   try {
-    await pool.query(
+  const {insertId} =   await pool.query(
       "INSERT INTO tb_ec_contenidos(Nombre, isModel, idUnidad, idCarrera) VALUES (?, 1 ,? , ?)",
       [Nombre, idUnidad, idCarrera]
     );
-    res.json({ status: true });
+    res.json({ status: true , insertId });
   } catch (error) {
     console.log(error);
     res.status(400).json(error);

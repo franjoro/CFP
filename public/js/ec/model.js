@@ -609,7 +609,7 @@ const deleteSubUnidad = async (id) => {
 };
 
 // ADD Contenido
-const addNewContenido = async (idUnidad, modulo, idCarrera , openac) => {
+const addNewContenido = async (idUnidad, modulo, idCarrera , from) => {
   try {
     const { value: formValues } = await Swal.fire({
       title: `Agregar nuevo contenido en : ${modulo}`,
@@ -637,14 +637,30 @@ const addNewContenido = async (idUnidad, modulo, idCarrera , openac) => {
         url: "/admin/ec/addNewContenido",
         data,
       });
-      if (query) {
-        location.reload();
+      if (query.status) {
+        if(from =="up"){
+          return fillContenidosHtml(data.Nombre, query.insertId,  idUnidad);
+        }
+        return location.reload();
       }
     }
   } catch (error) {
     console.log(error);
     Swal.fire(`Error : ${error}`);
   }
+};
+
+const fillContenidosHtml = (nombre, id, unidad) =>{
+  const upHTML = ` 
+  <tr><td>
+    ${nombre} <button class="btn btn-info btn-sm float-right"
+    onclick="editContenido('${id}','${nombre}')">
+    <i class="fas fa-edit"></i> Editar </button>
+    <button class="btn btn-danger btn-sm float-right"
+    onclick="deleteContenido('${id}')">
+    <i class="fas fa-trash"></i> Eliminar </button>
+    </td></tr>`;
+    $("#tablaContenidosUp"+unidad).append(upHTML);
 };
 
 // EDITAR Contenido 
@@ -721,8 +737,8 @@ $(".btnAddSubUnit").on("click", async function () {
 });
 
 $(".btnContenidos").on("click", async function () {
-  const { id, nombre, carrera , openac} = $(this).data();
-  addNewContenido(id, nombre, carrera, openac);
+  const { id, nombre, carrera , from} = $(this).data();
+  addNewContenido(id, nombre, carrera, from);
 });
 
 

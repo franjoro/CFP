@@ -238,7 +238,7 @@
 
                                     <button class="btn btn-success btn-sm btnContenidos float-right"
                                     data-id="<%= uni.UnidaId %>" data-nombre="<%= uni.UnidadName%>"
-                                    data-carrera="<%= carreraID%>"
+                                    data-carrera="<%= carreraID%>" data-from="up"
                                     data-openac="accordionContenidos<%= uni.UnidaId%>">
                                     <i class="fas fa-plus-circle"></i> Contenidos
                                   </button>
@@ -249,7 +249,7 @@
                                 data-parent="#headingTwo">
                                 <div class="card-body">
                                   <% uni.contenidos.forEach( contenido=> { %>
-                                    <table class="table table-striped">
+                                    <table class="table table-striped" id="tablaContenidosUp<%= uni.UnidaId %>">
                                       <tr>
                                         <td>
                                           <%= contenido.Nombre %>
@@ -545,6 +545,7 @@
                                       <button class="btn btn-success btn-sm btnContenidos float-right"
                                         data-id="<%= uni.UnidaId %>" data-nombre="<%= uni.UnidadName%>"
                                         data-carrera="<%= carreraID%>"
+                                        data-from="down"
                                         data-openac="accordionContenidos<%= uni.UnidaId%>">
                                         <i class="fas fa-plus-circle"></i> Contenidos
                                       </button>
