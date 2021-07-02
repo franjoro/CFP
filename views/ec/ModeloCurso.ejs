@@ -248,8 +248,8 @@
                               <div id="collapseContenidos<%= id+idModulo %>" class="collapse" aria-labelledby="headingThree"
                                 data-parent="#headingTwo">
                                 <div class="card-body">
+                                  <table class="table table-striped" id="tablaContenidosUp<%= uni.UnidaId %>">
                                   <% uni.contenidos.forEach( contenido=> { %>
-                                    <table class="table table-striped" id="tablaContenidosUp<%= uni.UnidaId %>">
                                       <tr>
                                         <td>
                                           <%= contenido.Nombre %>
@@ -263,8 +263,8 @@
                                         </button>
                                         </td>
                                       </tr>
+                                      <% }); %>
                                     </table>
-                                    <% }); %>
                                 </div>
                               </div>
                               <!-- Sub Unidades Accordion Up -->
