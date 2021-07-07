@@ -13,7 +13,7 @@ const loader = () => {
 const addNewModel = async () => {
   try {
     const { value: formValues } = await Swal.fire({
-      title: "Agregar nueva carrera",
+      title: "Agregar nuevo módulo",
       template: "#newModule",
       focusConfirm: false,
       width: 800,
@@ -771,7 +771,7 @@ $(".suUnidades").on("click", async function () {
 });
 
 
-$("#addNewModuleBtn").click(() => {
+$(".addNewModuleBtn").click(() => {
   addNewModel();
 });
 
