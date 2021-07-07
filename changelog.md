@@ -4,6 +4,10 @@
 
     ## [Unreleased]
 
+    ## [1.0.15] - 07/07/2021
+    ### Added
+    - Orden de solicitudes
+
     ## [1.0.14] - 29/06/2021
     ### Added
     - Duplicar contenidos al crear grupo de una carrera en empresa centro.
