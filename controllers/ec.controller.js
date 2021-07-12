@@ -898,7 +898,7 @@ ec.notas = async (req, res) => {
   try {
     promesas.push(
       pool.query(
-        "SELECT id, Nombres, Apellidos FROM tb_ec_alumno WHERE id_grupo = ? ",
+        "SELECT id, Nombres, Apellidos FROM tb_ec_alumno WHERE id_grupo = ? ORDER BY Apellidos ASC ",
         [grupo]
       )
     );
