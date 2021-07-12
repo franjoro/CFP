@@ -104,7 +104,5 @@ router.get("/getActividades/:year/:month" , authcheck, ec.getActividades);
 router.get("/getNotasAdmin/:evaluacion/:grupo" , authcheck, ec.NotasAdmin);
 
 
-
-
 // Exportamos la configuración
 module.exports = router;

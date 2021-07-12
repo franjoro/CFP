@@ -69,7 +69,7 @@ ec.grupos = async (req, res) => {
   try {
     const { carrera } = req.params;
     const grupos = await pool.query(
-      "SELECT * FROM tb_ec_grupo WHERE id_carrera = ? AND Estado = 1",
+      "SELECT id, Nombre FROM tb_ec_grupo WHERE id_carrera = ? AND Estado = 1",
       [carrera]
     );
     res.json(grupos).status(200);
@@ -89,11 +89,12 @@ ec.form = async (req, res) => {
       Nombres,
       Apellidos,
     } = req.body;
-    const statment = `INSERT INTO tb_ec_alumno( carnet, Nombres, Apellidos ,id_grupo, json1, json2, json3) VALUES(  ' ${carnet} ', '${Nombres}' ,'${Apellidos}' ,${grupo}, '${JSON.stringify(
+    const statment = `INSERT INTO tb_ec_alumno( carnet, Nombres, Apellidos ,id_grupo, json1, json2, json3) VALUES(  ' ${carnet} ', '${Nombres}' ,'${Apellidos}' ,'${grupo}', '${JSON.stringify(
       global_json1
-    )} ' , '${JSON.stringify(global_json2)} ' , ' ${JSON.stringify(
-      global_json3
-    )} ')    `;
+      )} ' , '${JSON.stringify(global_json2)} ' , ' ${JSON.stringify(
+        global_json3
+        )} ')    `;
+       console.log(statment);
     await pool.query(statment);
     res.json({ status: true });
   } catch (error) {

@@ -576,8 +576,8 @@ const SendFormulario = async () => {
       confirmButtonText: "Si, enviar",
     });
     if (alerta.isConfirmed) {
-      const carnet = $("#carnet").val(),
-        grupo = $("#grupos").val();
+      const carnet = $("#carnet").val() ;
+      const grupo = $("#grupos").val();
       const data = {
         carnet,
         grupo,
@@ -587,6 +587,7 @@ const SendFormulario = async () => {
         Nombres: $("#nombres").val(),
         Apellidos: $("#apellidos").val()
       };
+      console.log(data);
       loader();
       await $.ajax({
         url: "/admin/ec/form",
@@ -604,5 +605,5 @@ const SendFormulario = async () => {
 };
 
 $('input.text-uppercase').keyup(function(){
-  $(this).val($(this).val().toUpperCase())
+  $(this).val($(this).val().toUpperCase());
 });
