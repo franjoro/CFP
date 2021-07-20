@@ -4,6 +4,10 @@
 
     ## [Unreleased]
 
+    ## [1.0.16] - 13/07/2021
+    ### Changed
+    - Filtro de grupos en el administrador de notas 
+
     ## [1.0.15] - 07/07/2021
     ### Added
     - Orden de solicitudes

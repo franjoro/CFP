@@ -98,6 +98,8 @@ router.post("/contenidos" , authcheck , ec.addContenidos);
 
 // Administrador de notas
 router.get("/notasAdmin" , authcheck, ec.notasadmin);
+// Administrador de notas por filtros
+router.get("/filter/:year/:month" , authcheck, ec.notasByFilter);
 // Devuelve las actividades filtradas por mes o año
 router.get("/getActividades/:year/:month" , authcheck, ec.getActividades);
 // Devuelve el gestor de notas

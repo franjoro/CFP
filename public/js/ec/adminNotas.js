@@ -1,42 +1,44 @@
+$("#year").val(new Date().getFullYear());
+$("#mes").val(new Date().getMonth());
 
-  $(".filtro").on("change", function () { 
-    const year = $("#year").val();
-    const mes = $("#mes").val();
-    table(year, mes);  
-  }) ;
+const showEmptyMessage = (status = false) => {
+  if (status) { $("#contenedor").addClass('d-none'); return $("#emptyAlert").removeClass('d-none'); }
+  if (!status) return $("#emptyAlert").addClass('d-none');
+};
 
-  const table = ( year = 2021 , month = 5) =>{
-    // DataTable Participantes
-    $("#tablaEmpresa").DataTable().destroy();
-    $("#tablaEmpresa").DataTable({
-      ajax: `/admin/ec/getActividades/${year}/${month}`,
-      columns: [
-        { data: "Grupo" },
-        { data: "NombreModulo" },
-        { data: "NombreUnidad" },
-        {
-          "render": function (data, type, JsonResultRow, meta) {
-            if(JsonResultRow.Tipo == "1") return "Teórica";
-            if(JsonResultRow.Tipo == "2") return "Práctica";
-          }
-        },
-        { data: "Descripcion" },
-        {
-          "render": function (data, type, JsonResultRow, meta) {
-            const html =`<div class="btn-group" role = "group" aria - label="Basic example"><a href="/admin/ec/getNotasAdmin/${JsonResultRow.id}/${JsonResultRow.idGrupo}" class="btn btn-info"><i class="far fa-eye"></i></a></div >`;
-            return html;
-          }
-        },
-      ],
+
+
+
+const fillHtml = (data) => {
+  showEmptyMessage();
+  $("#contenedor").html('').removeClass('d-none');
+  for (const property in data) {
+    let htmlText = ` <div class="card shadow mb-4"> <div class="card-header py-3"> <h6 class="m-0 font-weight-bold text-primary">Actividades para el grupo con código: ${property} </h6></div>
+    <div class="card-body table-responsive"> <table class="table" id="tabla${property}"><thead><tr>
+                    <th>Módulo</th>
+                    <th>Unidad evaluada</th>
+                    <th>Tipo de evaluación</th>
+                    <th>Descripción</th>
+                    <th>Opciones</th>
+    </tr></thead><tbody>`;
+
+    data[property].forEach((elementT) => {
+      htmlText += `
+      <tr><td> ${elementT.NombreModulo}</td>
+      <td> ${elementT.NombreUnidad}</td>
+      <td> ${elementT.Tipo}</td>
+      <td> ${elementT.Descripcion}</td>
+      <td> <a class="btn btn-success btn-sm" target="_blank" href="/admin/ec/getNotasAdmin/${elementT.idEvaluacion}/${property}" > Ver notas </a> </td></tr>
+      `;
     });
-  };
-  
+    htmlText += `</tbody></table></div></div>`;
+    $("#contenedor").append(htmlText);
+    $(`#tabla${property}`).DataTable();
+  }
+};
 
 
-  $("#year").val(new Date().getFullYear());
-  $("#mes").val(new Date().getMonth());
-
-  const year = $("#year").val();
-  const mes = $("#mes").val();
-  table(year, mes);
-  
+$("#btnVerNotas").click(async () => {
+  const year = $("#year").val(), mes = $("#mes").val(), data = await $.ajax({ type: "GET", url: `/admin/ec/filter/${year}/${mes}` });
+  if ($.isEmptyObject(data)) { showEmptyMessage(true); } else { showEmptyMessage(false); fillHtml(data); }
+});

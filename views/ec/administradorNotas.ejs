@@ -1,41 +1,46 @@
-<link rel="stylesheet" href="/static/vendor/datatables/datatables.min.css">
+<link rel="stylesheet" href="/static/vendor/datatables/datatables.min.css" />
 <%- include('../partials/header.admin.ejs'); %>
     <!-- Begin Page Content -->
     <div class="container-fluid">
         <!-- Page Heading -->
-        <h1 class="h3 mb-2 d-inline text-gray-800">Administración de notas - Empresa Centro</h1>
-        <p class="mb-4 "></p>
-        <!-- DataTales Example -->
+        <h1 class="h3 mb-2 d-inline text-gray-800">
+            Administración de notas - Empresa Centro
+        </h1>
+        <p class="mb-4">
+            Filtros de búsqueda
+        </p>
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <!-- <h6 class="m-0 font-weight-bold text-primary">Tabla de actividades</h6> -->
-                <h6 class="m-0"> <b>Ayuda: </b> Puede cambiar los siguientes filtros de búsqueda</h6>
+                <h6 class="m-0">
+                    <b>Ayuda: </b> Puede cambiar los siguientes filtros de búsqueda
+                </h6>
             </div>
             <div class="card-body">
                 <p class="font-weight-bold">Filtros de búsqueda</p>
                 <div class="row">
                     <div class="col-md-6">
-                        <p class="mb-4 ">Seleccione el mes</p>
+                        <p class="mb-4">Seleccione el mes</p>
                         <select name="mes" id="mes" class="custom-select filtro">
-                            <option selected disabled> Seleccione </option>
-                            <option value="0">Enero</option>     
-                            <option value="1">Febrero</option>     
-                            <option value="2">Marzo</option>     
-                            <option value="3">Abril</option>     
-                            <option value="4">Mayo</option>     
-                            <option value="5">Junio</option>     
-                            <option value="6">Julio</option>     
-                            <option value="7">Agosto</option>     
-                            <option value="8">Septiembre</option>     
-                            <option value="9">Octubre</option>     
-                            <option value="10">Noviembre</option>     
-                            <option value="11">Diciembre</option>     
+                            <option selected disabled>Seleccione</option>
+                            <option value="0">Enero</option>
+                            <option value="1">Febrero</option>
+                            <option value="2">Marzo</option>
+                            <option value="3">Abril</option>
+                            <option value="4">Mayo</option>
+                            <option value="5">Junio</option>
+                            <option value="6">Julio</option>
+                            <option value="7">Agosto</option>
+                            <option value="8">Septiembre</option>
+                            <option value="9">Octubre</option>
+                            <option value="10">Noviembre</option>
+                            <option value="11">Diciembre</option>
                         </select>
                     </div>
                     <div class="col-md-6">
-                        <p class="mb-4 ">Seleccione Año</p>
+                        <p class="mb-4">Seleccione Año</p>
                         <select name="year" id="year" class="custom-select filtro">
-                            <option selected disabled> Seleccione </option>
+                            <option selected disabled>Seleccione</option>
                             <option value="2021">2021</option>
                             <option value="2022">2022</option>
                             <option value="2023">2023</option>
@@ -47,161 +52,25 @@
                         </select>
                     </div>
                 </div>
-                <hr>
-                
-
-                <table class="table table-bordered" id="tablaEmpresa" width="100%" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th>Grupo</th>
-                            <th>Módulo</th>
-                            <th>Unidad</th>
-                            <th>Tipo de evaluación</th>
-                            <th>Actividad</th>
-                            <th>Opciones</th>
-                        </tr>
-                    </thead>
-                </table>
-                <hr>
-                <p class="font-weight-bold">Generación de reportes</p>
-                <div class="row">
-                    <div class="col-md-6">
-                        <p class="mb-4 ">Reporte de unidad mensual</p>
-                        <select name="mes" id="mes" class="custom-select filtro">
-                            <option selected disabled> Seleccione </option>
-                            <option value="0">Enero</option>     
-                            <option value="1">Febrero</option>     
-                            <option value="2">Marzo</option>     
-                            <option value="3">Abril</option>     
-                            <option value="4">Mayo</option>     
-                            <option value="5">Junio</option>     
-                            <option value="6">Julio</option>     
-                            <option value="7">Agosto</option>     
-                            <option value="8">Septiembre</option>     
-                            <option value="9">Octubre</option>     
-                            <option value="10">Noviembre</option>     
-                            <option value="11">Diciembre</option>     
-                        </select>
-                    </div>
-                    <div class="col-md-6">
-                        <p class="mb-4 ">Reporte de módulo mensual</p>
-                        <select name="year" id="year" class="custom-select filtro">
-                            <option selected disabled> Seleccione </option>
-                            <option value="2021">2021</option>
-                            <option value="2022">2022</option>
-                            <option value="2023">2023</option>
-                            <option value="2024">2024</option>
-                            <option value="2025">2025</option>
-                            <option value="2026">2026</option>
-                            <option value="2027">2027</option>
-                            <option value="2028">2028</option>
-                        </select>
-                    </div>
-                </div>
-                <hr>
+                <button class="btn float-right btn-success mt-3" id="btnVerNotas">
+                    VER NOTAS <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card shadow mb-4 d-none" id="emptyAlert">
+            <div class="card-body">
+                <div class="alert alert-warning" role="alert">
+                    No existen evaluaciones para los filtros aplicados.
+                  </div>
+            </div>
+        </div>
+        <div class="card shadow mb-4">
+            <div class="card-body d-none" id="contenedor">
             </div>
         </div>
     </div>
-
-
-    <!-- Modal Ingresar-->
-    <div class="modal " id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Crear nuevo usuario</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="formparticipantes">
-                        <div class="form-row">
-                            <div class="col">
-                                <label for="dui">DUI</label>
-                                <input type="text" id="dui" name="dui" required class="form-control"
-                                    placeholder="0000000-0">
-                            </div>
-                            <div class="col">
-                                <label for="name">Nombre</label>
-                                <input type="text" id="name" name="name" required class="form-control"
-                                    placeholder="Nombre Completo">
-                            </div>
-                            <div class="col">
-                                <label for="email">Email</label>
-                                <input type="email" id="email" name="email" required class="form-control"
-                                    placeholder="Correo Electrónico">
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col">
-                                <label for="tel">Teléfono</label>
-                                <input type="text" id="tel" name="tel" required class="form-control"
-                                    placeholder="0000-0000">
-                            </div>
-                            <div class="col">
-                                <label for="name">Género</label>
-                                <select class="custom-select" required name="genero">
-                                    <option value="Hombre">Hombre</option>
-                                    <option value="Mujer">Mujer</option>
-                                </select>
-                            </div>
-                        </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <input type="submit" class="btn btn-primary">
-                </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!-- Modal Editar-->
-    <!-- <div class="modal " id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">EDITAR PARTICIPANTE</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="formEdit">
-                        <div class="form-row">
-                            <div class="col">
-                                <label for="name">Nombre</label>
-                                <input type="text" id="nameEdit" name="nameEdit" required class="form-control"
-                                    placeholder="Nombre Completo">
-                            </div>
-                            <div class="col">
-                                <label for="email">Email</label>
-                                <input type="email" id="emailEdit" name="emailEdit" required class="form-control"
-                                    placeholder="Correo Electrónico">
-                            </div>
-                            <div class="col">
-                                <label for="tel">tel</label>
-                                <input type="tel" id="telEdit" name="telEdit" required class="form-control"
-                                    placeholder="Correo Electrónico">
-                            </div>
-                        </div>
-                        <input type="hidden" id="duiEdit" name="duiEdit" class="form-control" placeholder="Usuario">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <input type="submit" class="btn btn-primary">
-                </div>
-                </form>
-            </div>
-        </div>
-    </div> -->
-
-    <!-- /.container-fluid -->
     <%- include('../partials/footer'); %>
         <!-- Page level plugins -->
-
         <script src="/static/js/jquery.mask.min.js"></script>
         <script src="/static/vendor/datatables/datatables.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>

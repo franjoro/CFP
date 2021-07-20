@@ -91,10 +91,10 @@ ec.form = async (req, res) => {
     } = req.body;
     const statment = `INSERT INTO tb_ec_alumno( carnet, Nombres, Apellidos ,id_grupo, json1, json2, json3) VALUES(  ' ${carnet} ', '${Nombres}' ,'${Apellidos}' ,'${grupo}', '${JSON.stringify(
       global_json1
-      )} ' , '${JSON.stringify(global_json2)} ' , ' ${JSON.stringify(
-        global_json3
-        )} ')    `;
-       console.log(statment);
+    )} ' , '${JSON.stringify(global_json2)} ' , ' ${JSON.stringify(
+      global_json3
+    )} ')    `;
+    console.log(statment);
     await pool.query(statment);
     res.json({ status: true });
   } catch (error) {
@@ -359,11 +359,11 @@ ec.addSubUnidad = async (req, res) => {
 ec.addNewContenido = async (req, res) => {
   const { Nombre, idUnidad, idCarrera } = req.body;
   try {
-  const {insertId} =   await pool.query(
+    const { insertId } = await pool.query(
       "INSERT INTO tb_ec_contenidos(Nombre, isModel, idUnidad, idCarrera) VALUES (?, 1 ,? , ?)",
       [Nombre, idUnidad, idCarrera]
     );
-    res.json({ status: true , insertId });
+    res.json({ status: true, insertId });
   } catch (error) {
     console.log(error);
     res.status(400).json(error);
@@ -954,19 +954,19 @@ ec.notas = async (req, res) => {
   }
 };
 ec.addContenidos = async (req, res) => {
-  let { contenido , idEvaluacion } = req.body;
+  let { contenido, idEvaluacion } = req.body;
   contenido = JSON.parse(contenido);
   const arrConsultas = [];
   contenido.forEach((content) => {
-    if(content.isCheck && !content.status){
+    if (content.isCheck && !content.status) {
       arrConsultas.push(pool.query("INSERT INTO union_evaluaciones_contenidos(idEvaluacion, idContenido) VALUES(?,?)", [idEvaluacion, content.id]));
-    }if(!content.isCheck && content.status){
+    } if (!content.isCheck && content.status) {
       arrConsultas.push(pool.query("DELETE FROM union_evaluaciones_contenidos WHERE idEvaluacion = ? AND idContenido = ? ", [idEvaluacion, content.id]));
     }
   });
   try {
     await Promise.all(arrConsultas);
-    res.json({status: true});
+    res.json({ status: true });
   } catch (error) {
     console.log(error);
     res.status(400).json(error);
@@ -1004,10 +1004,40 @@ ec.notasP = async (req, res) => {
 ec.notasadmin = async (req, res) => {
   const { data } = getUserDataByToken(req.cookies.token);
   try {
-    const grupos = await pool.query(
-      "SELECT id, Nombre FROM `tb_ec_grupo` WHERE Estado = 1"
+    // const grupos = await pool.query(
+    //   "SELECT id, Nombre FROM `tb_ec_grupo` WHERE Estado = 1"
+    // );
+    res.render("./ec/administradorNotas", { data });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json(error);
+  }
+};
+
+ec.notasByFilter = async (req, res) => {
+  const { data } = getUserDataByToken(req.cookies.token);
+  try {
+    const { year, month } = req.params;
+    let evaluaciones = pool.query(
+      "SELECT IF(Tipo = 1, 'Teórica', 'Práctica') AS Tipo ,  Descripcion , (SELECT Nombre FROM tb_ec_modulos WHERE id = ( SELECT idModulo FROM tb_ec_unidades WHERE id =  tb_ec_evaluaciones.idUnidad )  ) As NombreModulo  , (SELECT Nombre FROM tb_ec_unidades WHERE id = tb_ec_evaluaciones.idUnidad  ) As NombreUnidad , (SELECT idGrupo FROM tb_ec_unidades WHERE id = tb_ec_evaluaciones.idUnidad  ) As idGrupo , id AS idEvaluacion FROM tb_ec_evaluaciones WHERE Month = ? AND Year = ?  ",
+      [month, year]
     );
-    res.render("./ec/administradorNotas", { data, grupos });
+    const queries = await Promise.all([evaluaciones]);
+    evaluaciones = queries[0];
+    const idGrupos = [... new Set(evaluaciones.map(eva => eva.idGrupo))];
+    const dataOrdenada = {};
+
+    idGrupos.forEach(grupo => {
+      const grupoArray = [];
+      evaluaciones.forEach(evaluacion => {
+        if (grupo == evaluacion.idGrupo) {
+          grupoArray.push(evaluacion);
+        }
+      });
+      if (grupoArray.length) dataOrdenada[grupo] = grupoArray;
+    });
+
+    res.json(dataOrdenada);
   } catch (error) {
     console.log(error);
     res.status(400).json(error);
@@ -1047,6 +1077,13 @@ ec.NotasAdmin = async (req, res) => {
         [evaluacion]
       )
     );
+    // promesas.push(
+    //   pool.query(
+    //     "SELECT  (SELECT Nombre FROM tb_ec_modulos WHERE id = (SELECT idModulo FROM tb_ec_unidades WHERE id = idUnidad ) ) FROM tb_ec_evaluaciones WHERE idEvaluacion = ? ",
+    //     [evaluacion]
+    //   )
+    // );
+
     const query = await Promise.all(promesas),
       alumnos = query[0],
       nota = query[1],
