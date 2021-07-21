@@ -1072,6 +1072,43 @@ ec.getEvaluacionGrupos = async (req, res) => {
   }
 };
 
+
+
+ec.contenidosAdmin = async (req, res) => {
+  const { evaluacion } = req.params,
+  usuario = getUserDataByToken(req.cookies.token),
+  promesas = [];
+  const { unidad } = req.query;
+  try {
+    promesas.push(
+      pool.query(
+        "SELECT (SELECT Nombre FROM tb_ec_modulos WHERE id = (SELECT idModulo FROM tb_ec_unidades WHERE id = idUnidad )) as nombre , Descripcion , Tipo FROM tb_ec_evaluaciones WHERE id = ?",[evaluacion]
+       )
+     );
+     promesas.push(
+       pool.query(
+         "SELECT C.Nombre as contenido, U.Nombre as unidad FROM tb_ec_contenidos AS C INNER JOIN union_evaluaciones_contenidos AS EC ON C.id = EC.idContenido INNER JOIN tb_ec_evaluaciones AS E ON E.id = EC.idEvaluacion INNER JOIN tb_ec_unidades U ON C.idUnidad = U.id;"
+       )
+     );
+
+    const query = await Promise.all(promesas),
+      detalles = query[0];
+      dataContenidos = query[1];
+      console.log(detalles);
+      console.log(dataContenidos)
+      res.render("ec/contenidosAdmin", {
+        data: usuario.data,
+        detalles: detalles[0],
+        dataContenidos: dataContenidos[1]
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json(error);
+  }
+};
+
+
+
 ec.NotasAdmin = async (req, res) => {
   const { evaluacion, grupo } = req.params,
     usuario = getUserDataByToken(req.cookies.token),

@@ -104,7 +104,7 @@ router.get("/filter/:year/:month" , authcheck, ec.notasByFilter);
 router.get("/getActividades/:year/:month" , authcheck, ec.getActividades);
 // Devuelve el gestor de notas
 router.get("/getNotasAdmin/:evaluacion/:grupo" , authcheck, ec.NotasAdmin);
-
-
+// Devuelve el contenido evaluado
+router.get("/getContenidosAdmin/:evaluacion/:grupo", authcheck, ec.contenidosAdmin);
 // Exportamos la configuración
 module.exports = router;

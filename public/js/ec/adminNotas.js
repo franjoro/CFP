@@ -33,7 +33,7 @@ const fillHtml = (data) => {
       <td> ${elementT.Descripcion}</td>
       <td> ${elementT.Profesor}</td>
       <td> <a class="btn btn-primary btn-block" target="_blank" href="/admin/ec/getNotasAdmin/${elementT.idEvaluacion}/${property}" > <i class="fas fa-book"></i> </a> </td>
-      <td> <a class="btn btn-info btn-block" target="_blank" href="/admin/ec/getNotasAdmin/${elementT.idEvaluacion}/${property}" > <i class="fas fa-bookmark"></i> </a> </td>
+      <td> <a class="btn btn-info btn-block" target="_blank" href="/admin/ec/getContenidosAdmin/${elementT.idEvaluacion}/${property}" > <i class="fas fa-bookmark"></i> </a> </td>
       <td> <a class="btn btn-success btn-block" target="_blank" href="/admin/ec/getNotasAdmin/${elementT.idEvaluacion}/${property}" > <i class="fas fa-file-excel"></i> </a> </td></tr>
       `;
     });
