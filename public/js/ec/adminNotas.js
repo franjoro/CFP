@@ -19,7 +19,10 @@ const fillHtml = (data) => {
                     <th>Unidad evaluada</th>
                     <th>Tipo de evaluación</th>
                     <th>Descripción</th>
-                    <th>Opciones</th>
+                    <th>Profesor</th>
+                    <th>Notas</th>
+                    <th>Contenidos</th>
+                    <th>Reporte</th>
     </tr></thead><tbody>`;
 
     data[property].forEach((elementT) => {
@@ -28,7 +31,10 @@ const fillHtml = (data) => {
       <td> ${elementT.NombreUnidad}</td>
       <td> ${elementT.Tipo}</td>
       <td> ${elementT.Descripcion}</td>
-      <td> <a class="btn btn-success btn-sm" target="_blank" href="/admin/ec/getNotasAdmin/${elementT.idEvaluacion}/${property}" > Ver notas </a> </td></tr>
+      <td> ${elementT.Profesor}</td>
+      <td> <a class="btn btn-primary btn-block" target="_blank" href="/admin/ec/getNotasAdmin/${elementT.idEvaluacion}/${property}" > <i class="fas fa-book"></i> </a> </td>
+      <td> <a class="btn btn-info btn-block" target="_blank" href="/admin/ec/getNotasAdmin/${elementT.idEvaluacion}/${property}" > <i class="fas fa-bookmark"></i> </a> </td>
+      <td> <a class="btn btn-success btn-block" target="_blank" href="/admin/ec/getNotasAdmin/${elementT.idEvaluacion}/${property}" > <i class="fas fa-file-excel"></i> </a> </td></tr>
       `;
     });
     htmlText += `</tbody></table></div></div>`;
