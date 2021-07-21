@@ -1058,6 +1058,21 @@ ec.getActividades = async (req, res) => {
   }
 };
 
+
+ec.getEvaluacionGrupos = async (req, res) => {
+  try {
+    const { evaluacion, grupo } = req.params;
+    const data = await pool.query(
+      "SELECT ( SELECT id  FROM tb_ec_grupo WHERE id =( SELECT idGrupo FROM tb_ec_unidades WHERE id = tb_ec_evaluaciones.idUnidad ) ) AS  idGrupo , ( SELECT Nombre  FROM tb_ec_grupo WHERE id =( SELECT idGrupo FROM tb_ec_unidades WHERE id = tb_ec_evaluaciones.idUnidad ) ) AS  Grupo, ( SELECT Nombre FROM tb_ec_modulos WHERE id =( SELECT idModulo FROM tb_ec_unidades WHERE id = tb_ec_evaluaciones.idUnidad ) ) AS NombreModulo, ( SELECT Nombre FROM tb_ec_unidades WHERE id = tb_ec_evaluaciones.idUnidad ) AS NombreUnidad , Tipo, Month , Year, Descripcion , id FROM tb_ec_evaluaciones WHERE Month = ? AND Year = ? ",
+      [month, year]
+    );
+    res.json({ data });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json(error);
+  }
+};
+
 ec.NotasAdmin = async (req, res) => {
   const { evaluacion, grupo } = req.params,
     usuario = getUserDataByToken(req.cookies.token),
@@ -1077,16 +1092,16 @@ ec.NotasAdmin = async (req, res) => {
         [evaluacion]
       )
     );
-    // promesas.push(
-    //   pool.query(
-    //     "SELECT  (SELECT Nombre FROM tb_ec_modulos WHERE id = (SELECT idModulo FROM tb_ec_unidades WHERE id = idUnidad ) ) FROM tb_ec_evaluaciones WHERE idEvaluacion = ? ",
-    //     [evaluacion]
-    //   )
-    // );
+     promesas.push(
+      pool.query(
+        "SELECT (SELECT Nombre FROM tb_ec_modulos WHERE id = (SELECT idModulo FROM tb_ec_unidades WHERE id = idUnidad )) as nombre , Descripcion , Tipo FROM tb_ec_evaluaciones WHERE id = ?",[evaluacion]
+       )
+     );
 
     const query = await Promise.all(promesas),
       alumnos = query[0],
       nota = query[1],
+      detalles = query[2],
       dataOrdenada = [];
     alumnos.forEach((alumno, id) => {
       let notaObtenida = {};
@@ -1116,12 +1131,14 @@ ec.NotasAdmin = async (req, res) => {
       }
       dataOrdenada.push(notaObtenida);
     });
+    console.log(detalles);
     res.render("ec/notasAdmin", {
       data: usuario.data,
       dataOrdenada,
       evaluacion,
       grupo,
       unidad,
+      detalles: detalles[0],
     });
   } catch (error) {
     console.log(error);
