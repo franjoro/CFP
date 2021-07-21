@@ -1015,11 +1015,10 @@ ec.notasadmin = async (req, res) => {
 };
 
 ec.notasByFilter = async (req, res) => {
-  const { data } = getUserDataByToken(req.cookies.token);
   try {
     const { year, month } = req.params;
     let evaluaciones = pool.query(
-      "SELECT IF(Tipo = 1, 'Teórica', 'Práctica') AS Tipo ,  Descripcion , (SELECT Nombre FROM tb_ec_modulos WHERE id = ( SELECT idModulo FROM tb_ec_unidades WHERE id =  tb_ec_evaluaciones.idUnidad )  ) As NombreModulo  , (SELECT Nombre FROM tb_ec_unidades WHERE id = tb_ec_evaluaciones.idUnidad  ) As NombreUnidad , (SELECT idGrupo FROM tb_ec_unidades WHERE id = tb_ec_evaluaciones.idUnidad  ) As idGrupo , id AS idEvaluacion FROM tb_ec_evaluaciones WHERE Month = ? AND Year = ?  ",
+      "SELECT IF(Tipo = 1, 'Teórica', 'Práctica') AS Tipo, Descripcion, ( SELECT Nombre FROM tb_ec_modulos WHERE id =( SELECT idModulo FROM tb_ec_unidades WHERE id = tb_ec_evaluaciones.idUnidad ) ) AS NombreModulo, ( SELECT Nombre FROM tb_ec_unidades WHERE id = tb_ec_evaluaciones.idUnidad ) AS NombreUnidad, ( SELECT idGrupo FROM tb_ec_unidades WHERE id = tb_ec_evaluaciones.idUnidad ) AS idGrupo, id AS idEvaluacion, ( SELECT Nombre FROM tb_usuarios WHERE id_usuario =( SELECT id_usuario FROM tb_ec_unidades WHERE id = tb_ec_evaluaciones.idUnidad ) ) AS Profesor FROM tb_ec_evaluaciones WHERE MONTH = ? AND YEAR = ? ",
       [month, year]
     );
     const queries = await Promise.all([evaluaciones]);
