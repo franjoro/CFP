@@ -24,7 +24,7 @@ const fillHtml = (data) => {
                     <th>Contenidos</th>
                     <th>Reporte</th>
     </tr></thead><tbody>`;
-
+    
     data[property].forEach((elementT) => {
       htmlText += `
       <tr><td> ${elementT.NombreModulo}</td>

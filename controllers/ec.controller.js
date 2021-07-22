@@ -1095,7 +1095,7 @@ ec.contenidosAdmin = async (req, res) => {
       detalles = query[0];
       dataContenidos = query[1];
       console.log(detalles);
-      console.log(dataContenidos)
+      console.log(dataContenidos);
       res.render("ec/contenidosAdmin", {
         data: usuario.data,
         detalles: detalles[0],
