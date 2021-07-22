@@ -5,6 +5,11 @@
             width: 4rem;
         }
     </style>
+
+
+    <input type="hidden" id="idEvaluacion" value="<%= evaluacion.evaluacion %>">
+
+
     <div class="container-fluid">
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between">
@@ -25,26 +30,22 @@
                     </div>
                 </div>
             </div>
-            <div class="card-body table-responsive">
-                <table class="table table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Nombre</th>
-                            <th>Apellido</th>
-                            <th>Nota</th>
-                            <th>Comentario</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        
-                    </tbody>
-                </table>
-                <hr>
-                <div class="row">
-                    <div class="col-md-12">
-                        <button class="btn btn-success float-right" id="btnEnviar">Ingresar y actualizar notas</button>
-                    </div>
+            <div class="card shadow mb-3">
+                
+                <div class="card-body table-responsive">
+                    <h5 class="text-secondary">Contenidos vistos en la evaluación: <%= detalles.Descripcion %></h5>
+                        <div class="alert alert-info" role="alert">
+                            Por favor active los contenidos vistos en la evaluación y guarde los cambios
+                            <hr>
+                            <% dataContenidos.forEach( (contenido)=>
+                            {let ckd = "";if(contenido.exist) ckd ="checked";%>
+                            <div class="custom-control custom-switch" id="swt">
+                                <input type="checkbox" <%= ckd %>  class="custom-control-input switch" data-id="<%=contenido.id%>" data-status="<%=contenido.exist%>"  id="Switch<%=contenido.id%>">
+                                <label class="custom-control-label" for="Switch<%=contenido.id%>"> <%= contenido.Nombre%> </label>
+                            </div>
+                            <%})%>
+                        </div>
+                        <button class="btn btn-success float-right" id="btnSave">Guardar información</button>
                 </div>
             </div>
         </div>
@@ -55,5 +56,6 @@
     <script src="/static/js/jquery.mask.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="/static/js/ec/notas.js"></script>
+    <script src="/static/js/ec/adminNotas.js"></script>
 
     

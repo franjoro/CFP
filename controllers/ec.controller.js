@@ -1078,7 +1078,6 @@ ec.contenidosAdmin = async (req, res) => {
   const { evaluacion } = req.params,
   usuario = getUserDataByToken(req.cookies.token),
   promesas = [];
-  const { unidad } = req.query;
   try {
     promesas.push(
       pool.query(
@@ -1087,19 +1086,19 @@ ec.contenidosAdmin = async (req, res) => {
      );
      promesas.push(
        pool.query(
-         "SELECT C.Nombre as contenido, U.Nombre as unidad FROM tb_ec_contenidos AS C INNER JOIN union_evaluaciones_contenidos AS EC ON C.id = EC.idContenido INNER JOIN tb_ec_evaluaciones AS E ON E.id = EC.idEvaluacion INNER JOIN tb_ec_unidades U ON C.idUnidad = U.id;"
+         "SELECT C.id, C.Nombre, E.id AS evaluacion, (SELECT COUNT(*) FROM union_evaluaciones_contenidos WHERE idContenido =  C.id AND idEvaluacion = ?) AS exist FROM tb_ec_evaluaciones AS E INNER JOIN tb_ec_unidades AS U ON E.idUnidad = U.id INNER JOIN tb_ec_contenidos C on C.idUnidad = U.id WHERE E.id = ?",[evaluacion, evaluacion]
        )
      );
 
     const query = await Promise.all(promesas),
       detalles = query[0];
       dataContenidos = query[1];
-      console.log(detalles);
-      console.log(dataContenidos)
+      console.log(dataContenidos);
       res.render("ec/contenidosAdmin", {
         data: usuario.data,
         detalles: detalles[0],
-        dataContenidos: dataContenidos[1]
+        dataContenidos,
+        evaluacion: dataContenidos[0]
     });
   } catch (error) {
     console.log(error);

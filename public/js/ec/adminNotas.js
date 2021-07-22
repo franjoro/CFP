@@ -48,3 +48,33 @@ $("#btnVerNotas").click(async () => {
   const year = $("#year").val(), mes = $("#mes").val(), data = await $.ajax({ type: "GET", url: `/admin/ec/filter/${year}/${mes}` });
   if ($.isEmptyObject(data)) { showEmptyMessage(true); } else { showEmptyMessage(false); fillHtml(data); }
 });
+
+
+const getCheckedContenidos = ()=>{
+  const arrContenidos = [];
+  $(".switch").each(function ( element){
+    const {id} = $(this).data();
+    const {status} = $(this).data();
+    const isCheck= $(this).is(':checked');
+    const obj = {id,isCheck, status};
+    arrContenidos.push(obj);
+  });
+  return arrContenidos;
+};
+
+$("#btnSave").click( async ()=>{
+  const data = getCheckedContenidos();
+  const idEvaluacion = $("#idEvaluacion").val();
+  const query = await  $.ajax({
+    type: "POST",
+    url: "/admin/ec/contenidos",
+    data: {contenido : JSON.stringify(data) , idEvaluacion}
+  });
+  if(query.status) {
+    Swal.fire(
+      '¡Perfecto!',
+      'Contenidos actualizados correctamente',
+      'success'
+    );
+  }
+});
