@@ -11,7 +11,7 @@ router.get("/",  reportes.main);
 router.get("/download" , reportes.descargar);
 router.get("/PartiCurso/:curso" , reportes.ParticipantesEnCursos);
 router.get("/directorioEmpresas" , reportes.directorioEmpresas);
-
+router.get("/NotasContenidos", reportes.NotasContenidoss);
 
 
 

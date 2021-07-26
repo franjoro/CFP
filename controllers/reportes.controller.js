@@ -8,6 +8,8 @@ const reportes = {};
 const pool = require("../models/db");
 // Llamamos al creador de excel que admite dos parametros para titulos y datos
 const { CreateNewExcel } = require("../utils/excel");
+//Llamamos otra ruta para poder crear excel
+const { createNewExcelContenidos } = require("../utils/excel/notas_contenidos");
 const cursos = require("./cursos.controller");
 
 reportes.main = (req, res) => {
@@ -70,5 +72,16 @@ reportes.ec = async (req, res) => {
     res.send("ERROR API: " + error);
   }
 };
+
+reportes.NotasContenidoss = async (req, res) =>{
+  try {
+    const excel = await createNewExcelContenidos();
+    console.log(excel);
+    if(excel.status == true) return res.json({status : true});
+    res.json({status : false});
+  } catch (error) {
+      res.send("ERROR API: " + error);
+  }
+}
 
 module.exports = reportes;

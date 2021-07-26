@@ -34,7 +34,7 @@ const fillHtml = (data) => {
       <td> ${elementT.Profesor}</td>
       <td> <a class="btn btn-primary btn-block" target="_blank" href="/admin/ec/getNotasAdmin/${elementT.idEvaluacion}/${property}" > <i class="fas fa-book"></i> </a> </td>
       <td> <a class="btn btn-info btn-block" target="_blank" href="/admin/ec/getContenidosAdmin/${elementT.idEvaluacion}/${property}" > <i class="fas fa-bookmark"></i> </a> </td>
-      <td> <a class="btn btn-success btn-block" target="_blank" href="/admin/ec/getNotasAdmin/${elementT.idEvaluacion}/${property}" > <i class="fas fa-file-excel"></i> </a> </td></tr>
+      <td> <button type="button" onclick="NotasContenidosFunction()" class="btn btn-success btn-block" target="_blank"> <i class="fas fa-file-excel"></i> </button> </td></tr>
       `;
     });
     htmlText += `</tbody></table></div></div>`;
@@ -78,3 +78,12 @@ $("#btnSave").click( async ()=>{
     );
   }
 });
+
+const  NotasContenidosFunction = async ()=>{
+  const data = await $.ajax({
+    url: "/reportes/NotasContenidos",
+  });
+  Swal.close();
+  if(data.status) window.open("/reportes/download");
+  console.log(data);
+};
