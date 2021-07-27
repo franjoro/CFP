@@ -48,8 +48,10 @@ router.post("/getInstructores",authcheck ,cursos.getInstructores);
 router.post("/getCursos/:categoria",authcheck ,cursos.getCursosCategoria);
 // Agregar un nuevo curso
 router.post("/add",authcheck ,cursos.add);
-// Agregar una nueva oferta
+// Agregar una nueva oferta EMPRESAS
 router.post("/addOferta",authcheck ,cursos.oferta);
+// Agregar una nueva oferta NO COTIZANTES
+router.post("/addOfertaNoCtz",authcheck ,cursos.ofertaNoctz);
 // Agrega la asociación de participante en empresa y curso
 router.post("/matricula",authcheck , cursos.matricula);
 // Asocia empresa a un curso

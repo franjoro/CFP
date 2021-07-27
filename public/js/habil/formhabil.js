@@ -35,7 +35,12 @@ $(document).ready(function () {
     $("#sec5").css("display", "none");
     $("#sec6").css("display", "block");
   });
-  //Mascara
+
+  
+
+
+  
+  // #region Mascara
   $("#dui").mask("00000000-0");
   $("#nit").mask("0000-000000-000-0");
   $("#year1").mask("0000");
@@ -47,7 +52,7 @@ $(document).ready(function () {
   $("#movil").mask("0000-0000");
   // FIN Mascara
   // fecha
-  $.datepicker.setDefaults( $.datepicker.regional[ "es" ] );
+  $.datepicker.setDefaults( $.datepicker.regional.es );
   $("#fechanac").datepicker({
     dateFormat: "dd-mm-yy",
     changeMonth: true,

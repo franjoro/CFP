@@ -210,6 +210,33 @@ cursos.oferta = async (req, res) => {
   }
 };
 
+// Agregar oferta No cotizantes
+cursos.ofertaNoctz = async (req, res) => {
+  if (!req.body.programa || !req.body.codigo_curso || !req.body.nombre)
+    return res.status(400).json({ status: false, error: "empty_params" });
+  const data = [
+    req.body.codigo_curso,
+    req.body.nombre,
+    req.body.fechaL,
+    req.body.horario,
+    req.body.fechas,
+    req.body.costo,
+    req.body.programa,
+    req.body.role,
+    req.body.horas
+  ];
+  try {
+    await pool.query(
+      "INSERT INTO tb_cursos(Codigo_curso, Nombre, Date_inicio,  Horario, Fechas ,  CostoAlumno, id_programa, Estado, horas)  VALUES(?,?,?,?,?,?,?,?,?)",
+      data
+    );
+    return res.json({ status: true });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ status: false, error });
+  }
+};
+
 // agregar nueva empresa en curso
 cursos.addEmpresaCurso = async (req, res) => {
   if (!req.body.select_add_empresa || !req.body.curso)

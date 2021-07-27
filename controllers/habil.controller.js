@@ -1,5 +1,5 @@
 // declarar variable a exportar
-const ec = {};
+const habil = {};
 
 // Requerimos pool de base de datos si es necesario
 // const pool = require('../models/db')
@@ -7,10 +7,13 @@ const ec = {};
 // const mailer = require ('../utils/mailer');
 
 
-ec.main = (req,res) =>{
+habil.main = (req,res) =>{
     res.render('habil/formulario');
 };
 
+habil.addParticipante = (req, res) =>{
+
+};
 
 
-module.exports = ec;
+module.exports = habil;

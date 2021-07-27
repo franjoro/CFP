@@ -17,13 +17,19 @@ const loader = () => {
     },
   });
 };
+$("#btn_ctzants").click(() => {
+  $("#form_oferta_NoCotizantes").css("display", "block");
+  $("#menu").css("display", "none");
+});
+
 $("#btn_empresas").click(() => {
   $("#form_oferta_empresas").css("display", "block");
   $("#menu").css("display", "none");
 });
 
-$("#btn_back_menu").click(() => {
+$(".btn_back_menu").click(() => {
   $("#form_oferta_empresas").css("display", "none");
+  $("#form_oferta_NoCotizantes").css("display", "none");
   $("#menu").css("display", "block");
 });
 
@@ -33,8 +39,6 @@ $(document).ready(() => {
   $("#date_inicio").datepicker({ dateFormat: "yy-mm-dd" });
   $("#date_fin").datepicker({ dateFormat: "yy-mm-dd" });
   $("#fecha_limite").datepicker({ dateFormat: "yy-mm-dd" });
-
-
 
   $("#instructor").select2({
     width: "100%",
@@ -59,7 +63,7 @@ $(document).ready(() => {
   });
 
   // Agregar nuevo curso
-  $("#form_curso").submit(async function (e) {
+  $("#form_curso").on( 'submit' ,async function (e) {
     e.preventDefault();
     const t = $(this).serialize();
     loader();
@@ -81,7 +85,7 @@ $(document).ready(() => {
   });
 
   // Agregar nueva oferta
-  $("#form_oferta_empresas").submit(async function (e) {
+  $("#form_oferta_empresas").on( 'submit' ,async function (e) {
     e.preventDefault();
     const t = $(this).serialize();
     loader();
@@ -113,6 +117,35 @@ $(document).ready(() => {
     }
   });
 });
+
+  // Agregar nueva oferta
+  $("#form_oferta_NoCotizantes").on( 'submit' ,async function (e) {
+    e.preventDefault();
+    const t = $(this).serialize();
+    loader();
+    const data = {
+      codigo_curso: new Date().getTime(),
+      role: 15,
+      nombre: $("#nombre_oferta_noCtz").val(),
+      horario: $("#horario_fecha_noCtz").val(),
+      programa: $("#programa_oferta_noCtz").val(),
+    };
+    try {
+      const query = await $.ajax({
+        url: "/admin/cursos/addOferta",
+        type: "POST",
+        data,
+      });
+      if (query.status) {
+        swal.close();
+        location.reload();
+      }
+    } catch (error) {
+      swal.close();
+      console.log(error);
+      errorMessage();
+    }
+  });
 
 const deleteOferta = async (id) => {
   const alerta = await Swal.fire({
