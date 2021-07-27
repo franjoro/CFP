@@ -35,29 +35,37 @@
                 <h5 class="text-secondary">Oferta disponible</h5>
                 <% } %>
                   <div class="row">
-                    <% for(var i=0; i<oferta.length; i++) {%>
+                    <% oferta.forEach( ofert => {   %>
                       <div class="col-md-4">
                         <div class="card shadow mb-3">
                           <div class="card-body">
-                            <a href="/admin/cursos/detalle/<%= oferta[i].Codigo_curso %>/<%= programa %>/oferta  ">
+                            <% if(ofert.Estado === 5) { %> 
+                            <a href="/admin/cursos/detalle/<%= ofert.Codigo_curso %>/<%= programa %>/oferta  "> <%}%>
+                            <% if(ofert.Estado === 15) { %> 
+                            <a href="/admin/cursos/detallectz/<%= ofert.Codigo_curso %>/<%= programa %>/oferta  "> <%}%>
+
                               <h5 class="text-primary d-inline">
                                 <i class="fas fa-arrow-right"></i>
-                                <%= oferta[i].Nombre %>
+                                <%= ofert.Nombre %>
                               </h5>
                             </a>
                             <p>
                               <b>Participantes:</b>
-                              <%= oferta[i].cantidadAlumnos %> -
-                                <b>Empresas:</b>
-                                <%= oferta[i].cantidadEmpresas %>
+                              <%= ofert.cantidadAlumnos %> 
+                              <% if(ofert.Estado == 5) { %>
+                              <b>- Empresas:</b>
+                              <%= ofert.cantidadEmpresas %>
+                              <%}%>
                             </p>
+                            <% if(ofert.Estado == 5) { %> <span class="badge badge-pill badge-primary">Oferta para empresas</span> <%}%>
+                            <% if(ofert.Estado == 15) { %><span class="badge badge-pill badge-danger">Oferta para no cotizantes</span> <%}%>                            
                             <button class="btn btn-danger btn-sm float-right d-inline"
-                              onclick="deleteOferta('<%= oferta[i].Codigo_curso %>')"> <i
+                              onclick="deleteOferta('<%= ofert.Codigo_curso %>')"> <i
                                 class="fas fa-trash-alt"></i></button>
                           </div>
                         </div>
                       </div>
-                      <% } %>
+                      <% }) %>
                   </div>
                   <%if(!datos.length) {%>
                     <h5>No existen cursos activos</h5>

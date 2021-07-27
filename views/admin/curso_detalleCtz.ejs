@@ -1,0 +1,628 @@
+<link rel="stylesheet" href="/static/vendor/datatables/datatables.min.css" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"
+  type="text/css" />
+<%- include('../partials/header.admin.ejs'); %>
+  <div class="container-fluid">
+    <div class="row container-fluid">
+      <div class="col-lg-12">
+        <div class="card shadow mb-4">
+          <div class="card-header py-3">
+            <a href="/admin/cursos/<%= programa %>" class="btn btn-success btn-sm float-left d-inline"><i
+                class="fas fa-arrow-left"></i></a>
+            <% if(tipo=='curso' ) { %>
+              <button class="btn btn-warning btn-sm float-right d-inline m-1" data-toggle="modal"
+                data-target="#modificar_modal">
+                Editar
+              </button>
+              <button class="btn btn-danger btn-sm float-right d-inline m-1" id="btnFinalizarCurso">
+              Finalizar curso
+            </button>
+              <% } %>
+          </div>
+          <div class="card-body">
+            <div class="card shadow mb-3">
+              <div class="card-body">
+
+
+                <% if(tipo=='curso' ) { %>
+                  <h4>
+                    <%= curso.Nombre %> - <%= curso.Codigo_curso %>
+                  </h4>
+                  <div class="row">
+                    <div class="col-6">
+                      <p>
+                        <b>Fecha inicio:</b>
+                        <%= curso.Date_inicio %> <br />
+                          <b>Fecha final:</b>
+                          <%= curso.Date_fin %> <br />
+                            <b>Orden de inicio:</b>
+                            <%= curso.Orden %> <br />
+                              <b>Agrupación:</b>
+                              <%= curso.Agrupacion %><br />
+                                <b>Modalidad:</b>
+                                <%= curso.Modalidad %><br />
+                                  <b>Identificador Modalidad:</b>
+                                  <%= curso.id_modalidad %><br />
+                      </p>
+                    </div>
+                    <div class="col-6">
+                      <p>
+                        <b>Horario:</b>
+                        <%= curso.Horario %> <br />
+                          <b>Costo Por alumno:</b> $<%= curso.CostoAlumno %> <br />
+                            <b>Factura:</b>
+                            <%= curso.Factura %> <br />
+                              <b>Profesor:</b>
+                              <%= curso.instructor %> <br />
+                                <b>Documento:</b>
+                                <%= curso.Modalidad %><br />
+                                  <b>Identificador Documento:</b>
+                                  <%= curso.id_documento %><br />
+                      </p>
+                    </div>
+                  </div>
+                  <hr>
+                  <button class="btn btn-success btn-sm d-inline" onclick="ReporteAlumnos('<%=curso.Codigo_curso%>')"><i
+                      class="fas fa-file-excel"></i> Descargar participantes</button>
+                  <button class="btn btn-primary btn-sm d-inline" onclick="createZipCurso('<%=curso.Codigo_curso%>')"><i
+                      class="fas fa-file-archive"></i> Descargar ZIP de documentos</button>
+                      
+                  <%} else{ %>
+                    <h5> Oferta : <%= curso.Nombre %>
+                    </h5>
+                    <hr>
+                    <button class="btn btn-success btn-sm d-inline" data-toggle="modal"
+                      data-target="#modificar_modal_oferta">Obtener enlace de inscripción</button>
+
+                      <button class="btn btn-info btn-sm d-inline" data-toggle="modal"
+                      data-target="#modificar_modal_oferta">Editar oferta</button>
+                    <button class="btn btn-primary btn-sm  d-inline" data-toggle="modal"
+                      data-target="#insertar_modal">Crear curso de esta oferta</button>
+                    <button class="btn btn-secondary btn-sm d-inline"
+                      onclick="createZipCurso('<%=curso.Codigo_curso%>')"><i class="fas fa-file-archive"></i> Descargar
+                      ZIP de documentos</button>
+                    <% } %>
+              </div>
+            </div>
+            <p class="float-right">Cantidad de inscritos: <%= cAlumnos %>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row container-fluid">
+      <div class="col-lg-12">
+        <div class="card shadow mb-4">
+          <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary d-inline">Alumnos inscritos</h6>
+            <button class="btn btn-sm btn-success d-inline float-right" data-toggle="modal" data-target="#exampleModal">
+              Agregar participante
+            </button>
+            <p></p>
+          </div>
+          <div class="card-body row table-responsive">
+
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>DUI</th>
+                  <th>Nombre</th>
+                  <th>Telefono</th>
+                  <th>Email</th>
+                  <th>Género</th>
+                  <th>Opciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>05756113-8</td>
+                  <td>Franklin </td>
+                  <td>12345678</td>
+                  <td>franklin_lopez@ricaldone.edu.sv</td>
+                  <td>Hombre</td>
+                  <td>
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                      <button type="button" class="btn btn-primary">Ver solicitud</button>
+                      <button type="button" class="btn btn-success">Descargar documentos</button>
+                      <button type="button" class="btn btn-danger">Eliminar</button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+
+
+
+
+            <% datos.forEach( (element)=> { %>
+
+              <div class="col-md-3" id="<%= element.id %>">
+                <div class="card shadow mb-3">
+                  <div class="card-body">
+                    <h5>
+                      <%= element.Empresa %>
+                    </h5>
+                    <a class="btn  btn-info  btn-block"
+                      href="/admin/cursos/documentos/<%=curso.Codigo_curso%>/<%= element.id %>/<%= programa %>/<%= tipo %>"><i
+                        class="fas fa-file-alt"></i> Documentos</a>
+                    <button class="btn  btn-danger  btn-block"
+                      onclick="desasociarEmpresa('<%= element.id %>', '<%= curso.Codigo_curso %>')"> <i
+                        class="fas fa-trash-alt"></i> Desasociar Empresa</button>
+                    <button class="btn btn-success  bt-lg btn-block"
+                      onclick="MigrarAll('<%= element.id %>', '<%= curso.Codigo_curso %>' , '<%= programa %>')"><i
+                        class="fas fa-exchange-alt"></i> Migrar solicitud</button>
+                    <hr>
+                    <p>Cantidad de participantes : <%= element.Alumnos.length %>
+                    </p>
+                    <hr>
+                    <p class="comment font-weight-bold"> <%= element.comentario %></p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-9">
+                <div class="card shadow mb-3">
+                  <div class="card-body">
+                    <h5 class="text-dark d-inline">Participantes Inscritos</h5>
+                    <button class="btn btn-sm btn-success d-inline  float-right"
+                      onclick="agregarParticipante('<%= element.id %>')">
+                      Agregar participante
+                    </button>
+                    <hr />
+                    <div class="table-responsive">
+                      <table class="table table-bordered" width="100%" cellspacing="0">
+                        <thead>
+                          <tr>
+                            <th>DUI</th>
+                            <th>Participante</th>
+                            <th>Teléfono</th>
+                            <th>Email</th>
+                            <th>Opciones</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% element.Alumnos.forEach( (alumno)=> { %>
+                            <tr>
+                              <td>
+                                <p>
+                                  <%= alumno.DUI %>
+                                </p>
+                              </td>
+                              <td>
+                                <label>
+                                  <%= alumno.Nombre %>
+                                </label>
+                              </td>
+                              <td>
+                                <%= alumno.Telefono %>
+                              </td>
+                              <td>
+                                <%= alumno.Email %>
+                              </td>
+                              <td>
+                                <% if(tipo=='curso' ) { %>
+                                  <button
+                                    onclick="cambiarMatricula('<%= alumno.DUI %>', '<%= curso.Codigo_curso  %>'  ,  '<%= programa  %>' , ' <%=  element.id  %> '  ) "
+                                    class="btn btn-sm btn-warning"><i class="fas fa-exchange-alt"></i></button>
+                                  <% } %>
+                                    <button onclick="quitarMatricula('<%= alumno.id_matricula %>')"
+                                      class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                              </td>
+                            </tr>
+                            <% }); %>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <% }); %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Agregar empresa</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="newEmpresa">
+            <input type="hidden" id="CodigoCurso" name="curso" value="<%= curso.Codigo_curso  %>">
+            <select class="custom-select" id="select_empresa" name="select_add_empresa">
+              <option value="0">- Buscar empresa -</option>
+            </select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Close
+          </button>
+          <button type="submit" class="btn btn-primary">Guardar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <input type="hidden" name="curso" id="curso" value="<%=curso.Codigo_curso%>">
+  <input type="hidden" name="programa" id="programa" value="<%= programa%>">
+
+  <% if(tipo=='oferta' ) { %>
+    <!-- Modal Insertar curso en base a oferta -->
+    <div class="modal fade" id="insertar_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog  modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">AGREGAR NUEVO CURSO</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="form_curso">
+              <input type="hidden" name="programa" id="programa" value="<%= programa%>">
+              <div class="form-row">
+                <div class="form-group col-md-4">
+                  <label for="codigo_curso">Código de curso*</label>
+                  <input type="text" class="form-control" required name="codigo_curso" id="codigo_curso">
+                </div>
+                <div class="form-group col-md-8">
+                  <label for="nombre">Nombre del curso*</label>
+                  <input type="text" class="form-control" required name="nombre" id="nombre"
+                    value="<%= curso.CursoName %>">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col-3">
+                  <label for="date_inicio">Fecha de inicio</label>
+                  <input type="text" class="form-control" name="date_inicio" id="date_inicio">
+                </div>
+                <div class="col-3">
+                  <label for="date_fin">Fecha de finalización</label>
+                  <input type="text" class="form-control" name="date_fin" id="date_fin">
+                </div>
+                <div class="col-3">
+                  <label for="orden">Orden de inicio</label>
+                  <input type="text" class="form-control" name="orden" id="orden">
+                </div>
+                <div class="col-3">
+                  <label for="agrupacion">Agrupación</label>
+                  <input type="text" class="form-control" name="agrupacion" id="agrupacion">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col-3">
+                  <label for="modalidad">Modalidad de contratación</label>
+                  <select class="form-control" name="modalidad" id="modalidad">
+                    <option value="Licitación">Licitación</option>
+                    <option value="Bolpros">Bolpros</option>
+                  </select>
+                </div>
+                <div class="col-3">
+                  <label for="modadlidad_id">Identificador de modalidad</label>
+                  <input type="text" class="form-control" name="modadlidad_id" id="modadlidad_id">
+                </div>
+                <div class="col-3">
+                  <label for="documento">Documento de contratación</label>
+                  <select class="form-control" name="documento" id="documento">
+                    <option value="Contrato">Contrato</option>
+                    <option value="Orden">Orden de compra</option>
+                  </select>
+                </div>
+                <div class="col-3">
+                  <label for="documento_id">Identificador de documento</label>
+                  <input type="text" class="form-control" name="documento_id" id="documento_id">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-8">
+                  <label for="fechas">Fechas</label>
+                  <input type="text" class="form-control" name="fechas" id="fechas" value="<%= curso.Fechas %>">
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="horario">Horario</label>
+                  <input type="text" class="form-control" name="horario" id="horario" value="<%= curso.Horario %>">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-4">
+                  <label for="factura">Factura</label>
+                  <input type="text" class="form-control" name="factura" id="factura" placeholder="000000">
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="instructor">Instructor</label>
+                  <select id="instructor" name="instructor" class="form-control">
+                    <option selected>Seleccionar instructor</option>
+                    <option>...</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="costo">Costo Por alumno</label>
+                  <input type="text" class="form-control" name="costo" id="costo" value="<%= curso.costo %>">
+                </div>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            <button type="submit" class="btn btn-primary">Agregar curso</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal editar oferta -->
+    <div class="modal fade" id="modificar_modal_oferta" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog  modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">EDITAR OFERTA </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="form_editar_oferta">
+              <input type="hidden" name="id" value="<%= curso.Codigo_curso%>">
+              <div class="form-row">
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-12">
+                  <label for="costo">Fechas</label>
+                  <input type="text" class="form-control" name="fecha" value="<%= curso.Fechas %>" id="fecha">
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="horario">Horario</label>
+                  <input type="text" class="form-control" name="horario" value="<%= curso.Horario %> " id="horario">
+                </div>
+                <div class="form-group col-md-2">
+                  <label for="horas">Horas</label>
+                  <input type="number" min="0" class="form-control" name="horas" value="<%= curso.horas %>" id="horas">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="date_inicio">Fecha de finalización de recepción de archivos</label>
+                  <input type="text" class="form-control" value="<%= curso.Date_inicio %>" name="date_inicio_oferta"
+                    id="date_inicio_oferta">
+                </div>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            <button type="submit" class="btn btn-primary">Editar oferta</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <% }%>
+
+
+      <% if(tipo=='curso' ) { %>
+        <!-- Modal editar curso -->
+        <div class="modal fade" id="modificar_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog  modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">EDITAR CURSO</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form id="form_editar">
+                  <input type="hidden" name="id" value="<%= curso.Codigo_curso%>">
+                  <div class="form-row">
+                    <div class="form-group col-md-12">
+                      <label for="nombre">Nombre del curso*</label>
+                      <input type="text" class="form-control" value="<%= curso.Nombre %>" required name="nombre"
+                        id="nombre">
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="col-3">
+                      <label for="date_inicio">Fecha de inicio</label>
+                      <input type="text" class="form-control" value="<%= curso.Date_inicio %>" name="date_inicio"
+                        id="date_inicio">
+                    </div>
+                    <div class="col-3">
+                      <label for="date_fin">Fecha de finalización</label>
+                      <input type="text" class="form-control" value="<%= curso.Date_fin %>" name="date_fin"
+                        id="date_fin">
+                    </div>
+                    <div class="col-3">
+                      <label for="orden">Orden de inicio</label>
+                      <input type="text" class="form-control" name="orden" value="<%= curso.Orden %> " id="orden">
+                    </div>
+                    <div class="col-3">
+                      <label for="agrupacion">Agrupación</label>
+                      <input type="text" class="form-control" name="agrupacion" value="<%= curso.Agrupacion %> "
+                        id="agrupacion">
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="col-3">
+                      <label for="modalidad">Modalidad</label>
+                      <input type="text" class="form-control" value="<%= curso.Modalidad %>" name="modalidad"
+                        id="modalidad">
+                    </div>
+                    <div class="col-3">
+                      <label for="modalidad_id">Identificador Modalidad</label>
+                      <input type="text" class="form-control" value="<%= curso.id_modalidad %>" name="modalidad_id"
+                        id="modalidad_id">
+                    </div>
+                    <div class="col-3">
+                      <label for="Documento">Documento</label>
+                      <input type="text" class="form-control" name="Documento" value="<%= curso.Documento %> "
+                        id="Documento">
+                    </div>
+                    <div class="col-3">
+                      <label for="documento_id">Identificador Documento</label>
+                      <input type="text" class="form-control" name="documento_id" value="<%= curso.id_documento %> "
+                        id="documento_id">
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-6">
+                      <label for="horario">Horario</label>
+                      <input type="text" class="form-control" name="horario" value="<%= curso.Horario %> " id="horario"
+                        placeholder="Sábado de 0:00 a 0:00">
+                    </div>
+                    <div class="form-group col-6">
+                      <label for="instructor">Instructor</label>
+                      <select id="instructor" name="instructor" class="form-control">
+                        <option value="<%=curso.Instructor_id%>"><%=curso.instructor%></option>
+                        <option>...</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="factura">Factura</label>
+                      <input type="text" class="form-control" name="factura" value="<%= curso.Factura %> " id="factura"
+                        placeholder="000000">
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="costo">Costo Por alumno</label>
+                      <input type="text" class="form-control" name="costo" value="<%= curso.CostoAlumno %>" id="costo"
+                        placeholder="$0.00">
+                    </div>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-primary">Editar curso</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+        <div class="modal fade" id="modal_migrar_curso" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Migrar estudiante a otro curso </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <select class="custom-select" id="selec_cursos" name="selec_cursos">
+                  <option value="0">- Buscar curso -</option>
+                </select>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                  Close
+                </button>
+                <button id="change_matricula" class="btn btn-primary">Guardar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% }%>
+          <!-- Modal Ingresar participante-->
+          <div class="modal " id="modal_participante" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Crear o seleccionar nuevo participante Curso: <label
+                      id="curso">
+                      <%= curso.Codigo_curso %>
+                    </label> </h5>
+
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form id="formparticipantes">
+                    <div class="form-row">
+                      <div class="col">
+                        <label for="dui">DUI</label>
+                        <input type="text" id="dui" name="dui" required class="form-control" placeholder="0000000-0">
+                      </div>
+                      <div class="col">
+                        <label for="name">Nombre</label>
+                        <input type="text" id="name" name="name" required class="form-control"
+                          placeholder="Nombre Completo">
+                      </div>
+                      <div class="col">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required class="form-control"
+                          placeholder="Correo Electrónico">
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="col">
+                        <label for="tel">Teléfono</label>
+                        <input type="text" id="tel" name="tel" required class="form-control" placeholder="0000-0000">
+                      </div>
+                      <div class="col">
+                        <label for="name">Sexo</label>
+                        <select class="custom-select" required name="genero" id="genero">
+                          <option value="Hombre">Hombre</option>
+                          <option value="Mujer">Mujer</option>
+                        </select>
+                      </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <input type="submit" class="btn btn-primary">
+                </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="modal fade" id="modal_migrar_all" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Migrar todo el bloque de solicitud </h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <p>Migrar el bloque de solicitud, cambiara la asignación de participantes, empresa y documentos al
+                    nuevo
+                    curso seleccionado.</p>
+                  <select class="custom-select selec_cursos" id="selec_cursos2" name="selec_cursos">
+                    <option value="0">- Buscar curso -</option>
+                  </select>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    Close
+                  </button>
+                  <button id="btn_migrar_todo" class="btn btn-primary">Guardar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- /.container-fluid -->
+          <%- include('../partials/footer'); %>
+            <script src="/static/js/jquery.mask.min.js"></script>
+            <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+            <script src="/static/js/curso_detalle.js"></script>

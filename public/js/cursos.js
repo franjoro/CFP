@@ -132,7 +132,7 @@ $(document).ready(() => {
     };
     try {
       const query = await $.ajax({
-        url: "/admin/cursos/addOferta",
+        url: "/admin/cursos/addOfertaNoCtz",
         type: "POST",
         data,
       });

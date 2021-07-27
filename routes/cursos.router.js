@@ -42,6 +42,8 @@ router.get("/finalizados/:id",authcheck , cursos.cursosFinalizados);
 router.get("/form/:programa" , authcheck, cursos.form);
 // Muestra el detalle de cada curso con empresas y alumnos
 router.get("/detalle/:id/:programa/:tipo",authcheck ,  cursos.curso_detalle);
+// Muestra el detalle de cada curso con participantes no cotizantes
+router.get("/detallectz/:id/:programa/:tipo",authcheck ,  cursos.curso_detalle_NoCtoznts);
 // Devuelve todos los instructores para select
 router.post("/getInstructores",authcheck ,cursos.getInstructores);
 // Devuelve todos los cursos de esta categoria para select
