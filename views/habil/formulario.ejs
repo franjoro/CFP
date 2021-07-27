@@ -444,6 +444,7 @@
                   >
                     <option selected disabled>Seleccione</option>
                     <option value="Leer">Solo Leer</option>
+                    <option value="Ninguno">Ni leer ni escribir</option>
                     <option value="Escribir">Solo Escribir</option>
                   </select>
                 </div>
@@ -840,7 +841,7 @@
                   </div>
                   <div
                     class="col-md-6"
-                    id="sectordetraajo"
+                    id="sectordetrabajo"
                     style="display: none"
                   >
                     <p>¿En que Sector trabaja?</p>
@@ -933,14 +934,16 @@
                     <input
                       class="form-check-input"
                       type="checkbox"
-                      value=""
-                      id="ingresos4"
+                      value="otros"
+                      id="ingresos5"
                     />
-                    <label>Otros</label>
+                    <label class="form-check-label" for="ingresos4">
+                      Otros
+                    </label>
                     <input
                       type="text"
-                      name="otrosingresos"
-                      id="otrosingresos"
+                      name="otrosexpectativas"
+                      id="otrosIngresos"
                     />
                   </div>
                 </div>
@@ -1120,7 +1123,7 @@
                   <input
                     type="text"
                     class="form-control form-control-sm text-uppercase"
-                    name="nombrecontacto"
+                    name="direccioncontacto"
                   />
                 </div>
               </div>
@@ -1151,8 +1154,8 @@
                   <input
                     type="text"
                     class="form-control form-control-sm"
-                    name="telfijocontacto"
-                    id="telfijocontacto"
+                    name="fijoContact"
+                    id="fijoContact"
                   />
                 </div>
                 <div class="col-md-4">
@@ -1160,8 +1163,8 @@
                   <input
                     type="text"
                     class="form-control form-control-sm"
-                    name="telmovilcontacto"
-                    id="telmovilcontacto"
+                    name="movilContacto"
+                    id="movilContacto"
                   />
                 </div>
                 <div class="col-md-4">
