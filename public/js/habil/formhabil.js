@@ -356,4 +356,47 @@ $(document).ready(function () {
     });
   });
   //FIN SELECTS
+
+
+
+
+  //#region INICIO PROCESAR JSON
+  const json1 = () =>{
+    const dui = $("#dui").val(),
+    nit  = $("#nit").val(),
+    nombres = $("#nombres").val(),
+    apellidos = $("#apellidos").val(),
+    sexo = $("#sexo").val(),
+    cfamilia = $("#cfamilia").val(),
+    estadoFamiliar = $("#estadofamiliar").val(),
+    jefeDeHogar = $("#jefehogar").val(),
+    nHijos = $("#nhijos").val(),
+    otProfecionBool = $("input[name='flexRadioDefault']:checked").val(),
+    otProfecion = $("#profesion").val(),
+    depNacimiento = $("#depa_nac").val(),
+    munNacimiento = $("#municipioNac").val(),
+    fechNacimiento = $("#fechanac").val(),
+    depDomicilio = $("#depdomicilio").val(),
+    munDomicilio = $("#municipioDomicilio").val(),
+    direccionDom = $("#direccion").val(),
+    telFijo = $("#fijo").val(),
+    telMovil = $("#movil").val(),
+    email = $("#mail").val(),
+    discapacidadBool = $("input[name='discapacidadesc']:checked").val(),
+    discapacidad = {
+      moverseCaminar: $("#bautismo").is(":checked"),
+      usarBrazosPiernas: $("#comunion").is(":checked"),
+      verLentes: $("#confirmacion").is(":checked"),
+      oirAparatos: $("#confirmacion").is(":checked"),
+      hablar: $("#confirmacion").is(":checked"),
+      retrasoMental: $("#confirmacion").is(":checked"),
+      vestirseAlimentarse: $("#confirmacion").is(":checked"),
+      otro: $("#confirmacion").is(":checked"),
+      otroText: $("#confirmacion").is(":checked"),
+    }
+  }
+
+  const json2 = () =>{
+    const leerEscribir = $("#").val(),
+  };
 });
