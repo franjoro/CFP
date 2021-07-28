@@ -3,7 +3,34 @@ let global_json1;
 let global_json2;
 let global_json3;
 
+//Funciones globales
+const error = (error) => {
+  Swal.fire({
+    icon: "error",
+    title: "Oops...",
+    html: error,
+  });
+};
+//Funcion de calculo de fecha
+function calcularEdad(fecha) {
+  const date1 = dayjs(fecha);
+  const date2 = dayjs(fechaActual());
+  return date2.diff(date1, 'year');
+} 
 
+//Fecha actual formaro yy-mm-dd
+function fechaActual(){
+  let date = new Date()
+  let day = date.getDate()
+  let month = date.getMonth() + 1
+  let year = date.getFullYear()
+
+  if(month < 10){
+    return `${year}-0${month}-${day}`
+  }else{
+    return `${year}-${month}-${day}`
+  }
+}
 const ProgressChange = (texto, id, val) => {
   $("#progBar").val(val);
   $("#texto").text(texto);
@@ -13,12 +40,74 @@ $(document).ready(function () {
   // Cambiador de progress
   // BOTONES
   $("#next1").click(() => {
+    //Comenzamos las validaciones de la sección1
+    if ($("#dui").val().length < 10)
+      return error(" <b>errocode: </b> Colocar el campo DUI correctamente");
+    if ($("#nit").val().length < 17)
+      return error(" <b>errocode: </b> Colocar el campo NIT correctamente");
+    if (!$("#nombres").val())
+      return error(" <b>errocode: </b> Colocar el campo Nombres correctamente");
+    if (!$("#apellidos").val())
+      return error(" <b>errocode: </b> Colocar el campo Apellidos correctamente");
+    if (!$("#sexo").val())
+      return error(" <b>errocode: </b> Seleccione un sexo");
+    if (!$("#estadofamiliar").val())
+      return error(" <b>errocode: </b> Seleccione un Estado Familiar");
+    if (!$("#jefehogar").val())
+      return error(" <b>errocode: </b> Seleccione un sexo");
+    if (!$("#depa_nac").val())
+      return error(" <b>errocode: </b> Seleccione un departamento de nacimiento");
+    if (!$("#municipioNac").val())
+      return error(" <b>errocode: </b> Seleccione un municipio de nacimiento");
+    if (!$("#fechanac").val())
+      return error(" <b>errocode: </b> Seleccione una fecha de nacimiento");
+    if (!$("#depdomicilio").val())
+      return error(" <b>errocode: </b> Seleccione un departamento de domicilio");
+    if (!$("#municipioDomicilio").val())
+      return error(" <b>errocode: </b> Seleccione un departamento de domicilio");
+    if (!$("#direccion").val())
+      return error(" <b>errocode: </b> Colocar una dirección");
+    if ($("#fijo").val().length<9)
+      return error(" <b>errocode: </b> Colocar un teléfono fijo valido.");
+    if ($("#movil").val().length<9)
+      return error(" <b>errocode: </b> Colocar un teléfono movil valido.");
+    if (!$("#mail").val())
+      return error(" <b>errocode: </b> Colocar un correo valido");
+    alert(calcularEdad($("#fechanac").val()))
+    if(calcularEdad($("#fechanac").val()) < 16)
+      return error(" <b>errocode: </b> El participante tiene ser mayor o igual a 16 años");
+
+    //Ya completas las validaciones procedemos a pasar a la siguiente seccion (Seccion2 )
     ProgressChange("Educación formal y formación ocupacional", "2", "33.33");
     $("#sec1").css("display", "none");
     $("#sec2").css("display", "block");
     global_json1 = json1();
+    console.log(global_json1);
   });
   $("#next2").click(() => {
+
+    //Realizamos las validaciones en el lado del cliente de la seccion2
+    if(!$("#leerescribir").val()){
+      return error(" <b>errocode: </b> Seleccione si usted sabe leer y escribir.");
+    }else{
+      if($("#leerescribir").val() == 0){
+        if($("#soloescribir").val()){
+          return error(" <b>errocode: </b> Seleccione si usted solo sabe leer, si solo sabe escribir o ninguna de las anteriores opciones.");
+        }
+      }
+    } 
+    if(!$("#estudiaactualmente").val())
+      return error(" <b>errocode: </b> Seleccione si estudia actualmente.");
+    else{
+      if($("#estudiaactualmente").val() == 0){
+        if(!$("#tiempoestudio").val()){
+          return error(" <b>errocode: </b> Seleccione hace cuanto tiempo dejo de estudiar.");
+        }
+      }
+    }
+    if(!$("#cursospasados").val())
+      return error(" <b>errocode: </b> Seleccione si a recibido cursos previamente o no.");
+    //Finalizamos las validaciones seccion 2
     ProgressChange("Información sobre situación laboral", "3", "50");
     $("#sec2").css("display", "none");
     $("#sec3").css("display", "block");
@@ -44,6 +133,36 @@ $(document).ready(function () {
     global_json2 = json2();
   });
 
+  $("#ant2").click(() => {
+    ProgressChange("Educación formal y formación ocupacional", "1", "10");
+    $("#sec1").css("display", "block");
+    $("#sec2").css("display", "none");
+  });
+  $("#ant3").click(() => {
+    ProgressChange("Información sobre situación laboral", "2", "33");
+    $("#sec2").css("display", "block");
+    $("#sec3").css("display", "none");
+  });
+  $("#ant4").click(() => {
+    ProgressChange("Información sobre ingresos", "3", "50");
+    $("#sec3").css("display", "block");
+    $("#sec4").css("display", "none");
+  });
+  $("#ant5").click(() => {
+    ProgressChange(
+      "Expectativas y pertenencia de la información",
+      "4",
+      "66.33"
+    );
+    $("#sec4").css("display", "block");
+    $("#sec5").css("display", "none");
+  });
+  $("#ant6").click(() => {
+    ProgressChange("Seguimiento", "5", "82.66");
+    $("#sec5").css("display", "block");
+    $("#sec6").css("display", "none");
+  });
+
   
 
  
@@ -62,7 +181,7 @@ $(document).ready(function () {
   // fecha
   $.datepicker.setDefaults( $.datepicker.regional.es );
   $("#fechanac").datepicker({
-    dateFormat: "dd-mm-yy",
+    dateFormat: "yy-mm-dd",
     changeMonth: true,
     changeYear: true,
     yearRange: "-100:+0"
@@ -370,8 +489,7 @@ $(document).ready(function () {
 
   //#region INICIO PROCESAR JSON
   const json1 = () =>{
-    return {
-      dui = $("#dui").val(),
+    const  dui = $("#dui").val(),
       nit  = $("#nit").val(),
       nombres = $("#nombres").val(),
       apellidos = $("#apellidos").val(),
@@ -403,12 +521,34 @@ $(document).ready(function () {
         otro: $("#confirmacion").is(":checked"),
         otroText: $("#confirmacion").is(":checked"),
       }
-    }
+      return{
+        dui,
+        nit,
+        nombres,
+        apellidos,
+        sexo,
+        cfamilia,
+        estadoFamiliar,
+        jefeDeHogar,
+        nHijos,
+        otProfecionBool,
+        otProfecion,
+        depNacimiento, 
+        munNacimiento, 
+        fechNacimiento, 
+        depDomicilio, munDomicilio,
+        direccionDom, 
+        telFijo, 
+        telMovil,
+        email, 
+        discapacidadBool, 
+        discapacidad
+      }
+    
   }
 
   const json2 = () =>{
-    return {
-      sabeleerEscribir = $("#leerescribir").val(),
+    const sabeleerEscribir = $("#leerescribir").val(),
       leerEscribir = $("#soloescribir").val(),
       soloFirma = $("#firmahuella").val(),//importante terminar porque aca no lee todo
       gradoFinalizado = $("#ultgrado").val(),
@@ -467,12 +607,43 @@ $(document).ready(function () {
         otrosexpectativas : $("#otrosexpectativas").val(),
       },
       pertinencia = $("#pertinencia").val()
+    return{
+      sabeleerEscribir,
+      leerEscribir,
+      soloFirma,
+      gradoFinalizado,
+      estudiaActualmente,
+      tiempoestudio,
+      cursosPasados,
+      beneficioCursos,
+      impartio1,
+      year1,
+      beneficio1,
+      curso2,
+      impartio2,
+      year2,
+      beneficio2,
+      curso3,
+      impartio3,
+      year3,
+      beneficio3,
+      cursopositivo,
+      nobeneficioc,
+      actividades,
+      trabajaantes,
+      tiempoSinTrabajar,
+      tiempoSinTrabajarselect,
+      tipoempleo,
+      sectorDeTrabajo,
+      recibeIngresos,
+      ingresos,
+      espectativaLogro,
+      pertinencia
     }
   }
 
   const json3 = () =>{
-    return{
-      nombreContacto = $("#nombrecontacto").val(),
+    const nombreContacto = $("#nombrecontacto").val(),
       parentesco = $("#parentesco").val(),
       direccionContacto = $("#direccioncontacto").val(),
       departcontact = $("#departcontact").val(),
@@ -480,6 +651,15 @@ $(document).ready(function () {
       fijoContact = $("#fijoContact").val(),
       movilContacto = $("#movilContacto").val(),
       emailContacto = $("#emailcontacto").val()
+    return {
+      nombreContacto,
+      parentesco,
+      direccionContacto,
+      departcontact,
+      municipiocontacto,
+      fijoContact,
+      movilContacto,
+      emailContacto
     }
   }
 });
