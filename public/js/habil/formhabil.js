@@ -12,6 +12,19 @@ const error = (error) => {
     html: error,
   });
 };
+
+//Loader
+const loader = () => {
+  Swal.fire({
+    title: "Por favor, Espere",
+    html: "Cargando Data",
+    allowOutsideClick: !1,
+    showConfirmButton: false,
+    willOpen: () => {
+      Swal.showLoading();
+    },
+  });
+};
 //Funcion de calculo de fecha
 function calcularEdad(fecha) {
   const date1 = dayjs(fecha);
@@ -196,9 +209,7 @@ $(document).ready(function () {
 
     //FINALIZAMOS EL PROCESO DE VALIDACION DEL LADO DEL CLIENTE EN LA QUINTA PARTE DEL FORMULARIO
     global_json3 = json3();
-    console.log(global_json1);
-    console.log(global_json2);
-    console.log(global_json3);
+    SendFormulario();
   });
 
 
@@ -731,4 +742,40 @@ $(document).ready(function () {
       emailContacto
     }
   }
+
+  const SendFormulario = async () => {
+    try {
+      const alerta = await Swal.fire({
+        title: "¿Deseá enviar la solicitud?",
+        text:
+          "Por favor verificar que la información ingresada sea correcta antes de enviar.",
+        icon: "info",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si, enviar",
+      });
+      if (alerta.isConfirmed) {
+        const data = {
+          global_json1,
+          global_json2,
+          global_json3,
+          codigoCurso: '1616001977515'
+        };
+        console.log(data);
+        loader();
+        await $.ajax({
+          url: "/habil",
+          type: "POST",
+          data,
+          dataType: "json",
+        });
+        Swal.close();
+        window.location.replace('/habil');
+      }
+    } catch (e) {
+      console.log(e);
+      error(`<b>errocode: </b> ${e}`);
+    }
+  };
 });
