@@ -1,3 +1,4 @@
+
 //VARIABLES GLOBALES
 let global_json1;
 let global_json2;
@@ -73,7 +74,6 @@ $(document).ready(function () {
       return error(" <b>errocode: </b> Colocar un teléfono movil valido.");
     if (!$("#mail").val())
       return error(" <b>errocode: </b> Colocar un correo valido");
-    alert(calcularEdad($("#fechanac").val()))
     if(calcularEdad($("#fechanac").val()) < 16)
       return error(" <b>errocode: </b> El participante tiene ser mayor o igual a 16 años");
 
@@ -91,11 +91,13 @@ $(document).ready(function () {
       return error(" <b>errocode: </b> Seleccione si usted sabe leer y escribir.");
     }else{
       if($("#leerescribir").val() == 0){
-        if($("#soloescribir").val()){
+        if(!$("#soloescribir").val()){
           return error(" <b>errocode: </b> Seleccione si usted solo sabe leer, si solo sabe escribir o ninguna de las anteriores opciones.");
         }
       }
     } 
+    if(!$("#ultgrado").val())
+      return error(" <b>errocode: </b> Seleccione el ultimo de estudio finalizado.");
     if(!$("#estudiaactualmente").val())
       return error(" <b>errocode: </b> Seleccione si estudia actualmente.");
     else{
@@ -107,17 +109,45 @@ $(document).ready(function () {
     }
     if(!$("#cursospasados").val())
       return error(" <b>errocode: </b> Seleccione si a recibido cursos previamente o no.");
+    
+      
     //Finalizamos las validaciones seccion 2
     ProgressChange("Información sobre situación laboral", "3", "50");
     $("#sec2").css("display", "none");
     $("#sec3").css("display", "block");
   });
   $("#next3").click(() => {
+
+    //INICIAMOS EL PROCESO DE VALIDACION DEL LADO DEL CLIENTE EN LA TERCERA PARTE DEL FORMULARIO
+    if($("#c1").is(":checked") == false && $("#c2").is(":checked") == false && $("#c3").is(":checked") == false && $("#c4").is(":checked") == false)
+      return error(" <b>errocode: </b> Seleccione a que se dedica actualmente.");
+    if(!$("#trabajaantes").val()){
+      return error(" <b>errocode: </b> Seleccione si a trabajado antes.");
+    }else{
+      if($("#trabajaantes").val() == 1){
+        if(!$("#tiempoSinTrabajarselect").val()){
+          return error(" <b>errocode: </b> Seleccione HACE CUANTO TIEMPO QUE NO TRABAJA.");
+        }
+      }
+    }
+    //FINALIZAMOS EL PROCESO DE VALIDACION DEL LADO DEL CLIENTE EN LA TERCERA PARTE DEL FORMULARIO
     ProgressChange("Información sobre ingresos", "4", "66.33");
     $("#sec3").css("display", "none");
     $("#sec4").css("display", "block");
   });
   $("#next4").click(() => {
+    //INICIAMOS EL PROCESO DE VALIDACION DEL LADO DEL CLIENTE EN LA CUARTA PARTE DEL FORMULARIO
+    if(!$("#recibeingresosselect").val()){
+      return error(" <b>errocode: </b> Seleccione si recibe ingresos.");
+    }else{
+      if($("#recibeingresosselect").val() == 1){
+        if($("#ingresos1").is(":checked") == false && $("#ingresos2").is(":checked") == false && $("#ingresos3").is(":checked") == false && $("#ingresos4").is(":checked") == false && $("#ingresos5").is(":checked") == false){
+          return error(" <b>errocode: </b> Seleccione al menos una manera por la cual obtiene ingresos.");
+        }
+      }
+    }
+      
+    //FINALIZAMOS EL PROCESO DE VALIDACION DEL LADO DEL CLIENTE EN LA CUARTA PARTE DEL FORMULARIO
     ProgressChange(
       "Expectativas y pertenencia de la información",
       "5",
@@ -127,11 +157,50 @@ $(document).ready(function () {
     $("#sec5").css("display", "block");
   });
   $("#next5").click(() => {
+    //INICIAMOS EL PROCESO DE VALIDACION DEL LADO DEL CLIENTE EN LA QUINTA PARTE DEL FORMULARIO
+    if($("#e1").is(":checked") == false && $("#e2").is(":checked") == false && $("#e3").is(":checked") == false && $("#e4").is(":checked") == false && $("#e5").is(":checked") == false && $("#e6").is(":checked") == false && $("#e7").is(":checked") == false)
+      return error(" <b>errocode: </b> Seleccione al menos una casilla de '¿Qué espera lograr con la capacitación a recibir?'.");
+
+    if(!$("#pertinencia").val())
+      return error(" <b>errocode: </b> Seleccione al menos una pertinencia del curso.");
+    
+
+    //FINALIZAMOS EL PROCESO DE VALIDACION DEL LADO DEL CLIENTE EN LA QUINTA PARTE DEL FORMULARIO
     ProgressChange("Seguimiento", "6", "100");
     $("#sec5").css("display", "none");
     $("#sec6").css("display", "block");
     global_json2 = json2();
   });
+
+
+  //CRAMOS BOTON FINALIZAR PARA ENVIAR EL PEDIDO AL SERVIDOR
+  $("#next6").click(() => {
+    //INICIAMOS EL PROCESO DE VALIDACION DEL LADO DEL CLIENTE EN LA QUINTA PARTE DEL FORMULARIO
+    if(!$("#nombrecontacto").val())
+      return error(" <b>errocode: </b> Rellene el campo 'Nombre completo del contacto.'");
+    if(!$("#parentesco").val())
+      return error(" <b>errocode: </b> Rellene el campo 'Parentesco'");
+    if(!$("#direccioncontacto").val())
+      return error(" <b>errocode: </b> Rellene el campo 'Dirección'");
+    if(!$("#departcontact").val())
+      return error(" <b>errocode: </b> Rellene el campo 'Departamento'");
+    if(!$("#municipiocontacto").val())
+      return error(" <b>errocode: </b> Rellene el campo 'Municipio'");
+    if(!$("#fijoContact").val())
+      return error(" <b>errocode: </b> Rellene el campo 'Tel. Fijo'");
+    if(!$("#movilContacto").val())
+      return error(" <b>errocode: </b> Rellene el campo 'Tel. Movil'");
+    if(!$("#emailcontacto").val())
+      return error(" <b>errocode: </b> Rellene el campo 'E-mail .'");
+    
+
+    //FINALIZAMOS EL PROCESO DE VALIDACION DEL LADO DEL CLIENTE EN LA QUINTA PARTE DEL FORMULARIO
+    global_json3 = json3();
+    console.log(global_json1);
+    console.log(global_json2);
+    console.log(global_json3);
+  });
+
 
   $("#ant2").click(() => {
     ProgressChange("Educación formal y formación ocupacional", "1", "10");
@@ -173,8 +242,8 @@ $(document).ready(function () {
   $("#year1").mask("0000");
   $("#year2").mask("0000");
   $("#year3").mask("0000");
-  $("#telfijocontacto").mask("0000-0000");
-  $("#telmovilcontacto").mask("0000-0000");
+  $("#fijoContact").mask("0000-0000");
+  $("#movilContacto").mask("0000-0000");
   $("#fijo").mask("0000-0000");
   $("#movil").mask("0000-0000");
   // FIN Mascara
