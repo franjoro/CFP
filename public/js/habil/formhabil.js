@@ -771,7 +771,7 @@ $(document).ready(function () {
           dataType: "json",
         });
         Swal.close();
-        window.location.replace('/habil');
+        window.location.replace('/habil/agradecimiento/habil');
       }
     } catch (e) {
       console.log(e);

@@ -10,6 +10,8 @@ const router = express.Router();
 router.get("/:codigoCurso?", habil.main);
 // Agregar nuevo participante en habil
 router.post("/", habil.form);
+//Agregar vista de agradecimiento por rellenar el formulario
+router.get("/agradecimiento/habil", habil.agradecimiento);
 
 
 // Exportamos la configuración

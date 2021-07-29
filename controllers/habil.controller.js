@@ -28,4 +28,8 @@ habil.form = async (req, res) => {
     }
 };
 
+habil.agradecimiento = async(req, res) =>{
+    res.render('habil/agradecimiento');
+};
+
 module.exports = habil;
