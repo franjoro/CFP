@@ -1,4 +1,5 @@
-
+const curso = req.params.codigoCurso;
+alert(curso);
 //VARIABLES GLOBALES
 let global_json1;
 let global_json2;
@@ -54,6 +55,7 @@ $(document).ready(function () {
   // Cambiador de progress
   // BOTONES
   $("#next1").click(() => {
+    
     //Comenzamos las validaciones de la sección1
     if ($("#dui").val().length < 10)
       return error(" <b>errocode: </b> Colocar el campo DUI correctamente");
@@ -743,8 +745,10 @@ $(document).ready(function () {
     }
   }
 
-  const SendFormulario = async () => {
+
+  const SendFormulario = async (req) => {
     try {
+      const curso = req.params.codigoCurso;
       const alerta = await Swal.fire({
         title: "¿Deseá enviar la solicitud?",
         text:
@@ -760,7 +764,7 @@ $(document).ready(function () {
           global_json1,
           global_json2,
           global_json3,
-          codigoCurso: '1616001977515'
+          codigoCurso: curso
         };
         console.log(data);
         loader();
