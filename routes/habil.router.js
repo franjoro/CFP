@@ -7,7 +7,7 @@ const habil = require('../controllers/habil.controller');
 const router = express.Router();
 // Creamos una ruta para los métodos que tenemos en nuestros controladores
 
-router.get("/:codigoCurso?", habil.main);
+router.get("/:codigoCurso", habil.main);
 // Agregar nuevo participante en habil
 router.post("/", habil.form);
 //Agregar vista de agradecimiento por rellenar el formulario
