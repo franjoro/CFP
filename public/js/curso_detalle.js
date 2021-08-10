@@ -76,7 +76,7 @@ $(document).ready(() => {
   // Editar curso
   $("#form_editar").submit(async function (e) {
     e.preventDefault();
-    const t = $(this).serialize();
+    const t = $(this).serialize();//Aca envia todo lo del formulario
     loader();
     try {
       const data = await $.ajax({

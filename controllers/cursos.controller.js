@@ -356,6 +356,7 @@ cursos.editOferta = async (req, res) => {
 
 cursos.edit = async (req, res) => {
   try {
+    console.log(req.body);
     if (!req.body.id) throw new Error("EMPTY_ID");
     const data = [
       req.body.nombre,
@@ -373,6 +374,7 @@ cursos.edit = async (req, res) => {
       req.body.instructor,
       req.body.id,
     ];
+    
     const statment =
       "UPDATE tb_cursos SET Nombre = ? ,Date_inicio = ?, Date_fin = ?,  Agrupacion =  ? , Orden = ?, Horario = ?, CostoAlumno = ?, Factura = ?   , Modalidad = ? , id_modalidad= ?, Documento=?, id_documento=? , id_instructor = ?   WHERE Codigo_curso = ? ";
     await pool.query(statment, data);
@@ -383,7 +385,7 @@ cursos.edit = async (req, res) => {
   }
 };
 
-cursos.edit = async (req, res) => {
+cursos.finalizarCurso = async (req, res) => {
   try {
     const {id_curso} = req.body;
     if (!id_curso) throw new Error("EMPTY_ID");
