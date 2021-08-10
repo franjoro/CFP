@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <title>Formulario de inscripción</title>
+
+  <link rel="icon" type="image/png" href="/static/img/logo.ico">
+
+  <link href="/static/css/sb-admin-2.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"
+    type="text/css" />
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.23/datatables.min.css" />
+  <link href="/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body class="d-flex flex-column min-vh-100 bg-gradient-light" style="color: black">
+  <header class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+  </header>
+  <main class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body">
+            <img src="/static/img/logo.png" style="width: 125px;" class="d-inline" />
+            <img src="/static/img/uploads/1611934869304_INSAFORP%20TRASNPARENTE%20Y%20RESPLANDOR.png" class="logo d-inline float-right" />
+            <div class="text-center">
+              <h1 class="text-danger">¡Gracias por rellenar nuestro formulario!</h1>
+              <h3 class="text-center"></h3>
+              <p>Estas a un solo paso de completar todo lo necesario para participar.</p>
+              <p>Sube tu documentación.</p>
+              <h5 class="text-center">RECUERDA ES IMPORTANTE SUBIR EL ESCANEADO DE TU DOCUMENTO DE FORMA CLARA POR ESO SIGUE LAS INDICACIONES</h5>
+              <img src="static/img/guia_documentos.png" alt="" style="width: 125px;" class="d-inline"/>
+              <img src="/static/img/guia_documentos.png" style="width: 600px;" class="d-inline" />
+              <p class="text-center">
+                <div class="form-row">
+                    <div class="col-md-6 offset-md-4">
+                        <input 
+                        type="file" 
+                        class="form-control-file" 
+                        name="file">
+                    </div>
+                </div>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%- include('../partials/footer.public.ejs'); %>
+  </main>
+</body>
+
+</html>

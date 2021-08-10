@@ -50,6 +50,8 @@ const ProgressChange = (texto, id, val) => {
   $("#id").text(id);
 };
 $(document).ready(function () {
+  //Asignamos valor por defecto a combobox Has trabajadoAntes?
+  $("#trabajaantes").val('0');
   // Cambiador de progress
   // BOTONES
   $("#next1").click(() => {
@@ -766,14 +768,14 @@ $(document).ready(function () {
         };
         console.log(data);
         loader();
-        await $.ajax({
+        const respuesta = await $.ajax({
           url: "/habil",
           type: "POST",
           data,
-          dataType: "json",
+          dataType: "json"
         });
         Swal.close();
-        window.location.replace('/habil/agradecimiento/habil');
+        window.location.replace(`/habil/documentacion/habil/${respuesta.idSolicitud}/documento/${$("#dui").val()}`);
       }
     } catch (e) {
       console.log(e);
