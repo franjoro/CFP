@@ -142,14 +142,16 @@ const registrarSolicitud = async () => {
 };
 const SendFiles = async () => {
   const cursos = JSON.parse(global_data_cursos);
-  const fd = new FormData();
+  const fd = new FormData(); // Objeto de javascript utilizado para mandar documentos
   cursos.forEach((element, index) => {
     fd.append(`ficha${index}`, $(`#ficha${index}`)[0].files[0]);
 
+    //Recolectamos la longitud de archivos almacenados tanto en plantilla, recibo y cancelacion
     let CantidadPlanilla = $(`#planilla${index}`)[0].files.length;
     let CantidadRecibo = $(`#recibo${index}`)[0].files.length;
     let CantidadCancelacion = $(`#cancelacion${index}`)[0].files.length;
 
+    //Usamos append para anidar la cantidad de planilla al FormData fd para manejar documentos
     fd.append("CantidadPlanilla", CantidadPlanilla);
     fd.append("CantidadRecibo", CantidadRecibo);
     fd.append("CantidadCancelacion", CantidadCancelacion);
@@ -191,7 +193,9 @@ const SendFiles = async () => {
     );
   }
 };
-$("#dui").blur(async function () {
+
+
+$("#dui").blur(async function () {//cuando pierde el foco es diferente al onfocus 
   global_estado_participante = false;
   try {
     data = await $.ajax({ url: `/admin/participantes/get/${$(this).val()}` });

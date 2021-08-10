@@ -34,15 +34,15 @@ function calcularEdad(fecha) {
 
 //Fecha actual formaro yy-mm-dd
 function fechaActual(){
-  let date = new Date()
-  let day = date.getDate()
-  let month = date.getMonth() + 1
-  let year = date.getFullYear()
+  let date = new Date();
+  let day = date.getDate();
+  let month = date.getMonth() + 1;
+  let year = date.getFullYear();
 
   if(month < 10){
-    return `${year}-0${month}-${day}`
+    return `${year}-0${month}-${day}`;
   }else{
-    return `${year}-${month}-${day}`
+    return `${year}-${month}-${day}`;
   }
 }
 const ProgressChange = (texto, id, val) => {
@@ -600,7 +600,7 @@ $(document).ready(function () {
         vestirseAlimentarse: $("#confirmacion").is(":checked"),
         otro: $("#confirmacion").is(":checked"),
         otroText: $("#confirmacion").is(":checked"),
-      }
+      };
       return{
         dui,
         nit,
@@ -623,9 +623,8 @@ $(document).ready(function () {
         email, 
         discapacidadBool, 
         discapacidad
-      }
-    
-  }
+      };
+  };
 
   const json2 = () =>{
     const sabeleerEscribir = $("#leerescribir").val(),
@@ -659,8 +658,7 @@ $(document).ready(function () {
         estudia :$("#c1").is(":checked"),
         oficiosHogar :$("#c2").is(":checked"),
         buscaTrabajo :$("#c3").is(":checked"),
-        trabaja :$("#c4").is(":checked"),
-        estudia :$("#c1").is(":checked"),
+        trabaja :$("#c4").is(":checked")
       },
       trabajaantes = $("#trabajaantes").val(),
       tiempoSinTrabajar = $("#tiempoSinTrabajar").val(),
@@ -686,7 +684,7 @@ $(document).ready(function () {
         otro : $("#e7").is(":checked"),
         otrosexpectativas : $("#otrosexpectativas").val(),
       },
-      pertinencia = $("#pertinencia").val()
+      pertinencia = $("#pertinencia").val();
     return{
       sabeleerEscribir,
       leerEscribir,
@@ -719,8 +717,8 @@ $(document).ready(function () {
       ingresos,
       espectativaLogro,
       pertinencia
-    }
-  }
+    };
+  };
 
   const json3 = () =>{
     const nombreContacto = $("#nombrecontacto").val(),
@@ -730,7 +728,7 @@ $(document).ready(function () {
       municipiocontacto = $("#municipiocontacto").val(),
       fijoContact = $("#fijoContact").val(),
       movilContacto = $("#movilContacto").val(),
-      emailContacto = $("#emailcontacto").val()
+      emailContacto = $("#emailcontacto").val();
     return {
       nombreContacto,
       parentesco,
@@ -740,8 +738,8 @@ $(document).ready(function () {
       fijoContact,
       movilContacto,
       emailContacto
-    }
-  }
+    };
+  };
 
   const SendFormulario = async () => {
     try {
