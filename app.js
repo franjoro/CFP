@@ -39,6 +39,7 @@ app.use("/admin/participantes", require("./routes/participantes.router"));
 app.use("/admin/cursos", require("./routes/cursos.router"));
 app.use("/admin/ec", require("./routes/ec.router"));
 
+
 // Router de login
 
 app.use("/", require("./routes/login.router"));
@@ -50,6 +51,7 @@ app.use("/public", require("./routes/public.router"));
 app.use("/habil", require("./routes/habil.router"));
 
 
+app.use("/pruebas", require("./routes/pruebas.router"));
 
 // Router Formulario de Habil
 app.use("/reportes", require("./routes/reportes.router"));

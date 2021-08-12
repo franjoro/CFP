@@ -747,8 +747,6 @@ $(document).ready(function () {
   const SendFormulario = async (req) => {
     try {
       //const curso = req.params.codigoCurso;
-      console.log("Hello");
-      console.log(req);
       const alerta = await Swal.fire({
         title: "¿Deseá enviar la solicitud?",
         text:
@@ -775,7 +773,11 @@ $(document).ready(function () {
           dataType: "json"
         });
         Swal.close();
-        window.location.replace(`/habil/documentacion/habil/${respuesta.idSolicitud}/documento/${$("#dui").val()}`);
+        if(respuesta){
+          window.location.replace(`/habil/documentacion/habil/${respuesta.idSolicitud}/documento/${$("#dui").val()}`);
+        }else{
+          error(respuesta);
+        }
       }
     } catch (e) {
       console.log(e);
