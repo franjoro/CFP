@@ -11,7 +11,7 @@ const habil = {};
 
 //#region RENDERIZADOS
 habil.agradecimiento = async(req, res) =>{
-    res.render('habil/agradecimiento');
+    res.render('habil/gracias');
 };
 
 habil.documentacion = async(req, res) =>{

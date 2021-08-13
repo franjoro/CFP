@@ -17,7 +17,7 @@ router.get("/:codigoCurso", habil.main);
 // Agregar nuevo participante en habil
 router.post("/", habil.form);
 //Agregar vista de agradecimiento por rellenar el formulario
-router.get("/agradecimiento/habil", habil.agradecimiento);
+router.get("/gracias/habil", habil.agradecimiento);
 //Vista de subida de documentación
 router.get("/documentacion/habil/:idSolicitud?/documento/:documento?/:documento2?", habil.documentacion);
 //Enviar documentos para guardar en AWS
