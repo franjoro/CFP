@@ -104,35 +104,8 @@
           </div>
           <div class="card-body row table-responsive">
 
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>DUI</th>
-                  <th>Nombre</th>
-                  <th>Telefono</th>
-                  <th>Email</th>
-                  <th>Género</th>
-                  <th>Opciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>05756113-8</td>
-                  <td>Franklin </td>
-                  <td>12345678</td>
-                  <td>franklin_lopez@ricaldone.edu.sv</td>
-                  <td>Hombre</td>
-                  <td>
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                      <button type="button" class="btn btn-primary">Ver solicitud</button>
-                      <button type="button" class="btn btn-success">Descargar documentos</button>
-                      <button type="button" class="btn btn-danger">Eliminar</button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-
+            <!--Incluimos la seccion de habil si y solo si es codigo 28-->
+            <%- include('tablaAlumnos'); %>
 
 
 
@@ -626,3 +599,6 @@
             <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
             <script src="/static/js/curso_detalle.js"></script>
+            <script src="/static/js/habil/detalle/read.js"></script>
+            <script src="/static/js/habil/detalle/clicks.js"></script>
+            

@@ -33,20 +33,7 @@ s3Functions.upload = (file, identifier, ext, empresa, posicion) =>
     return status;
   });
 
-s3Functions.uploadGlobal = (file, identifier, ext, idSolicitud, posicion,carpeta) =>
-new Promise((resolve, reject) => {
-  const uploadParams = { Bucket: process.env.BUCKET, Key: "", Body: file };
-  uploadParams.Key = `app/${carpeta}/${idSolicitud}/${identifier}.${ext}`;
-  let status = s3.upload(uploadParams, (err, data) => {
-    if (err) {
-      reject(err);
-    }
-    if (data) {
-      resolve({ posicion, key: uploadParams.Key });
-    }
-  });
-  return status;
-});
+
 
 s3Functions.deleteObject = (Key) =>
   new Promise((resolve, reject) => {

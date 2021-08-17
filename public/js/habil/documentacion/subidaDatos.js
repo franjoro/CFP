@@ -1,24 +1,30 @@
+/*@author: Osmaro Bonilla
+  @description: Se utiliza para enviar los ficheros a una sentencia AJAX en la cual se ejecuta la subida
+  @see: Se utiliza en subidaDatoscontroller.js
+  @param: Null
+  @*/
 const SendFiles = async () => {
+  //Recolectamos los valores de los input
     let idSolicitud = $("#id_solicitud").val();
-    let documento = $("#documento").val();
-    let documento2 = $("#documento2").val();
-
+    //Objeto de js utilizado para mandar ficheros
     const fd = new FormData(); // Objeto de javascript utilizado para mandar documentos
     //Recolectamos la longitud de archivos almacenados tanto en plantilla, recibo y cancelacion
     let cantidadDocumentos = $(`#fileDocumentos`)[0].files.length;
     //Hacemos un for a pesar de que sea solo un file tiene diferentes archivos por eso mandamos un for
-    fd.append(`fileDocumentos`, $(`#fileDocumentos`)[0].files[0]);//append para anidar y ponemos el name y id del file
-    
+    for (let i = 0; i < cantidadDocumentos; i++) {
+      //append para anidar y ponemos el name y id del file
+      fd.append(`fileDocumentos${i}`, $(`#fileDocumentos`)[0].files[i]);  
+    }
     //Usamos append para anidar la cantidad de planilla al FormData fd para manejar documentos
     fd.append("cantidadDocumentos", cantidadDocumentos);
     //AGREGAMOS LAS VARIABLES A ENVIAR AL SERVER
     fd.append("idSolicitud", idSolicitud);
-    fd.append("documento1", documento);
-    fd.append("documento2", documento2);
 
     //Ejecutamos un try e intentamos mandar los archivos a la nube
     try {
+      //ventana emergente de carga
       archivosLoader();
+      //const respuesta para recolectar lo traido del .ajax
       const respuesta = await $.ajax({
         url: "/habil/EnviarFiles",
         type: "POST",
@@ -26,6 +32,7 @@ const SendFiles = async () => {
         processData: false,
         contentType: false,
       });
+      //validamos el estado de la const respuesta
       if(respuesta.status){
         swal.close();
         Swal.fire({

@@ -1,7 +1,9 @@
+/*@author: Osmaro Bonilla
+  @description: Controlador de subida de archivos de solicitudes habil
+  @param: Null
+  @*/
 const pool = require("../../models/db");
-const { uploadGlobal, getFiles } = require("../../utils/s3");// Lo usaremos para subir u obtener archivos
-// const fs = require("fs");
-
+const { uploadGlobal } = require("../../utils/s3Folder/s3_habil");// Lo usaremos para subir u obtener archivos
 const subidaHabil = {};
 
 //SECCION DE ASOCIACIÓN DEL BUCKET CON LA SUBIDA DE DATOS
@@ -12,8 +14,6 @@ subidaHabil.archivos = async (req, res) => {
     Object.keys(req.files);
     //Recolectamos las variables enviadas por el cliente
     const {
-      documento1,
-      documento2,
       idSolicitud,
       cantidadDocumentos
     } = req.body;
@@ -33,32 +33,37 @@ subidaHabil.archivos = async (req, res) => {
       // SUBIR documentos
       //Hacemos un for contando la cantidad de documentos que se enviaran
       //Se le da formato a la extansion del file
-      ext = formatExtension(req.files[`fileDocumentos`].name.split("."));
-      //Se recibe la informacion del documento
-      fileContent = Buffer.from(
-        req.files[`fileDocumentos`].data,
-        "binary"
-      );
-      promesas.push(
-        uploadGlobal(fileContent, Date.now(), ext, idSolicitud, `fileDocumentos`, `participantes`)
-      );
+      for (let i = 0; i < cantidadDocumentos; i++) {
+        //Se recibe la informacion del documento
+        console.log(req.files);
+        ext = formatExtension(req.files[`fileDocumentos${i}`].name.split("."));
+        fileContent = Buffer.from(
+          req.files[`fileDocumentos${i}`].data,
+          "binary"
+        );
+        promesas.push(
+          uploadGlobal(fileContent, Date.now(), ext, idSolicitud, `fileDocumentos${i}`, `participantes`)
+        );
+      }
       const datos = await Promise.all(promesas);
-  
-      // cursos.forEach((curso, index) => {
-      //   let key;
-      //   datos.forEach((element) => {
-      //     if (element.posicion == `ficha${index}`) {
-      //       key = element.key;
-      //       inserts.push(
-      //         pool.query(
-      //           "INSERT INTO archivo_empresa_curso(s3key, Role, id_empresa, id_curso) VALUES(?,?,?,?) ",
-      //           [key, 1, empresa, curso]
-      //         )
-      //       );
-      //     }
-      //   });
-      // });
-      // await Promise.all(inserts);
+        
+      //Asignamos 
+      let key;
+      for (let i = 0; i < cantidadDocumentos; i++) {
+        datos.forEach((element) => {
+          if (element.posicion == `fileDocumentos${i}`) {
+            key = element.key;
+            inserts.push(
+              pool.query(
+                "INSERT INTO tb_habil_documentos( id_solicitud, s3key, estado ) VALUES (?,?,?) ",
+                [idSolicitud, key , false]
+              )
+            );
+          }
+        });
+      }
+      
+      //await Promise.all(inserts);
       return res.status(200).json({ status: true });
     }catch (error) {
       console.log(error);

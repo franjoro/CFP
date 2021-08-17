@@ -19,6 +19,6 @@ funcionesGlobales.calcularEdad = (fecha) =>{
     }
   
     return edad;
-}
+};
 
 module.exports = funcionesGlobales;
