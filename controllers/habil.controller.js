@@ -22,6 +22,9 @@ habil.documentacion = async(req, res) =>{
     res.render('habil/documentacion',{id_solicitud, documento, documento2});
 };
 
+habil.gestorDeDocumentacion = async(req,res) =>{
+    res.render('habil/gestion_de_documentos');
+};
 //#endregion
 
 

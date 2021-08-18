@@ -1,0 +1,259 @@
+<link rel="stylesheet" href="/static/vendor/datatables/datatables.min.css" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"
+  type="text/css" />
+<%- include('../partials/header.admin.ejs'); %>
+  <div class="container-fluid">
+    <style>
+      .actives {
+        background: rgb(91 126 204);
+        color: white
+      }
+    </style>
+    <div class="row container-fluid">
+      <div class="col-md-12">
+        <div class="card shadow mb-4">
+          <div class="card-header py-3">
+            <a href="/admin/cursos/detalle/<%= curso %>/<%= programa %>/<%=tipo %>#<%=empresa%>"
+              class="btn btn-success btn-sm float-left d-inline"><i class="fas fa-arrow-left"></i></a>
+            <button class="btn btn-info btn-sm float-right d-inline mx-1"
+              onclick="createZip('<%=curso %>','<%=empresa %>')" data-toggle="modal" data-target="#modificar_modal">
+              <i class="fas fa-cloud-download-alt"></i>
+              Descargar todos los archivos en .zip
+            </button>
+            <button class="btn btn-success btn-sm float-right d-inline mx-1" data-toggle="modal"
+              onclick="CrearArchivoExtra('<%= curso %>', '<%= empresa %>')" data-target="#modificar_modal">
+              <i class="fas fa-upload"></i>
+              Subir archivos extra
+            </button>
+            <button class="btn btn-primary btn-sm float-right d-inline mx-1" data-toggle="modal"
+              data-target="#modal_compartir"
+              onclick="GetLinkToShare('<%= curso %>', '<%= empresa %>', '<%= programa %>')">
+              <i class="fas fa-share"></i>
+              Obtener enlace para compartir
+            </button>
+          </div>
+          <div class="card-body">
+            <div class="card shadow mb-3">
+              <div class="card-body">
+                <h4>Archivos adjuntos empresa: <b>
+                    <%= query[1][0].Nombre %>
+                  </b></h4>
+                <h5>Curso: <b>
+                    <%= curso %>
+                  </b></h5>
+                <div class="row table-responsive">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Nombre del archivo</th>
+                        <th>Descargar</th>
+                        <th>Sustituir</th>
+                        <th>Visualizar</th>
+                        <th>Eliminar</th>
+                        <th>¿Permitir edición a la empresa? <i style="cursor: pointer;" data-toggle="tooltip"
+                            title="Permitir edición por terceros habilita a las empresas a poder sustituir este documento"
+                            class="fas fa-info-circle"></i></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% query[0].forEach(element=> {
+                        let archivo="Archivo extra", checked1="", checked2="";
+                        if(element.Role == 1 ) {archivo = "Solicitud de capacitación"}
+                        if(element.Role >= 20 && element.Role < 30 ) {archivo="Recibo de aportación" } if(element.Role>=
+                          30 && element.Role < 40 ){archivo="Comprobante de pago en línea" } if (element.Role>= 40 )
+                            {archivo = "Planilla ISSS"}
+                            element.isEditable == 1 ? checked1 = "checked" : checked2 = "checked";
+                            %>
+                            <tr id="<%= element.id %>">
+                              <td>
+                                <%= archivo %>
+                              </td>
+                              <td>
+                                <button class="btn btn-success btn-block"
+                                  onclick="DowloadS3File('<%=element.s3key %>' , '<%= archivo %>')">
+                                  <i class="fas fa-cloud-download-alt"></i>
+                                </button>
+                              <td>
+                                <button class="btn btn-info btn-block"
+                                  onclick="SustituirArchivo('<%=curso %>','<%=empresa %>', '<%=element.id %>', '<%=element.Role %>')">
+                                  <i class="fas fa-file-signature"></i>
+                                </button>
+                              </td>
+                              <td>
+                                <button class="btn btn-primary btn-block"
+                                  onclick="SeeS3File('<%=element.s3key %>', '<%= element.id%>')">
+                                  <i class="fas fa-eye"></i>
+                                </button>
+                              </td>
+                              <td>
+                                <button class="btn btn-danger btn-block" onclick="deleteS3('<%=element.s3key %>')">
+                                  <i class="fas fa-trash"></i>
+                                </button>
+                              </td>
+                              <td>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" data-id="<%=element.id %>" data-valor="1"
+                                    name="r<%=element.id%>" id="r<%=element.id%>1" value="option1" <%=checked1 %> />
+                                  <label class="form-check-label" for="r<%=element.id%>1">Permitir edición</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" data-id="<%=element.id %>" data-valor="0" type="radio"
+                                    name="r<%=element.id%>" id="r<%=element.id%>2" value="option2" <%=checked2 %>>
+                                  <label class="form-check-label" for="r<%=element.id%>2">No permitir</label>
+                                </div>
+                              </td>
+                            </tr>
+                            <% }) %>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <label>Comentarios del coordinador:</label>
+                    <textarea name="comentarios" class="form-control" id="comentarios" cols="30" rows="3"><%= comentario%></textarea>
+                   
+                    <button class="btn btn-success float-left btn-sm m-2" id="commentCompleto"><i class="fas fa-check-circle"></i> Marcar como completo</button>
+                    <button class="btn btn-danger float-left btn-sm m-2" id="commentRecibo"><i class="far fa-file"></i> Pendiente Recibo</button>
+                    <button class="btn btn-danger float-left btn-sm m-2" id="commentCancelacion"><i class="far fa-file"></i> Pendiente Cancelación</button>
+                    <button class="btn btn-danger float-left btn-sm m-2" id="commentPlanilla"><i class="far fa-file"></i> Pendiente Planilla</button>
+
+                    <button class="btn btn-primary float-right btn-sm mt-2" id="updateCommentBtn">Actualizar comentarios</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row container-fluid">
+      <div class="col-md-12">
+        <div class="card shadow mb-3">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card shadow">
+                  <div class="card-body table-responsive">
+                    <h5>Lista de participantes inscritos</h5>
+
+                    <table class="table table-stripeed table-hover">
+                      <thead>
+                        <tr>
+                          <th>DUI</th>
+                          <th>Nombre</th>
+                          <th>Email</th>
+                          <th>ISSS</th>
+                          <th>Cargo</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% alumnos.forEach(element=> { %>
+                          <tr>
+                            <td>
+                              <%= element.DUI %>
+                            </td>
+                            <td>
+                              <%= element.Nombre %>
+                            </td>
+                            <td>
+                              <%= element.Email %>
+                            </td>
+                            <td>
+                              <%= element.ISSS %>
+                            </td>
+                            <td>
+                              <%= element.Cargo %>
+                            </td>
+                          </tr>
+                          <% }) %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col-md-12">
+                <div class="card shadow">
+                  <div class="card-body">
+                    <h5>Documentación</h5>
+                    <div id="framediv"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <input type="hidden" id="curso" value="<%= curso %>">
+    <input type="hidden" id="empresa" value="<%= empresa %>">
+
+
+    <div class="modal fade" id="modal_compartir" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Compartir edición de archivos</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link " id="home-tab" data-toggle="tab" href="#enlace" role="tab"
+                  aria-controls="home" aria-selected="true">Compartir por enlace</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#correo" role="tab" aria-controls="profile"
+                  aria-selected="false">Enviar por correo electrónico</a>
+              </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+              <div class="tab-pane fade show active p-4" id="enlace" role="tabpanel" aria-labelledby="home-tab">
+                <label>Copiar enlace para compartir:</label>
+                <input type="text" class="form-control" id="link">
+                <button class="btn btn-primary my-3 float-right" id="btnCopy">Copiar enlace para compartir</button>
+              </div>
+              <div class="tab-pane fade p-4" id="correo" role="tabpanel" aria-labelledby="profile-tab">
+                <div class="form-group">
+                  <label for="correo">Correo Electrónico</label>
+                  <input type="email" class="form-control" id="email" placeholder="name@example.com">
+                </div>
+                <div class="form-group">
+                  <label for="mensaje">Mensaje</label>
+                  <textarea class="form-control" id="mensaje" rows="3"></textarea>
+                </div>
+                <button class="btn btn-success float-right" id="btnCorreo">Enviar correo</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="modal fade" id="viewer" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" style="height:50rem;"></div>
+        </div>
+      </div>
+    </div> -->
+
+    <!-- /.container-fluid -->
+    <%- include('../partials/footer'); %>
+      <script src="/static/js/jquery.mask.min.js"></script>
+      <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+      <script src="/static/js/gestor_documentos.js"></script>
