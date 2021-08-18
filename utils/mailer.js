@@ -13,7 +13,7 @@ mailer.sendEmail = (to, sub, html = "", text) => {
   // Definimos el email
   const mailOptions = {
     from: "soporte_cfp@ricaldone.edu.sv",
-    to: to || "franklin_lopez@ricaldone.edu.sv",
+    to: to || "osmaro_bonilla@ricaldone.edu.sv",
     subject: sub || "",
     text: text || "",
     html

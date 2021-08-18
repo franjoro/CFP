@@ -1,5 +1,6 @@
 const pool = require("../models/db");
 const { upload, getFiles } = require("../utils/s3");// Lo usaremos para subir u obtener archivos
+const {sendEmail} = require("../utils/mailer");
 
 // declarar variable a exportar
 const habil = {};
@@ -41,6 +42,27 @@ habil.form = async (req, res) => {
     } catch (error) {
         console.log(error);
         res.status(400).json(error);
+    }
+};
+
+habil.sendEmail = async (req,res) =>{
+    const to = req.body.email;
+    const { text } = req.body;
+    const { enlace } = req.body;
+    const { cursoNombre } = req.body;
+    const asunto = `RELLENO DE FORMULARIO PARA CURSO ${cursoNombre.toUpperCase()}`;
+    const html = `<h5>Reciba un cordial saludo de parte del Centro de Formación Profesional Don Pedro Ricaldone<h5> <p> por este medio solicitamos el relleno de formulario para aplicar a los cursos aperturados.</p><br>
+    <b>Este link esta habilitado para el curso ${cursoNombre}</b>
+    <b>Enlace:</b>
+    <a href="${enlace}">${enlace}</a> <br>
+    <p>Mensaje adjunto: ${text}</p>
+    `;
+    try {
+      await sendEmail(to, asunto, html);
+      res.status(200).json({ status: true });
+    } catch (error) {
+      console.log(error);
+      res.status(400).json({ status: false, error });
     }
 };
 

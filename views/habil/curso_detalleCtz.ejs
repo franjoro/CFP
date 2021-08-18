@@ -67,8 +67,8 @@
                 <%} else{ %>
                   <h5> Oferta : <%= curso.Nombre %></h5>
                   <hr>
-                  <button class="btn btn-success btn-sm d-inline" data-toggle="modal"
-                    data-target="#modificar_modal_oferta">Obtener enlace de inscripción
+                  <button id="enlaceTrue" class="btn btn-success btn-sm d-inline" data-toggle="modal"
+                    data-target="#modal_compartir" onclick="GetLinkToShare('<%=curso.Codigo_curso%>')">Obtener enlace de inscripción
                   </button>
                   <button class="btn btn-info btn-sm d-inline" data-toggle="modal"
                     data-target="#modificar_modal_oferta">Editar oferta
@@ -82,7 +82,7 @@
                 <% } %>
               </div>
             </div>
-            <p class="float-right">Cantidad de inscritos: <%= cAlumnos %>
+            <p class="float-right">Cantidad de solicitantes: <%= conteo %>
             </p>
           </div>
         </div>
@@ -109,12 +109,11 @@
   </div>
   <!-- Modal insertar participante -->
   <%- include('Modals/modalAgregarParticipante'); %>
-  <input type="hidden" name="curso" id="curso" value="<%=curso.Codigo_curso%>">
-  <input type="hidden" name="programa" id="programa" value="<%= programa%>">
   <!-- Si el tipo es oferta aparecera esto -->
   <% if(tipo=='oferta' ) { %>
     <!-- Modal insertar oferta -->
     <%- include('Modals/modalInsertarOferta'); %>
+    <%- include('Modals/modalModificarOferta'); %>
     <!-- Modal editar oferta -->
   <% }%>
   <!-- Si el tipo es curso aparecera esto -->
@@ -126,13 +125,20 @@
   <% }%>
   <!-- Modal Ingresar participante-->
   <%- include('Modals/modalParticipante'); %>
+  <!-- Modal para compartir enlaces -->
+  <%- include('Modals/modalEnlace'); %>
   <!-- /.container-fluid -->
   <%- include('../partials/footer'); %>
+  <!-- ASIGNANDO VARIABLES -->
+  <input type="hidden" name="curso" id="curso" value="<%=curso.Codigo_curso%>">
+  <input type="hidden" name="cursoNombre" id="cursoNombre" value="<%=curso.Nombre%>">
+  <input type="hidden" name="programa" id="programa" value="<%= programa%>">
+  <!-- SCRIPT -->
   <script src="/static/js/jquery.mask.min.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+  <script src="/static/js/habil/detalle/functions.js"></script>
   <script src="/static/js/curso_detalle.js"></script>
-  <script src="/static/js/habil/detalle/read.js"></script>
   <script src="/static/js/habil/detalle/clicks.js"></script>
             

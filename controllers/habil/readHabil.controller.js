@@ -13,21 +13,27 @@ const readHabil = {};
 readHabil.curso_detalle_NoCtoznts = async (req, res) => {
     const usuario = getUserDataByToken(req.cookies.token);
 
-    //#region tabla de datos
-    //REALIZAMOS EL READ DE LA TABLA 
-    const query = await pool.query(`SELECT DISTINCT REPLACE(JSON_EXTRACT(json1, '$.dui'), '"','' ) as dui ,REPLACE(JSON_EXTRACT(json1, '$.nombres'), '"','' ) as nombre,
-    REPLACE(JSON_EXTRACT(json1, '$.telMovil'), '"','' ) as telefono, REPLACE(JSON_EXTRACT(json1, '$.email'), '"','' ) as email, 
-    REPLACE(JSON_EXTRACT(json1, '$.sexo'), '"','' ) as sexo, sol.id as idSolicitud, doc.estado as estadoSolicitud 
-    FROM tb_habil_solicitudes AS sol INNER JOIN tb_habil_documentos doc on doc.id_solicitud = sol.id`);
-    console.log(query);
-    //#endregion
     // VALIDAR si la peticion trae un codigo de curso
     const curso = req.params.id;
     const { programa, tipo } = req.params;
+
     if (!curso) return res.status(400).json({ error: "ID_NOT_EXIST" });
     if (!(tipo === "curso" || tipo === "oferta"))
         return res.status(400).json({ error: "TIPO_NOT_VALID" });
     try {
+
+        //CONSULTA DE TABLA
+        const countString ="SELECT COUNT(*) AS count FROM tb_habil_solicitudes where Codigo_curso = ? ";
+        const count = await pool.query(countString,[curso]);
+        let conteo = count[0].count;
+        const queryString = `SELECT DISTINCT REPLACE(JSON_EXTRACT(json1, '$.dui'), '"','' ) as dui ,
+        REPLACE(JSON_EXTRACT(json1, '$.nombres'), '"','' ) as nombre, REPLACE(JSON_EXTRACT(json1, '$.telMovil'), '"','' ) as telefono, 
+        REPLACE(JSON_EXTRACT(json1, '$.email'), '"','' ) as email, REPLACE(JSON_EXTRACT(json1, '$.sexo'), '"','' ) as sexo,
+        sol.id as idSolicitud, doc.estado as estadoSolicitud, sol.Codigo_curso as id_curso, COUNT(DISTINCT(sol.documento)) as participantes FROM tb_habil_solicitudes AS sol 
+        INNER JOIN tb_habil_documentos doc on doc.id_solicitud = sol.id WHERE sol.Codigo_curso = ?`;
+        //Agregamos la consulta de queryString con su parametro
+        const query = await pool.query(queryString,[curso]);
+        
         // Traer de bd Las empresas que estan matriculadas al curso y los alumnos asociados
         let typeQuery;
         if (tipo === "curso") {
@@ -65,7 +71,8 @@ readHabil.curso_detalle_NoCtoznts = async (req, res) => {
         cAlumnos: empresas[1].length,
         data: usuario.data,
         tipo,
-        query
+        query,
+        conteo
         });
     } catch (error) {
         return res.status(400).json(error);

@@ -11,20 +11,20 @@
 </thead>
 <tbody>
     <% query.forEach((element)=> { %>
-    <tr>
-    <td><%= element.dui %></td>
-    <td><%= element.nombre %> </td>
-    <td><%= element.telefono %></td>
-    <td><%= element.email %></td>
-    <td><%= element.sexo %></td>
-    <td>
-        <div class="btn-group" role="group" aria-label="Basic example">
-        <button type="button" class="btn btn-primary">Ver solicitud</button>
-        <button type="button" class="btn btn-success">Descargar documentos</button>
-        <button type="button" class="btn btn-danger">Eliminar</button>
-        </div>
-    </td>
-    </tr>
+        <tr>
+        <td><%= element.dui %></td>
+        <td><%= element.nombre %> </td>
+        <td><%= element.telefono %></td>
+        <td><%= element.email %></td>
+        <td><%= element.sexo %></td>
+        <td>
+            <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-primary">Ver solicitud</button>
+            <button type="button" class="btn btn-success">Descargar documentos</button>
+            <button type="button" class="btn btn-danger">Eliminar</button>
+            </div>
+        </td>
+        </tr>
     <% }); %>
 </tbody>
 </table>
