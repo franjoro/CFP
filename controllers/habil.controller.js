@@ -1,14 +1,10 @@
 const pool = require("../models/db");
 const { upload, getFiles } = require("../utils/s3");// Lo usaremos para subir u obtener archivos
 const {sendEmail} = require("../utils/mailer");
+const { getUserDataByToken } = require("../middlewares/auth");
 
 // declarar variable a exportar
 const habil = {};
-
-// Requerimos pool de base de datos si es necesario
-// const pool = require('../models/db')
-
-// const mailer = require ('../utils/mailer');
 
 //#region RENDERIZADOS
 habil.agradecimiento = async(req, res) =>{
@@ -23,7 +19,40 @@ habil.documentacion = async(req, res) =>{
 };
 
 habil.gestorDeDocumentacion = async(req,res) =>{
-    res.render('habil/gestion_de_documentos');
+    //RECOLECTANDO PARAMETROS
+    const usuario = getUserDataByToken(req.cookies.token);
+    const { idCurso, idSolicitud, dui, programa, tipo } = req.params;
+    //SECCION DE CONSULTAS
+    const queryCursos = `SELECT Nombre, Horario FROM tb_cursos WHERE Codigo_curso = ?`;
+    const queryParticipante = `
+    SELECT DISTINCT par.DUI as dui , REPLACE(JSON_EXTRACT(json1, '$.nit'), '"','' ) as nit, par.Nombre as nombre 
+    FROM tb_habil_solicitudes AS sol INNER JOIN tb_participante par on par.DUI = sol.documento WHERE sol.id =?`;
+    const queryDocumentos = `SELECT id, s3key,estado FROM tb_habil_documentos WHERE id_solicitud = ?`;
+    //EJECUTANDO CONSULTAS
+    const cursos = await pool.query(queryCursos,[idCurso]);
+    const participantes = await pool.query(queryParticipante,[idSolicitud]);
+    const documentos = await pool.query(queryDocumentos,[idSolicitud]);
+    //MANIPULANDO RES DE CONSULTA
+    const nCurso = cursos[0].Nombre;
+    const hCurso = cursos[0].Horario;
+    const participante = participantes[0].nombre;
+    const nit = participantes[0].nit;
+    //IMPORTANDO DATA
+    const dataSend = {
+        data: usuario.data, 
+        idCurso,
+        idSolicitud,
+        dui,
+        programa,
+        tipo,
+        nCurso,
+        hCurso,
+        participante,
+        nit,
+        documentos
+    };
+    //RENDERIZANDO Y MANDANDO PARAMETROS
+    res.render('habil/gestion_de_documentos', dataSend);
 };
 //#endregion
 
@@ -69,6 +98,26 @@ habil.sendEmail = async (req,res) =>{
     }
 };
 
+habil.sendMailDocument = async (req,res) =>{
+    const to = req.body.email;
+    const { text } = req.body;
+    const { enlace } = req.body;
+    const { cursoNombre } = req.body;
+    const asunto = `INGRESA TUS DOCUMENTOS PARA CURSO ${cursoNombre.toUpperCase()}`;
+    const html = `<h5>Reciba un cordial saludo de parte del Centro de Formación Profesional Don Pedro Ricaldone<h5> <p> por este medio solicitamos la subida de su documentación para seguir con la solicitud.</p><br>
+    <b>Este link esta habilitado para el curso ${cursoNombre}</b>
+    <b>Enlace:</b>
+    <a href="${enlace}">${enlace}</a> <br>
+    <p>Mensaje adjunto: ${text}</p>
+    `;
+    try {
+      await sendEmail(to, asunto, html);
+      res.status(200).json({ status: true });
+    } catch (error) {
+      console.log(error);
+      res.status(400).json({ status: false, error });
+    }
+};
 
 
 module.exports = habil;

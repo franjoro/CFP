@@ -19,8 +19,17 @@
         <td><%= element.sexo %></td>
         <td>
             <div class="btn-group" role="group" aria-label="Basic example">
-            <button type="button" class="btn btn-primary btn-sm">Ver solicitud</button>
-            <button type="button" class="btn btn-secondary btn-sm">Obtener enlace documentación</button>
+            <a href="../../../../habil/gestor-de-documentos/habil/<%= element.id_curso %>/<%= element.idSolicitud %>/<%= element.dui %>/<%=programa%>/<%=tipo%>" class="btn btn-primary btn-sm">Ver solicitud</a>
+            <button 
+                type="button" data-toggle="modal" data-target="#modal_compartir_documentacion" class="btn btn-secondary btn-sm" 
+                <% if(element.dui) {%>
+                    onclick="GetLinkToShareDocuments(<%=element.idSolicitud%>, '<%=element.dui%>')">
+                <% }else{%>
+                    onclick="GetLinkToShareDocuments(<%=element.idSolicitud%>, '<%=element.nit%>')">
+                <% }%>
+
+                Obtener enlace documentación
+            </button>
             <button type="button" class="btn btn-success btn-sm">Descargar documentos</button>
             <button type="button" class="btn btn-danger btn-sm">Eliminar</button>
             </div>

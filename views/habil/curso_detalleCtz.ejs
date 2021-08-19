@@ -94,9 +94,7 @@
         <div class="card shadow mb-4">
           <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary d-inline">Alumnos inscritos</h6>
-            <button class="btn btn-sm btn-success d-inline float-right" data-toggle="modal" data-target="#agregarParticipante">
-              Agregar participante
-            </button>
+            
             <p></p>
           </div>
           <div class="card-body row table-responsive">
@@ -107,6 +105,8 @@
       </div>
     </div>
   </div>
+  <%- include('Modals/modalEnlaceDocumentacion'); %>
+
   <!-- Modal insertar participante -->
   <%- include('Modals/modalAgregarParticipante'); %>
   <!-- Si el tipo es oferta aparecera esto -->

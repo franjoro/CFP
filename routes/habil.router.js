@@ -19,12 +19,13 @@ router.get("/gracias/habil", habil.agradecimiento);
 //Vista de subida de documentación
 router.get("/documentacion/habil/:idSolicitud?/documento/:documento?/:documento2?", habil.documentacion);
 
-router.get("/gestor-de-documentos/habil", habil.gestorDeDocumentacion);
+router.get("/gestor-de-documentos/habil/:idCurso/:idSolicitud/:dui/:programa/:tipo?", authcheck, habil.gestorDeDocumentacion);
 //Enviar documentos para guardar en AWS
 
 //SENTENCIAS RES.POST
 router.post("/EnviarFiles", fileUpload(), subida.archivos);
 router.post("/sendMail", authcheck, habil.sendEmail);
+router.post("/sendMailDocument", authcheck, habil.sendMailDocument);
 // Agregar nuevo participante en habil
 router.post("/", habil.form);
 
