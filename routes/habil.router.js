@@ -6,6 +6,8 @@ const { authcheck } = require('../middlewares/auth');
 const habil = require('../controllers/habil.controller');
 const subida = require('../controllers/habil/subidaDatos.controller');
 const updateHabil = require('../controllers/habil/update.controller');
+const deleteDocumentos = require('../controllers/habil/deleteDocumento.controller');
+const updateFile = require('../controllers/habil/updateFile.controller')
 // Llamamos al router
 const router = express.Router();
 const fileUpload = require("express-fileupload");// proteccion para fileUpload
@@ -25,8 +27,10 @@ router.get("/gestor-de-documentos/habil/:idCurso/:idSolicitud/:dui/:programa/:ti
 //SENTENCIAS RES.POST
 router.post("/EnviarFiles", fileUpload(), subida.archivos);
 router.post("/sendMail", authcheck, habil.sendEmail);
-router.post("/sendMailDocument", authcheck, habil.sendMailDocument);
+router.post("/sendMailDocument", authcheck, habil.sendMailDocument)
+router.delete("/deleteFiles3", authcheck , deleteDocumentos.deleteFiles3);
 // Agregar nuevo participante en habil
+router.post("/updateFile", fileUpload(), updateFile.archivos)
 router.post("/", habil.form);
 
 //SENTENCIAS RES.PUT

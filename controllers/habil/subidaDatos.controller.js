@@ -56,14 +56,14 @@ subidaHabil.archivos = async (req, res) => {
             inserts.push(
               pool.query(
                 "INSERT INTO tb_habil_documentos( id_solicitud, s3key, estado ) VALUES (?,?,?) ",
-                [idSolicitud, key , false]
+                [idSolicitud, key , true]
               )
             );
           }
         });
       }
       
-      //await Promise.all(inserts);
+      await Promise.all(inserts);
       return res.status(200).json({ status: true });
     }catch (error) {
       console.log(error);

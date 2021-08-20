@@ -27,7 +27,7 @@ habil.gestorDeDocumentacion = async(req,res) =>{
     const queryParticipante = `
     SELECT DISTINCT par.DUI as dui , REPLACE(JSON_EXTRACT(json1, '$.nit'), '"','' ) as nit, par.Nombre as nombre 
     FROM tb_habil_solicitudes AS sol INNER JOIN tb_participante par on par.DUI = sol.documento WHERE sol.id =?`;
-    const queryDocumentos = `SELECT id, s3key,estado FROM tb_habil_documentos WHERE id_solicitud = ?`;
+    const queryDocumentos = `SELECT id, s3key,estado, tipo, id_solicitud FROM tb_habil_documentos WHERE id_solicitud = ?`;
     //EJECUTANDO CONSULTAS
     const cursos = await pool.query(queryCursos,[idCurso]);
     const participantes = await pool.query(queryParticipante,[idSolicitud]);

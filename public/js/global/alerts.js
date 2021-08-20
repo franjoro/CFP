@@ -49,3 +49,15 @@ const error = (error) => {
       },
     });
   };
+
+  const loaderFile = () => {
+    Swal.fire({
+      title: "Por favor espere",
+      html: "Descargando archivo",
+      allowOutsideClick: false,
+      showConfirmButton: false,
+      willOpen: () => {
+        Swal.showLoading();
+      },
+    });
+  };

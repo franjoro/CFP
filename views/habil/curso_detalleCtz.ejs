@@ -44,7 +44,7 @@
                     <div class="col-6">
                       <p>
                         <b>Horario:</b>
-                          <%= curso.Horario %> <br />
+                          <%= curso.Horio %> <br />
                         <b>Costo Por alumno:</b> $<%= curso.CostoAlumno %> <br />
                         <b>Factura:</b>
                           <%= curso.Factura %> <br />
@@ -61,9 +61,13 @@
                   <button class="btn btn-success btn-sm d-inline" onclick="ReporteAlumnos('<%=curso.Codigo_curso%>')"><i
                       class="fas fa-file-excel"></i> Descargar participantes
                   </button>
+                  <!--
                   <button class="btn btn-primary btn-sm d-inline" onclick="createZipCurso('<%=curso.Codigo_curso%>')"><i
-                      class="fas fa-file-archive"></i> Descargar ZIP de documentos
+                          class="fas fa-file-archive"></i> Descargar ZIP de documentos
                   </button>
+
+                  -->
+                  
                 <%} else{ %>
                   <h5> Oferta : <%= curso.Nombre %></h5>
                   <hr>
@@ -76,9 +80,11 @@
                   <button class="btn btn-primary btn-sm  d-inline" data-toggle="modal"
                     data-target="#insertar_modal">Crear curso de esta oferta
                   </button>
-                  <button class="btn btn-secondary btn-sm d-inline" onclick="createZipCurso('<%=curso.Codigo_curso%>')">
-                    <i class="fas fa-file-archive"></i> Descargar ZIP de documentos
-                  </button>
+                  <!--
+                    <button class="btn btn-secondary btn-sm d-inline" onclick="createZipCurso('<%=curso.Codigo_curso%>')">
+                      <i class="fas fa-file-archive"></i> Descargar ZIP de documentos
+                    </button>
+                  -->
                 <% } %>
               </div>
             </div>
