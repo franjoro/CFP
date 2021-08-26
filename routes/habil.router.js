@@ -7,7 +7,10 @@ const habil = require('../controllers/habil.controller');
 const subida = require('../controllers/habil/subidaDatos.controller');
 const updateHabil = require('../controllers/habil/update.controller');
 const deleteDocumentos = require('../controllers/habil/deleteDocumento.controller');
-const updateFile = require('../controllers/habil/updateFile.controller')
+const updateFile = require('../controllers/habil/updateFile.controller');
+const updateComment = require('../controllers/habil/updateComment.controller');
+const sendNotificacion = require('../controllers/habil/sendNotification.controller')
+const deleteSolicitud = require('../controllers/habil/deleteSolicitud.controller');
 // Llamamos al router
 const router = express.Router();
 const fileUpload = require("express-fileupload");// proteccion para fileUpload
@@ -27,10 +30,14 @@ router.get("/gestor-de-documentos/habil/:idCurso/:idSolicitud/:dui/:programa/:ti
 //SENTENCIAS RES.POST
 router.post("/EnviarFiles", fileUpload(), subida.archivos);
 router.post("/sendMail", authcheck, habil.sendEmail);
-router.post("/sendMailDocument", authcheck, habil.sendMailDocument)
+router.post("/sendNotificacion", authcheck, sendNotificacion.send)
+router.post("/sendMailDocument", authcheck, habil.sendMailDocument);
 router.delete("/deleteFiles3", authcheck , deleteDocumentos.deleteFiles3);
+router.delete("/deleteSolicitud", authcheck , deleteSolicitud.delete);
 // Agregar nuevo participante en habil
-router.post("/updateFile", fileUpload(), updateFile.archivos)
+router.post("/updateFile", fileUpload(), updateFile.archivos);
+router.put("/updateComment", authcheck, updateComment.update);
+router.put("/matricular", authcheck, updateHabil.cambiarCurso);
 router.post("/", habil.form);
 
 //SENTENCIAS RES.PUT

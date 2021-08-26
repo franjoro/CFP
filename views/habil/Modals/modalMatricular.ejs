@@ -1,0 +1,36 @@
+<div class="modal " id="modal_matricular" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Matricular alumno a curso</h5>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="formMatriculacionPart">  
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="col">
+                        <label for="name">Curso de matriculación</label>
+                        <input type="hidden" name="txtIdSolicitud" id="txtIdSolicitud" value="">
+                        <select class="custom-select" required name="cmbCurso" id="cmbCurso">
+                            <option value="" selected>Selecciona un curso</option>
+                            <% cursosNoCotz.forEach((element)=> { %>
+                                <option value="<%=element.Codigo_curso%>"><%=element.Nombre%></option>
+                            <% }); %>
+                        </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+

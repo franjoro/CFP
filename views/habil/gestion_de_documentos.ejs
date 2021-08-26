@@ -120,13 +120,9 @@
                 <div class="row">
                   <div class="col-md-12">
                     <label>Comentarios del coordinador:</label>
-                    <textarea name="comentarios" class="form-control" id="comentarios" cols="30" rows="3">jkjk</textarea>
+                    <textarea name="comentarios" class="form-control" id="comentarios" cols="30" rows="3"><%=comentario%></textarea>
                    
                     <button class="btn btn-success float-left btn-sm m-2" id="commentCompleto"><i class="fas fa-check-circle"></i> Marcar como completo</button>
-                    <button class="btn btn-danger float-left btn-sm m-2" id="commentRecibo"><i class="far fa-file"></i> Pendiente Recibo</button>
-                    <button class="btn btn-danger float-left btn-sm m-2" id="commentCancelacion"><i class="far fa-file"></i> Pendiente Cancelación</button>
-                    <button class="btn btn-danger float-left btn-sm m-2" id="commentPlanilla"><i class="far fa-file"></i> Pendiente Planilla</button>
-
                     <button class="btn btn-primary float-right btn-sm mt-2" id="updateCommentBtn">Actualizar comentarios</button>
                   </div>
                 </div>
@@ -155,11 +151,10 @@
       </div>
     </div>
 
-    <input type="hidden" id="curso" value="">
-    <input type="hidden" id="empresa" value="">
     <!-- ASIGNANDO VARIABLES -->
     <input type="hidden" name="curso" id="curso" value="<%=idCurso%>">
     <input type="hidden" name="cursoNombre" id="cursoNombre" value="<%=nCurso%>">
+    <input type="hidden" name="idSolicitud" id="idSolicitud" value="<%=idSolicitud%>">
     <%- include('Modals/modalEnlaceDocumentacion.ejs'); %>
     <%- include('../partials/footer'); %>
       <script src="/static/js/jquery.mask.min.js"></script>
@@ -168,4 +163,6 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
       <script src="/static/js/global/alerts.js"></script>
       <script src="/static/js/habil/detalle/functions.js"></script>
+      <script src="/static/js/habil/detalle/notificacion.js"></script>
+      <script src="/static/js/habil/detalle/update.js"></script>
       <script src="/static/js/habil/detalle/clicks.js"></script>

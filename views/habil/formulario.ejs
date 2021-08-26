@@ -29,6 +29,12 @@
             alt="logo Cfp Ricaldone"
           />
         </div>
+        <div class="col align-self-center">
+          <h1><%=nombre%> </h1>
+          <h3>Horario: <%=horario%></h3>
+          <input type="hidden" value="<%=nombre%>" id="nombreCurso">
+          <input type="hidden" value="<%=horario%>" id="horarioCurso">
+        </div>
         <div class="col align-self-end">
           <img
             src="/static/img/uploads/1611934869304_INSAFORP TRASNPARENTE Y RESPLANDOR.png"
@@ -1200,5 +1206,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <script src="/static/js/jquery.mask.min.js"></script>
     <script src="/static/js/habil/formhabil.js"></script>
+    <script src="/static/js/habil/read.js"></script>
   </body>
 </html>

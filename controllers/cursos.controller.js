@@ -81,7 +81,18 @@ cursos.curso_detalle = async (req, res) => {
   if (!curso) return res.status(400).json({ error: "ID_NOT_EXIST" });
   if (!(tipo === "curso" || tipo === "oferta"))
     return res.status(400).json({ error: "TIPO_NOT_VALID" });
+
   try {
+
+
+    const queryString = `
+        SELECT DISTINCT par.DUI as dui, REPLACE(JSON_EXTRACT(json1, '$.nit'), '"','' ) as nit , 
+        par.Nombre as nombre, par.Telefono as telefono,par.Email as email, par.Genero as sexo, sol.id as idSolicitud, 
+        sol.estado as estadoSolicitud, sol.Codigo_curso as id_curso FROM tb_habil_solicitudes AS sol 
+        INNER JOIN tb_participante par on par.DUI = sol.documento WHERE sol.Codigo_curso = ? 
+        AND (sol.estado = 0 OR sol.estado = 3)`;
+        //Agregamos la consulta de queryString con su parametro
+    const query = await pool.query(queryString,[curso]);
     // Traer de bd Las empresas que estan matriculadas al curso y los alumnos asociados
     let typeQuery;
     if (tipo === "curso") {
@@ -119,6 +130,7 @@ cursos.curso_detalle = async (req, res) => {
       cAlumnos: empresas[1].length,
       data: usuario.data,
       tipo,
+      query
     });
   } catch (error) {
     return res.status(400).json(error);

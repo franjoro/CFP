@@ -1,7 +1,7 @@
 <table class="table table-striped">
 <thead>
     <tr>
-    <th>DUI</th>
+    <th>Documento</th>
     <th>Nombre</th>
     <th>Telefono</th>
     <th>Email</th>
@@ -10,7 +10,8 @@
     </tr>
 </thead>
 <tbody>
-    <% query.forEach((element)=> { %>
+    <%let n=0;%>
+    <% query.forEach((element)=> { n = n+1;%>
         <tr>
         <td><%= element.dui %></td>
         <td><%= element.nombre %> </td>
@@ -30,14 +31,18 @@
 
                 Obtener enlace documentación
             </button>
+            <%if(tipo == 'oferta'){%>
+                <a type="button" data-toggle="modal" data-target="#modal_matricular" class="btn btn-success btn-sm" onclick="idSolicitudChangue('<%=element.idSolicitud%>')">Matricular Solicitante</a>
+            <%}%>
             <!--
                  <button type="button" class="btn btn-success btn-sm">Descargar documentos</button>
             -->
-            <button type="button" class="btn btn-danger btn-sm">Eliminar</button>
+            <button type="button" class="btn btn-danger btn-sm" onclick="deleteNotificacion('<%=element.idSolicitud%>')">Eliminar</button>
             </div>
         </td>
         </tr>
     <% }); %>
+    Cantidad de participantes <%=n%>
 </tbody>
 </table>
 

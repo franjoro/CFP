@@ -55,12 +55,9 @@ $(document).ready(function () {
   // Cambiador de progress
   // BOTONES
   $("#next1").click(() => {
-    
     //Comenzamos las validaciones de la sección1
-    if ($("#dui").val().length < 10)
-      return error(" <b>errocode: </b> Colocar el campo DUI correctamente");
-    if ($("#nit").val().length < 17)
-      return error(" <b>errocode: </b> Colocar el campo NIT correctamente");
+    if ($("#dui").val().length < 10 && $("#nit").val().length < 17)
+      return error(`<b>errocode: </b> Debe de colocar al menos un documento para poder enviar la solicitud`);
     if (!$("#nombres").val())
       return error(" <b>errocode: </b> Colocar el campo Nombres correctamente");
     if (!$("#apellidos").val())
@@ -571,8 +568,14 @@ $(document).ready(function () {
 
   //#region INICIO PROCESAR JSON
   const json1 = () =>{
-    const  dui = $("#dui").val(),
-      nit  = $("#nit").val(),
+    let dui;
+    if($("#dui").val().length == 0){
+      dui = $("#nit").val();
+    }else{
+      dui = $("#dui").val();
+    }
+    
+    const  nit  = $("#nit").val(),
       nombres = $("#nombres").val(),
       apellidos = $("#apellidos").val(),
       sexo = $("#sexo").val(),
@@ -746,9 +749,11 @@ $(document).ready(function () {
 
   const SendFormulario = async (req) => {
     try {
+      let nombreCurso = $("#nombreCurso").val();
+      let horarioCurso = $("#horarioCurso").val();
       //const curso = req.params.codigoCurso;
       const alerta = await Swal.fire({
-        title: "¿Deseá enviar la solicitud?",
+        title: `¿Deseá enviar la solicitud para el curso ${nombreCurso} con horario ${horarioCurso}?`,
         text:
           "Por favor verificar que la información ingresada sea correcta antes de enviar.",
         icon: "info",

@@ -26,4 +26,17 @@
     }
   };
 
+  updateHabil.cambiarCurso = async (req, res) =>{
+    try {
+      const codigoCurso = req.body.cmbCurso;
+      const idSolicitud = req.body.txtIdSolicitud;
+      const query =`UPDATE tb_habil_solicitudes SET Codigo_curso = ? WHERE id = ?`;
+      await pool.query(query,[codigoCurso, idSolicitud]);
+      return res.status(200).json({ status: true });
+    } catch (error) {
+      if (error) console.log(error);
+      return res.status(400).json({ status: false, error: error });
+    }
+  };
+
   module.exports = updateHabil;

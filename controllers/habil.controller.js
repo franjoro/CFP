@@ -25,7 +25,7 @@ habil.gestorDeDocumentacion = async(req,res) =>{
     //SECCION DE CONSULTAS
     const queryCursos = `SELECT Nombre, Horario FROM tb_cursos WHERE Codigo_curso = ?`;
     const queryParticipante = `
-    SELECT DISTINCT par.DUI as dui , REPLACE(JSON_EXTRACT(json1, '$.nit'), '"','' ) as nit, par.Nombre as nombre 
+    SELECT DISTINCT par.DUI as dui, REPLACE(JSON_EXTRACT(json1, '$.nit'), '"','' ) as nit, par.Nombre as nombre, sol.comentario 
     FROM tb_habil_solicitudes AS sol INNER JOIN tb_participante par on par.DUI = sol.documento WHERE sol.id =?`;
     const queryDocumentos = `SELECT id, s3key,estado, tipo, id_solicitud FROM tb_habil_documentos WHERE id_solicitud = ?`;
     //EJECUTANDO CONSULTAS
@@ -35,6 +35,7 @@ habil.gestorDeDocumentacion = async(req,res) =>{
     //MANIPULANDO RES DE CONSULTA
     const nCurso = cursos[0].Nombre;
     const hCurso = cursos[0].Horario;
+    const comentario = participantes[0].comentario;
     const participante = participantes[0].nombre;
     const nit = participantes[0].nit;
     //IMPORTANDO DATA
@@ -49,7 +50,8 @@ habil.gestorDeDocumentacion = async(req,res) =>{
         hCurso,
         participante,
         nit,
-        documentos
+        documentos,
+        comentario
     };
     //RENDERIZANDO Y MANDANDO PARAMETROS
     res.render('habil/gestion_de_documentos', dataSend);
@@ -57,9 +59,21 @@ habil.gestorDeDocumentacion = async(req,res) =>{
 //#endregion
 
 
-habil.main = (req, res) => {
+habil.main = async (req, res) => {
     global.global_codigoCurso = req.params.codigoCurso;//ALERTA ESTA ES UNA VARIABLE GLOBAL QUE SE UTILIZARA POCO TIEMPO TOMAR EN CUENTA QUE LAS VARIABLE GLOBALES NO SON VIABLES POR MEMORIA
-    res.render('habil/formulario');
+    const { codigoCurso } = req.params;
+    try {
+        const sql ="SELECT Nombre, Horario from tb_cursos WHERE Codigo_curso = ?";
+        const curso = await pool.query(sql,[codigoCurso]);
+        const nombre = curso[0].Nombre;
+        const horario = curso[0].Horario;
+        return res.render("habil/formulario", {
+            nombre,
+            horario
+        });
+    } catch (error) {
+            return res.status(400).json(error);
+    }
 };
 
 habil.form = async (req, res) => {

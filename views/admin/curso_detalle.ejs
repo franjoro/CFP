@@ -63,10 +63,12 @@
                     </div>
                   </div>
                   <hr>
-                  <button class="btn btn-success btn-sm d-inline" onclick="ReporteAlumnos('<%=curso.Codigo_curso%>')"><i
+                  <%if (programa != 28 ){%>
+                    <button class="btn btn-success btn-sm d-inline" onclick="ReporteAlumnos('<%=curso.Codigo_curso%>')"><i
                       class="fas fa-file-excel"></i> Descargar participantes</button>
-                  <button class="btn btn-primary btn-sm d-inline" onclick="createZipCurso('<%=curso.Codigo_curso%>')"><i
-                      class="fas fa-file-archive"></i> Descargar ZIP de documentos</button>
+                    <button class="btn btn-primary btn-sm d-inline" onclick="createZipCurso('<%=curso.Codigo_curso%>')"><i
+                        class="fas fa-file-archive"></i> Descargar ZIP de documentos</button>
+                  <%}%>
                       
                   <%} else{ %>
                     <h5> Oferta : <%= curso.Nombre %>
@@ -84,8 +86,10 @@
                     <% } %>
               </div>
             </div>
-            <p class="float-right">Cantidad de inscritos: <%= cAlumnos %>
-            </p>
+            <%if (programa != 28 ){%>
+              <p class="float-right">Cantidad de inscritos: <%= cAlumnos %></p>
+            <%}%>
+            
           </div>
         </div>
       </div>
@@ -95,13 +99,19 @@
       <div class="col-lg-12">
         <div class="card shadow mb-4">
           <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary d-inline">Empresas registradas </h6>
-            <button class="btn btn-sm btn-success d-inline float-right" data-toggle="modal" data-target="#exampleModal">
-              Agregar Empresa
-            </button>
+            <h6 class="m-0 font-weight-bold text-primary d-inline"><%if(programa == 28) {%> Participantes inscritos <% }else {%>Empresas registradas <%}%></h6>
+            <%if(programa != 28) {%> 
+              <button class="btn btn-sm btn-success d-inline float-right" data-toggle="modal" data-target="#exampleModal">
+                Agregar Empresa
+              </button>
+            <% }%>
+            
             <p></p>
           </div>
           <div class="card-body row">
+            <%if (programa == 28 ){%>
+              <%- include('../habil/Boards/tablaAlumnos'); %>
+            <%}%>
             <% datos.forEach( (element)=> { %>
 
               <div class="col-md-3" id="<%= element.id %>">
@@ -195,6 +205,7 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
+         
           <h5 class="modal-title" id="exampleModalLabel">Agregar empresa</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>

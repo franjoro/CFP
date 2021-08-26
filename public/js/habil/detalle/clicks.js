@@ -73,4 +73,33 @@ $(document).ready(function () {
       console.log(error);
     }
   });
+  $("#commentCompleto").click(() => {
+    Swal.fire({
+      title: '¿Estas seguro?',
+      text: "Se notificara al participante confirmando la aprobación de sus documentos",
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, notificar y guardar comentario!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+       ChangeComment("Revisión completada");
+       const comentario = $("#comentarios").val();
+       const idSolicitud = $("#idSolicitud").val();
+       updateCommentFunction(comentario, 3, idSolicitud);
+       enviarNotificacion();
+        Swal.fire(
+          'Deleted!',
+          'Your file has been deleted.',
+          'success'
+        );
+      }
+    });
+  });
+  $("#updateCommentBtn").click(() => {
+    const comentario = $("#comentarios").val();
+    const idSolicitud = $("#idSolicitud").val();
+    updateCommentFunction(comentario, 3, idSolicitud);
+  });
 });

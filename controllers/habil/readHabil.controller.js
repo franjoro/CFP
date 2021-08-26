@@ -22,15 +22,20 @@ readHabil.curso_detalle_NoCtoznts = async (req, res) => {
         return res.status(400).json({ error: "TIPO_NOT_VALID" });
     try {
 
+        //CONSULTA DE CURSOS DE HABIL Y NO COTIZANTES
+        const queryCursos = `SELECT Nombre, Codigo_curso FROM tb_cursos where Estado = 1 AND id_programa = ?`;
+        const cursosNoCotz = await pool.query(queryCursos,[programa]);
+
         //CONSULTA DE TABLA
         const countString ="SELECT COUNT(*) AS count FROM tb_habil_solicitudes where Codigo_curso = ? ";
         const count = await pool.query(countString,[curso]);
         let conteo = count[0].count;
-        const queryString = `SELECT DISTINCT par.DUI as dui, REPLACE(JSON_EXTRACT(json1, '$.nit'), '"','' ) as nit ,
-         par.Nombre as nombre, par.Telefono as telefono,par.Email as email, par.Genero as sexo, sol.id as idSolicitud, 
-         doc.estado as estadoSolicitud, sol.Codigo_curso as id_curso FROM tb_habil_solicitudes AS sol 
-         INNER JOIN tb_habil_documentos doc on doc.id_solicitud = sol.id INNER JOIN tb_participante par on par.DUI = sol.documento 
-         WHERE sol.Codigo_curso = ?`;
+        const queryString = `
+        SELECT DISTINCT par.DUI as dui, REPLACE(JSON_EXTRACT(json1, '$.nit'), '"','' ) as nit , 
+        par.Nombre as nombre, par.Telefono as telefono,par.Email as email, par.Genero as sexo, sol.id as idSolicitud, 
+        sol.estado as estadoSolicitud, sol.Codigo_curso as id_curso FROM tb_habil_solicitudes AS sol 
+        INNER JOIN tb_participante par on par.DUI = sol.documento WHERE sol.Codigo_curso = ? 
+        AND (sol.estado = 0 OR sol.estado = 3)`;
         //Agregamos la consulta de queryString con su parametro
         const query = await pool.query(queryString,[curso]);
         
@@ -72,11 +77,13 @@ readHabil.curso_detalle_NoCtoznts = async (req, res) => {
         data: usuario.data,
         tipo,
         query,
-        conteo
+        conteo,
+        cursosNoCotz
         });
     } catch (error) {
         return res.status(400).json(error);
     }
 };
+
 
 module.exports = readHabil;
