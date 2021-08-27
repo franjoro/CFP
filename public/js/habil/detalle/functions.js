@@ -61,10 +61,10 @@ const SeeS3File = async (key, id) => {
     });
     if (query.status) {
       console.log(query);
-      // const html = ` <iframe src="https://cfp.ricaldone.edu.sv/public/seefile/${
-      //   query.ext
-      // }?date=${Date.now()}" width="100%" height="100%"></iframe>`;
-       const html = ` <iframe src="http://localhost:8080/public/seefile/${query.ext}?date=${Date.now()}" width="100%" height="100%"></iframe>`;
+       const html = ` <iframe src="https://cfp.ricaldone.edu.sv/public/seefile/${
+         query.ext
+       }?date=${Date.now()}" width="100%" height="100%"></iframe>`;
+       //const html = ` <iframe src="http://localhost:8080/public/seefile/${query.ext}?date=${Date.now()}" width="100%" height="100%"></iframe>`;
       $("#framediv").css("height", "1200px");
       $("#framediv").html(html);
       $("html, body").animate(
