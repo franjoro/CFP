@@ -4,6 +4,7 @@
   @*/
 //INICIAMOS CON LA FUNCION READY DE JQUERY
 $(document).ready(function () {
+  
   $("#btnCopy").click(() => {
       
   });
@@ -103,3 +104,4 @@ $(document).ready(function () {
     updateCommentFunction(comentario, 3, idSolicitud);
   });
 });
+

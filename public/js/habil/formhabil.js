@@ -202,8 +202,6 @@ $(document).ready(function () {
       return error(" <b>errocode: </b> Rellene el campo 'Tel. Fijo'");
     if(!$("#movilContacto").val())
       return error(" <b>errocode: </b> Rellene el campo 'Tel. Movil'");
-    if(!$("#emailcontacto").val())
-      return error(" <b>errocode: </b> Rellene el campo 'E-mail .'");
     
 
     //FINALIZAMOS EL PROCESO DE VALIDACION DEL LADO DEL CLIENTE EN LA QUINTA PARTE DEL FORMULARIO
@@ -414,6 +412,17 @@ $(document).ready(function () {
     }
   });
   // FIN SECCION 4 =====================================================================
+  //ORDENAMIENTO 
+  function ordenarSelect(id_componente)
+  {
+    alert("Hod");
+    var selectToSort = jQuery('#' + id_componente);
+    var optionActual = selectToSort.val();
+    selectToSort.html(selectToSort.children('option').sort(function (a, b) {
+      return a.text === b.text ? 0 : a.text < b.text ? -1 : 1;
+    })).val(optionActual);
+  }
+  
   //SELECTS
   $("#depa_nac").select2({
     width: "100%",
@@ -435,6 +444,9 @@ $(document).ready(function () {
         };
       },
       cache: true,
+      complete: function(){
+        ordenarSelect("depa_nac");
+      },
     },
   });
 
@@ -779,7 +791,7 @@ $(document).ready(function () {
         });
         Swal.close();
         if(respuesta){
-          window.location.replace(`/habil/documentacion/habil/${respuesta.idSolicitud}/documento/${$("#dui").val()}`);
+          window.location.replace(`/habil/documentacion/habil/${respuesta.idSolicitud}/documento/${global_json1.dui}`);
         }else{
           error(respuesta);
         }

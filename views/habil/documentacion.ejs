@@ -34,8 +34,12 @@
               <h1 class="text-danger">¡Gracias por rellenar nuestro formulario!</h1>
               <h3 class="text-center"></h3>
               <p>Estas a un solo paso de completar todo lo necesario para participar.</p>
-              <p>Sube tu documentación.</p>
-              <h5 class="text-center">RECUERDA ES IMPORTANTE SUBIR EL ESCANEADO DE TU DOCUMENTO DE FORMA CLARA POR ESO SIGUE LAS INDICACIONES</h5>
+              <p>Sube tu documentación ambos lados.</p>
+              <%if(documento.length>10){%>
+                <h5 class="text-center">RECUERDA ES IMPORTANTE SUBIR TU NIT DE FORMA CLARA POR ESO SIGUE LAS INDICACIONES</h5>
+              <%} else {%>
+                <h5 class="text-center">RECUERDA ES IMPORTANTE SUBIR TU DUI DE FORMA CLARA POR ESO SIGUE LAS INDICACIONES</h5>
+              <%}%>
               <img src="static/img/guia_documentos.png" alt="" style="width: 125px;" class="d-inline"/>
               <img src="/static/img/guia_documentos.png" style="width: 600px;" class="d-inline" />
               <p class="text-center">

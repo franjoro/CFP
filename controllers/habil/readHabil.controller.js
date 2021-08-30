@@ -85,5 +85,43 @@ readHabil.curso_detalle_NoCtoznts = async (req, res) => {
     }
 };
 
+readHabil.readDet = async (req,res) => {
+    const { idSolicitud } =req.params;
+    try {
+        const sqlJson1 =`SELECT 
+        REPLACE(JSON_EXTRACT(json1, '$.dui'), '"','' ) as dui, 
+        REPLACE(JSON_EXTRACT(json1, '$.nit'), '"','' ) as nit, 
+        REPLACE(JSON_EXTRACT(json1, '$.nombres'), '"','' ) as nombres,
+        REPLACE(JSON_EXTRACT(json1, '$.apellidos'), '"','' ) as apellidos,
+        REPLACE(JSON_EXTRACT(json1, '$.sexo'), '"','' ) as sexo,
+        REPLACE(JSON_EXTRACT(json1, '$.cfamilia'), '"','' ) as cfamilia,
+        REPLACE(JSON_EXTRACT(json1, '$.estadoFamiliar'), '"','' ) as estadoFamiliar,
+        REPLACE(JSON_EXTRACT(json1, '$.jefeDeHogar'), '"','' ) as jefeDeHogar,
+        REPLACE(JSON_EXTRACT(json1, '$.nHijos'), '"','' ) as nHijos,
+        REPLACE(JSON_EXTRACT(json1, '$.otProfecionBool'), '"','' ) as booltrabajoantes,
+        REPLACE(JSON_EXTRACT(json1, '$.otProfecion'), '"','' ) as profesion,
+        REPLACE(JSON_EXTRACT(json1, '$.depNacimiento'), '"','' ) as depNacimiento,
+        REPLACE(JSON_EXTRACT(json1, '$.munNacimiento'), '"','' ) as munNacimiento,
+        REPLACE(JSON_EXTRACT(json1, '$.fechNacimiento'), '"','' ) as fechNacimiento,
+        REPLACE(JSON_EXTRACT(json1, '$.depDomicilio'), '"','' ) as depDomicilio,
+        REPLACE(JSON_EXTRACT(json1, '$.munDomicilio'), '"','' ) as munDomicilio,
+        REPLACE(JSON_EXTRACT(json1, '$.direccionDom'), '"','' ) as direccionDom,
+        REPLACE(JSON_EXTRACT(json1, '$.telFijo'), '"','' ) as telFijo,
+        REPLACE(JSON_EXTRACT(json1, '$.telMovil'), '"','' ) as telMovil,
+        REPLACE(JSON_EXTRACT(json1, '$.email'), '"','' ) as email,
+        REPLACE(JSON_EXTRACT(json1, '$.discapacidadBool'), '"','' ) as discapacidadBool,
+        REPLACE(JSON_EXTRACT(json1, '$.discapacidad'), '"','' ) as discapacidad,
+        REPLACE(JSON_EXTRACT(json1, '$.otroText'), '"','' ) as textoDiscapacidad
+        FROM tb_habil_solicitudes WHERE id = ?`;
+        const dataJson1 = await pool.query(sqlJson1,[idSolicitud]);
+        return res.status(200).json({ 
+            status: true,
+            data: dataJson1 
+        });
+
+    } catch (error) {
+        return res.status(400).json(error);
+    }
+};
 
 module.exports = readHabil;

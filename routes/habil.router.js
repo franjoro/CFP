@@ -11,6 +11,7 @@ const updateFile = require('../controllers/habil/updateFile.controller');
 const updateComment = require('../controllers/habil/updateComment.controller');
 const sendNotificacion = require('../controllers/habil/sendNotification.controller')
 const deleteSolicitud = require('../controllers/habil/deleteSolicitud.controller');
+const readHabil = require('../controllers/habil/readHabil.controller');
 // Llamamos al router
 const router = express.Router();
 const fileUpload = require("express-fileupload");// proteccion para fileUpload
@@ -18,11 +19,15 @@ const fileUpload = require("express-fileupload");// proteccion para fileUpload
 
 //SENTANCIAS RES.GET
 // Creamos una ruta para los métodos que tenemos en nuestros controladore
-router.get("/:codigoCurso", habil.main);
+router.get("/:codigoCurso/", habil.main);
+//renderizado especial
+router.get("/formulario/:idSolicitud", habil.renderFormulario);
+//recoleccion de información
+router.get("/readSolicitud/detalle/:idSolicitud?", readHabil.readDet);
 //Agregar vista de agradecimiento por rellenar el formulario
 router.get("/gracias/habil", habil.agradecimiento);
 //Vista de subida de documentación
-router.get("/documentacion/habil/:idSolicitud?/documento/:documento?/:documento2?", habil.documentacion);
+router.get("/documentacion/habil/:idSolicitud/documento/:documento?/:documento2?", habil.documentacion);
 
 router.get("/gestor-de-documentos/habil/:idCurso/:idSolicitud/:dui/:programa/:tipo?", authcheck, habil.gestorDeDocumentacion);
 //Enviar documentos para guardar en AWS

@@ -34,6 +34,9 @@
           <h3>Horario: <%=horario%></h3>
           <input type="hidden" value="<%=nombre%>" id="nombreCurso">
           <input type="hidden" value="<%=horario%>" id="horarioCurso">
+          <%if(idSolicitud != ''){%>
+            <input type="hidden" value="<%=idSolicitud%>" id="idSolicitud">
+          <%}%>
         </div>
         <div class="col align-self-end">
           <img
@@ -49,7 +52,7 @@
           Centro de formación profesional, hoja de inscipción de participantes
         </h3>
         <p class="text-dark">
-          <b>Ayuda: </b>Siga las instrucciones de cada paso
+          <b>Ayuda: </b>Siga las instrucciones de cada paso, recuerde que, si tiene 16 o 17 años debe de ingresar solamente su NIT, en caso de ser mayor de 18 años debe ingresar su DUI obligatoriamente y su NIT de forma opcional.
         </p>
       </div>
       <div class="row">
@@ -1206,6 +1209,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <script src="/static/js/jquery.mask.min.js"></script>
     <script src="/static/js/habil/formhabil.js"></script>
-    <script src="/static/js/habil/read.js"></script>
+    <%if(idSolicitud != ''){%>
+      <script src="/static/js/habil/read.js"></script>
+    <%}%>
   </body>
 </html>

@@ -127,3 +127,4 @@ const ChangeComment = (comment) => {
 const idSolicitudChangue = (id) =>{
   $("#txtIdSolicitud").val(id);
 };
+

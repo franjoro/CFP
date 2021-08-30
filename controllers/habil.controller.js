@@ -62,6 +62,7 @@ habil.gestorDeDocumentacion = async(req,res) =>{
 habil.main = async (req, res) => {
     global.global_codigoCurso = req.params.codigoCurso;//ALERTA ESTA ES UNA VARIABLE GLOBAL QUE SE UTILIZARA POCO TIEMPO TOMAR EN CUENTA QUE LAS VARIABLE GLOBALES NO SON VIABLES POR MEMORIA
     const { codigoCurso } = req.params;
+    const idSolicitud =''; //Pasamos esta variabñe vacia
     try {
         const sql ="SELECT Nombre, Horario from tb_cursos WHERE Codigo_curso = ?";
         const curso = await pool.query(sql,[codigoCurso]);
@@ -69,12 +70,31 @@ habil.main = async (req, res) => {
         const horario = curso[0].Horario;
         return res.render("habil/formulario", {
             nombre,
-            horario
+            horario,
+            idSolicitud
         });
     } catch (error) {
             return res.status(400).json(error);
     }
 };
+
+habil.renderFormulario = async(req,res) =>{
+    const {idSolicitud} = req.params;
+    try {
+        const sql = `SELECT C.Nombre as nombre, C.Horario as horario FROM tb_habil_solicitudes AS S INNER JOIN tb_cursos C ON S.Codigo_curso = C.Codigo_curso WHERE id = ?`;
+        const curso = await pool.query(sql,[idSolicitud]);
+        const nombre = curso[0].nombre;
+        const horario = curso[0].horario;
+        return res.render("habil/formulario", {
+            nombre,
+            horario,
+            idSolicitud
+        });
+    } catch (error) {
+        return res.status(400).json(error);
+    }
+};
+
 
 habil.form = async (req, res) => {
     try {
