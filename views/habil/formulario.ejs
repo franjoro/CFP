@@ -66,6 +66,7 @@
               <progress value="16.66" max="100" id="progBar"></progress>
             </div>
             <form id="form_habil"></form>
+            <input type="hidden" value="<%=codigoCurso%>" id="codigoCurso" name="codigoCurso">
             <div class="card-body" id="sec1" >
               <h3>SECCIÓN 1. DATOS DE IDENTIFICACIÓN</h3>
               <h6 class="lead">DATOS PERSONALES</h6>
@@ -175,6 +176,7 @@
                         type="radio"
                         name="flexRadioDefault"
                         id="flexRadioDefault1"
+                        value="si"
                       />
                       <label class="form-check-label" for="flexRadioDefault1">
                         Si
@@ -186,6 +188,7 @@
                         type="radio"
                         name="flexRadioDefault"
                         id="flexRadioDefault2"
+                        value="no"
                         checked
                       />
                       <label class="form-check-label" for="flexRadioDefault2">
@@ -309,6 +312,7 @@
                       type="radio"
                       name="discapacidadesc"
                       id="discapacidades1"
+                      value="si"
                     />
                     <label class="form-check-label" for="discapacidades1">
                       Si
@@ -321,6 +325,7 @@
                       name="discapacidadesc"
                       id="discapacidades2"
                       checked
+                      value="no"
                     />
                     <label class="form-check-label" for="discapacidades2">
                       No

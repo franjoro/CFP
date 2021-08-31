@@ -60,7 +60,7 @@ habil.gestorDeDocumentacion = async(req,res) =>{
 
 
 habil.main = async (req, res) => {
-    global.global_codigoCurso = req.params.codigoCurso;//ALERTA ESTA ES UNA VARIABLE GLOBAL QUE SE UTILIZARA POCO TIEMPO TOMAR EN CUENTA QUE LAS VARIABLE GLOBALES NO SON VIABLES POR MEMORIA
+    //global.global_codigoCurso = req.params.codigoCurso;//ALERTA ESTA ES UNA VARIABLE GLOBAL QUE SE UTILIZARA POCO TIEMPO TOMAR EN CUENTA QUE LAS VARIABLE GLOBALES NO SON VIABLES POR MEMORIA
     const { codigoCurso } = req.params;
     const idSolicitud =''; //Pasamos esta variabñe vacia
     try {
@@ -71,7 +71,8 @@ habil.main = async (req, res) => {
         return res.render("habil/formulario", {
             nombre,
             horario,
-            idSolicitud
+            idSolicitud,
+            codigoCurso
         });
     } catch (error) {
             return res.status(400).json(error);
@@ -81,14 +82,16 @@ habil.main = async (req, res) => {
 habil.renderFormulario = async(req,res) =>{
     const {idSolicitud} = req.params;
     try {
-        const sql = `SELECT C.Nombre as nombre, C.Horario as horario FROM tb_habil_solicitudes AS S INNER JOIN tb_cursos C ON S.Codigo_curso = C.Codigo_curso WHERE id = ?`;
+        const sql = `SELECT C.Nombre as nombre, C.Horario as horario, C.Codigo_curso as codigoCurso FROM tb_habil_solicitudes AS S INNER JOIN tb_cursos C ON S.Codigo_curso = C.Codigo_curso WHERE id = ?`;
         const curso = await pool.query(sql,[idSolicitud]);
         const nombre = curso[0].nombre;
         const horario = curso[0].horario;
+        const codigoCurso = curso[0].codigoCurso;
         return res.render("habil/formulario", {
             nombre,
             horario,
-            idSolicitud
+            idSolicitud,
+            codigoCurso
         });
     } catch (error) {
         return res.status(400).json(error);
@@ -98,11 +101,12 @@ habil.renderFormulario = async(req,res) =>{
 
 habil.form = async (req, res) => {
     try {
+        const {codigoCurso} = req.body;
         const { global_json1, global_json2, global_json3 } = req.body;
         const { dui, nombres, telMovil, email, sexo } = global_json1;
         const { [0]: { cantidad } } = await pool.query("SELECT COUNT(*) AS cantidad FROM tb_participante WHERE DUI = ?", [dui]);
         if (!cantidad) await pool.query("INSERT INTO tb_participante(DUI, Nombre, Telefono , Email, Genero) VALUES(? ,? , ? ,? ,? )", [dui, nombres, telMovil, email, sexo]);
-        const statment = `INSERT INTO tb_habil_solicitudes(documento, Codigo_curso, json1, json2, json3) VALUES ('${dui}', '${global_codigoCurso}','${JSON.stringify(global_json1)}','${JSON.stringify(global_json2)} ','${JSON.stringify(global_json3)}')`;
+        const statment = `INSERT INTO tb_habil_solicitudes(documento, Codigo_curso, json1, json2, json3) VALUES ('${dui}', '${codigoCurso}','${JSON.stringify(global_json1)}','${JSON.stringify(global_json2)} ','${JSON.stringify(global_json3)}')`;
         const {insertId} = await pool.query(statment);
         res.json({ status: true  , idSolicitud : insertId});
     } catch (error) {

@@ -49,7 +49,10 @@ const ProgressChange = (texto, id, val) => {
   $("#texto").text(texto);
   $("#id").text(id);
 };
+
+
 $(document).ready(function () {
+  
   //Asignamos valor por defecto a combobox Has trabajadoAntes?
   $("#trabajaantes").val('0');
   // Cambiador de progress
@@ -367,6 +370,7 @@ $(document).ready(function () {
     }
   });
 
+
   // FIN SECCION 2 =====================================================================
 
   // SECCION 3 =====================================================================
@@ -415,15 +419,37 @@ $(document).ready(function () {
   //ORDENAMIENTO 
   function ordenarSelect(id_componente)
   {
-    alert("Hod");
     var selectToSort = jQuery('#' + id_componente);
     var optionActual = selectToSort.val();
     selectToSort.html(selectToSort.children('option').sort(function (a, b) {
       return a.text === b.text ? 0 : a.text < b.text ? -1 : 1;
     })).val(optionActual);
   }
+
+  //Funcion busqueda de municipios
   
+   
   //SELECTS
+  $("#depa_nac").focus({
+    width: "100%",
+    ajax: {
+      url: "https://api.salud.gob.sv/departamentos",
+      dataType: "json",
+      delay: 250,
+      data:[{
+        idPais: 68,
+        nombre: 12,
+      }], 
+      processResults: function (data) {
+        return {
+          results: $.map(data, function (obj, index) {
+            return { id: obj.id, text: obj.nombre };
+          }),
+        };
+      },
+      cache: true,
+    },
+  });
   $("#depa_nac").select2({
     width: "100%",
     ajax: {
@@ -449,6 +475,8 @@ $(document).ready(function () {
       },
     },
   });
+
+
 
   $("#depa_nac").on("select2:select", function (e) {
     var idDepartamento = e.params.data.id;
@@ -608,15 +636,15 @@ $(document).ready(function () {
       email = $("#mail").val(),
       discapacidadBool = $("input[name='discapacidadesc']:checked").val(),
       discapacidad = {
-        moverseCaminar: $("#bautismo").is(":checked"),
-        usarBrazosPiernas: $("#comunion").is(":checked"),
-        verLentes: $("#confirmacion").is(":checked"),
-        oirAparatos: $("#confirmacion").is(":checked"),
-        hablar: $("#confirmacion").is(":checked"),
-        retrasoMental: $("#confirmacion").is(":checked"),
-        vestirseAlimentarse: $("#confirmacion").is(":checked"),
-        otro: $("#confirmacion").is(":checked"),
-        otroText: $("#confirmacion").is(":checked"),
+        moverseCaminar: $("#discapacidad1").is(":checked"),
+        usarBrazosPiernas: $("#discapacidad2").is(":checked"),
+        verLentes: $("#discapacidad3").is(":checked"),
+        oirAparatos: $("#discapacidad4").is(":checked"),
+        hablar: $("#discapacidad5").is(":checked"),
+        retrasoMental: $("#discapacidad6").is(":checked"),
+        vestirseAlimentarse: $("#discapacidad7").is(":checked"),
+        otro: $("#discapacidad8").is(":checked"),
+        otroText: $("#otrosdiscapacidades").val(),
       };
       return{
         dui,
@@ -644,14 +672,18 @@ $(document).ready(function () {
   };
 
   const json2 = () =>{
+    let soloFirma;
+    if($('#firmahuella').prop('checked')) {
+      soloFirma = $("#firmahuella").val();
+    }
     const sabeleerEscribir = $("#leerescribir").val(),
       leerEscribir = $("#soloescribir").val(),
-      soloFirma = $("#firmahuella").val(),//importante terminar porque aca no lee todo
       gradoFinalizado = $("#ultgrado").val(),
       estudiaActualmente = $("#estudiaactualmente").val(),
       tiempoestudio = $("#tiempoestudio").val(),
       cursosPasados = $("#cursospasados").val(),
       beneficioCursos = $("#beneficiocursos").val(),
+      curso1 = $("#curso1").val(),
       impartio1 = $("#impartio1").val(),
       year1 = $("#year1").val(),
       beneficio1 = $("#beneficio1").val(),
@@ -660,9 +692,9 @@ $(document).ready(function () {
       year2 = $("#year2").val(),
       beneficio2 = $("#beneficio2").val(),
       curso3 = $("#curso2").val(),
-      impartio3 = $("#impartio2").val(),
-      year3 = $("#year2").val(),
-      beneficio3 = $("#beneficio2").val(),
+      impartio3 = $("#impartio3").val(),
+      year3 = $("#year3").val(),
+      beneficio3 = $("#beneficio3").val(),
       cursopositivo = {
         trabajarPropio: $("#b2").is(":checked"),
         oportunidadProm: $("#b3").is(":checked"),
@@ -711,6 +743,7 @@ $(document).ready(function () {
       tiempoestudio,
       cursosPasados,
       beneficioCursos,
+      curso1,
       impartio1,
       year1,
       beneficio1,
@@ -763,7 +796,7 @@ $(document).ready(function () {
     try {
       let nombreCurso = $("#nombreCurso").val();
       let horarioCurso = $("#horarioCurso").val();
-      //const curso = req.params.codigoCurso;
+      let codigoCurso = $("#codigoCurso").val();
       const alerta = await Swal.fire({
         title: `¿Deseá enviar la solicitud para el curso ${nombreCurso} con horario ${horarioCurso}?`,
         text:
@@ -779,7 +812,7 @@ $(document).ready(function () {
           global_json1,
           global_json2,
           global_json3,
-          //codigoCurso: curso
+          codigoCurso: codigoCurso
         };
         console.log(data);
         loader();

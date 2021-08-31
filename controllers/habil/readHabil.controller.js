@@ -110,13 +110,48 @@ readHabil.readDet = async (req,res) => {
         REPLACE(JSON_EXTRACT(json1, '$.telMovil'), '"','' ) as telMovil,
         REPLACE(JSON_EXTRACT(json1, '$.email'), '"','' ) as email,
         REPLACE(JSON_EXTRACT(json1, '$.discapacidadBool'), '"','' ) as discapacidadBool,
-        REPLACE(JSON_EXTRACT(json1, '$.discapacidad'), '"','' ) as discapacidad,
+        JSON_EXTRACT(json1, '$.discapacidad') as discapacidad,
         REPLACE(JSON_EXTRACT(json1, '$.otroText'), '"','' ) as textoDiscapacidad
         FROM tb_habil_solicitudes WHERE id = ?`;
         const dataJson1 = await pool.query(sqlJson1,[idSolicitud]);
+        const sqlJson2 = `SELECT 
+        REPLACE(JSON_EXTRACT(json2, '$.sabeleerEscribir'), '"','' ) as sabeleerEscribir, 
+        REPLACE(JSON_EXTRACT(json2, '$.leerEscribir'), '"','' ) as leerEscribir, 
+        REPLACE(JSON_EXTRACT(json2, '$.soloFirma'), '"','' ) as soloFirma, 
+        REPLACE(JSON_EXTRACT(json2, '$.gradoFinalizado'), '"','' ) as gradoFinalizado, 
+        REPLACE(JSON_EXTRACT(json2, '$.estudiaActualmente'), '"','' ) as estudiaActualmente, 
+        REPLACE(JSON_EXTRACT(json2, '$.tiempoestudio'), '"','' ) as tiempoestudio, 
+        REPLACE(JSON_EXTRACT(json2, '$.cursosPasados'), '"','' ) as cursosPasados, 
+        REPLACE(JSON_EXTRACT(json2, '$.beneficioCursos'), '"','' ) as beneficioCursos, 
+        REPLACE(JSON_EXTRACT(json2, '$.curso1'), '"','' ) as curso1, 
+        REPLACE(JSON_EXTRACT(json2, '$.impartio1'), '"','' ) as impartio1, 
+        REPLACE(JSON_EXTRACT(json2, '$.year1'), '"','' ) as year1, 
+        REPLACE(JSON_EXTRACT(json2, '$.beneficio1'), '"','' ) as beneficio1, 
+        REPLACE(JSON_EXTRACT(json2, '$.curso2'), '"','' ) as curso2, 
+        REPLACE(JSON_EXTRACT(json2, '$.impartio2'), '"','' ) as impartio2, 
+        REPLACE(JSON_EXTRACT(json2, '$.year2'), '"','' ) as year2, 
+        REPLACE(JSON_EXTRACT(json2, '$.beneficio2'), '"','' ) as beneficio2, 
+        REPLACE(JSON_EXTRACT(json2, '$.curso3'), '"','' ) as curso3, 
+        REPLACE(JSON_EXTRACT(json2, '$.impartio3'), '"','' ) as impartio3, 
+        REPLACE(JSON_EXTRACT(json2, '$.year3'), '"','' ) as year3, 
+        REPLACE(JSON_EXTRACT(json2, '$.beneficio3'), '"','' ) as beneficio3, 
+        JSON_EXTRACT(json2, '$.cursopositivo') as cursopositivo, 
+        REPLACE(JSON_EXTRACT(json2, '$.nobeneficioc'), '"','' ) as nobeneficioc, 
+        JSON_EXTRACT(json2, '$.actividades') as actividades, 
+        REPLACE(JSON_EXTRACT(json2, '$.trabajaantes'), '"','' ) as trabajaantes, 
+        REPLACE(JSON_EXTRACT(json2, '$.tiempoSinTrabajar'), '"','' ) as tiempoSinTrabajar, 
+        REPLACE(JSON_EXTRACT(json2, '$.tipoempleo'), '"','' ) as tipoempleo, 
+        REPLACE(JSON_EXTRACT(json2, '$.sectorDeTrabajo'), '"','' ) as sectorDeTrabajo, 
+        REPLACE(JSON_EXTRACT(json2, '$.recibeIngresos'), '"','' ) as recibeIngresos, 
+        JSON_EXTRACT(json2, '$.ingresos') as ingresos, 
+        JSON_EXTRACT(json2, '$.espectativaLogro') as espectativaLogro, 
+        REPLACE(JSON_EXTRACT(json2, '$.pertinencia'), '"','' ) as pertinencia
+        FROM tb_habil_solicitudes WHERE id = ?`;
+        const dataJson2 = await pool.query(sqlJson2,[idSolicitud]);
         return res.status(200).json({ 
             status: true,
-            data: dataJson1 
+            data: dataJson1 ,
+            data2: dataJson2
         });
 
     } catch (error) {
