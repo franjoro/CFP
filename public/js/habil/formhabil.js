@@ -834,4 +834,71 @@ $(document).ready(function () {
       error(`<b>errocode: </b> ${e}`);
     }
   };
+
+  const updateFormulario = async (req) => {
+    try {
+      let nombreCurso = $("#nombreCurso").val();
+      let horarioCurso = $("#horarioCurso").val();
+      let idSolicitud = $("#idSolicitud").val();
+      const alerta = await Swal.fire({
+        title: `¿Deseá modificar la solicitud para el curso ${nombreCurso} con horario ${horarioCurso}?`,
+        text:
+          "Por favor verificar que la información ingresada sea correcta antes de enviar.",
+        icon: "info",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si, enviar",
+      });
+      if (alerta.isConfirmed) {
+        const data = {
+          global_json1,
+          global_json2,
+          global_json3,
+          idSolicitud: idSolicitud
+        };
+        console.log(data);
+        loader();
+        const respuesta = await $.ajax({
+          url: "/habil",
+          type: "PUT",
+          data,
+          dataType: "json"
+        });
+        Swal.close();
+        if(respuesta){
+          alert("actualizado con exito");
+          //tiene que redireccionar
+        }else{
+          error(respuesta);
+        }
+      }
+    } catch (e) {
+      console.log(e);
+      error(`<b>errocode: </b> ${e}`);
+    }
+  };
+
+  $("#btnUpdate").click(() => {
+      //INICIAMOS EL PROCESO DE VALIDACION DEL LADO DEL CLIENTE EN LA QUINTA PARTE DEL FORMULARIO
+      if(!$("#nombrecontacto").val())
+      return error(" <b>errocode: </b> Rellene el campo 'Nombre completo del contacto.'");
+      if(!$("#parentesco").val())
+          return error(" <b>errocode: </b> Rellene el campo 'Parentesco'");
+      if(!$("#direccioncontacto").val())
+          return error(" <b>errocode: </b> Rellene el campo 'Dirección'");
+      if(!$("#departcontact").val())
+          return error(" <b>errocode: </b> Rellene el campo 'Departamento'");
+      if(!$("#municipiocontacto").val())
+          return error(" <b>errocode: </b> Rellene el campo 'Municipio'");
+      if(!$("#fijoContact").val())
+          return error(" <b>errocode: </b> Rellene el campo 'Tel. Fijo'");
+      if(!$("#movilContacto").val())
+          return error(" <b>errocode: </b> Rellene el campo 'Tel. Movil'");
+      
+
+      //FINALIZAMOS EL PROCESO DE VALIDACION DEL LADO DEL CLIENTE EN LA QUINTA PARTE DEL FORMULARIO
+      global_json3 = json3();
+      updateFormulario();
+  });
 });

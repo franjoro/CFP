@@ -43,6 +43,7 @@ router.delete("/deleteSolicitud", authcheck , deleteSolicitud.delete);
 router.post("/updateFile", fileUpload(), updateFile.archivos);
 router.put("/updateComment", authcheck, updateComment.update);
 router.put("/matricular", authcheck, updateHabil.cambiarCurso);
+router.put("/", updateHabil.updateSolicitud);
 router.post("/", habil.form);
 
 //SENTENCIAS RES.PUT

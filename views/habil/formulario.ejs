@@ -1193,9 +1193,16 @@
                 </div>
               </div>
               <hr />
-              <button class="btn btn-success float-right" id="next6">
-                FINALIZAR
-              </button>
+              <%if(idSolicitud != ''){%>
+                <button class="btn btn-success float-right" id="btnUpdate">
+                  MODIFICAR
+                </button>
+              <%}else{%>
+                <button class="btn btn-success float-right" id="next6">
+                  FINALIZAR
+                </button>
+              <%}%>
+              
               <button class="btn btn-primary float-left" id="ant6">
                 EXPECTATIVA Y PERTINENCIA DE LA FORMACIÓN
               </button>
@@ -1216,6 +1223,7 @@
     <script src="/static/js/habil/formhabil.js"></script>
     <%if(idSolicitud != ''){%>
       <script src="/static/js/habil/read.js"></script>
+      <script src="/static/js/habil/update.js"></script>
     <%}%>
   </body>
 </html>

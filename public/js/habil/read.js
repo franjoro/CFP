@@ -170,7 +170,78 @@ const readDetSol = async () =>{
         }
         if(actividad.trabaja == 'true'){
           $("#c4").prop("checked", true);
+          $("#tiempoSinTrabajar").css("display", "none");
+          $("#iftrabaja").css("display", "block");
+          $("#tipoempleo").val(values2.tipoempleo);
         }
+        //¿Ha trabajado antes?
+        $("#trabajaantes").val(values2.trabajaantes);
+        //1 = si a trabajado antes
+        if(values2.trabajaantes == 1){
+          $("#tiempoSinTrabajar").css("display", "block");
+          $("#tiempoSinTrabajarselect").val(values2.tiempoSinTrabajar);
+        }
+        //¿Usted recibe ingresos?
+        //1= si recibe ingresos
+        $("#recibeingresosselect").val(values2.recibeIngresos);
+        if(values2.recibeIngresos == 1){
+          $("#sirecibeingresos").css("display", "block");
+          const ingresosjson = JSON.parse(values2.ingresos);
+          if(ingresosjson.trabajo == 'true'){
+            $("#ingresos1").prop("checked", true);
+          }
+          if(ingresosjson.ayudaFamiliar == 'true'){
+            $("#ingresos2").prop("checked", true);
+          }
+          if(ingresosjson.remesa == 'true'){
+            $("#ingresos3").prop("checked", true);
+          }
+          if(ingresosjson.pension == 'true'){
+            $("#ingresos4").prop("checked", true);
+          }
+          if(ingresosjson.otros == 'true'){
+            $("#ingresos5").prop("checked", true);
+          }
+          $("#otrosIngresos").val(ingresosjson.otrosIngresos);
+          // ¿Qué espera lograr con la capacitación a recibir? espectativaLogro
+          //convertimos a json
+          console.log(values2.espectativaLogro);
+          const espectativasJson = JSON.parse(values2.espectativaLogro);
+          if(espectativasJson.oportunidadProm == 'true'){
+            $("#e1").prop("checked", true);
+          }
+          if(espectativasJson.cambEmpleo == 'true'){
+            $("#e2").prop("checked", true);
+          }
+          if(espectativasJson.obtenerEmpleo == 'true'){
+            $("#e3").prop("checked", true);
+          }
+          if(espectativasJson.trabajarPropio == 'true'){
+            $("#e4").prop("checked", true);
+          }
+          if(espectativasJson.ingresosExtra == 'true'){
+            $("#e5").prop("checked", true);
+          }
+          if(espectativasJson.ninguno == 'true'){
+            $("#e6").prop("checked", true);
+          }
+          if(espectativasJson.otro == 'true'){
+            $("#e7").prop("checked", true);
+          }
+          $("#otrosexpectativas").val(espectativasJson.otrosexpectativas);
+          $("#pertinencia").val(values2.pertinencia);
+        }
+        //Recolectando los valores de json2
+        values3 = data.data3[0];
+        $("#nombrecontacto").val(values3.nombreContacto);
+        $("#parentesco").val(values3.parentesco);
+        $("#direccioncontacto").val(values3.direccionContacto);
+        busquedaDepartamentos(values3.departcontact, '#departcontact');
+        busquedaMunicipio(values3.departcontact, values3.municipiocontacto, "#municipiocontacto");
+        $("#fijoContact").val(values3.fijoContact);
+        $("#movilContacto").val(values3.movilContacto);
+        $("#emailcontacto").val(values3.emailContacto);
+
       }else{
           console.log(data);
       }

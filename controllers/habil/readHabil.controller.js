@@ -148,10 +148,22 @@ readHabil.readDet = async (req,res) => {
         REPLACE(JSON_EXTRACT(json2, '$.pertinencia'), '"','' ) as pertinencia
         FROM tb_habil_solicitudes WHERE id = ?`;
         const dataJson2 = await pool.query(sqlJson2,[idSolicitud]);
+        const sqlJson3 = `SELECT 
+        REPLACE(JSON_EXTRACT(json3, '$.nombreContacto'), '"','' ) as nombreContacto,
+        REPLACE(JSON_EXTRACT(json3, '$.parentesco'), '"','' ) as parentesco,
+        REPLACE(JSON_EXTRACT(json3, '$.direccionContacto'), '"','' ) as direccionContacto,
+        REPLACE(JSON_EXTRACT(json3, '$.departcontact'), '"','' ) as departcontact,
+        REPLACE(JSON_EXTRACT(json3, '$.municipiocontacto'), '"','' ) as municipiocontacto,
+        REPLACE(JSON_EXTRACT(json3, '$.fijoContact'), '"','' ) as fijoContact,
+        REPLACE(JSON_EXTRACT(json3, '$.movilContacto'), '"','' ) as movilContacto,
+        REPLACE(JSON_EXTRACT(json3, '$.emailContacto'), '"','' ) as emailContacto
+        FROM tb_habil_solicitudes WHERE id = ?`;
+        const dataJson3 = await pool.query(sqlJson3,[idSolicitud]);
         return res.status(200).json({ 
             status: true,
             data: dataJson1 ,
-            data2: dataJson2
+            data2: dataJson2,
+            data3: dataJson3
         });
 
     } catch (error) {
