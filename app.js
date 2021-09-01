@@ -39,7 +39,8 @@ app.use("/admin/participantes", require("./routes/participantes.router"));
 app.use("/admin/cursos", require("./routes/cursos.router"));
 app.use("/admin/ec", require("./routes/ec.router"));
 app.use("/admin/habil", require("./routes/habil.router"));
-
+//ROUTER DE LANDING PAGE
+app.use("/landing", require("./src/components/landing/routes/landing.router"));
 
 
 // Router de login
