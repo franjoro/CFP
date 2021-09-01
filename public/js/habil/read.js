@@ -62,9 +62,7 @@ const readDetSol = async () =>{
         if(values.discapacidadBool == 'si'){
           $("#discapacidades1").prop("checked", true);
           $("#discapacidades").css("display", "block");
-          console.log(values.discapacidad);
           const discapacidadesJson = JSON.parse(values.discapacidad);
-          console.log(discapacidadesJson);
           if(discapacidadesJson.moverseCaminar){
             
           }
@@ -136,7 +134,6 @@ const readDetSol = async () =>{
           if(values2.beneficio1 == 'Si' || values2.beneficio2 == 'Si' || values2.beneficio3 == 'Si'){
             $("#cursopositivo").css("display", "block");
             const jsonPositivo = JSON.parse(values2.cursopositivo);
-            console.log(values2.cursopositivo);
             if(jsonPositivo.trabajarPropio == 'true'){
               $("#b2").prop("checked", true);
             }
@@ -179,7 +176,7 @@ const readDetSol = async () =>{
         //1 = si a trabajado antes
         if(values2.trabajaantes == 1){
           $("#tiempoSinTrabajar").css("display", "block");
-          $("#tiempoSinTrabajarselect").val(values2.tiempoSinTrabajar);
+          $("#tiempoSinTrabajarselect").val(values2.tiempoSinTrabajarselect);
         }
         //¿Usted recibe ingresos?
         //1= si recibe ingresos
@@ -205,7 +202,6 @@ const readDetSol = async () =>{
           $("#otrosIngresos").val(ingresosjson.otrosIngresos);
           // ¿Qué espera lograr con la capacitación a recibir? espectativaLogro
           //convertimos a json
-          console.log(values2.espectativaLogro);
           const espectativasJson = JSON.parse(values2.espectativaLogro);
           if(espectativasJson.oportunidadProm == 'true'){
             $("#e1").prop("checked", true);

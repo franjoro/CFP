@@ -139,7 +139,7 @@ readHabil.readDet = async (req,res) => {
         REPLACE(JSON_EXTRACT(json2, '$.nobeneficioc'), '"','' ) as nobeneficioc, 
         JSON_EXTRACT(json2, '$.actividades') as actividades, 
         REPLACE(JSON_EXTRACT(json2, '$.trabajaantes'), '"','' ) as trabajaantes, 
-        REPLACE(JSON_EXTRACT(json2, '$.tiempoSinTrabajar'), '"','' ) as tiempoSinTrabajar, 
+        REPLACE(JSON_EXTRACT(json2, '$.tiempoSinTrabajarselect'), '"','' ) as tiempoSinTrabajarselect, 
         REPLACE(JSON_EXTRACT(json2, '$.tipoempleo'), '"','' ) as tipoempleo, 
         REPLACE(JSON_EXTRACT(json2, '$.sectorDeTrabajo'), '"','' ) as sectorDeTrabajo, 
         REPLACE(JSON_EXTRACT(json2, '$.recibeIngresos'), '"','' ) as recibeIngresos, 

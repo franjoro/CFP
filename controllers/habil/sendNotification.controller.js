@@ -18,7 +18,7 @@ sendNotification.send = async (req, res) => {
     REPLACE(JSON_EXTRACT(json1, '$.nombres'), '"','' ) as nombres, 
     REPLACE(JSON_EXTRACT(json1, '$.apellidos'), '"','' ) as apellidos, 
     C.Nombre as nombreCurso
-    FROM tb_habil_solicitudes S INNER JOIN tb_cursos C ON S.Codigo_curso = C.Codigo_curso WHERE id = 24;`, [
+    FROM tb_habil_solicitudes S INNER JOIN tb_cursos C ON S.Codigo_curso = C.Codigo_curso WHERE id = ?`, [
       idSolicitud,
     ]),
   ];

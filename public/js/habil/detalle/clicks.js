@@ -89,7 +89,8 @@ $(document).ready(function () {
        const comentario = $("#comentarios").val();
        const idSolicitud = $("#idSolicitud").val();
        updateCommentFunction(comentario, 3, idSolicitud);
-       enviarNotificacion();
+       const respuesta = enviarNotificacion();
+       console.log(respuesta);
         Swal.fire(
           'Deleted!',
           'Your file has been deleted.',

@@ -110,7 +110,7 @@ habil.form = async (req, res) => {
         const {insertId} = await pool.query(statment);
         res.json({ status: true  , idSolicitud : insertId});
     } catch (error) {
-        console.log(error);
+        console.log(error); 
         res.status(400).json(error);
     }
 };

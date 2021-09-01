@@ -97,7 +97,6 @@ $(document).ready(function () {
     $("#sec1").css("display", "none");
     $("#sec2").css("display", "block");
     global_json1 = json1();
-    console.log(global_json1);
   });
   $("#next2").click(() => {
 
@@ -185,6 +184,7 @@ $(document).ready(function () {
     $("#sec5").css("display", "none");
     $("#sec6").css("display", "block");
     global_json2 = json2();
+    console.log(global_json2);
   });
 
 
@@ -711,7 +711,7 @@ $(document).ready(function () {
       },
       trabajaantes = $("#trabajaantes").val(),
       tiempoSinTrabajar = $("#tiempoSinTrabajar").val(),
-      tiempoSinTrabajarselect = $("tiempoSinTrabajarselect").val(),
+      tiempoSinTrabajarselect = $("#tiempoSinTrabajarselect").val(),
       tipoempleo = $("#tipoempleo").val(),
       sectorDeTrabajo = $("#sectordetrabajo").val(),
       recibeIngresos = $("#recibeingresosselect").val(),
@@ -814,7 +814,6 @@ $(document).ready(function () {
           global_json3,
           codigoCurso: codigoCurso
         };
-        console.log(data);
         loader();
         const respuesta = await $.ajax({
           url: "/habil",
@@ -857,7 +856,6 @@ $(document).ready(function () {
           global_json3,
           idSolicitud: idSolicitud
         };
-        console.log(data);
         loader();
         const respuesta = await $.ajax({
           url: "/habil",
