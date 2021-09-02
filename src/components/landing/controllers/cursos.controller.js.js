@@ -7,10 +7,19 @@ const pool = require("../../../../models/db");
 
 cursos.main = async (req, res) => {
   const {idPrograma} = req.params;
+  console.log(idPrograma);
   try {
-    const sql =  `SELECT 
-    Codigo_curso as codigo_curso, Nombre as nombre, Date_inicio as fecha_inicio, Date_fin as fecha_fin, Horario as horario, 
-    Fechas as fechas FROM tb_cursos WHERE id_programa = ? and (Estado = 15 );`;
+    let sql;
+    if(idPrograma != undefined){
+       sql =  `SELECT 
+      Codigo_curso as codigo_curso, Nombre as nombre, Date_inicio as fecha_inicio, Date_fin as fecha_fin, Horario as horario, 
+      Fechas as fechas FROM tb_cursos WHERE id_programa = ? and (Estado = 15 );`;
+    }else{
+       sql =  `SELECT 
+      Codigo_curso as codigo_curso, Nombre as nombre, Date_inicio as fecha_inicio, Date_fin as fecha_fin, Horario as horario, 
+      Fechas as fechas FROM tb_cursos WHERE (Estado = 15 OR Estado = 5 )`;
+    }
+    
     const cursos = await pool.query(sql,[idPrograma]);
     return res.render("index", {
       data: cursos

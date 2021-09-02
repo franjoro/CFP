@@ -7,6 +7,6 @@ const cursos = require("../controllers/cursos.controller.js");
 const router = express.Router();
 //SENTANCIAS RES.GET
 // Creamos una ruta para los métodos que tenemos en nuestros controladore
-router.get("/:idPrograma", cursos.main);
+router.get("/:idPrograma?", cursos.main);
 // Exportamos la configuración
 module.exports = router;
