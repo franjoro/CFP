@@ -7,7 +7,6 @@ const pool = require("../../../../models/db");
 
 cursos.main = async (req, res) => {
   const {idPrograma} = req.params;
-  console.log(idPrograma);
   try {
     let sql;
     if(idPrograma != undefined){

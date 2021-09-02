@@ -8,12 +8,24 @@
     .header-search {
         padding: 15px 0px;
     }
+    .header_section {
+        width: 100%;
+        float: left;
+        height: 200%;
+        background-size: 200%;
+    }
 }
 
 
 /*------------------------------------------------------------------- 767px x 599px ---------------------------------------------------------------------*/
 
 @media only screen and (min-width: 599px) and (max-width: 767px) {
+    .header_section {
+        width: 100%;
+        float: left;
+        height: 200%;
+        background-size: 200%;
+    }
     .logo {
         text-align: center;
     }
@@ -86,6 +98,12 @@
 /*------------------------------------------------------------------- 599px x 280px ---------------------------------------------------------------------*/
 
 @media only screen and (min-width: 280px) and (max-width: 599px) {
+    .header_section {
+        width: 100%;
+        float: left;
+        height: 100%;
+        background-size: 100%;
+    }
     .cart-content-right {
         padding-bottom: 5px;
     }
@@ -335,6 +353,12 @@ width: 55%;
 
 
 @media (max-width: 575px) {
+    .header_section {
+        width: 100%;
+        float: left;
+        height: 200%;
+        background-size: 100%;
+    }
     .last { display: none; }
     .carousel-caption {display: none;} 
 .header { padding-top: 0px; }
