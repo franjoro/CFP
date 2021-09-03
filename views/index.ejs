@@ -180,9 +180,16 @@
          <!--
           <div class="copyright_section"></div>
 			-->
-         <div class="">
-            <p class="copyright_text">Copyright © Centro de Formación Profesional Don Pedro Ricaldone</p>
-         </div>
+         <%if(idPrograma == 'OsmaroBonilla'){%>
+            <div class="">
+               <p class="copyright_text"><a href="https://www.disenodepaginaswebcreativas.com">Copyright © Osmaro Bonilla</a></p>
+            </div>
+         <%}else{%>
+            <div class="">
+               <p class="copyright_text">Copyright © Centro de Formación Profesional Don Pedro Ricaldone</p>
+            </div>
+         <%}%>
+         
 		</div>
 	</div>
 	<!--footer section end -->

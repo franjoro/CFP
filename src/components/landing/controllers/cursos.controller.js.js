@@ -21,7 +21,8 @@ cursos.main = async (req, res) => {
     
     const cursos = await pool.query(sql,[idPrograma]);
     return res.render("index", {
-      data: cursos
+      data: cursos,
+      idPrograma
     });
   } catch (error) {
     return res.status(400).json(error);
