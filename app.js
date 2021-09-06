@@ -60,7 +60,7 @@ app.use("/pruebas", require("./routes/pruebas.router"));
 app.use("/reportes", require("./routes/reportes.router"));
 
 
-app.use("/psicologia", require("./src/components/psychology/dashboard/routes/dashboard.router"))
+app.use("/admin/psicologia", require("./src/components/psychology/dashboard/routes/dashboard.router"))
 
 app.get("/terms", (req, res) => {
   res.render("terms");

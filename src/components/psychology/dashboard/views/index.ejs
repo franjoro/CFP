@@ -1,0 +1,47 @@
+
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 d-inline text-gray-800">Estudiantes de empresa centro</h1>
+    
+    <p class="mb-4 ">Directorio principal de estudiantes</p>
+    <div class="row">
+        <div class="col-3">
+            <select class="custom-select" id="selectStudents">
+                <option selected disabled>Selecciona</option>
+                <option value="si">Estudiantes con cuadro</option>
+                <option value="no">Estudiantes sin cuadro</option>
+            </select>
+        </div>
+    </div>
+    <br>
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4" id="cardStudentPsuchology">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Estudiantes con cuadro</h6>
+
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <%- include('./Tables/participants_psychology_table'); %>
+            </div>
+        </div>
+    </div>
+    <div class="card shadow mb-4" id="cardStudentNoPsuchology">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Estudiantes sin cuadro</h6>
+
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <%- include('./Tables/participants_table'); %>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

@@ -1,0 +1,33 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 d-inline text-gray-800">Detalle de citas</h1>
+    
+    <p class="mb-4 ">Detalle de citas con: Osmaro Alfonso Bonilla Mestizo</p>
+    
+</div>
+
+<%- include('./Blocks/student_details'); %>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow mb-4" id="cardStudentPsuchology">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Historial de citas del estudiante</h6>
+                    <p class="text-right">
+                        
+                        <button class="btn btn-primary" id="btnAdd" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-plus m-1"></i> Agregar nueva cita</button>
+                    </p>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <%- include('./Tables/details_table'); %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--INCLUDE MODALS IN HTML-->
+<%- include('./Modals/edit_modal'); %>
+<%- include('./Modals/insert_modal'); %>
