@@ -3,7 +3,7 @@
     <!-- Page Heading -->
     <h1 class="h3 mb-2 d-inline text-gray-800">Detalle de citas</h1>
     
-    <p class="mb-4 ">Detalle de citas con: Osmaro Alfonso Bonilla Mestizo</p>
+    <p class="mb-4 ">Detalle de citas con: <span id="nombredet"></span></p>
     
 </div>
 
@@ -31,3 +31,5 @@
 <!--INCLUDE MODALS IN HTML-->
 <%- include('./Modals/edit_modal'); %>
 <%- include('./Modals/insert_modal'); %>
+<!--Collect values GET-->
+<input type="hidden" id="idStudent" name="idStudent" value="<%= idStudent%>">

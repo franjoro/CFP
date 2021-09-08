@@ -211,6 +211,7 @@ $(document).ready(function () {
         processResults: function (data) {
           return {
             results: $.map(data, function (obj, index) {
+              console.log(obj.id);
               return { id: obj.id, text: obj.Nombre };
             }),
           };
@@ -218,6 +219,7 @@ $(document).ready(function () {
         cache: true,
       },
     });
+    alert(idcarrera);
   });
 
   // FIN SECCION 1 =====================================================================

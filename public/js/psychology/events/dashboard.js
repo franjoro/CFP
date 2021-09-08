@@ -6,6 +6,8 @@ $(document).ready(function () {
         } else {
             seeUserWhitPsichology();
         }
-      });
+    });
+    table();
+    tableCadre();
 });
    
