@@ -7,13 +7,26 @@ const { getUserDataByToken } = require("../../../../../../middlewares/auth");
 // Requremimos utils encriptador
 
 createDetails.addDetail = async (req, res) => {
- const {idStudent} = req.params;
- try {
-   return res.json({idStudent: idStudent});
- } catch (error) {
-  console.log(error);
-  return res.status(400).json({ status: false, error });
- }
+  const {idStudent} = req.params;
+  //We collect the req.body
+  const data = [
+    req.body.idStudent,
+    req.body.fullDate
+  ];
+  //New format DATETIME
+  try {
+    //We write the query sql 
+    const sql = `INSERT INTO tb_psychology(id_student, date, status) VALUES (?,?)`;
+    //execute the query
+    await pool.query(sql,data);
+    //return status
+    return res.json({status: true});
+  }catch (error) {
+    //print the error in console
+    console.log(error);
+    //return status false
+    return res.status(400).json({ status: false, error });
+  }
 };
 
 

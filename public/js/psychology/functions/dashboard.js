@@ -64,7 +64,7 @@ function table(){
             render(data, type, row) {
               const html = `
               <div class="btn-group" role = "group" aria - label="Basic example">
-              <a href="./psicologia/detalles/${row.id}" class="btn btn-success"><i class="fas fa-plus"></i></a>
+              <a href="./detalles/${row.id}" class="btn btn-success"><i class="fas fa-plus"></i></a>
             </div >`;
               return html;
             },
@@ -104,7 +104,7 @@ function tableCadre(){
             render(data, type, row) {
               const html = `
               <div class="btn-group" role = "group" aria - label="Basic example">
-                <a href="./psicologia/detalles/${row.id}" class="btn btn-success"><i class="fas fa-plus"></i></a>
+                <a href="./detalles/${row.id}" class="btn btn-success"><i class="fas fa-plus"></i></a>
             </div >`;
               return html;
             },

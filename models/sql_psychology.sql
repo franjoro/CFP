@@ -3,7 +3,7 @@
 
 --INSERT tb_psychology --
 sql = `INSERT INTO tb_psychology(id_student, date, next_date, results, observations, status) VALUES (?,?,?,?,?,?)`
-sql = `INSERT INTO tb_psychology(id_student, status) VALUES (?,?)`
+sql = `INSERT INTO tb_psychology(id_student, status, date) VALUES (?,?)`
 --UPDATE tb_psychology --
 sql = `UPDATE tb_psychology SET  date = ?, next_date = ?, results = ?, observations = ?, status = ? WHERE id_psychology = ?`
 --DELETE tb_psychology --
