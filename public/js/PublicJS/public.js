@@ -58,14 +58,16 @@ let global_data_actualizacionEmpresa;
 let global_data_cursos;
 let global_data_firmante;
 
-
+localStorage.removeItem('paso');
 const seccion =() =>{
   if(localStorage.getItem('paso') == 2){
     stepper1.next();
+    AsginarGlobalEmpresa();
   }
   if(localStorage.getItem('paso') == 3){
     stepper1.next();
     stepper1.next();
+    AsginarGlobalEmpresa();
     AsginarGlobalCursos();
   }
 }
@@ -308,7 +310,7 @@ const GenerarPdf = async (curso) => {
   }
 };
 $(document).ready(() => {
-  seccion();
+  //seccion();
   global_empresa_seleccionada = $("#id_empresa").val();
   // Mascaras para dui y telefono
   $("#dui").mask("00000000-0");
