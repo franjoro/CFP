@@ -49,6 +49,7 @@ const loader = () => {
     },
   });
 };
+
 let global_empresa_seleccionada = false;
 let global_estado_participante = false;
 //Contiene información a insertar
@@ -56,6 +57,18 @@ let global_data_solicitud;
 let global_data_actualizacionEmpresa;
 let global_data_cursos;
 let global_data_firmante;
+
+
+const seccion =() =>{
+  if(localStorage.getItem('paso') == 2){
+    stepper1.next();
+  }
+  if(localStorage.getItem('paso') == 3){
+    stepper1.next();
+    stepper1.next();
+    AsginarGlobalCursos();
+  }
+}
 const AsginarGlobalEmpresa = () => {
   global_data_actualizacionEmpresa = {
     aportacion: $("#aportacion").val(),
@@ -145,6 +158,7 @@ const AsginarGlobalCursos = () => {
   $("#cursos_files").append(ContentHtml);
   global_data_solicitud = JSON.stringify(local);
   global_data_cursos = JSON.stringify(data);
+  localStorage.setItem('paso',3);
   stepper1.next();
 };
 const registrarSolicitud = async () => {
@@ -294,6 +308,7 @@ const GenerarPdf = async (curso) => {
   }
 };
 $(document).ready(() => {
+  seccion();
   global_empresa_seleccionada = $("#id_empresa").val();
   // Mascaras para dui y telefono
   $("#dui").mask("00000000-0");
@@ -400,6 +415,7 @@ $(document).ready(() => {
     storage.push(data);
     storage = JSON.stringify(storage);
     localStorage.clear();
+    localStorage.setItem('paso',2);
     localStorage.setItem("storage", storage);
     return 1;
   };
@@ -448,6 +464,7 @@ const VerificarEmpresa = () => {
     error("<b>errcode: </b> DEBE RELLENAR LOS CAMPOS DEL FIRMANTE");
   }else{
     AsginarGlobalEmpresa();
+    localStorage.setItem('paso',2);
     stepper1.next();
   }
 };
