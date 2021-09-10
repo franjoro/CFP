@@ -20,7 +20,11 @@ $(document).ready(() => {
           });
           Swal.close();
           if(res){
-            alert("Insertado correctamente");
+            // Toast.fire({
+            //   icon: "success",
+            //   title: "Insertado correctamente",
+            // });
+           location.reload();
             // window.location.replace(`/habil/documentacion/habil/${respuesta.idSolicitud}/documento/${global_json1.dui}`);
           }else{
             error(res);

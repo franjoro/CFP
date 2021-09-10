@@ -6,6 +6,7 @@ sql = `INSERT INTO tb_psychology(id_student, date, next_date, results, observati
 sql = `INSERT INTO tb_psychology(id_student, status, date) VALUES (?,?)`
 --UPDATE tb_psychology --
 sql = `UPDATE tb_psychology SET  date = ?, next_date = ?, results = ?, observations = ?, status = ? WHERE id_psychology = ?`
+sql = `UPDATE tb_psychology SET  date = ?, next_date = ? WHERE id_psychology = ?`;
 --DELETE tb_psychology --
 sql = `DELETE tb_psychology WHERE id_psychology = ?`
 --CHANGE STATUS tb_psychology --
@@ -13,35 +14,33 @@ sql = `UPDATE tb_psychology SET status=? WHERE id_psychology = ?`
 
 
 --INSERT tb_reasons_psychology--
-sql = `INSERT INTO tb_reasons_psychology(id_psychology, id_reason) VALUES (?,?)`
+sql = `INSERT INTO tb_reasons_psychology(id_psychology, id_reason) VALUES (?,?)`;
 --UPDATE tb_reasons_psychology--
-sql = `UPDATE tb_reasons_psychology SET id_reason=? WHERE id_reason_psychology = ? `--no creo que se utilice --
+sql = `UPDATE tb_reasons_psychology SET id_reason=? WHERE id_reason_psychology = ? `;--no creo que se utilice --
 --DELETE tb_reasons_psychology--
-sql = `DELETE tb_reasons_psychology WHERE id_reason_psychology = ?`
+sql = `DELETE tb_reasons_psychology WHERE id_reason_psychology = ?`;
 
 
 --INSERT tb_strategies_psychology--
-sql = `INSERT INTO tb_strategies_psychology(id_strategy, id_psychology) VALUES (?,?)`
+sql = `INSERT INTO tb_strategies_psychology(id_strategy, id_psychology) VALUES (?,?)`;
 --UPDATE tb_strategies_psychology-- 
-sql = `UPDATE tb_strategies_psychology SET id_strategy = ?,id_psychology = ? WHERE id_strategy_psychology = ?`
+sql = `UPDATE tb_strategies_psychology SET id_strategy = ?,id_psychology = ? WHERE id_strategy_psychology = ?`;
 --DELETE tb_strategies_psychology--
-sql = `DELETE tb_strategies_psychology WHERE id_strategy_psychology = ?`
+sql = `DELETE tb_strategies_psychology WHERE id_strategy_psychology = ?`;
 
 -- ============================ READS =====================================--
 
 
---SELECT for detail table whit id_student
-sql = `SELECT date, next_date, id_psychology FROM tb_psychology WHERE id_student = ? AND status = 0`
 
 
 --SELECT FOR UPDATE FORM
 
 --select tb_strategies_psychology
-sql = `SELECT id_strategy_psychology, id_strategy FROM tb_strategies_psychology WHERE id_psychology = ?`
+sql = `SELECT id_strategy_psychology, id_strategy FROM tb_strategies_psychology WHERE id_psychology = ?`;
 --select tb_reasons_psychology
-sql = `SELECT id_reason, id_reason_psychology FROM tb_reasons_psychology WHERE id_psychology = ?`
+sql = `SELECT id_reason, id_reason_psychology FROM tb_reasons_psychology WHERE id_psychology = ?`;
 --select tb_psychology
-sql = `SELECT date, next_date, results, observations, status FROM tb_psychology WHERE id_psychology = ?`
+
 
 
 
@@ -72,3 +71,8 @@ FROM tb_ec_alumno WHERE id = ?;`
 
 --SELECT for details table
 sql = `SELECT date, next_date, id_psychology FROM tb_psychology WHERE status = 0`
+
+--SELECT for detail table whit id_student
+sql = `SELECT date, next_date, id_psychology FROM tb_psychology WHERE id_student = ? AND status = 0`
+
+sql = `SELECT date, next_date, results, observations, status FROM tb_psychology WHERE id_psychology = ?`;

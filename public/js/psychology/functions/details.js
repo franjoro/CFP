@@ -7,13 +7,60 @@ function inputDate(id){
         yearRange: "-100:+0"
     });
 }
+//SECCTION FOR READ SPECIFIC PSYCHOLOGY CASE 
+
+//fcuntion model date 
+const modelDate  =(date) =>{
+    const year = new Date(date).getFullYear();
+    let month = new Date(date).getMonth();
+    let day = new Date(date).getDate();
+    if(month<10){
+        month = '0'+month;
+    }
+    if(day<10){
+        day = '0'+day;
+    }
+    const dateReturn = (year+'-'+month+'-'+day);
+    return dateReturn;
+};
+const modelHour = (date) =>{
+    let hour = new Date(date).getHours();
+    let minutes = new Date(date).getMinutes();
+    if(hour<10){
+        hour = '0'+hour;
+    }
+    if(minutes<10){
+        minutes = '0'+minutes;
+    }
+    const hourReturn = hour+':'+minutes+':00';
+    return hourReturn;
+};
+const readPsychology = async (idPsychology) =>{
+    const data = await $.ajax({
+        url: `/admin/psicologia/detailPsychology/${idPsychology}`
+    });
+    $("#nextDateEdit").val(modelDate(data.psychologyCase.date));
+    $("#nextHourEdit").val(modelHour(data.psychologyCase.date));
+    $("#idPsychology").val(data.psychologyCase.id_psychology);
+    if(data.psychologyCase.next_date != null){
+        $("#followUpHourEdit").val(modelHour(data.psychologyCase.next_date));
+        $("#followUpDateEdit").val(modelDate(data.psychologyCase.next_date));
+    }else{
+        $("#followUpHourEdit").val(null);        
+        $("#followUpDateEdit").val(null);
+
+    }
+    
+    // console.log(data.psychologyCase.date);
+
+    // $("#nextDateEdit").val(d);
+};
+
 
 const readDetailsStudent = async () =>{
     const idStudent = $("#idStudent").val();
     const data = await $.ajax({ url: `/admin/psicologia/detailsStudent/${idStudent}`});
     try {
-        console.log(data);
-        console.log(data.datos.carnet);
         $("#nombredet").text(data.datos.nombres + " " + data.datos.apellidos);
         $("#nombre").text(data.datos.nombres + " " + data.datos.apellidos);
         $("#carnet").text(data.datos.carnet);
@@ -68,34 +115,33 @@ function detailsTable(){
         },
         {
             render(data, type, row){
-                const day = new Date(row.date).getDate();
-                const month = new Date(row.date).getMonth();
-                const year = new Date(row.date).getFullYear();
-                return (day+"/"+month+"/"+year);
+                const fullDate = modelDate(row.date);
+                return (fullDate);
+
             }
         },
         {
             render(data, type, row){
-                const hour = new Date(row.date).getHours();
-                const minuts = new Date(row.date).getMinutes();
-                return (hour+":"+minuts);
+                return (modelHour(row.date));
             }
         },
         {
             render(date, type, row){
-                const day = new Date(row.next_date).getDate();
-                const month = new Date(row.next_date).getMonth();
-                const year = new Date(row.next_date).getFullYear();
-                const hour = new Date(row.next_date).getHours();
-                const minuts = new Date(row.next_date).getMinutes();
-                return (day+"/"+month+"/"+year + " a las "+hour+":"+minuts);
+                if(row.next_date != null){
+                    const hour = modelHour(row.next_date);
+                    const fullDate = modelDate(row.next_date);
+                    return (fullDate + " a las "+hour);
+                }else{  
+                    return '-';
+                }
+                
             }
         },
         {
             render(data, type, row) {
               const html = `
               <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#"><i class="fas fa-trash-alt"></i></button>
-                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editModal"><i class="fas fa-pen"></i></button>
+                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editModal" onclick='readPsychology(${row.id_psychology})'><i class="fas fa-pen"></i></button>
                     <button type="button" class="btn btn-success" ><i class="fas fa-info"></i></button>
               `;
               return html;

@@ -4,34 +4,6 @@ const { isEmail, isEmpty } = require("validator");
 // Requerimos pool de base de datos si es necesario
 const pool = require("../../../../../../models/db");
 const { getUserDataByToken } = require("../../../../../../middlewares/auth");
-// Requremimos utils encriptador
-
-// details.main = async (req, res) => {
-//   const usuario = getUserDataByToken(req.cookies.token);
-//   try {
-//     // let sql;
-//     // if(idPrograma != undefined){
-//     //    sql =  `SELECT 
-//     //   Codigo_curso as codigo_curso, Nombre as nombre, Date_inicio as fecha_inicio, Date_fin as fecha_fin, Horario as horario, 
-//     //   Fechas as fechas FROM tb_cursos WHERE id_programa = ? and (Estado = 15 );`;
-//     // }else{
-//     //    sql =  `SELECT 
-//     //   Codigo_curso as codigo_curso, Nombre as nombre, Date_inicio as fecha_inicio, Date_fin as fecha_fin, Horario as horario, 
-//     //   Fechas as fechas FROM tb_cursos WHERE (Estado = 15 OR Estado = 5 )`;
-//     // }
-    
-//     // const cursos = await pool.query(sql,[idPrograma]);
-//     // return res.render("index", {
-//     //   data: cursos,
-//     //   idPrograma
-//     // });
-//     return res.render('psychology/dashboard', {
-//       data: usuario.data,
-//     });
-//   } catch (error) {
-//     return res.status(400).json(error);
-//   }
-// };
 
 
 
@@ -73,7 +45,7 @@ details.detailsStudent = async (req,res) =>{
 
 details.detailsTable = async (req,res) =>{
     const {idStudent} = req.params; 
-    const sql = `SELECT date, next_date, id_psychology, status FROM tb_psychology WHERE id_student = ? AND status = 0;`;
+    const sql = `SELECT date, next_date, id_psychology, status FROM tb_psychology WHERE id_student = ? `;
     const params = [idStudent];
     try {
         const data = await pool.query(sql, params);
@@ -85,5 +57,19 @@ details.detailsTable = async (req,res) =>{
     }
 };
 
+details.detailPsychology = async (req, res) =>{
+    const {idPsychology} = req.params;
+    const sql = `SELECT date, next_date, results, observations, status,id_psychology FROM tb_psychology WHERE id_psychology = ?`;
+    const params = [idPsychology];
+    try {
+        const data = await pool.query(sql, params);
+        const psychologyCase = data[0];
+        return res.json({
+            psychologyCase
+        });
+    } catch (error) {
+        return res.status(400).json(error);
+    }
+};
 
 module.exports = details;

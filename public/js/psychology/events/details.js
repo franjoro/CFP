@@ -2,8 +2,10 @@ $(document).ready(function () {
     //Configuraciones iniciales
     inputDate("#nextDate");
     inputDate("#nextDateEdit");
+    inputDate("#followUpDateEdit");
     readDetailsStudent();
     detailsTable();
+    
 });
    
 

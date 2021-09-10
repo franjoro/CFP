@@ -1,22 +1,21 @@
 // declarar variable a exportar
-const createDetails = {};
-const { isEmail, isEmpty } = require("validator");
+const updateDetails = {};
 // Requerimos pool de base de datos si es necesario
 const pool = require("../../../../../../models/db");
 const { getUserDataByToken } = require("../../../../../../middlewares/auth");
 // Requremimos utils encriptador
 
-createDetails.addDetail = async (req, res) => {
-  const {idStudent} = req.params;
+updateDetails.updatePsychology = async (req, res) => {
   //We collect the req.body
   const data = [
-    req.body.idStudent,
-    req.body.fullDate
+    req.body.date,
+    req.body.nextDate,
+    req.body.idPsychology,
   ];
   //New format DATETIME
   try {
-    //We write the query sql 
-    const sql = `INSERT INTO tb_psychology(id_student, date, status) VALUES (?,?,0)`;
+    //We write the query sql s
+    const sql = `UPDATE tb_psychology SET  date = ?, next_date = ? WHERE id_psychology = ?`;
     //execute the query
     await pool.query(sql,data);
     //return status
@@ -30,4 +29,4 @@ createDetails.addDetail = async (req, res) => {
 };
 
 
-module.exports = createDetails;
+module.exports = updateDetails;

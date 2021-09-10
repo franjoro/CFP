@@ -10,10 +10,10 @@
             </div>
             <div class="modal-body">
                 <form id="formparticipantesEdit" >
-                   
+                   <input type="hidden" id="idPsychology">
                 <div class="form-row">
                     <div class="col-sm-12 col-md-6 col-lg-12">
-                        <label>Fecha para proxima cita</label>
+                        <label>Fecha cita</label>
                         <input
                             type="text"
                             class="form-control form-control-sm"
@@ -22,8 +22,21 @@
                         />
                     </div>
                     <div class="col-sm-12 col-md-6 col-lg-12">
-                        <label>Hora de la siguiente cita</label>
+                        <label>Hora  cita</label>
                         <input id="nextHourEdit" type="time" class="form-control" />
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-12">
+                        <label>Fecha seguimiento</label>
+                        <input
+                            type="text"
+                            class="form-control form-control-sm"
+                            name="followUpDateEdit"
+                            id="followUpDateEdit"
+                        />
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-12">
+                        <label>Hora  seguimiento</label>
+                        <input id="followUpHourEdit" type="time" class="form-control" />
                     </div>
                 </div>
             </div>
