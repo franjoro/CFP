@@ -52,7 +52,7 @@ details.detailsTable = async (req,res) =>{
     //We collect params for sql query
     const {idStudent} = req.params; 
     //Writte sql query
-    const sql = `SELECT date, next_date, id_psychology, status FROM tb_psychology WHERE id_student = ? `;
+    const sql = `SELECT date, next_date, id_psychology,id_student, status FROM tb_psychology WHERE id_student = ? `;
     //We collect params 
     const params = [idStudent];
     try {

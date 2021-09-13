@@ -18,50 +18,12 @@
             
                     </div>
                     <div class="card-body">
-                        <div class="custom-control custom-checkbox custom-control-inline m-2">
-                            <input type="checkbox" class="custom-control-input" id="customCheck1">
-                            <label class="custom-control-label" for="customCheck1">Check this custom checkbox Check this custom checkbox</label>
-                        </div>
-                        <div class="custom-control custom-checkbox custom-control-inline m-2">
-                            <input type="checkbox" class="custom-control-input" id="customCheck1">
-                            <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
-                        </div>
-                        <div class="custom-control custom-checkbox custom-control-inline m-2">
-                            <input type="checkbox" class="custom-control-input" id="customCheck1">
-                            <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
-                        </div>
-                        <div class="custom-control custom-checkbox custom-control-inline m-2">
-                            <input type="checkbox" class="custom-control-input" id="customCheck1">
-                            <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
-                        </div>
-                        <div class="custom-control custom-checkbox custom-control-inline m-2">
-                            <input type="checkbox" class="custom-control-input" id="customCheck1">
-                            <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
-                        </div>
-                        <div class="custom-control custom-checkbox custom-control-inline m-2">
-                            <input type="checkbox" class="custom-control-input" id="customCheck1">
-                            <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
-                        </div>
-                        <div class="custom-control custom-checkbox custom-control-inline m-2">
-                            <input type="checkbox" class="custom-control-input" id="customCheck1">
-                            <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
-                        </div>
-                        <div class="custom-control custom-checkbox custom-control-inline m-2">
-                            <input type="checkbox" class="custom-control-input" id="customCheck1">
-                            <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
-                        </div>
-                        <div class="custom-control custom-checkbox custom-control-inline m-2">
-                            <input type="checkbox" class="custom-control-input" id="customCheck1">
-                            <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
-                        </div>
-                        <div class="custom-control custom-checkbox custom-control-inline m-2">
-                            <input type="checkbox" class="custom-control-input" id="customCheck1">
-                            <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
-                        </div>
-                        <div class="custom-control custom-checkbox custom-control-inline m-2">
-                            <input type="checkbox" class="custom-control-input" id="customCheck1">
-                            <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
-                        </div>
+                        <% dataReason.forEach( (element)=> { %>
+                            <div class="custom-control custom-checkbox custom-control-inline m-2">
+                                <input type="checkbox" class="custom-control-input" id="ckR<%= element.id_reason%>">
+                                <label class="custom-control-label" for="ckR<%= element.id_reason%>"><%= element.name%></label>
+                            </div>
+                        <% });%>
                         
                     </div>
                 </div>
@@ -71,30 +33,12 @@
             
                     </div>
                     <div class="card-body">
-                        <div class="custom-control custom-checkbox custom-control-inline m-2">
-                            <input type="checkbox" class="custom-control-input" id="customCheck1">
-                            <label class="custom-control-label" for="customCheck1">Check this custom checkbox Check this custom checkbox</label>
-                        </div>
-                        <div class="custom-control custom-checkbox custom-control-inline m-2">
-                            <input type="checkbox" class="custom-control-input" id="customCheck1">
-                            <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
-                        </div>
-                        <div class="custom-control custom-checkbox custom-control-inline m-2">
-                            <input type="checkbox" class="custom-control-input" id="customCheck1">
-                            <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
-                        </div>
-                        <div class="custom-control custom-checkbox custom-control-inline m-2">
-                            <input type="checkbox" class="custom-control-input" id="customCheck1">
-                            <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
-                        </div>
-                        <div class="custom-control custom-checkbox custom-control-inline m-2">
-                            <input type="checkbox" class="custom-control-input" id="customCheck1">
-                            <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
-                        </div>
-                        <div class="custom-control custom-checkbox custom-control-inline m-2">
-                            <input type="checkbox" class="custom-control-input" id="customCheck1">
-                            <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
-                        </div>
+                        <% dataStrategy.forEach( (element)=> { %>
+                            <div class="custom-control custom-checkbox custom-control-inline m-2">
+                                <input type="checkbox" class="custom-control-input" id="ckS<%= element.id_strategy%>">
+                                <label class="custom-control-label" for="ckS<%= element.id_strategy%>"><%= element.name%></label>
+                            </div>
+                        <% });%>
                         
                     </div>
                 </div>
@@ -151,7 +95,59 @@
         </div>
     </div>
 </div>
+<!--ADD INPUT HIDDEN idStudent-->
+<input type="hidden" id='idStudent' value="<%= idStudent%>">
+<!--THIS SECTION CHECK CKBOX IN CASE-->
+<% dataStrategyForCase.forEach( (element)=> { %>
+    <script>
+        document.getElementById("ckS<%= element.id_strategy%>").checked = true;
+    </script>
+<% });%>
+<% dataReasonForCase.forEach( (element)=> { %>
+    <script>
+        document.getElementById("ckR<%= element.id_reason%>").checked = true;
+    </script>
+<% });%>
+<% dataStrategy.forEach( (element)=> { %>
+    <script>
+        $(document).ready(function () { 
+            managmentStrategy('ckS<%= element.id_strategy%>');
+        });
+    </script>
+<% });%>
+<% dataReason.forEach( (element)=> { %>
+    <script>
+        $(document).ready(function () { 
+            managmentReason('ckR<%= element.id_reason%>');
+        });
+    </script>
+<% });%>
 
 
+
+
+
+
+<script>
+    function managmentStrategy(idCk){
+        $(`#${idCk}`).click(function(){
+            if( $(`#${idCk}`).prop('checked') ) {
+                alert('Seleccionado Strategy');
+            }else{
+                alert('NO Seleccionado Strategy');
+            }
+        });
+    }
+
+    function managmentReason(idCk){
+        $(`#${idCk}`).click(function(){
+            if( $(`#${idCk}`).prop('checked') ) {
+                alert('Seleccionado Reason');
+            }else{
+                alert('NO Seleccionado Reason');
+            }
+        });
+    }
+</script>
 
 

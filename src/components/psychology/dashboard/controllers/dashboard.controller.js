@@ -24,12 +24,32 @@ dashboard.main = async (req, res) => {
 };
 //We create arrow function form and later render 'psychology/form'
 dashboard.form = async (req, res) => {
+  //We collect req.params
+  const {idPsychology, idStudent} = req.params;
   //We collect req.cookies.token
   const usuario = getUserDataByToken(req.cookies.token);
   try {
+    //We writte sql query
+    const sqlStrategy = `SELECT id_strategy, name, description FROM tb_strategies`;
+    const sqlStrategyForCase = `SELECT S.name, SP.id_strategy_psychology, S.id_strategy from tb_strategies as S, (SELECT id_strategy_psychology, id_psychology, id_strategy FROM tb_strategies_psychology) AS SP WHERE SP.id_psychology = ? AND S.id_strategy = SP.id_strategy`;
+    const sqlReason = `SELECT id_reason, name, description from tb_reasons;`;
+    const sqlReasonForCase = `SELECT R.name, RP.id_reason_psychology, R.id_reason FROM tb_reasons AS R, (SELECT * FROM tb_reasons_psychology) AS RP WHERE R.id_reason = RP.id_reason AND RP.id_psychology = ?`;
+    //We collect parameters;
+    const paramsStrategyForCase = [idPsychology];
+    const paramsReasonForCase =[idPsychology];
+    //We execute sql query with pool query
+    const dataStrategy = await pool.query(sqlStrategy);
+    const dataStrategyForCase = await pool.query(sqlStrategyForCase, paramsStrategyForCase);
+    const dataReason = await pool.query(sqlReason);
+    const dataReasonForCase = await pool.query(sqlReasonForCase, paramsReasonForCase);
     //We return render
     return res.render('psychology/form', {
       data: usuario.data,
+      dataStrategy,
+      dataReason,
+      dataStrategyForCase,
+      dataReasonForCase,
+      idStudent
     });
   } catch (error) {
     //We return error

@@ -8,7 +8,7 @@ sql = `INSERT INTO tb_psychology(id_student, status, date) VALUES (?,?)`
 sql = `UPDATE tb_psychology SET  date = ?, next_date = ?, results = ?, observations = ?, status = ? WHERE id_psychology = ?`
 sql = `UPDATE tb_psychology SET  date = ?, next_date = ? WHERE id_psychology = ?`;
 --DELETE tb_psychology --
-sql = `DELETE tb_psychology WHERE id_psychology = ?`
+sql = `DELETE tb_psychology WHERE id_psychology = ?`;
 --CHANGE STATUS tb_psychology --
 sql = `UPDATE tb_psychology SET status=? WHERE id_psychology = ?`
 

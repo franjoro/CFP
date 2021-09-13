@@ -4,6 +4,7 @@
   @params: */
 $(document).ready(function () { 
     //Configuraciones iniciales
+    readDetailsStudent();
     inputDate("#nextDate");
     $("#nextDate").prop("disabled", true);
     $("#nextHour").prop("disabled", true);
