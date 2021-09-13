@@ -49,7 +49,8 @@ dashboard.form = async (req, res) => {
       dataReason,
       dataStrategyForCase,
       dataReasonForCase,
-      idStudent
+      idStudent,
+      idPsychology
     });
   } catch (error) {
     //We return error

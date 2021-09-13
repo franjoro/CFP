@@ -28,7 +28,7 @@ createDetails.addDetail = async (req, res) => {
   }
 };
 
-createDetails.addStrategyPsychology = async()=>{
+createDetails.addStrategyPsychology = async(req, res)=>{
   //We collect the req.body
   const data = [
     req.body.idPsychology,
@@ -48,7 +48,7 @@ createDetails.addStrategyPsychology = async()=>{
     return res.status(400).json({ status: false, error });
   }
 };
-createDetails.addReasonPsychology = async()=>{
+createDetails.addReasonPsychology = async(req,res)=>{
   //We collect the req.body
   const data = [
     req.body.idPsychology,

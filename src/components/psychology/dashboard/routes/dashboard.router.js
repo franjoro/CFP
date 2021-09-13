@@ -14,11 +14,13 @@ const router = express.Router();
 // Creamos una ruta para los métodos que tenemos en nuestros controladore
 
 //Routes get
+//get dashboard
 router.get("/", authcheck, dashboard.main);
-router.get("/formulario/:idPsychology/:idStudent?", authcheck, dashboard.form);
-router.get("/detalles/:idStudent?", authcheck, dashboard.details);
+router.get("/formulario/:idPsychology/:idStudent", authcheck, dashboard.form);
+router.get("/detalles/:idStudent", authcheck, dashboard.details);
 router.get("/studentsTable", dashboard.studentsTableWithoutCadre);
 router.get("/studentsWithCadre", dashboard.studentsTableWithtCadre);
+//get details
 router.get("/detailsStudent/:idStudent", details.detailsStudent);
 router.get("/detailTable/:idStudent", details.detailsTable);
 router.get("/detailPsychology/:idPsychology", details.detailPsychology);

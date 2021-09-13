@@ -27,7 +27,7 @@ deleteDetails.deletePsychology = async (req, res) => {
   }
 };
 
-deleteDetails.deleteStrategyPsychology = async () =>{
+deleteDetails.deleteStrategyPsychology = async (req, res) =>{
   //We collect the req.body
   const data = [
     req.body.idPsychology,
@@ -48,7 +48,7 @@ deleteDetails.deleteStrategyPsychology = async () =>{
   }
 };
 
-deleteDetails.deleteReasonPsychology = async() =>{
+deleteDetails.deleteReasonPsychology = async(req,res) =>{
   //We collect the req.body
   const data = [
     req.body.idPsychology,

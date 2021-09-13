@@ -111,14 +111,14 @@
 <% dataStrategy.forEach( (element)=> { %>
     <script>
         $(document).ready(function () { 
-            managmentStrategy('ckS<%= element.id_strategy%>');
+            managmentStrategy('ckS<%= element.id_strategy%>', '<%= element.id_strategy%>', '<%= idPsychology%>');
         });
     </script>
 <% });%>
 <% dataReason.forEach( (element)=> { %>
     <script>
         $(document).ready(function () { 
-            managmentReason('ckR<%= element.id_reason%>');
+            managmentReason('ckR<%= element.id_reason%>', '<%= element.id_reason%>', '<%= idPsychology%>');
         });
     </script>
 <% });%>
@@ -129,22 +129,22 @@
 
 
 <script>
-    function managmentStrategy(idCk){
+    function managmentStrategy(idCk, idStrategy, idPsychology){
         $(`#${idCk}`).click(function(){
             if( $(`#${idCk}`).prop('checked') ) {
-                alert('Seleccionado Strategy');
+                createStrategyPsychology(idPsychology, idStrategy);
             }else{
-                alert('NO Seleccionado Strategy');
+                deleteStrategyPsychology(idStrategy, idPsychology)
             }
         });
     }
 
-    function managmentReason(idCk){
+    function managmentReason(idCk, idReason, idPsychology){
         $(`#${idCk}`).click(function(){
             if( $(`#${idCk}`).prop('checked') ) {
-                alert('Seleccionado Reason');
+                createReasonPsychology(idPsychology, idReason);
             }else{
-                alert('NO Seleccionado Reason');
+                deleteReasonPsychology(idPsychology, idReason);
             }
         });
     }
