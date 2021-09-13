@@ -1,13 +1,12 @@
-// declarar variable a exportar
+/*@author: Osmaro Bonilla
+  @description: Created Psychology row in tb_psychology with id_student, date, statud = 0
+  @date: 8/09/2021*/
+// declare variables to export
 const createDetails = {};
-const { isEmail, isEmpty } = require("validator");
-// Requerimos pool de base de datos si es necesario
+// We require to database pool
 const pool = require("../../../../../../models/db");
-const { getUserDataByToken } = require("../../../../../../middlewares/auth");
-// Requremimos utils encriptador
-
+//Created arrow function 
 createDetails.addDetail = async (req, res) => {
-  const {idStudent} = req.params;
   //We collect the req.body
   const data = [
     req.body.idStudent,
@@ -28,6 +27,4 @@ createDetails.addDetail = async (req, res) => {
     return res.status(400).json({ status: false, error });
   }
 };
-
-
 module.exports = createDetails;

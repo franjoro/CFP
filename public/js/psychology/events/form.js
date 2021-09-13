@@ -1,5 +1,8 @@
-$(document).ready(function () {
-    
+/*@author: Osmaro Bonilla
+  @description: page deary
+  @date: 6/09/2021
+  @params: */
+$(document).ready(function () { 
     //Configuraciones iniciales
     inputDate("#nextDate");
     $("#nextDate").prop("disabled", true);

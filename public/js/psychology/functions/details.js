@@ -140,7 +140,7 @@ function detailsTable(){
         {
             render(data, type, row) {
               const html = `
-              <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#"><i class="fas fa-trash-alt"></i></button>
+              <button type="button" class="btn btn-danger" onclick='deleteDetail(${row.id_psychology})'><i class="fas fa-trash-alt"></i></button>
                     <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editModal" onclick='readPsychology(${row.id_psychology})'><i class="fas fa-pen"></i></button>
                     <button type="button" class="btn btn-success" ><i class="fas fa-info"></i></button>
               `;

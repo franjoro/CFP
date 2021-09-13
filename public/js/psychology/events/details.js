@@ -1,3 +1,7 @@
+/*@author: Osmaro Bonilla
+  @description: Created Psychology row in tb_psychology with id_student, date, statud = 0
+  @date: 6/09/2021*/
+// declare variables to export
 $(document).ready(function () {
     //Configuraciones iniciales
     inputDate("#nextDate");
@@ -7,17 +11,3 @@ $(document).ready(function () {
     detailsTable();
     
 });
-   
-
-// $(document).ready(function () {
-//     seeUserWhitPsichology();
-//     $("#selectStudents").on("change", function () {
-//         if (this.value == "no") {
-//             seeUserWhitNoPsichology();
-//         } else {
-//             seeUserWhitPsichology();
-//         }
-//     });
-//     table();
-//     tableCadre();
-// });
