@@ -95,7 +95,7 @@ dashboard.studentsTableWithoutCadre = async (req,res) =>{
 dashboard.studentsTableWithtCadre = async (req,res) =>{
   //we writte sql query
   const sql = `
-  SELECT carnet, Nombres, Apellidos, C.Nombre as nombreCarrera, REPLACE(JSON_EXTRACT(json1, '$.Sexo'), '"','' ) as genero, 
+  SELECT DISTINCT carnet, Nombres, Apellidos, C.Nombre as nombreCarrera, REPLACE(JSON_EXTRACT(json1, '$.Sexo'), '"','' ) as genero, 
   REPLACE(REPLACE(JSON_EXTRACT(json1, '$.FechaNac'), '"','' ),'-','/') as fechaNac, A.id FROM tb_ec_alumno as A 
   INNER JOIN tb_psychology P on P.id_student = A.id 
   INNER JOIN tb_ec_carrera C on C.id = REPLACE(JSON_EXTRACT(json1, '$.Carrera'), '"','' )`;

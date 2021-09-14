@@ -24,12 +24,16 @@ router.get("/studentsWithCadre", dashboard.studentsTableWithtCadre);
 router.get("/detailsStudent/:idStudent", details.detailsStudent);
 router.get("/detailTable/:idStudent", details.detailsTable);
 router.get("/detailPsychology/:idPsychology", details.detailPsychology);
+//get form
+router.get('/getDetailsPsychology/:idPsychology', details.getDetailsPsychology);
 //routes post
 router.post("/addDetails/:idStudent", authcheck, createDetails.addDetail);
 router.post("/addStrategyPsychology", authcheck, createDetails.addStrategyPsychology);
 router.post("/addReasonPsychology", authcheck, createDetails.addReasonPsychology);
 //route put
 router.put('/updatePsychology', authcheck, updateDetails.updatePsychology);
+router.put('/updatePsychologyDetail', authcheck, updateDetails.updatePsychologyDetail);
+router.put('/updateStatusPsychology', authcheck, updateDetails.updateStatusPsychology);
 //routes delete
 router.delete('/deletePsychology', authcheck, deleteDetails.deletePsychology);
 router.delete('/deleteStrategyPsychology', authcheck, deleteDetails.deleteStrategyPsychology);

@@ -19,5 +19,9 @@ $(document).ready(function () {
             $("#nextDate").prop("disabled", true);
         }
     });
+    $(`#btnStatus`).click(function(){
+        updateStatudPsychology();
+    });
+    readForm();
 });
    

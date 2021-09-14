@@ -2,7 +2,6 @@
 <div class="container-fluid">
     <!-- Page Heading -->
     <h1 class="h3 mb-2 d-inline text-gray-800">Formulario de cita</h1>
-    <p class="mb-4 ">Cita de 06/09/2021 con Osmaro Alfonso Bonilla</p>
 </div>
 
 <%- include('./Blocks/student_details'); %>
@@ -11,7 +10,7 @@
     <div class="row">
         
         <div class="col-12">
-            <form>
+            <form id="frmUpdateDetailPsychology">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold text-primary">1. Motivo de atención</h6>
@@ -86,16 +85,23 @@
                         <textarea class="form-control" id="txtConsideraciones" rows="3"></textarea>
                     </div>
                 </div>
-            </form>
+            
         </div>
         <div class="col-12">
             <p class="text-right">
                 <button type="submit" class="btn btn-primary">Guardar</button>
             </p>
+        </form>
+            <p class="text-right">
+                <button class="btn btn-success" id="btnStatus">Marcar como realizada</button>
+            </p>
         </div>
+        
+        
     </div>
 </div>
 <!--ADD INPUT HIDDEN idStudent-->
+<input type="hidden" id="idPsychology" value="<%= idPsychology%>">
 <input type="hidden" id='idStudent' value="<%= idStudent%>">
 <!--THIS SECTION CHECK CKBOX IN CASE-->
 <% dataStrategyForCase.forEach( (element)=> { %>

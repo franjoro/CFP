@@ -88,4 +88,24 @@ details.detailPsychology = async (req, res) =>{
         return res.status(400).json(error);
     }
 };
+
+details.getDetailsPsychology = async(req,res) =>{
+    //We collect params for sql query
+    const {idPsychology} = req.params;
+    //Writte sql query
+    const sql = `SELECT next_date, results, observations FROM tb_psychology WHERE id_psychology = ?`;
+    //We collect params 
+    const params = [idPsychology];
+    try {
+        //we execute pool query
+        const data = await pool.query(sql, params);
+        //return json datos
+        return res.json({
+            data
+        });
+    } catch (error) {
+        //return diferents errors
+        return res.status(400).json(error);
+    }
+};
 module.exports = details;
