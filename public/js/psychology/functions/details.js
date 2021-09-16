@@ -100,11 +100,6 @@ function detailsTable(){
             }
         },
         {
-            render(data, type, row){
-                return (new Date(row.date).toLocaleTimeString());
-            }
-        },
-        {
             render(date, type, row){
                 if(row.next_date != null){
                     const hour = modelHour(row.next_date);
