@@ -99,7 +99,7 @@ function detailsTable(){
                     fullDate.setDate(fullDate.getDate()+1);
                 }
                 fullDate.setHours(fullDate.getHours() -6);
-                return (fullDate + 'new date');
+                return ('Fecha: '+fullDate.toLocaleDateString() + ' Hora:'+ fullDate.getHours());
 
             }
         },
