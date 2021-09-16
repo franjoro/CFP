@@ -95,7 +95,8 @@ function detailsTable(){
         {
             render(data, type, row){
                 const fullDate = new Date(row.date);
-                return (fullDate + 'new date' + new Date(new Date(row.date).toLocaleString('en-US', { timeZone: 'America/El_Salvador' })));
+                fullDate.setHours(fullDate.getHours() -6);
+                return (fullDate + 'new date');
 
             }
         },
