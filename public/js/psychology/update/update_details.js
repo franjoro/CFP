@@ -11,6 +11,12 @@ $(document).ready(() => {
           const date=$("#nextDateEdit").val()+' '+$("#nextHourEdit").val();
           const nextDate=$("#followUpDateEdit").val()+' '+$("#followUpHourEdit").val();
           const idPsychology = $("#idPsychology").val();
+          console.log("Fecha");
+          console.log(date);
+          console.log("Siguiente fecha");
+          console.log(nextDate);
+          console.log("idPsychology");
+          console.log(idPsychology);
           const data = {
             date,
             nextDate,
