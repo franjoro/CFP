@@ -35,7 +35,7 @@ $(document).ready(() => {
               Swal.close();
               console.log(res);
               console.log('data');
-              console.log(res.data);
+              console.log(data);
             } catch (error) {
               swal.close();
               console.log(error);

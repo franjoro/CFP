@@ -27,7 +27,7 @@ updateDetails.updatePsychology = async (req, res) => {
     //print the error in console
     console.log(error);
     //return status false
-    return res.status(400).json({ status: false, error , data: data});
+    return res.status(400).json({ status: false,data: data, error });
   }
 };
 
