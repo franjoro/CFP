@@ -13,7 +13,7 @@ function inputDate(id){
 const modelDate  =(date) =>{
     const year = new Date(date).getFullYear().toLocaleString('es-ES');
     let month = new Date(date).getMonth()+1;
-    let day = new Date(date).getDate().toLocaleString('es-ES');
+    let day = new Date(date).getDate();
     if(month<10){
         month = '0'+month;
     }
