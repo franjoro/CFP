@@ -16,6 +16,7 @@ updateDetails.updatePsychology = async (req, res) => {
   ];
   //New format DATETIME
   try {
+    if(data[1] == ''){data[1] = null;}
     //We write the query sql s
     const sql = `UPDATE tb_psychology SET  date = ?, next_date = ? WHERE id_psychology = ?`;
     //execute the query
