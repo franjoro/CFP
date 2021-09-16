@@ -16,7 +16,7 @@ const modelDate  =(date) =>{
         fullDate.setDate(fullDate.getDate());
     }
     fullDate.setHours(fullDate.getHours() +6);
-    const year = fullDate.toLocaleDateString();
+    const year = fullDate.getFullYear();
     let month = fullDate.getMonth();
     let day = fullDate.getDate();
     if(month<10){
@@ -29,21 +29,22 @@ const modelDate  =(date) =>{
     return dateReturn;
 };
 const modelHour = (date) =>{
-    const fullDate = new Date(date);
-    if(fullDate.getHours() >=18 || fullDate.getHours()<=6){
-        fullDate.setDate(fullDate.getDate());
-    }
-    fullDate.setHours(fullDate.getHours() +6);
-    let hour = new fullDate.getHours().toLocaleString('es-ES');
-    let minutes = new fullDate.getMinutes().toLocaleString('es-ES');
-    if(hour<10){
-        hour = '0'+hour;
-    }
-    if(minutes<10){
-        minutes = '0'+minutes;
-    }
-    const hourReturn = hour+':'+minutes+':00';
-    return hourReturn;
+    // const fullDate = new Date(date);
+    // if(fullDate.getHours() >=18 || fullDate.getHours()<=6){
+    //     fullDate.setDate(fullDate.getDate());
+    // }
+    // fullDate.setHours(fullDate.getHours() +6);
+    // let hour = new fullDate.getHours().toLocaleString('es-ES');
+    // let minutes = new fullDate.getMinutes().toLocaleString('es-ES');
+    // if(hour<10){
+    //     hour = '0'+hour;
+    // }
+    // if(minutes<10){
+    //     minutes = '0'+minutes;
+    // }
+    // const hourReturn = hour+':'+minutes+':00';
+    // return hourReturn;
+    return '';
 };
 
 const changeTimeZone =(date)=>{
