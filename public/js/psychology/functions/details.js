@@ -11,7 +11,7 @@ function inputDate(id){
 
 //fcuntion model date 
 const modelDate  =(date) =>{
-    const year = new Date(date).getFullYear().toLocaleString('es-ES');
+    const year = new Date(date).toLocaleDateString();
     let month = new Date(date).getMonth()+1;
     let day = new Date(date).getDate();
     if(month<10){
@@ -88,14 +88,14 @@ function detailsTable(){
         },
         {
             render(data, type, row){
-                const fullDate = modelDate(row.date);
+                const fullDate = new Date(row.date).toLocaleDateString();
                 return (fullDate);
 
             }
         },
         {
             render(data, type, row){
-                return (modelHour(row.date));
+                return (new Date(row.date).toLocaleTimeString());
             }
         },
         {
@@ -103,7 +103,7 @@ function detailsTable(){
                 if(row.next_date != null){
                     const hour = modelHour(row.next_date);
                     const fullDate = modelDate(row.next_date);
-                    return (fullDate+' a las '+hour);
+                    return (new Date(row.next_date).toLocaleDateString()+' a las '+new Date(row.next_date).toLocaleTimeString());
                 }else{  
                     return '-';
                 }
