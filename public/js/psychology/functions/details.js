@@ -107,7 +107,7 @@ function detailsTable(){
                     fullDate.setDate(fullDate.getDate());
                 }
                 fullDate.setHours(fullDate.getHours() +6);
-                return ('Fecha: '+fullDate.toLocaleDateString() + ' Hora:'+ fullDate.getHours()+':'+fullDate.getMinutes());
+                return ('Fecha: '+fullDate.toLocaleDateString() + ' Hora:'+ modelHour(row.date));
 
             }
         },
@@ -119,7 +119,7 @@ function detailsTable(){
                         fullDate.setDate(fullDate.getDate());
                     }
                     fullDate.setHours(fullDate.getHours() +6);
-                    return ('Fecha: '+fullDate.toLocaleDateString() + ' Hora:'+ fullDate.getHours()+':'+fullDate.getMinutes());
+                    return ('Fecha: '+fullDate.toLocaleDateString() + ' Hora:'+ modelHour(row.next_date));
                 }else{  
                     return '-';
                 }

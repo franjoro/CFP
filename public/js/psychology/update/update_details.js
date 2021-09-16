@@ -36,12 +36,14 @@ $(document).ready(() => {
               console.log(res);
               console.log('data');
               console.log(data);
+              $('#editModal').modal('toggle');
             } catch (error) {
               swal.close();
               console.log(error);
               console.log('data');
               console.log(res.data);
               errorMessage();
+              $('#editModal').modal('toggle');
             }
           }else{
             alert("Tienes que ingresar una fecha y una hora inicial"+ $("#nextDateEdit").val()+ $("#nextHourEdit").val()); 
