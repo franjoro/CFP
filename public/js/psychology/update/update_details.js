@@ -47,7 +47,7 @@ $(document).ready(() => {
               errorMessage();
             }
           }else{
-            alert("Tienes que ingresar una fecha y una hora inicial"); 
+            alert("Tienes que ingresar una fecha y una hora inicial"+ $("#nextDateEdit").val()+ $("#nextHourEdit").val()); 
           }
           
         });
