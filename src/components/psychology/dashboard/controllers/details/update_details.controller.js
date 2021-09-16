@@ -14,6 +14,10 @@ updateDetails.updatePsychology = async (req, res) => {
     req.body.nextDate,
     req.body.idPsychology,
   ];
+  if(req.body.nextDate == ''){
+    data.req.body.nextDate = null;
+  }
+
   //New format DATETIME
   try {
     //We write the query sql s

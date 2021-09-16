@@ -34,16 +34,13 @@ $(document).ready(() => {
               });
               Swal.close();
               console.log(res);
-              console.log('data')
+              console.log('data');
               console.log(res.data);
-              // if(res){
-              //  location.reload();
-              // }else{
-              //   error(res);
-              // }
             } catch (error) {
               swal.close();
               console.log(error);
+              console.log('data');
+              console.log(res.data);
               errorMessage();
             }
           }else{
