@@ -34,8 +34,8 @@ const modelHour = (date) =>{
         fullDate.setDate(fullDate.getDate());
     }
     fullDate.setHours(fullDate.getHours() +6);
-    let hour = new fullDate.getHours();
-    let minutes = new fullDate.getMinutes();
+    let hour = fullDate.getHours();
+    let minutes = fullDate.getMinutes();
     if(hour<10){
         hour = '0'+hour;
     }
