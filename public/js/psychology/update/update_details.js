@@ -34,9 +34,7 @@ $(document).ready(() => {
               });
               Swal.close();
               console.log(res);
-              console.log('data');
-              console.log(data);
-              $('#editModal').modal('toggle');
+              location.reload();
             } catch (error) {
               swal.close();
               console.log(error);
