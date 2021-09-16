@@ -35,6 +35,12 @@ const modelHour = (date) =>{
     const hourReturn = hour+':'+minutes+':00';
     return hourReturn;
 };
+
+const changeTimeZone =(date)=>{
+    let formatter = new Intl.DateTimeFormat('es-ES',{timeZone: "America/El_Salvador"});
+    let esDate = formatter.format(date);
+    return esDate;
+};
 const readPsychology = async (idPsychology) =>{
     const data = await $.ajax({
         url: `/admin/psicologia/detailPsychology/${idPsychology}`
@@ -88,7 +94,7 @@ function detailsTable(){
         },
         {
             render(data, type, row){
-                const fullDate = new Date(row.date).toLocaleDateString();
+                const fullDate = changeTimeZone(new Date(row.date));
                 return (fullDate);
 
             }
