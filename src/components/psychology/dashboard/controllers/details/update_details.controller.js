@@ -8,6 +8,7 @@ const pool = require("../../../../../../models/db");
 // Created arrow function
 updateDetails.updatePsychology = async (req, res) => {
   //We collect the req.body
+  
   const data = [
     req.body.date,
     req.body.nextDate,
@@ -25,7 +26,7 @@ updateDetails.updatePsychology = async (req, res) => {
     //print the error in console
     console.log(error);
     //return status false
-    return res.status(400).json({ status: false, error });
+    return res.status(400).json({ status: false, error , data: data});
   }
 };
 
