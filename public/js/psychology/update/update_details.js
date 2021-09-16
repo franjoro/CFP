@@ -9,7 +9,7 @@ $(document).ready(() => {
           //setFormatDate
 
           const date=$("#nextDateEdit").val()+' '+$("#nextHourEdit").val();
-          if($("#nextDateEdit").val() == '' || $("#nextHourEdit").val() == ''){
+          if($("#nextDateEdit").val() != '' && $("#nextHourEdit").val() != ''){
             let nextDate=$("#followUpDateEdit").val()+' '+$("#followUpHourEdit").val();
             if($("#followUpDateEdit").val() == '' || $("#followUpHourEdit").val() == ''){
               nextDate = null;
