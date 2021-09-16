@@ -94,7 +94,7 @@ function detailsTable(){
         },
         {
             render(data, type, row){
-                const fullDate = changeTimeZone(new Date(row.date));
+                const fullDate = new Date(row.date);
                 return (fullDate);
 
             }
