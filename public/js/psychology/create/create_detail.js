@@ -32,7 +32,7 @@ $(document).ready(() => {
         } catch (error) {
           swal.close();
           console.log(error);
-          errorMessage();
+          errorMessage(error);
         }
       });
 });
