@@ -28,7 +28,7 @@ const deleteDetail = async (id) => {
         }
       } catch (error) {
         swal.close();
-        errorMessage();
+        error(error);
       }
     }
   };
