@@ -9,7 +9,10 @@ $(document).ready(() => {
           //setFormatDate
 
           const date=$("#nextDateEdit").val()+' '+$("#nextHourEdit").val();
-          const nextDate=$("#followUpDateEdit").val()+' '+$("#followUpHourEdit").val();
+          let nextDate=$("#followUpDateEdit").val()+' '+$("#followUpHourEdit").val();
+          if($("#followUpDateEdit").val() == '' || $("#followUpHourEdit").val() == ''){
+            nextDate = null;
+          }
           const idPsychology = $("#idPsychology").val();
           console.log("Fecha");
           console.log(date);
