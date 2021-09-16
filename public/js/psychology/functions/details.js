@@ -96,7 +96,7 @@ function detailsTable(){
             render(data, type, row){
                 const fullDate = new Date(row.date);
                 if(fullDate.getHours() >=18 || fullDate.getHours()<=6){
-                    fullDate.setDate(fullDate.getDate()+1);
+                    fullDate.setDate(fullDate.getDate());
                 }
                 fullDate.setHours(fullDate.getHours() +6);
                 return ('Fecha: '+fullDate.toLocaleDateString() + ' Hora:'+ fullDate.getHours()+':'+fullDate.getMinutes());
