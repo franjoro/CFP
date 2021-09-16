@@ -95,6 +95,9 @@ function detailsTable(){
         {
             render(data, type, row){
                 const fullDate = new Date(row.date);
+                if(fullDate.getHours() >=18){
+                    fullDate.setDate(fullDate.getDate()+1);
+                }
                 fullDate.setHours(fullDate.getHours() -6);
                 return (fullDate + 'new date');
 
