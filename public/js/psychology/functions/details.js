@@ -11,9 +11,14 @@ function inputDate(id){
 
 //fcuntion model date 
 const modelDate  =(date) =>{
-    const year = new Date(date).toLocaleDateString();
-    let month = new Date(date).getMonth()+1;
-    let day = new Date(date).getDate();
+    const fullDate = new Date(date);
+    if(fullDate.getHours() >=18 || fullDate.getHours()<=6){
+        fullDate.setDate(fullDate.getDate());
+    }
+    fullDate.setHours(fullDate.getHours() +6);
+    const year = fullDate.toLocaleDateString();
+    let month = fullDate.getMonth();
+    let day = fullDate.getDate();
     if(month<10){
         month = '0'+month;
     }
@@ -24,8 +29,13 @@ const modelDate  =(date) =>{
     return dateReturn;
 };
 const modelHour = (date) =>{
-    let hour = new Date(date).getHours().toLocaleString('es-ES');
-    let minutes = new Date(date).getMinutes().toLocaleString('es-ES');
+    const fullDate = new Date(date);
+    if(fullDate.getHours() >=18 || fullDate.getHours()<=6){
+        fullDate.setDate(fullDate.getDate());
+    }
+    fullDate.setHours(fullDate.getHours() +6);
+    let hour = new fullDate.getHours().toLocaleString('es-ES');
+    let minutes = new fullDate.getMinutes().toLocaleString('es-ES');
     if(hour<10){
         hour = '0'+hour;
     }
@@ -37,9 +47,7 @@ const modelHour = (date) =>{
 };
 
 const changeTimeZone =(date)=>{
-    let formatter = new Intl.DateTimeFormat('es-ES',{timeZone: "America/El_Salvador"});
-    let esDate = formatter.format(date);
-    return esDate;
+    
 };
 const readPsychology = async (idPsychology) =>{
     const data = await $.ajax({
@@ -94,6 +102,10 @@ function detailsTable(){
         },
         {
             render(data, type, row){
+                console.log('Asi se veria la fecha para insertar');
+                console.log(modelDate(row.date));
+                console.log('Así se veria la hora para insertar');
+                console.log(modelHour(row.date));
                 const fullDate = new Date(row.date);
                 if(fullDate.getHours() >=18 || fullDate.getHours()<=6){
                     fullDate.setDate(fullDate.getDate());
