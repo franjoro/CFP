@@ -95,7 +95,7 @@ function detailsTable(){
         {
             render(data, type, row){
                 const fullDate = new Date(row.date);
-                fullDate.setHours(fullDate.getHours() -24);
+                fullDate.setHours(fullDate.getHours() -6);
                 return (fullDate + 'new date');
 
             }
