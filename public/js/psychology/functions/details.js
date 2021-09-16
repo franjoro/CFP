@@ -11,9 +11,9 @@ function inputDate(id){
 
 //fcuntion model date 
 const modelDate  =(date) =>{
-    const year = new Date(date).getFullYear();
-    let month = new Date(date).getMonth();
-    let day = new Date(date).getDate();
+    const year = new Date(date).getFullYear().toLocaleString('es-ES');
+    let month = new Date(date).getMonth()+1;
+    let day = new Date(date).getDate().toLocaleString('es-ES');
     if(month<10){
         month = '0'+month;
     }
@@ -24,8 +24,8 @@ const modelDate  =(date) =>{
     return dateReturn;
 };
 const modelHour = (date) =>{
-    let hour = new Date(date).getHours();
-    let minutes = new Date(date).getMinutes();
+    let hour = new Date(date).getHours().toLocaleString('es-ES');
+    let minutes = new Date(date).getMinutes().toLocaleString('es-ES');
     if(hour<10){
         hour = '0'+hour;
     }
@@ -56,7 +56,10 @@ const readPsychology = async (idPsychology) =>{
     // $("#nextDateEdit").val(d);
 };
 
-
+const prueba = (fecha)=>{
+    
+   
+};
 
 //================ USO DE FECHAS =======================
 //Funcion de calculo de fecha
@@ -100,7 +103,7 @@ function detailsTable(){
                 if(row.next_date != null){
                     const hour = modelHour(row.next_date);
                     const fullDate = modelDate(row.next_date);
-                    return (fullDate + " a las "+hour);
+                    return (fullDate+' a las '+hour);
                 }else{  
                     return '-';
                 }
