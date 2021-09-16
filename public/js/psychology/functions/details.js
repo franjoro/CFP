@@ -102,10 +102,6 @@ function detailsTable(){
         },
         {
             render(data, type, row){
-                console.log('Asi se veria la fecha para insertar');
-                console.log(modelDate(row.date));
-                console.log('Así se veria la hora para insertar');
-                console.log(modelHour(row.date));
                 const fullDate = new Date(row.date);
                 if(fullDate.getHours() >=18 || fullDate.getHours()<=6){
                     fullDate.setDate(fullDate.getDate());
@@ -118,9 +114,12 @@ function detailsTable(){
         {
             render(date, type, row){
                 if(row.next_date != null){
-                    const hour = modelHour(row.next_date);
-                    const fullDate = modelDate(row.next_date);
-                    return (new Date(row.next_date).toLocaleDateString()+' a las '+new Date(row.next_date).toLocaleTimeString());
+                    const fullDate = new Date(row.next_date);
+                    if(fullDate.getHours() >=18 || fullDate.getHours()<=6){
+                        fullDate.setDate(fullDate.getDate());
+                    }
+                    fullDate.setHours(fullDate.getHours() +6);
+                    return ('Fecha: '+fullDate.toLocaleDateString() + ' Hora:'+ fullDate.getHours()+':'+fullDate.getMinutes());
                 }else{  
                     return '-';
                 }

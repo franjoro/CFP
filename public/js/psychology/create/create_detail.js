@@ -8,31 +8,35 @@ $(document).ready(() => {
         loader();
         //setFormatDate
         const fullDate = ($("#nextDate").val()+" "+$("#nextHour").val()+":00");
-        const data = {
-          idStudent: $("#idStudent").val(),
-          fullDate
-        };
-        try {
-          const res = await $.ajax({
-            url: `/admin/psicologia/addDetails/${$("#idStudent").val()}`,
-            type: "POST",
-            data,
-          });
-          Swal.close();
-          if(res){
-            // Toast.fire({
-            //   icon: "success",
-            //   title: "Insertado correctamente",
-            // });
-           location.reload();
-            // window.location.replace(`/habil/documentacion/habil/${respuesta.idSolicitud}/documento/${global_json1.dui}`);
-          }else{
-            error(res);
+        if($("#nextDate").val() !='' && $("#nextHour").val()!=''){
+          const data = {
+            idStudent: $("#idStudent").val(),
+            fullDate
+          };
+          try {
+            const res = await $.ajax({
+              url: `/admin/psicologia/addDetails/${$("#idStudent").val()}`,
+              type: "POST",
+              data,
+            });
+            Swal.close();
+            if(res){
+              // Toast.fire({
+              //   icon: "success",
+              //   title: "Insertado correctamente",
+              // });
+             location.reload();
+              // window.location.replace(`/habil/documentacion/habil/${respuesta.idSolicitud}/documento/${global_json1.dui}`);
+            }else{
+              error(res);
+            }
+          } catch (error) {
+            swal.close();
+            console.log(error);
+            //errorMessage(error);
           }
-        } catch (error) {
-          swal.close();
-          console.log(error);
-          //errorMessage(error);
+        }else{
+          error('Debe seleccionar una fecha de inicio para la cita');
         }
       });
 });
