@@ -39,6 +39,7 @@ router.post("/addReasonPsychology", authcheck, createDetails.addReasonPsychology
 router.put('/updatePsychology', authcheck, updateDetails.updatePsychology);
 router.put('/updatePsychologyDetail', authcheck, updateDetails.updatePsychologyDetail);
 router.put('/updateStatusPsychology', authcheck, updateDetails.updateStatusPsychology);
+router.put('/updateInform', authcheck, updateDetails.updateInform);
 //routes delete
 router.delete('/deletePsychology', authcheck, deleteDetails.deletePsychology);
 router.delete('/deleteStrategyPsychology', authcheck, deleteDetails.deleteStrategyPsychology);

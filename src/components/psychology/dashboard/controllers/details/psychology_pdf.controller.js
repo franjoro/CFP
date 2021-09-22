@@ -71,7 +71,6 @@ psychology_pdf.renderPreview = async (req,res) =>{
 };
 psychology_pdf.pdfDetails = async (req,res) =>{
   const {data} =req.params;
-  console.log('Hello');
     try {
        await PrintPdf(data);
       return res.status(200).json({ status: true});

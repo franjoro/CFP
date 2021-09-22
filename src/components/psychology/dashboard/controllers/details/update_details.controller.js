@@ -77,4 +77,21 @@ updateDetails.updateStatusPsychology = async(req,res) =>{
     return res.status(400).json({ status: false, error });
   }
 };
+
+updateDetails.updateInform = async(req,res) =>{
+  const data= [
+    req.body.json,
+    req.body.idPsychology
+  ];
+  try {
+    const sql = `UPDATE tb_psychology SET inform = ? WHERE id_psychology = ?`;
+    await pool.query(sql,data)
+    return res.json({status: true});
+  } catch (error) {
+    //print the error in console
+    console.log(error);
+    //return status false
+    return res.status(400).json({ status: false, error });
+  }
+};
 module.exports = updateDetails;
