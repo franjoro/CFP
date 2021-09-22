@@ -7,6 +7,7 @@ const details = require("../controllers/details/details.controller");
 const createDetails = require('../controllers/details/create_details.controller');
 const updateDetails = require('../controllers/details/update_details.controller');
 const deleteDetails = require('../controllers/details/delete_details.controller');
+const psychology_pdf = require('../controllers/details/psychology_pdf.controller')
 const { authcheck } = require('../../../../../middlewares/auth');
 // Llamamos al router
 const router = express.Router();
@@ -26,6 +27,10 @@ router.get("/detailTable/:idStudent", details.detailsTable);
 router.get("/detailPsychology/:idPsychology", details.detailPsychology);
 //get form
 router.get('/getDetailsPsychology/:idPsychology', details.getDetailsPsychology);
+//print of pdf
+router.get('/printPdf/:data', psychology_pdf.pdfDetails);
+router.get('/previsualizacion_pdf/:idPsychology?/:idStudent?',psychology_pdf.renderPreview);
+router.get('/downloadFilePsychology', psychology_pdf.downloadFile);
 //routes post
 router.post("/addDetails/:idStudent", authcheck, createDetails.addDetail);
 router.post("/addStrategyPsychology", authcheck, createDetails.addStrategyPsychology);
@@ -38,5 +43,9 @@ router.put('/updateStatusPsychology', authcheck, updateDetails.updateStatusPsych
 router.delete('/deletePsychology', authcheck, deleteDetails.deletePsychology);
 router.delete('/deleteStrategyPsychology', authcheck, deleteDetails.deleteStrategyPsychology);
 router.delete('/deleteReasonPsychology', authcheck, deleteDetails.deleteReasonPsychology);
+
+
+
 // Exportamos la configuración
 module.exports = router;
+

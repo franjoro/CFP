@@ -70,11 +70,6 @@ const readPsychology = async (idPsychology) =>{
     // $("#nextDateEdit").val(d);
 };
 
-const prueba = (fecha)=>{
-    
-   
-};
-
 //================ USO DE FECHAS =======================
 //Funcion de calculo de fecha
 
@@ -129,9 +124,10 @@ function detailsTable(){
         {
             render(data, type, row) {
               const html = `
-              <button type="button" class="btn btn-danger" onclick='deleteDetail(${row.id_psychology})'><i class="fas fa-trash-alt"></i></button>
-                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editModal" onclick='readPsychology(${row.id_psychology})'><i class="fas fa-pen"></i></button>
-                    <a class="btn btn-success" href="/admin/psicologia/formulario/${row.id_psychology}/${row.id_student}"><i class="fas fa-info"></i></a>
+                <button type="button" class="btn btn-danger" onclick='deleteDetail(${row.id_psychology})'><i class="fas fa-trash-alt"></i></button>
+                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editModal" onclick='readPsychology(${row.id_psychology})'><i class="fas fa-pen"></i></button>
+                <a href="/admin/psicologia/previsualizacion_pdf/${row.id_psychology}/${row.id_student}" class="btn btn-info"><i class="far fa-file-pdf"></i></a>
+                <a class="btn btn-success" href="/admin/psicologia/formulario/${row.id_psychology}/${row.id_student}"><i class="fas fa-info"></i></a>
               `;
               return html;
             },
