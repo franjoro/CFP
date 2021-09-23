@@ -15,7 +15,7 @@ function inputDate(id){
 //fcuntion model date 
 const modelDate  =(date) =>{
   const year = new Date(date).getFullYear();
-  let month = new Date(date).getMonth();
+  let month = new Date(date).getMonth()+1;
   let day = new Date(date).getDate();
   if(month<10){
       month = '0'+month;
@@ -26,9 +26,15 @@ const modelDate  =(date) =>{
   const dateReturn = (year+'-'+month+'-'+day);
   return dateReturn;
 };
+
 const modelHour = (date) =>{
-  let hour = new Date(date).getHours();
-  let minutes = new Date(date).getMinutes();
+  const fullDate = new Date(date);
+  if(fullDate.getHours() >=18 || fullDate.getHours()<=6){
+      fullDate.setDate(fullDate.getDate());
+  }
+  fullDate.setHours(fullDate.getHours() +6);
+  let hour = fullDate.getHours();
+  let minutes = fullDate.getMinutes();
   if(hour<10){
       hour = '0'+hour;
   }

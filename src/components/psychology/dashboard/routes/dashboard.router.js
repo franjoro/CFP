@@ -8,6 +8,7 @@ const createDetails = require('../controllers/details/create_details.controller'
 const updateDetails = require('../controllers/details/update_details.controller');
 const deleteDetails = require('../controllers/details/delete_details.controller');
 const psychology_pdf = require('../controllers/details/psychology_pdf.controller')
+const validPsychology = require('../controllers/details/validPsychology.controller');
 const { authcheck } = require('../../../../../middlewares/auth');
 // Llamamos al router
 const router = express.Router();
@@ -31,6 +32,8 @@ router.get('/getDetailsPsychology/:idPsychology', details.getDetailsPsychology);
 router.get('/printPdf/:data', psychology_pdf.pdfDetails);
 router.get('/previsualizacion_pdf/:idPsychology?/:idStudent?',psychology_pdf.renderPreview);
 router.get('/downloadFilePsychology', psychology_pdf.downloadFile);
+//get for valid
+router.get('/validDate/:tipo/:date/:next_date?/:idPsychology?', validPsychology.validDate);
 //routes post
 router.post("/addDetails/:idStudent", authcheck, createDetails.addDetail);
 router.post("/addStrategyPsychology", authcheck, createDetails.addStrategyPsychology);

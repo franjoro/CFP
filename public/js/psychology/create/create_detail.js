@@ -9,32 +9,35 @@ $(document).ready(() => {
         //setFormatDate
         const fullDate = ($("#nextDate").val()+" "+$("#nextHour").val()+":00");
         if($("#nextDate").val() !='' && $("#nextHour").val()!=''){
-          const data = {
-            idStudent: $("#idStudent").val(),
-            fullDate
-          };
-          try {
-            const res = await $.ajax({
-              url: `/admin/psicologia/addDetails/${$("#idStudent").val()}`,
-              type: "POST",
-              data,
-            });
-            Swal.close();
-            if(res){
-              // Toast.fire({
-              //   icon: "success",
-              //   title: "Insertado correctamente",
-              // });
-             location.reload();
-              // window.location.replace(`/habil/documentacion/habil/${respuesta.idSolicitud}/documento/${global_json1.dui}`);
+          const validationDate = $.ajax({
+            url: `/admin/psicologia/validDate/create/${fullDate}/0/0`,
+          }).done(function(data){
+            if(data.dataCount == 0){
+              const data = {
+                idStudent: $("#idStudent").val(),
+                fullDate
+              };
+              try {
+                const res = $.ajax({
+                  url: `/admin/psicologia/addDetails/${$("#idStudent").val()}`,
+                  type: "POST",
+                  data,
+                });
+                Swal.close();
+                if(res){
+                  location.reload();
+                }else{
+                  swal.close();
+                  error(res);
+                }
+              } catch (error) {
+                swal.close();
+                console.log(error);
+              }
             }else{
-              error(res);
-            }
-          } catch (error) {
-            swal.close();
-            console.log(error);
-            //errorMessage(error);
-          }
+              error('Ya tiene asignada otra cita a ese día y a esa hora');
+            }  
+          });
         }else{
           error('Debe seleccionar una fecha de inicio para la cita');
         }

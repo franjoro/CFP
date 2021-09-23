@@ -5,6 +5,14 @@ const error = (error) => {
       html: error,
     });
   };
+
+  const successMsg = (msg) => {
+    Swal.fire({
+      icon: "success",
+      title: "Finalizado con exito",
+      html: msg,
+    });
+  };
   const Toast = Swal.mixin({
     toast: true,
     position: "top-end",

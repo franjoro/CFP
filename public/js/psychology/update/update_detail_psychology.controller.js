@@ -11,21 +11,30 @@ $(document).ready(() => {
           const nextDate=$("#nextDate").val()+' '+$("#nextHour").val();
           const idPsychology = $("#idPsychology").val();
           const observations = $("#txtConsideraciones").val();
-          const data = {
+          const dataSend = {
             results,
             nextDate,
             idPsychology,
             observations
           };
           try {
-            const res = await $.ajax({
-              url: `/admin/psicologia/updatePsychologyDetail`,
-              type: "PUT",
-              data,
+            const validDate = $.ajax({
+              url: `/admin/psicologia/validDate/update/0000-00-00 00:00/${nextDate}/${idPsychology}`,
+            }).done(function(data){
+              if(data.dataCount == 0 && data.dataCount1 == 0){
+                const res = $.ajax({
+                  url: `/admin/psicologia/updatePsychologyDetail`,
+                  type: "PUT",
+                  data: dataSend,
+                });
+                Swal.close();
+                console.log(res);
+                location.reload();
+              }else{
+                error('Ya tiene asignada otra cita a ese día y a esa hora');
+              }
             });
-            Swal.close();
-            console.log(res);
-            location.reload();
+           
           } catch (error) {
             swal.close();
             console.log(error);
