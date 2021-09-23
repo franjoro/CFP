@@ -36,7 +36,14 @@ const PrintPdf = (data) => {
             .block-height{
                 height: 30px;
             }
-
+            .img-size{
+                height: 60px !important;
+                width: 160px !important;
+            }
+            .img-size-cuadre{
+                height: 80px !important;
+                width: 160px !important;
+            }
             .text-aling-top-center{
                 vertical-align: text-top !important;
                 text-align: center !important;
@@ -96,44 +103,36 @@ const PrintPdf = (data) => {
           
           <div class="container">
             <div class="row">
-                <div class="col-3 offset-2">
-                    <br>
-                    <br>
-                    <br>
-                    <br>
+                <div class="col-3 offset-1">
                     <br>
                     <p class="text-center">
                         <img
                         src="https://cfp.ricaldone.edu.sv/static/img/logoi.png"
                         alt=""
                         style="width: 250px; display:block; margin:auto;"
-                        class="img-fluid float-right"
+                        class="img-fluid float-right img-size"
                     />
                     </p>
                 </div>
                 <div class="col-3">
-                    <br>
-                    <br>
                     <br>
                     <p class="text-center">
                         <img
                         src="https://cfp.ricaldone.edu.sv/static/img/logo.png"
                         alt=""
                         style="width: 250px; display:block; margin:auto;"
-                        class="img-fluid float-right"
+                        class="img-fluid float-right img-size-cuadre"
                     />
                     </p>
                 </div>
                 <div class="col-3">
-                    <br>
-                    <br>
                     <br>
                     <p class="text-center">
                         <img
                         src="https://avcfp.ricaldone.edu.sv/pluginfile.php/29995/coursecat/description/Sin%20t%C3%ADtulo-1.png"
                         alt=""
                         style="width: 250px; display:block; margin:auto;"
-                        class="img-fluid float-right"
+                        class="img-fluid float-right img-size-cuadre"
                     />
                     </p>
                 </div>
@@ -148,7 +147,7 @@ const PrintPdf = (data) => {
                 <div class="row">
                     <div class="col-12 bg-info block-height">
                         <h6 class=" text-aling-top-center"><b>
-                             INFORME DE ATENCIÓN PSICOLOGICA
+                             INFORME DE ATENCIÓN PSICOLÓGICA
                         </b></h6>
                     </div>
                 </div>
@@ -163,7 +162,7 @@ const PrintPdf = (data) => {
                   </div>
               </div>
           </div>
-          <br><br>
+          <br>
             <div class="container">
                 <dic class="row">
                     <div class="col-12">
@@ -220,7 +219,7 @@ const PrintPdf = (data) => {
                     </div>
                 </dic>    
             </div>
-            <br><br>
+            <br>
             <div class="container ">
                 <div class="row">
                     <div class="col-12 bg-info block-height">
