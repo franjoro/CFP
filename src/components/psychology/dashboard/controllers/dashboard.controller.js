@@ -42,6 +42,7 @@ dashboard.form = async (req, res) => {
     const dataStrategyForCase = await pool.query(sqlStrategyForCase, paramsStrategyForCase);
     const dataReason = await pool.query(sqlReason);
     const dataReasonForCase = await pool.query(sqlReasonForCase, paramsReasonForCase);
+    
     //We return render
     return res.render('psychology/form', {
       data: usuario.data,

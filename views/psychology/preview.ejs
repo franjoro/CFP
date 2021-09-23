@@ -301,6 +301,27 @@
       </html>               
 <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.6/dayjs.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<%if(type != 0){%>
+    <script>
+        $("#name").val('<%= datosReport.name%>') 
+        $("#yearOld").val('<%= datosReport.yearOld%>') 
+        $("#date").val('<%= datosReport.date%>') 
+        $("#state").val('<%= datosReport.state%>') 
+        $("#scholarship").val('<%= datosReport.scholarship%>') 
+        $("#address").val('<%= datosReport.address%>') 
+        $("#persons").val('<%= datosReport.persons%>') 
+        $("#tel").val('<%= datosReport.tel%>') 
+        $("#responsable_person").val('<%= datosReport.responsable_person%>') 
+        $("#refer_date").val('<%= datosReport.refer_date%>') 
+        $("#reason").val('<%= datosReport.reason%>') 
+        $("#description").val('<%= datosReport.description%>') 
+        $("#approach").val('<%= datosReport.approach%>') 
+        $("#recommendations").val('<%= datosReport.recommendations%>') 
+        $("#follow_up").val('<%= datosReport.follow_up%>') 
+        $("#nowDate").val('<%= datosReport.nowDate%>');
+        $("#namePsychology").val('<%= datosReport.namePsychology%>');
+    </script>
+<%}%>
 <script src="/static/js/psychology/pdf/psychology_pdf.js"></script>
 <script>
     const calculateAge = (fecha) =>{

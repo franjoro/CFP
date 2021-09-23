@@ -10,8 +10,12 @@ const pool = require("../../../../../../models/db");
 const  { PrintPdf } = require('../../../../../../utils/PDF/psychology_pdf');
 
 psychology_pdf.renderPreview = async (req,res) =>{
+  let type;
   const usuario = getUserDataByToken(req.cookies.token);
   const {idPsychology, idStudent} = req.params; 
+    //SQL inform
+    const sqlReport = `SELECT inform FROM tb_psychology WHERE id_psychology = ?`
+    
     //Writte sql query
     const sql = `SELECT carnet, Nombres, Apellidos, C.Nombre as nombreCarrera,
                 REPLACE(JSON_EXTRACT(json1, '$.Sexo'), '"','' ) as genero, 
@@ -26,12 +30,14 @@ psychology_pdf.renderPreview = async (req,res) =>{
     const sqlStrategies = `SELECT  name as nombre , description as descripcion  FROM tb_strategies_psychology AS SP INNER JOIN tb_strategies AS S on S.id_strategy = SP.id_strategy WHERE SP.id_psychology = ?`
     const sqlReason = `SELECT name as nombre , description as descripcion FROM tb_reasons_psychology AS RP INNER JOIN tb_reasons AS R on R.id_reason = RP.id_reason WHERE RP.id_psychology = ?`
     //We collect params 
+    const paramsReport = [idPsychology];
     const params = [idStudent];
     const paramsPsychology = [idPsychology];
     const paramsStrategies = [idPsychology];
     const paramsReason = [idPsychology];
     try {
       //we execute pool query
+      const dataReport = await pool.query(sqlReport, paramsReport);
       const data = await pool.query(sql, params);
       const dataPsychology = await pool.query(sqlPsychology, paramsPsychology);
       const dataStrategies = await pool.query(sqlStrategies, paramsStrategies);
@@ -55,6 +61,17 @@ psychology_pdf.renderPreview = async (req,res) =>{
         resultados: dataPsychology[0].results,
         next_date: dataPsychology[0].next_date,
       };
+      let datosReport ={};
+
+      //Review if exist inform
+      if(dataReport[0].inform === null){
+        //Whitout inform
+        type =0;
+      }else{
+        //whit inform
+        type =1;
+        datosReport= JSON.parse(dataReport[0].inform);
+      }
       
       res.render("./psychology/preview", {
         data: usuario.data,
@@ -62,10 +79,13 @@ psychology_pdf.renderPreview = async (req,res) =>{
         datosPsychology,
         dataStrategies,
         dataReason,
-        idPsychology
+        idPsychology,
+        datosReport,
+        type
       });
     } catch (error) {
       //return diferents errors
+      console.log(error);
       return res.status(200).json(error);
     }
 };
