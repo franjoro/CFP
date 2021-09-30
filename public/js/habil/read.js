@@ -43,6 +43,7 @@ const readDetSol = async () =>{
         $("#estadofamiliar").val(values.estadoFamiliar);
         $("#jefehogar").val(values.jefeDeHogar);
         $("#nhijos").val(values.nHijos);
+        console.log(values.booltrabajoantes);
         if(values.booltrabajoantes == 'on'){
           $("#flexRadioDefault2").prop("checked", true);
         }else{
@@ -90,7 +91,8 @@ const readDetSol = async () =>{
           if(discapacidadesJson.otro == 'true'){
             $("#discapacidad8").prop('checked', true);
           }
-          if(discapacidadesJson.otroText != ''){
+          console.log(discapacidadesJson.otroText);
+          if(discapacidadesJson.otroText != 'false'){
             
             $("#otrosdiscapacidades").val(discapacidadesJson.otroText);
           }

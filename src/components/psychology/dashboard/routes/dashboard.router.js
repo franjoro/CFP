@@ -23,17 +23,17 @@ router.get("/detalles/:idStudent", authcheck, dashboard.details);
 router.get("/studentsTable", dashboard.studentsTableWithoutCadre);
 router.get("/studentsWithCadre", dashboard.studentsTableWithtCadre);
 //get details
-router.get("/detailsStudent/:idStudent", details.detailsStudent);
-router.get("/detailTable/:idStudent", details.detailsTable);
-router.get("/detailPsychology/:idPsychology", details.detailPsychology);
+router.get("/detailsStudent/:idStudent",authcheck, details.detailsStudent);
+router.get("/detailTable/:idStudent",authcheck, details.detailsTable);
+router.get("/detailPsychology/:idPsychology",authcheck, details.detailPsychology);
 //get form
-router.get('/getDetailsPsychology/:idPsychology', details.getDetailsPsychology);
+router.get('/getDetailsPsychology/:idPsychology',authcheck, details.getDetailsPsychology);
 //print of pdf
-router.get('/printPdf/:data', psychology_pdf.pdfDetails);
-router.get('/previsualizacion_pdf/:idPsychology?/:idStudent?',psychology_pdf.renderPreview);
-router.get('/downloadFilePsychology', psychology_pdf.downloadFile);
+router.get('/printPdf/:data',authcheck, psychology_pdf.pdfDetails);
+router.get('/previsualizacion_pdf/:idPsychology?/:idStudent?',authcheck,psychology_pdf.renderPreview);
+router.get('/downloadFilePsychology',authcheck, psychology_pdf.downloadFile);
 //get for valid
-router.get('/validDate/:tipo/:date/:next_date?/:idPsychology?', validPsychology.validDate);
+router.get('/validDate/:tipo/:date/:next_date?/:idPsychology?',authcheck, validPsychology.validDate);
 //routes post
 router.post("/addDetails/:idStudent", authcheck, createDetails.addDetail);
 router.post("/addStrategyPsychology", authcheck, createDetails.addStrategyPsychology);

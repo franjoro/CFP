@@ -35,7 +35,7 @@ readHabil.curso_detalle_NoCtoznts = async (req, res) => {
         par.Nombre as nombre, par.Telefono as telefono,par.Email as email, par.Genero as sexo, sol.id as idSolicitud, 
         sol.estado as estadoSolicitud, sol.Codigo_curso as id_curso FROM tb_habil_solicitudes AS sol 
         INNER JOIN tb_participante par on par.DUI = sol.documento WHERE sol.Codigo_curso = ? 
-        AND (sol.estado = 0 OR sol.estado = 3)`;
+        AND (sol.estado = 0 OR sol.estado = 3 OR sol.estado = 4)`;
         //Agregamos la consulta de queryString con su parametro
         const query = await pool.query(queryString,[curso]);
         

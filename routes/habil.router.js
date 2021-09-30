@@ -12,6 +12,8 @@ const updateComment = require('../controllers/habil/updateComment.controller');
 const sendNotificacion = require('../controllers/habil/sendNotification.controller')
 const deleteSolicitud = require('../controllers/habil/deleteSolicitud.controller');
 const readHabil = require('../controllers/habil/readHabil.controller');
+const tableaHabil = require('../controllers/habil/tablesHabil.controller');
+const zipCourse  = require('../controllers/habil/zip.controller');
 // Llamamos al router
 const router = express.Router();
 const fileUpload = require("express-fileupload");// proteccion para fileUpload
@@ -28,26 +30,37 @@ router.get("/readSolicitud/detalle/:idSolicitud?", readHabil.readDet);
 router.get("/gracias/habil", habil.agradecimiento);
 //Vista de subida de documentación
 router.get("/documentacion/habil/:idSolicitud/documento/:documento?/:documento2?", habil.documentacion);
-
 router.get("/gestor-de-documentos/habil/:idCurso/:idSolicitud/:dui/:programa/:tipo?", authcheck, habil.gestorDeDocumentacion);
-//Enviar documentos para guardar en AWS
+//#region tables
+router.get('/application-table/:idCourse', authcheck, tableaHabil.aplicationsTable)
+//#endregion
 
-//SENTENCIAS RES.POST
+//#region delete sentences
+router.delete("/deleteFiles3", authcheck , deleteDocumentos.deleteFiles3);
+router.delete("/deleteSolicitud", authcheck , deleteSolicitud.delete);
+//#endregion
+
+//#region post sentences 
+router.post("/updateFile", fileUpload(), updateFile.archivos);
+router.post("/", habil.form);
 router.post("/EnviarFiles", fileUpload(), subida.archivos);
 router.post("/sendMail", authcheck, habil.sendEmail);
 router.post("/sendNotificacion", authcheck, sendNotificacion.send)
 router.post("/sendMailDocument", authcheck, habil.sendMailDocument);
-router.delete("/deleteFiles3", authcheck , deleteDocumentos.deleteFiles3);
-router.delete("/deleteSolicitud", authcheck , deleteSolicitud.delete);
-// Agregar nuevo participante en habil
-router.post("/updateFile", fileUpload(), updateFile.archivos);
+//#endregion
+
+//#region put sentences
+router.put("/editOferta" ,authcheck , updateHabil.editOferta);
 router.put("/updateComment", authcheck, updateComment.update);
 router.put("/matricular", authcheck, updateHabil.cambiarCurso);
 router.put("/", updateHabil.updateSolicitud);
-router.post("/", habil.form);
+//#endregion
 
-//SENTENCIAS RES.PUT
-router.put("/editOferta" ,authcheck , updateHabil.editOferta);
 
-// Exportamos la configuración
+// #region zip
+router.post("/saveZipCourse", authcheck, zipCourse.getZipCouse);
+router.get("/fileZipCourse/zip", authcheck, zipCourse.dowloadZipCourse);
+//#endregion
+
+// export routes
 module.exports = router;

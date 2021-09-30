@@ -80,11 +80,9 @@
                   <button class="btn btn-primary btn-sm  d-inline" data-toggle="modal"
                     data-target="#insertar_modal">Crear curso de esta oferta
                   </button>
-                  <!--
-                    <button class="btn btn-secondary btn-sm d-inline" onclick="createZipCurso('<%=curso.Codigo_curso%>')">
-                      <i class="fas fa-file-archive"></i> Descargar ZIP de documentos
-                    </button>
-                  -->
+                  <button class="btn btn-secondary btn-sm d-inline" onclick="createZipCourse('<%=curso.Codigo_curso%>')">
+                    <i class="fas fa-file-archive"></i> Descargar ZIP de documentos
+                  </button>
                 <% } %>
               </div>
             </div>
@@ -105,7 +103,9 @@
           </div>
           <div class="card-body row table-responsive">
             <!--Tabla detalle alumnos-->
-            <%- include('Boards/tablaAlumnos'); %>
+            <div class="container">
+              <%- include('Boards/tablaAlumnos'); %>
+            </div>
           </div>
         </div>
       </div>
@@ -138,12 +138,14 @@
   <!-- /.container-fluid -->
   <%- include('../partials/footer'); %>
   <!-- ASIGNANDO VARIABLES -->
+  <input type="hidden" id="tipo" value="<%= tipo%>">
   <input type="hidden" name="curso" id="curso" value="<%=curso.Codigo_curso%>">
   <input type="hidden" name="cursoNombre" id="cursoNombre" value="<%=curso.Nombre%>">
   <input type="hidden" name="programa" id="programa" value="<%= programa%>">
   <!-- SCRIPT -->
   <script src="/static/js/jquery.mask.min.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
   <script src="/static/js/habil/detalle/functions.js"></script>
@@ -152,4 +154,15 @@
   <script src="/static/js/habil/detalle/update_oferta.js"></script>
   <script src="/static/js/habil/detalle/delete.js"></script>
   <script src="/static/js/habil/detalle/clicks.js"></script>
+  <script src="/static/js/habil/zip.js"></script>
+    <!--DATATABLE DEPENDENCIES-->
+    <script src="/static/vendor/datatables/datatables.min.js"></script>
+    <script src="/static/js/dataTables.buttons.min.js"></script>
+    <script src="/static/js/pdfmake.min.js"></script>
+    <script src="/static/js/vfs_fonts.js"></script>
+    <script src="/static/js/buttons.html5.min.js"></script>
+    <script src="/static/js/buttons.print.min.js"></script>
+    <script src="/static/js/jszip.min.js"></script>
+    <!--GLOBAL DEPENDENCES-->
+  <script src="/static/js/habil/detalle/tables.js"></script>
             

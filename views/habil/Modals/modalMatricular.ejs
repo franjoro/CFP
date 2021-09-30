@@ -18,7 +18,7 @@ aria-hidden="true">
                         <select class="custom-select" required name="cmbCurso" id="cmbCurso">
                             <option value="" selected>Selecciona un curso</option>
                             <% cursosNoCotz.forEach((element)=> { %>
-                                <option value="<%=element.Codigo_curso%>"><%=element.Nombre%></option>
+                                <option value="<%=element.Codigo_curso%>"><%=element.Nombre%> || <%=element.Codigo_curso%></option>
                             <% }); %>
                         </select>
                         </div>
