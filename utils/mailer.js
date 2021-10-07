@@ -6,7 +6,7 @@ const transporter = nodemailer.createTransport({
   service: "Gmail",
   auth: {
     user: "soporte_cfp@ricaldone.edu.sv",
-    pass: "Ricaldone_21",
+    pass: "Ricaldone_2021*_",
   },
 });
 mailer.sendEmail = (to, sub, html = "", text) => {
