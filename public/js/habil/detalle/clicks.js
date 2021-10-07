@@ -4,8 +4,6 @@
   @*/
 //INICIAMOS CON LA FUNCION READY DE JQUERY
 $(document).ready(function () {
-  applicationTable();
-  
   $("#btnCopy").click(() => {
       
   });
@@ -105,5 +103,8 @@ $(document).ready(function () {
     const idSolicitud = $("#idSolicitud").val();
     updateCommentFunction(comentario, 3, idSolicitud);
   });
+
+
+  
 });
 

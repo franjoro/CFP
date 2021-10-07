@@ -3,6 +3,9 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"
   type="text/css" />
 <%- include('../partials/header.admin.ejs'); %>
+<!-- Conteniendo los id por input -->
+<input type="hidden" name="curso" id="curso" value="<%=curso.Codigo_curso%>">
+<input type="hidden" name="programa" id="programa" value="<%= programa%>">
   <div class="container-fluid">
     <div class="row container-fluid">
       <div class="col-lg-12">
@@ -108,12 +111,17 @@
             
             <p></p>
           </div>
+          <div class="container-fluid">
+            <div class="row m-2">
+              <div class="col-12">
+                <%if (programa == 28 ){%>
+                  <%- include('../habil/Boards/tablaAlumnos'); %>
+                <%}%>
+              </div>
+            </div>
+          </div>
           <div class="card-body row">
-            <%if (programa == 28 ){%>
-              <%- include('../habil/Boards/tablaAlumnos'); %>
-            <%}%>
             <% datos.forEach( (element)=> { %>
-
               <div class="col-md-3" id="<%= element.id %>">
                 <div class="card shadow mb-3">
                   <div class="card-body">
@@ -228,8 +236,7 @@
       </div>
     </div>
   </div>
-  <input type="hidden" name="curso" id="curso" value="<%=curso.Codigo_curso%>">
-  <input type="hidden" name="programa" id="programa" value="<%= programa%>">
+
 
   <% if(tipo=='oferta' ) { %>
     <!-- Modal Insertar curso en base a oferta -->
@@ -595,6 +602,7 @@
             </div>
           </div>
 
+          
           <!-- /.container-fluid -->
           <%- include('../partials/footer'); %>
             <script src="/static/js/jquery.mask.min.js"></script>
@@ -602,3 +610,19 @@
             <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
             <script src="/static/js/curso_detalle.js"></script>
+            <%if (programa == 28 ){%>
+              <%- include('../habil/Modals/modalEnlaceDocumentacion'); %>
+
+              <input type="hidden" id="idCourse" value="<%= curso.Codigo_curso  %>">
+
+              <!--DATATABLE DEPENDENCIES-->
+            <script src="/static/vendor/datatables/datatables.min.js"></script>
+            <script src="/static/js/dataTables.buttons.min.js"></script>
+            <script src="/static/js/pdfmake.min.js"></script>
+            <script src="/static/js/vfs_fonts.js"></script>
+            <script src="/static/js/buttons.html5.min.js"></script>
+            <script src="/static/js/buttons.print.min.js"></script>
+            <script src="/static/js/jszip.min.js"></script>
+            <!--GLOBAL DEPENDENCES-->
+            <script src="/static/js/habil/detalle/tables.js"></script>
+            <%}%>
