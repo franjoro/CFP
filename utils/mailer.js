@@ -1,12 +1,18 @@
 const nodemailer = require("nodemailer");
+require('dotenv').config();
+
 // email sender function
 mailer = {};
+
+//
+const passEmail = process.env.PASSEMAIL;
+
 // Definimos el transporter
 const transporter = nodemailer.createTransport({
   service: "Gmail",
   auth: {
     user: "soporte_cfp@ricaldone.edu.sv",
-    pass: "Ricaldone_2021*_",
+    pass: `${process.env.PASSEMAIL}`,
   },
 });
 mailer.sendEmail = (to, sub, html = "", text) => {
