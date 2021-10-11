@@ -4,22 +4,19 @@ require('dotenv').config();
 // email sender function
 mailer = {};
 
-//
-const passEmail = process.env.PASSEMAIL;
-
 // Definimos el transporter
 const transporter = nodemailer.createTransport({
   service: "Gmail",
   auth: {
-    user: "soporte_cfp@ricaldone.edu.sv",
+    user: `${process.env.EMAIL}`,
     pass: `${process.env.PASSEMAIL}`,
   },
 });
 mailer.sendEmail = (to, sub, html = "", text) => {
   // Definimos el email
   const mailOptions = {
-    from: "soporte_cfp@ricaldone.edu.sv",
-    to: to || "osmaro_bonilla@ricaldone.edu.sv",
+    from: `${process.env.EMAIL}`,
+    to: to || `${process.env.SECONDEMAIL}`,
     subject: sub || "",
     text: text || "",
     html

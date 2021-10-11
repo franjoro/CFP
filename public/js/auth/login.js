@@ -10,7 +10,7 @@ const NotFoundM = () => {
     Swal.fire({
       icon: "success",
       title: "Correo enviado",
-      text: `Hemos enviado un correo electrónico a : ${email} con las instrucciones, por favor verifia la carpeta SPAM`,
+      text: `Hemos enviado un correo electrónico a : ${email} con las instrucciones, por favor verifica la carpeta SPAM`,
     });
   };
 

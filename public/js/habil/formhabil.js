@@ -52,7 +52,6 @@ const ProgressChange = (texto, id, val) => {
 
 
 $(document).ready(function () {
-  
   //Asignamos valor por defecto a combobox Has trabajadoAntes?
   $("#trabajaantes").val('0');
   // Cambiador de progress
@@ -133,8 +132,14 @@ $(document).ready(function () {
   $("#next3").click(() => {
 
     //INICIAMOS EL PROCESO DE VALIDACION DEL LADO DEL CLIENTE EN LA TERCERA PARTE DEL FORMULARIO
-    if($("#c1").is(":checked") == false && $("#c2").is(":checked") == false && $("#c3").is(":checked") == false && $("#c4").is(":checked") == false)
+    if($("#c1").is(":checked") == false && $("#c2").is(":checked") == false && $("#c3").is(":checked") == false && $("#c4").is(":checked") == false && $("#c5").is(":checked")==false)
       return error(" <b>errocode: </b> Seleccione a que se dedica actualmente.");
+    if($("#c5").is(":checked")==true && $("#txtOtro").val() == ''){
+      return error("<b>errorcode:>/b> Especifique a que otra actividad se dedica usted");
+    }
+    if($("#c5").is(":checked")==false && $("#txtOtro").val() != ''){
+      return error("<b>errorcode:>/b> Rellene el cuatro de oto solo si selecciona otra actividad a la cual se dedica.");
+    }
     if(!$("#trabajaantes").val()){
       return error(" <b>errocode: </b> Seleccione si a trabajado antes.");
     }else{
@@ -672,15 +677,14 @@ $(document).ready(function () {
   };
 
   const json2 = () =>{
-    let soloFirma;
-    if($('#firmahuella').prop('checked')) {
-      soloFirma = $("#firmahuella").val();
-    }
+    
     const sabeleerEscribir = $("#leerescribir").val(),
       leerEscribir = $("#soloescribir").val(),
       gradoFinalizado = $("#ultgrado").val(),
       estudiaActualmente = $("#estudiaactualmente").val(),
       tiempoestudio = $("#tiempoestudio").val(),
+      txtOtherEduc = $("#txtOtherEduc").val(),
+      txtTitleOr = $("#txtTitleOr").val(),
       cursosPasados = $("#cursospasados").val(),
       beneficioCursos = $("#beneficiocursos").val(),
       curso1 = $("#curso1").val(),
@@ -707,12 +711,16 @@ $(document).ready(function () {
         estudia :$("#c1").is(":checked"),
         oficiosHogar :$("#c2").is(":checked"),
         buscaTrabajo :$("#c3").is(":checked"),
-        trabaja :$("#c4").is(":checked")
+        trabaja :$("#c4").is(":checked"),
+        otro :$("#c5").is(":checked")
       },
+      txtOtro = $("#txtOtro").val(),
       trabajaantes = $("#trabajaantes").val(),
       tiempoSinTrabajar = $("#tiempoSinTrabajar").val(),
       tiempoSinTrabajarselect = $("#tiempoSinTrabajarselect").val(),
       tipoempleo = $("#tipoempleo").val(),
+      txtOtherWork = $("#txtOtherWork").val(),
+      sectortrabajo = $("#sectortrabajo").val(),
       sectorDeTrabajo = $("#sectordetrabajo").val(),
       recibeIngresos = $("#recibeingresosselect").val(),
       ingresos = {
@@ -737,10 +745,11 @@ $(document).ready(function () {
     return{
       sabeleerEscribir,
       leerEscribir,
-      soloFirma,
       gradoFinalizado,
       estudiaActualmente,
       tiempoestudio,
+      txtTitleOr,
+      txtOtherEduc,
       cursosPasados,
       beneficioCursos,
       curso1,
@@ -758,10 +767,13 @@ $(document).ready(function () {
       cursopositivo,
       nobeneficioc,
       actividades,
+      txtOtro,
       trabajaantes,
       tiempoSinTrabajar,
       tiempoSinTrabajarselect,
       tipoempleo,
+      txtOtherWork,
+      sectortrabajo,
       sectorDeTrabajo,
       recibeIngresos,
       ingresos,

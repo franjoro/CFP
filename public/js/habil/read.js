@@ -43,7 +43,6 @@ const readDetSol = async () =>{
         $("#estadofamiliar").val(values.estadoFamiliar);
         $("#jefehogar").val(values.jefeDeHogar);
         $("#nhijos").val(values.nHijos);
-        console.log(values.booltrabajoantes);
         if(values.booltrabajoantes == 'on'){
           $("#flexRadioDefault2").prop("checked", true);
         }else{
@@ -54,6 +53,7 @@ const readDetSol = async () =>{
         busquedaDepartamentos(values.depNacimiento, '#depa_nac');
         busquedaMunicipio(values.depNacimiento, values.munNacimiento, "#municipioNac");
         $("#fechanac").val(values.fechNacimiento);
+        $("#edad").val(calcularEdad($("#fechanac").val()));
         busquedaDepartamentos(values.depDomicilio, "#depdomicilio");
         busquedaMunicipio(values.depDomicilio, values.munDomicilio, "#municipioDomicilio");
         $("#direccion").val(values.direccionDom);
@@ -91,7 +91,6 @@ const readDetSol = async () =>{
           if(discapacidadesJson.otro == 'true'){
             $("#discapacidad8").prop('checked', true);
           }
-          console.log(discapacidadesJson.otroText);
           if(discapacidadesJson.otroText != 'false'){
             
             $("#otrosdiscapacidades").val(discapacidadesJson.otroText);
@@ -105,11 +104,24 @@ const readDetSol = async () =>{
         if(values2.sabeleerEscribir == 0){//Si sabe leer y escribir
           $(".analfabeta").css("display", "block");
             $("#soloescribir").val(values2.leerEscribir);
-            if(values2.soloFirma == 'firmahuella'){
-              $("#firmahuella").prop('checked', true);
-            }
         }
         $("#ultgrado").val(values2.gradoFinalizado);
+        $("#txtTitleOr").val(values2.txtTitleOr);
+        if(values2.txtTitleOr==''){
+          $("#titleOrCert").val('no');
+          $("#blockTitOr").css("display", "none");
+        }else{
+          $("#titleOrCert").val('si');
+          $("#blockTitOr").css("display", "block");
+        }
+        $("#txtOtherEduc").val(values2.txtOtherEduc);
+        if(values2.txtOtherEduc==''){
+          $("#educacionFormal").val('no');
+          $("#blockEduForm").css("display", "none");
+        }else{
+          $("#educacionFormal").val('si');
+          $("#blockEduForm").css("display", "block");
+        }
         $("#estudiaactualmente").val(values2.estudiaActualmente);
         if(values2.estudiaActualmente == 0){// Si no estudia
           $("#tiempodejoestudio").css("display", "block");
@@ -172,6 +184,23 @@ const readDetSol = async () =>{
           $("#tiempoSinTrabajar").css("display", "none");
           $("#iftrabaja").css("display", "block");
           $("#tipoempleo").val(values2.tipoempleo);
+        }
+        if($("#tipoempleo").val() == 'otro'){
+          $("#otherWork").css('display', 'block');
+          $("#txtOtherWork").val(values2.txtOtherWork);
+        }else{
+          $("#otherWork").css('display', 'none');
+        }
+        const typeEmploye = values2.tipoempleo;
+        $("#sectortrabajo").val(values2.sectortrabajo);
+        if(typeEmploye == 'tmpcompleto' || typeEmploye == 'tmpparcial' || typeEmploye == 'negocio' || typeEmploye == 'inde' || typeEmploye == 'otro'){
+          $("#sectordetrabajo").css('display', 'block');
+        }else{
+          $("#sectordetrabajo").css('display', 'none');
+        }
+        if(actividad.otro == 'true'){
+          $("#c5").prop("checked", true);
+          $("#txtOtro").val(values2.txtOtro);
         }
         //¿Ha trabajado antes?
         $("#trabajaantes").val(values2.trabajaantes);
@@ -247,6 +276,50 @@ const readDetSol = async () =>{
       console.log(error);
     }
 };
+// name:charge title and tecnology
+// description see input for change text in title and tecnology
+// params: null
+// author: Osmaro Bonilla
+// date: 11/10/2021
+const changeTitleAndTecnology = () =>{
+  $("#educacionFormal").change(function(){
+    if($('#educacionFormal').val() == 'si'){
+      $("#blockEduForm").css('display', 'block');
+    }else{
+      $("#blockEduForm").css('display', 'none');
+    }
+  });
+  $("#titleOrCert").change(function(){
+    if($("#titleOrCert").val() == 'si'){
+      $("#blockTitOr").css('display', 'block');
+    }else{
+      $("#blockTitOr").css('display', 'none');
+    }
+  });
+}
+
+// name changeOtherSec3_1_2
+// description: change text input select tipoempleo
+// params: null
+// author: OsmaroBonilla
+// date: 11/10/2021
+const changeOtherSec3_1_2 = () =>{
+    $("#tipoempleo").change(function(){
+      const typeEmploye = $("#tipoempleo").val();
+      if($("#tipoempleo").val() == 'otro'){
+        $("#otherWork").css('display', 'block');
+      }else{
+        $("#otherWork").css('display', 'none');
+      }
+      if(typeEmploye == 'tmpcompleto' || typeEmploye == 'tmpparcial' || typeEmploye == 'negocio' || typeEmploye == 'inde' || typeEmploye == 'otro'){
+        $("#sectordetrabajo").css('display', 'block');
+      }else{
+        $("#sectordetrabajo").css('display', 'none');
+      }
+    });
+}
 $(document).ready(function () {
     readDetSol();
+    changeOtherSec3_1_2();
+    changeTitleAndTecnology();
 });

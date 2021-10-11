@@ -225,13 +225,23 @@
                     <option selected disabled>Seleccione</option>
                   </select>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-2">
                   <label>Fecha</label
                   ><input
                     type="text"
                     class="form-control form-control-sm"
                     name="fechanac"
                     id="fechanac"
+                  />
+                </div>
+                <div class="col-md-2">
+                  <label>Edad</label
+                  ><input
+                    type="text"
+                    class="form-control form-control-sm"
+                    name="edad"
+                    id="edad"
+                    readonly
                   />
                 </div>
               </div>
@@ -286,6 +296,7 @@
                     name="movil"
                     id="movil"
                   />
+                  <small id="" class="form-text text-muted">El número ingresado debe tener whatsApp</small>
                 </div>
                 <div class="col-md-6">
                   <label>E-mail</label
@@ -420,7 +431,7 @@
                     value=""
                     id="discapacidad8"
                   />
-                  <label class="form-check-label" for="defaultCheck8">Otros</label>
+                  <label class="form-check-label" for="defaultCheck8">Otra limitación permanente</label>
                   <input
                     type="text"
                     name="otrosdiscapacidades"
@@ -459,9 +470,10 @@
                     <option value="Leer">Solo Leer</option>
                     <option value="Ninguno">Ni leer ni escribir</option>
                     <option value="Escribir">Solo Escribir</option>
+                    <option value="soloFirma">Solo firma</option>
                   </select>
                 </div>
-                <div class="form-group col-md-3 analfabeta">
+                <!-- <div class="form-group col-md-3 analfabeta">
                   <label>¿Solo firma ?</label>
                   <div class="form-check">
                     <input
@@ -474,7 +486,7 @@
                       (firma ó huella):
                     </label>
                   </div>
-                </div>
+                </div> -->
               </div>
               <div class="form-row">
                 <div class="col-md-5 form-group">
@@ -495,9 +507,37 @@
                     <option value="BachCom">Bachillerato Completo</option>
                     <option value="UniInc">Universidad Incompleta</option>
                     <option value="UniCom">Universidad Completa</option>
+                    <option value="TecInc">Tecnológica Incompleta</option>
+                    <option value="TecCom">Tecnológica Completa</option>
+                    <option value="OtrEdu">Otra educación formal</option>
+                    <option value="Certif">Titulo o certificado obtenido</option>
                   </select>
                 </div>
+                <div class="col-md-2 form-group">
+                  <label>Otra educación formal</label>
+                  <select name="educacionFormal" id="educacionFormal" class="form-control form-control-sm">
+                    <option value="">No seleccionado</option>
+                    <option value="no">No</option>
+                    <option value="si">Si</option>
+                  </select>
+                </div>
+                <div class="col-md-3 form-group" id="blockEduForm">
+                  <label>Escribe otra educación formal</label>
+                  <input type="text" class="form-control form-control-sm" id="txtOtherEduc"/>
+                </div>
                 <div class="col-md-3 form-group">
+                  <label>Titulo o certificado obtenido</label>
+                  <select name="titCer" id="titleOrCert" class="form-control form-control-sm">
+                    <option value="">No Seleccionado</option>
+                    <option value="no">No</option>
+                    <option value="si">Si</option>
+                  </select>
+                </div>
+                <div class="col-md-3 form-group" id="blockTitOr">
+                  <label for="txtTitleOr">Escribe que titulo o certificado</label>
+                  <input type="text" class="form-control" id="txtTitleOr">
+                </div>
+                <div class="col-md-2 form-group">
                   <label>¿Estudia actualmente?</label>
                   <select
                     id="estudiaactualmente"
@@ -566,6 +606,7 @@
                       <option selected disabled>Seleccione</option>
                       <option value="Si">Si</option>
                       <option value="No">No</option>
+                      <option value="NoSe">No sabe</option>
                     </select>
                   </div>
                   <div class="col-md-3 form-group">
@@ -606,6 +647,7 @@
                       <option selected disabled>Seleccione</option>
                       <option value="Si">Si</option>
                       <option value="No">No</option>
+                      <option value="NoSe">No sabe</option>
                     </select>
                   </div>
                   <div class="col-md-3 form-group">
@@ -646,6 +688,8 @@
                       <option selected disabled>Seleccione</option>
                       <option value="Si">Si</option>
                       <option value="No">No</option>
+                      <option value="NoSe">No sabe</option>
+
                     </select>
                   </div>
                   <div class="col-md-3 form-group">
@@ -798,6 +842,24 @@
                 />
                 <label class="form-check-label" for="c4"> Trabaja </label>
               </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value="Otro"
+                  id="c5"
+                />
+                <label class="form-check-label" for="c5">Otro</label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="text"
+                  id="txtOtro"
+                  placeholder="Escribe si selecciona el check otro"
+                />
+              </div>
+              <br><br>
               <hr />
               <div class="form-row" id="ifnottrabaja">
                 <div class="col-md-3 form-group">
@@ -851,8 +913,26 @@
                         Independiente o cuenta propia
                       </option>
                       <option value="informal">Trabajo informal</option>
+                      <option value="otro">Otro</option>
                     </select>
                   </div>
+                  <div class="col-md-4" id="otherWork">
+                    <label for="txtOtherWork" class="form-label">Especifique que tipo de trabajo tiene</label>
+                    <input 
+                      type="text" 
+                      id="txtOtherWork" 
+                      placeholder="Especifique que tipo de trabajo tiene"
+                      class="form-control"  
+                    >
+                  </div>
+                  <!-- <div class="col-md-4">
+                    <p>¿Cotiza ISSS y AFP?</p>
+                    <select name="cotiza" id="cotiza">
+                      <option value="">Seleccione</option>
+                      <option value="no">No</option>
+                      <option value="si">Si</option>
+                    </select>
+                  </div> -->
                   <div
                     class="col-md-6"
                     id="sectordetrabajo"
@@ -867,6 +947,7 @@
                       <option value="privado">Sector Privado</option>
                       <option value="publico">Sector Público</option>
                     </select>
+                    <small id="" class="form-text text-muted">Seleccione solamente si tiene un trabajo formal es decir si cotiza en ISSS y AFP</small>
                   </div>
                 </div>
               </div>
