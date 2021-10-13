@@ -351,6 +351,7 @@
                   <input
                     class="form-check-input"
                     type="checkbox"
+                    name='disability'
                     value="Moverse o caminar"
                     id="discapacidad1"
                   />
@@ -362,6 +363,7 @@
                   <input
                     class="form-check-input"
                     type="checkbox"
+                    name='disability'
                     value="Usar sus brazos o manos"
                     id="discapacidad2"
                   />
@@ -373,6 +375,7 @@
                   <input
                     class="form-check-input"
                     type="checkbox"
+                    name='disability'
                     value="Ver, aun usando lentes"
                     id="discapacidad3"
                   />
@@ -384,6 +387,7 @@
                   <input
                     class="form-check-input"
                     type="checkbox"
+                    name='disability'
                     value="Oír, aun usando aparatos especiales"
                     id="discapacidad4"
                   />
@@ -395,6 +399,7 @@
                   <input
                     class="form-check-input"
                     type="checkbox"
+                    name='disability'
                     value="Hablar"
                     id="discapacidad5"
                   />
@@ -406,6 +411,7 @@
                   <input
                     class="form-check-input"
                     type="checkbox"
+                    name='disability'
                     value="Tiene algún retraso o deficiencia mental"
                     id="discapacidad6"
                   />
@@ -417,6 +423,7 @@
                   <input
                     class="form-check-input"
                     type="checkbox"
+                    name='disability'
                     value="Bañarse, vestirse, alimentarse por si mismo"
                     id="discapacidad7"
                   />
@@ -428,10 +435,11 @@
                   <input
                     class="form-check-input"
                     type="checkbox"
+                    name='disability'
                     value=""
                     id="discapacidad8"
                   />
-                  <label class="form-check-label" for="defaultCheck8">Otra limitación permanente</label>
+                  <label class="form-check-label" for="defaultCheck8">Otra limitación permanente. Explique: </label>
                   <input
                     type="text"
                     name="otrosdiscapacidades"
@@ -509,8 +517,6 @@
                     <option value="UniCom">Universidad Completa</option>
                     <option value="TecInc">Tecnológica Incompleta</option>
                     <option value="TecCom">Tecnológica Completa</option>
-                    <option value="OtrEdu">Otra educación formal</option>
-                    <option value="Certif">Titulo o certificado obtenido</option>
                   </select>
                 </div>
                 <div class="col-md-2 form-group">
@@ -627,7 +633,7 @@
                       <option selected disabled>Seleccione</option>
                       <option value="Si">Si</option>
                       <option value="No">No</option>
-                      <option value="No">No recuerda</option>
+                      <option value="NR">NR</option>
                     </select>
                   </div>
                 </div>
@@ -668,7 +674,7 @@
                       <option selected disabled>Seleccione</option>
                       <option value="Si">Si</option>
                       <option value="No">No</option>
-                      <option value="No">No recuerda</option>
+                      <option value="NR">NR</option>
                     </select>
                   </div>
                 </div>
@@ -710,7 +716,7 @@
                       <option selected disabled>Seleccione</option>
                       <option value="Si">Si</option>
                       <option value="No">No</option>
-                      <option value="No">No recuerda</option>
+                      <option value="NR">NR</option>
                     </select>
                   </div>
                 </div>
@@ -782,7 +788,7 @@
                   <div class="col-md-12 form-group">
                     <label
                       >¿Por que cree que no recibió beneficios como producto de
-                      la/las capacitación/es?o</label
+                      la/las capacitación/es?</label
                     >
                     <input
                       type="text"
@@ -1126,7 +1132,7 @@
                     <input
                       class="form-check-input"
                       type="checkbox"
-                      value=""
+                      value="Otros"
                       id="e7"
                     />
                     <label>Otros</label>
@@ -1305,7 +1311,7 @@
     <script src="/static/js/habil/formhabil.js"></script>
     <%if(idSolicitud != ''){%>
       <script src="/static/js/habil/read.js"></script>
-      <script src="/static/js/habil/update.js"></script>
+      <script src="/static/js/habil/functions.js"></script>
     <%}%>
   </body>
 </html>

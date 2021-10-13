@@ -318,8 +318,22 @@ const changeOtherSec3_1_2 = () =>{
       }
     });
 }
+/*
+name: calculingYearInChange
+description: change year in moment change dateText
+params: null
+author: OsmaroBonilla
+date: 12/10/2021
+*/
+const changeDateOfBirth = () =>{
+  $("#fechanac").change(function(){
+    $("#edad").val(calcularEdad($("#fechanac").val()));
+  });
+}
 $(document).ready(function () {
+    // initialize arrow functions
     readDetSol();
     changeOtherSec3_1_2();
     changeTitleAndTecnology();
+    changeDateOfBirth();
 });

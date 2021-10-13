@@ -1,3 +1,12 @@
+/*
+name: formhabil.js
+description: sent post form and diferents sections whit button next
+dependencies: functions.js
+authors: Franklin Lopez || Osmaro Bonilla
+creation date: 12/06/2021 for Franklin Lopez
+last modification: 12/20/2021 for Osmaro Bonilla
+*/
+
 //VARIABLES GLOBALES
 let global_json1;
 let global_json2;
@@ -57,139 +66,184 @@ $(document).ready(function () {
   // Cambiador de progress
   // BOTONES
   $("#next1").click(() => {
-    //Comenzamos las validaciones de la sección1
-    if ($("#dui").val().length < 10 && $("#nit").val().length < 17)
-      return error(`<b>errocode: </b> Debe de colocar al menos un documento para poder enviar la solicitud`);
-    if (!$("#nombres").val())
-      return error(" <b>errocode: </b> Colocar el campo Nombres correctamente");
-    if (!$("#apellidos").val())
-      return error(" <b>errocode: </b> Colocar el campo Apellidos correctamente");
-    if (!$("#sexo").val())
-      return error(" <b>errocode: </b> Seleccione un sexo");
-    if (!$("#estadofamiliar").val())
-      return error(" <b>errocode: </b> Seleccione un Estado Familiar");
-    if (!$("#jefehogar").val())
-      return error(" <b>errocode: </b> Seleccione un sexo");
-    if (!$("#depa_nac").val())
-      return error(" <b>errocode: </b> Seleccione un departamento de nacimiento");
-    if (!$("#municipioNac").val())
-      return error(" <b>errocode: </b> Seleccione un municipio de nacimiento");
-    if (!$("#fechanac").val())
-      return error(" <b>errocode: </b> Seleccione una fecha de nacimiento");
-    if (!$("#depdomicilio").val())
-      return error(" <b>errocode: </b> Seleccione un departamento de domicilio");
-    if (!$("#municipioDomicilio").val())
-      return error(" <b>errocode: </b> Seleccione un departamento de domicilio");
-    if (!$("#direccion").val())
-      return error(" <b>errocode: </b> Colocar una dirección");
-    if ($("#fijo").val().length<9)
-      return error(" <b>errocode: </b> Colocar un teléfono fijo valido.");
-    if ($("#movil").val().length<9)
-      return error(" <b>errocode: </b> Colocar un teléfono movil valido.");
-    if (!$("#mail").val())
-      return error(" <b>errocode: </b> Colocar un correo valido");
-    if(calcularEdad($("#fechanac").val()) < 16)
-      return error(" <b>errocode: </b> El participante tiene ser mayor o igual a 16 años");
-
-    //Ya completas las validaciones procedemos a pasar a la siguiente seccion (Seccion2 )
-    ProgressChange("Educación formal y formación ocupacional", "2", "33.33");
-    $("#sec1").css("display", "none");
-    $("#sec2").css("display", "block");
-    global_json1 = json1();
+    if(validateDisabilities().status){
+        //Comenzamos las validaciones de la sección1
+        clearDisabilities();
+        validateDisabilities();
+        if ($("#dui").val().length < 10 && $("#nit").val().length < 17)
+          return error(`<b>errocode: </b> Debe de colocar al menos un documento para poder enviar la solicitud`);
+        if (!$("#nombres").val())
+          return error(" <b>errocode: </b> Colocar el campo Nombres correctamente");
+        if (!$("#apellidos").val())
+          return error(" <b>errocode: </b> Colocar el campo Apellidos correctamente");
+        if (!$("#sexo").val())
+          return error(" <b>errocode: </b> Seleccione un sexo");
+        if (!$("#estadofamiliar").val())
+          return error(" <b>errocode: </b> Seleccione un Estado Familiar");
+        if (!$("#jefehogar").val())
+          return error(" <b>errocode: </b> Seleccione un sexo");
+        if (!$("#depa_nac").val())
+          return error(" <b>errocode: </b> Seleccione un departamento de nacimiento");
+        if (!$("#municipioNac").val())
+          return error(" <b>errocode: </b> Seleccione un municipio de nacimiento");
+        if (!$("#fechanac").val())
+          return error(" <b>errocode: </b> Seleccione una fecha de nacimiento");
+        if (!$("#depdomicilio").val())
+          return error(" <b>errocode: </b> Seleccione un departamento de domicilio");
+        if (!$("#municipioDomicilio").val())
+          return error(" <b>errocode: </b> Seleccione un departamento de domicilio");
+        if (!$("#direccion").val())
+          return error(" <b>errocode: </b> Colocar una dirección");
+        if ($("#fijo").val().length<9)
+          return error(" <b>errocode: </b> Colocar un teléfono fijo valido.");
+        if ($("#movil").val().length<9)
+          return error(" <b>errocode: </b> Colocar un teléfono movil valido.");
+        if (!$("#mail").val())
+          return error(" <b>errocode: </b> Colocar un correo valido");
+        if(calcularEdad($("#fechanac").val()) < 16)
+          return error(" <b>errocode: </b> El participante tiene ser mayor o igual a 16 años");
+  
+        //Ya completas las validaciones procedemos a pasar a la siguiente seccion (Seccion2 )
+        ProgressChange("Educación formal y formación ocupacional", "2", "33.33");
+        $("#sec1").css("display", "none");
+        $("#sec2").css("display", "block");
+        global_json1 = json1();
+    }else{
+      return error(validateDisabilities().msg);
+    }
   });
+
+  //========================================== 
+  //#region      SECCTION NEXT 2
+  // =========================================
   $("#next2").click(() => {
+    // we validate that complete  previos courses
+    if(validationCompleteNamePreviosCouses().status){
+      if(validationCompletePreviousCourses().status){
+        //Realizamos las validaciones en el lado del cliente de la seccion2
+        if(!$("#leerescribir").val()){
+          return error(" <b>errocode: </b> Seleccione si usted sabe leer y escribir.");
+        }else{
+          if($("#leerescribir").val() == 0){
+            if(!$("#soloescribir").val()){
+              return error(" <b>errocode: </b> Seleccione si usted solo sabe leer, si solo sabe escribir o ninguna de las anteriores opciones.");
+            }
+          }
+        } 
+        if(!$("#ultgrado").val())
+          return error(" <b>errocode: </b> Seleccione el ultimo de estudio finalizado.");
+        if(!$("#estudiaactualmente").val())
+          return error(" <b>errocode: </b> Seleccione si estudia actualmente.");
+        else{
+          if($("#estudiaactualmente").val() == 0){
+            if(!$("#tiempoestudio").val()){
+              return error(" <b>errocode: </b> Seleccione hace cuanto tiempo dejo de estudiar.");
+            }
+          }
+        }
+        if(!$("#cursospasados").val())
+          return error(" <b>errocode: </b> Seleccione si a recibido cursos previamente o no.");
+        
+          
+        //Finalizamos las validaciones seccion 2
+        ProgressChange("Información sobre situación laboral", "3", "50");
+        $("#sec2").css("display", "none");
+        $("#sec3").css("display", "block");
+        clearSection2();
 
-    //Realizamos las validaciones en el lado del cliente de la seccion2
-    if(!$("#leerescribir").val()){
-      return error(" <b>errocode: </b> Seleccione si usted sabe leer y escribir.");
+      }else{
+        return error(`<b>errorcode</b> ${validationCompletePreviousCourses().msg}`);
+      }
     }else{
-      if($("#leerescribir").val() == 0){
-        if(!$("#soloescribir").val()){
-          return error(" <b>errocode: </b> Seleccione si usted solo sabe leer, si solo sabe escribir o ninguna de las anteriores opciones.");
-        }
-      }
-    } 
-    if(!$("#ultgrado").val())
-      return error(" <b>errocode: </b> Seleccione el ultimo de estudio finalizado.");
-    if(!$("#estudiaactualmente").val())
-      return error(" <b>errocode: </b> Seleccione si estudia actualmente.");
-    else{
-      if($("#estudiaactualmente").val() == 0){
-        if(!$("#tiempoestudio").val()){
-          return error(" <b>errocode: </b> Seleccione hace cuanto tiempo dejo de estudiar.");
-        }
-      }
+      return error(`<b>errorcode</b> ${validationCompleteNamePreviosCouses().msg}`);
     }
-    if(!$("#cursospasados").val())
-      return error(" <b>errocode: </b> Seleccione si a recibido cursos previamente o no.");
     
-      
-    //Finalizamos las validaciones seccion 2
-    ProgressChange("Información sobre situación laboral", "3", "50");
-    $("#sec2").css("display", "none");
-    $("#sec3").css("display", "block");
   });
-  $("#next3").click(() => {
+//#endregion
 
-    //INICIAMOS EL PROCESO DE VALIDACION DEL LADO DEL CLIENTE EN LA TERCERA PARTE DEL FORMULARIO
-    if($("#c1").is(":checked") == false && $("#c2").is(":checked") == false && $("#c3").is(":checked") == false && $("#c4").is(":checked") == false && $("#c5").is(":checked")==false)
-      return error(" <b>errocode: </b> Seleccione a que se dedica actualmente.");
-    if($("#c5").is(":checked")==true && $("#txtOtro").val() == ''){
-      return error("<b>errorcode:>/b> Especifique a que otra actividad se dedica usted");
-    }
-    if($("#c5").is(":checked")==false && $("#txtOtro").val() != ''){
-      return error("<b>errorcode:>/b> Rellene el cuatro de oto solo si selecciona otra actividad a la cual se dedica.");
-    }
-    if(!$("#trabajaantes").val()){
-      return error(" <b>errocode: </b> Seleccione si a trabajado antes.");
-    }else{
-      if($("#trabajaantes").val() == 1){
-        if(!$("#tiempoSinTrabajarselect").val()){
-          return error(" <b>errocode: </b> Seleccione HACE CUANTO TIEMPO QUE NO TRABAJA.");
+
+  //========================================== 
+  //#region    SECCTION NEXT 3
+  // =========================================
+  $("#next3").click(() => {
+  // valitade 
+  
+
+    if(validateSection3().status){
+        //INICIAMOS EL PROCESO DE VALIDACION DEL LADO DEL CLIENTE EN LA TERCERA PARTE DEL FORMULARIO
+        if($("#c1").is(":checked") == false && $("#c2").is(":checked") == false && $("#c3").is(":checked") == false && $("#c4").is(":checked") == false && $("#c5").is(":checked")==false)
+        return error(" <b>errocode: </b> Seleccione a que se dedica actualmente.");
+        if($("#c5").is(":checked")==true && $("#txtOtro").val() == ''){
+          return error("<b>errorcode:</b> Especifique a que otra actividad se dedica usted");
         }
-      }
+        if($("#c5").is(":checked")==false && $("#txtOtro").val() != ''){
+          return error("<b>errorcode:>/b> Rellene el cuatro de oto solo si selecciona otra actividad a la cual se dedica.");
+        }
+        if(!$("#trabajaantes").val()){
+          return error(" <b>errocode: </b> Seleccione si a trabajado antes.");
+        }else{
+          if($("#trabajaantes").val() == 1){
+            if(!$("#tiempoSinTrabajarselect").val()){
+              return error(" <b>errocode: </b> Seleccione HACE CUANTO TIEMPO QUE NO TRABAJA.");
+            }
+          }
+        }
+        //FINALIZAMOS EL PROCESO DE VALIDACION DEL LADO DEL CLIENTE EN LA TERCERA PARTE DEL FORMULARIO
+        ProgressChange("Información sobre ingresos", "4", "66.33");
+        $("#sec3").css("display", "none");
+        $("#sec4").css("display", "block");
+        clearSection3();
+    }else{
+      return error(validateSection3().msg);
     }
-    //FINALIZAMOS EL PROCESO DE VALIDACION DEL LADO DEL CLIENTE EN LA TERCERA PARTE DEL FORMULARIO
-    ProgressChange("Información sobre ingresos", "4", "66.33");
-    $("#sec3").css("display", "none");
-    $("#sec4").css("display", "block");
   });
+//#endregion
+
   $("#next4").click(() => {
-    //INICIAMOS EL PROCESO DE VALIDACION DEL LADO DEL CLIENTE EN LA CUARTA PARTE DEL FORMULARIO
-    if(!$("#recibeingresosselect").val()){
-      return error(" <b>errocode: </b> Seleccione si recibe ingresos.");
-    }else{
-      if($("#recibeingresosselect").val() == 1){
-        if($("#ingresos1").is(":checked") == false && $("#ingresos2").is(":checked") == false && $("#ingresos3").is(":checked") == false && $("#ingresos4").is(":checked") == false && $("#ingresos5").is(":checked") == false){
-          return error(" <b>errocode: </b> Seleccione al menos una manera por la cual obtiene ingresos.");
+    if(validateSection4().status){
+        //INICIAMOS EL PROCESO DE VALIDACION DEL LADO DEL CLIENTE EN LA CUARTA PARTE DEL FORMULARIO
+        if(!$("#recibeingresosselect").val()){
+          return error(" <b>errocode: </b> Seleccione si recibe ingresos.");
+        }else{
+          if($("#recibeingresosselect").val() == 1){
+            if($("#ingresos1").is(":checked") == false && $("#ingresos2").is(":checked") == false && $("#ingresos3").is(":checked") == false && $("#ingresos4").is(":checked") == false && $("#ingresos5").is(":checked") == false){
+              return error(" <b>errocode: </b> Seleccione al menos una manera por la cual obtiene ingresos.");
+            }
+          }
         }
-      }
+          
+        //FINALIZAMOS EL PROCESO DE VALIDACION DEL LADO DEL CLIENTE EN LA CUARTA PARTE DEL FORMULARIO
+        ProgressChange(
+          "Expectativas y pertenencia de la información",
+          "5",
+          "82.66"
+        );
+        $("#sec4").css("display", "none");
+        $("#sec5").css("display", "block");
+        clearSection4();
+    }else{
+      return error(validateSection4().msg);
     }
-      
-    //FINALIZAMOS EL PROCESO DE VALIDACION DEL LADO DEL CLIENTE EN LA CUARTA PARTE DEL FORMULARIO
-    ProgressChange(
-      "Expectativas y pertenencia de la información",
-      "5",
-      "82.66"
-    );
-    $("#sec4").css("display", "none");
-    $("#sec5").css("display", "block");
   });
   $("#next5").click(() => {
-    //INICIAMOS EL PROCESO DE VALIDACION DEL LADO DEL CLIENTE EN LA QUINTA PARTE DEL FORMULARIO
-    if($("#e1").is(":checked") == false && $("#e2").is(":checked") == false && $("#e3").is(":checked") == false && $("#e4").is(":checked") == false && $("#e5").is(":checked") == false && $("#e6").is(":checked") == false && $("#e7").is(":checked") == false)
-      return error(" <b>errocode: </b> Seleccione al menos una casilla de '¿Qué espera lograr con la capacitación a recibir?'.");
+    if(validateSection5().status){
+      //INICIAMOS EL PROCESO DE VALIDACION DEL LADO DEL CLIENTE EN LA QUINTA PARTE DEL FORMULARIO
+      if($("#e1").is(":checked") == false && $("#e2").is(":checked") == false && $("#e3").is(":checked") == false && $("#e4").is(":checked") == false && $("#e5").is(":checked") == false && $("#e6").is(":checked") == false && $("#e7").is(":checked") == false)
+        return error(" <b>errocode: </b> Seleccione al menos una casilla de '¿Qué espera lograr con la capacitación a recibir?'.");
 
-    if(!$("#pertinencia").val())
-      return error(" <b>errocode: </b> Seleccione al menos una pertinencia del curso.");
-    
+      if(!$("#pertinencia").val())
+        return error(" <b>errocode: </b> Seleccione al menos una pertinencia del curso.");
+      
 
-    //FINALIZAMOS EL PROCESO DE VALIDACION DEL LADO DEL CLIENTE EN LA QUINTA PARTE DEL FORMULARIO
-    ProgressChange("Seguimiento", "6", "100");
-    $("#sec5").css("display", "none");
-    $("#sec6").css("display", "block");
-    global_json2 = json2();
-    console.log(global_json2);
+      //FINALIZAMOS EL PROCESO DE VALIDACION DEL LADO DEL CLIENTE EN LA QUINTA PARTE DEL FORMULARIO
+      ProgressChange("Seguimiento", "6", "100");
+      $("#sec5").css("display", "none");
+      $("#sec6").css("display", "block");
+      global_json2 = json2();
+      console.log(global_json2);
+    }else{
+      return error(validateSection5().msg);
+    } 
   });
 
 
@@ -367,6 +421,12 @@ $(document).ready(function () {
   });
 
   $(".beneficios").on("change", function () {
+    if($("#beneficio1").val() != 'No' && $("#beneficio2").val() != 'No' && $("#beneficio3").val() != 'No'){
+      $("#cursonegativo").css("display", "none");
+    }
+    if($("#beneficio1").val() != 'Si' && $("#beneficio2").val() != 'Si' && $("#beneficio3").val() != 'Si'){
+      $("#cursopositivo").css("display", "none");
+    }
     if (this.value == "Si") {
       $("#cursopositivo").css("display", "block");
     }
