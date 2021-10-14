@@ -61,6 +61,11 @@ const ProgressChange = (texto, id, val) => {
 
 
 $(document).ready(function () {
+  changeDateOfBirth();
+  changeOtherSec3_1_2();
+    changeTitleAndTecnology();
+    $("#blockTitOr").css("display", "none");
+    $("#blockEduForm").css("display", "none");
   //Asignamos valor por defecto a combobox Has trabajadoAntes?
   $("#trabajaantes").val('0');
   // Cambiador de progress
@@ -394,93 +399,7 @@ $(document).ready(function () {
   });
 
   // FIN SECCION 1 =====================================================================
-  // SECCION 2 =========================================================================
-  // Sabe leer escribir
-  $("#leerescribir").on("change", function () {
-    if (this.value == "0") {
-      $(".analfabeta").css("display", "block");
-    } else {
-      $(".analfabeta").css("display", "none");
-    }
-  });
-  // Estudia actualmete
-  $("#estudiaactualmente").on("change", function () {
-    if (this.value == "0") {
-      $("#tiempodejoestudio").css("display", "block");
-    } else {
-      $("#tiempodejoestudio").css("display", "none");
-    }
-  });
-  //Cursos pasados
-  $("#cursospasados").on("change", function () {
-    if (this.value == "1") {
-      $("#beneficiocursos").css("display", "block");
-    } else {
-      $("#beneficiocursos").css("display", "none");
-    }
-  });
-
-  $(".beneficios").on("change", function () {
-    if($("#beneficio1").val() != 'No' && $("#beneficio2").val() != 'No' && $("#beneficio3").val() != 'No'){
-      $("#cursonegativo").css("display", "none");
-    }
-    if($("#beneficio1").val() != 'Si' && $("#beneficio2").val() != 'Si' && $("#beneficio3").val() != 'Si'){
-      $("#cursopositivo").css("display", "none");
-    }
-    if (this.value == "Si") {
-      $("#cursopositivo").css("display", "block");
-    }
-    if (this.value == "No") {
-      $("#cursonegativo").css("display", "block");
-    }
-  });
-
-
-  // FIN SECCION 2 =====================================================================
-
-  // SECCION 3 =====================================================================
-  //Si trabaja
-  $("#c4").change(function () {
-    if (this.checked) {
-      $("#iftrabaja").css("display", "block");
-      $("#ifnottrabaja").css("display", "none");
-    } else {
-      $("#iftrabaja").css("display", "none");
-      $("#ifnottrabaja").css("display", "flex");
-    }
-  });
-  // Si no trabaja
-  $("#trabajaantes").on("change", function () {
-    if (this.value == "1") {
-      $("#tiempoSinTrabajar").css("display", "block");
-    } else {
-      $("#tiempoSinTrabajar").css("display", "none");
-    }
-  });
-
-  $("#tipoempleo").on("change", function () {
-    if (
-      this.value == "tmpcompleto" ||
-      this.value == "tmpparcial" ||
-      this.value == "temporal"
-    ) {
-      $("#sectordetraajo").css("display", "block");
-    } else {
-      $("#sectordetraajo").css("display", "none");
-    }
-  });
-
-  // FIN SECCION 3 =====================================================================
-  // SECCION 4 =====================================================================
-  // Si recibe ingresos
-  $("#recibeingresosselect").on("change", function () {
-    if (this.value == "1") {
-      $("#sirecibeingresos").css("display", "block");
-    } else {
-      $("#sirecibeingresos").css("display", "none");
-    }
-  });
-  // FIN SECCION 4 =====================================================================
+ 
   //ORDENAMIENTO 
   function ordenarSelect(id_componente)
   {

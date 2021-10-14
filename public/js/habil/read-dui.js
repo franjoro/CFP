@@ -1,35 +1,35 @@
 busquedaDepartamentos = (idDepartamento, select) =>{
-  const url = `https://api.salud.gob.sv/departamentos/${idDepartamento}`;
-  $.ajax({
-    type: "GET",
-    url: url,
-    data: [{
-      idPais: 68,
-      id: idDepartamento
-    }],
-    success: function(data){
-      $(`${select}`).prepend(`<option value='${idDepartamento}' selected='selected'>${data.nombre}</option>`);
-    }
-  });
-};
+    const url = `https://api.salud.gob.sv/departamentos/${idDepartamento}`;
+    $.ajax({
+      type: "GET",
+      url: url,
+      data: [{
+        idPais: 68,
+        id: idDepartamento
+      }],
+      success: function(data){
+        $(`${select}`).prepend(`<option value='${idDepartamento}' selected='selected'>${data.nombre}</option>`);
+      }
+    });
+  };
+  
+  busquedaMunicipio = (idDepartamento,idMunicipio, select) =>{
+    const url = `https://api.salud.gob.sv/municipios/${idMunicipio}`;
+    $.ajax({
+      type: "GET",
+      url: url,
+      data: [{
+        idDepartamento: idDepartamento
+      }],
+      success: function(data){
+        $(`${select}`).prepend(`<option value='${idMunicipio}' selected='selected'>${data.nombre}</option>`);
+      }
+    });
+  };
+  
 
-busquedaMunicipio = (idDepartamento,idMunicipio, select) =>{
-  const url = `https://api.salud.gob.sv/municipios/${idMunicipio}`;
-  $.ajax({
-    type: "GET",
-    url: url,
-    data: [{
-      idDepartamento: idDepartamento
-    }],
-    success: function(data){
-      $(`${select}`).prepend(`<option value='${idMunicipio}' selected='selected'>${data.nombre}</option>`);
-    }
-  });
-};
-
-
-const readDetSol = async () =>{
-    const data = await $.ajax({ url: `/admin/habil/readSolicitud/detalle/${$("#idSolicitud").val()}`});
+const readDetSolWhitDUI = async () =>{
+    const data = await $.ajax({ url: `/admin/habil/readSolicitud/detalle-dui/${$("#dui").val()}`});
     try {
       if (data.status) {
         //Recolectando los valores de json 1
@@ -277,8 +277,9 @@ const readDetSol = async () =>{
     }
 };
 
-
 $(document).ready(function () {
     // initialize arrow functions
-    readDetSol();
+    $("#dui").change(function(){
+        readDetSolWhitDUI();
+    });
 });

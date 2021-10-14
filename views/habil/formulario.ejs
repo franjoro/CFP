@@ -276,6 +276,10 @@
                     name="direccion"
                     id="direccion"
                   />
+                  <small id="" class="form-text text-muted">
+                    Colonia, caserío, asentamiento o comunidad, seguido del 
+                    nombre de la calle o pasaje y por ultimo el número de casa o lote.
+                  </small>
                 </div>
               </div>
               <div class="row">
@@ -312,11 +316,13 @@
               <h6 class="lead">Discapacidades</h6>
               <div class="row">
                 <div class="col-md-12">
-                  <label
-                    >¿Tiene usted alguna discapacidad permanente? Si su
-                    respuesta es <b>NO</b> por favor continue a la siguiente
-                    sección</label
-                  >
+                  <label>
+                    Tiene algina discapacidad permanente?
+                  </label>
+                  <small id="" class="form-text text-muted">
+                    Responda "Si" sollo si tiene alguna o varias dificultades para realizar
+                    actividades de la vida diaria.
+                  </small>
                   <div class="form-check">
                     <input
                       class="form-check-input"
@@ -725,6 +731,9 @@
                   <p>
                     ¿Para que sirvió(eron) la(s) capacitacion(es) que recibió?
                   </p>
+                  <small id="" class="form-text text-muted">
+                    Puede marcar más de una casilla.
+                  </small>
                   <div class="form-check">
                     <input
                       class="form-check-input"
@@ -810,6 +819,9 @@
               <h3>SECCION 3. INFORMACIÓN SOBRE SU SITUACIÓN LABORAL</h3>
               <hr />
               <p>¿A qué actividad se dedica usted actualmente?</p>
+              <small id="" class="form-text text-muted">
+                Puede marcar más de una casilla.
+              </small>
               <div class="form-check">
                 <input
                   class="form-check-input"
@@ -1063,6 +1075,9 @@
               <div class="row">
                 <div class="col-md-6">
                   <p>¿Qué espera lograr con la capacitación a recibir?</p>
+                  <small id="" class="form-text text-muted">
+                    Puede marcar más de una casilla.
+                  </small>
                   <div class="form-check">
                     <input
                       class="form-check-input"
@@ -1309,9 +1324,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <script src="/static/js/jquery.mask.min.js"></script>
     <script src="/static/js/habil/formhabil.js"></script>
+    <script src="/static/js/habil/functions.js"></script>
+    <script src="/static/js/habil/read-dui.js"></script>
     <%if(idSolicitud != ''){%>
       <script src="/static/js/habil/read.js"></script>
-      <script src="/static/js/habil/functions.js"></script>
     <%}%>
+    
   </body>
 </html>

@@ -26,6 +26,8 @@ router.get("/:codigoCurso/", habil.main);
 router.get("/formulario/:idSolicitud", habil.renderFormulario);
 //recoleccion de información
 router.get("/readSolicitud/detalle/:idSolicitud?", readHabil.readDet);
+//recoleccion de informacion a partir del DUI
+router.get("/readSolicitud/detalle-dui/:dui", readHabil.readDetWhitDUI);
 //Agregar vista de agradecimiento por rellenar el formulario
 router.get("/gracias/habil", habil.agradecimiento);
 //Vista de subida de documentación

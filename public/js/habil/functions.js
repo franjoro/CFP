@@ -5,8 +5,6 @@ author: OsmaroBonilla
 date: 12/10/2021 for Osmaro Bonilla
 last update: 12/10/2021 for Osmaro Bonilla
 */
-
-
 //#region validationCompletePreviousCourses
 /*
 name: validationCompletePreviousCourses
@@ -306,3 +304,152 @@ const validateSection5 = () =>{
     });
 }
 //#endregion
+
+
+$("#leerescribir").on("change", function () {
+    if (this.value == "0") {
+      $(".analfabeta").css("display", "block");
+    } else {
+      $(".analfabeta").css("display", "none");
+    }
+  });
+  // Estudia actualmete
+  $("#estudiaactualmente").on("change", function () {
+    if (this.value == "0") {
+      $("#tiempodejoestudio").css("display", "block");
+    } else {
+      $("#tiempodejoestudio").css("display", "none");
+    }
+  });
+  //Cursos pasados
+  $("#cursospasados").on("change", function () {
+    if (this.value == "1") {
+      $("#beneficiocursos").css("display", "block");
+    } else {
+      $("#beneficiocursos").css("display", "none");
+    }
+  });
+
+  $(".beneficios").on("change", function () {
+    if($("#beneficio1").val() != 'No' && $("#beneficio2").val() != 'No' && $("#beneficio3").val() != 'No'){
+      $("#cursonegativo").css("display", "none");
+    }
+    if($("#beneficio1").val() != 'Si' && $("#beneficio2").val() != 'Si' && $("#beneficio3").val() != 'Si'){
+      $("#cursopositivo").css("display", "none");
+    }
+    if (this.value == "Si") {
+      $("#cursopositivo").css("display", "block");
+    }
+    if (this.value == "No") {
+      $("#cursonegativo").css("display", "block");
+    }
+  });
+
+
+   // SECCION 2 =========================================================================
+  // Sabe leer escribir
+
+
+  // FIN SECCION 2 =====================================================================
+
+  // SECCION 3 =====================================================================
+  //Si trabaja
+  $("#c4").change(function () {
+    if (this.checked) {
+      $("#iftrabaja").css("display", "block");
+      $("#ifnottrabaja").css("display", "none");
+    } else {
+      $("#iftrabaja").css("display", "none");
+      $("#ifnottrabaja").css("display", "flex");
+    }
+  });
+  // Si no trabaja
+  $("#trabajaantes").on("change", function () {
+    if (this.value == "1") {
+      $("#tiempoSinTrabajar").css("display", "block");
+    } else {
+      $("#tiempoSinTrabajar").css("display", "none");
+    }
+  });
+
+  $("#tipoempleo").on("change", function () {
+    if (
+      this.value == "tmpcompleto" ||
+      this.value == "tmpparcial" ||
+      this.value == "temporal"
+    ) {
+      $("#sectordetraajo").css("display", "block");
+    } else {
+      $("#sectordetraajo").css("display", "none");
+    }
+  });
+
+  // FIN SECCION 3 =====================================================================
+  // SECCION 4 =====================================================================
+  // Si recibe ingresos
+  $("#recibeingresosselect").on("change", function () {
+    if (this.value == "1") {
+      $("#sirecibeingresos").css("display", "block");
+    } else {
+      $("#sirecibeingresos").css("display", "none");
+    }
+  });
+  // FIN SECCION 4 =====================================================================
+/*
+
+  name: calculingYearInChange
+description: change year in moment change dateText
+params: null
+author: OsmaroBonilla
+date: 12/10/2021
+*/
+const changeDateOfBirth = () =>{
+  $("#fechanac").change(function(){
+    $("#edad").val(calcularEdad($("#fechanac").val()));
+  });
+}
+
+
+
+// name:charge title and tecnology
+// description see input for change text in title and tecnology
+// params: null
+// author: Osmaro Bonilla
+// date: 11/10/2021
+const changeTitleAndTecnology = () =>{
+    $("#educacionFormal").change(function(){
+      if($('#educacionFormal').val() == 'si'){
+        $("#blockEduForm").css('display', 'block');
+      }else{
+        $("#blockEduForm").css('display', 'none');
+      }
+    });
+    $("#titleOrCert").change(function(){
+      if($("#titleOrCert").val() == 'si'){
+        $("#blockTitOr").css('display', 'block');
+      }else{
+        $("#blockTitOr").css('display', 'none');
+      }
+    });
+  }
+  
+  // name changeOtherSec3_1_2
+  // description: change text input select tipoempleo
+  // params: null
+  // author: OsmaroBonilla
+  // date: 11/10/2021
+  const changeOtherSec3_1_2 = () =>{
+      $("#tipoempleo").change(function(){
+        const typeEmploye = $("#tipoempleo").val();
+        if($("#tipoempleo").val() == 'otro'){
+          $("#otherWork").css('display', 'block');
+        }else{
+          $("#otherWork").css('display', 'none');
+        }
+        if(typeEmploye == 'tmpcompleto' || typeEmploye == 'tmpparcial' || typeEmploye == 'negocio' || typeEmploye == 'inde' || typeEmploye == 'otro'){
+          $("#sectordetrabajo").css('display', 'block');
+        }else{
+          $("#sectordetrabajo").css('display', 'none');
+        }
+      });
+  }
