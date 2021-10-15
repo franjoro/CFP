@@ -45,7 +45,7 @@ router.delete("/deleteSolicitud", authcheck , deleteSolicitud.delete);
 //#region post sentences 
 router.post("/updateFile", fileUpload(), updateFile.archivos);
 router.post("/", habil.form);
-router.post("/EnviarFiles", fileUpload(), subida.archivos);
+router.post("/EnviarFiles/:tipo?", fileUpload(), subida.archivos);
 router.post("/sendMail", authcheck, habil.sendEmail);
 router.post("/sendNotificacion", authcheck, sendNotificacion.send)
 router.post("/sendMailDocument", authcheck, habil.sendMailDocument);

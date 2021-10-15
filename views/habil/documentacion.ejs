@@ -44,7 +44,8 @@
               <img src="/static/img/guia_documentos.png" style="width: 600px;" class="d-inline" />
               <p class="text-center">
                 <div class="form-row">
-                    <div class="col-md-6 offset-md-4">
+                    <div class="col-md-5 offset-1">
+                      <label for="fileDocumentos" class="label-form ">Ingresa el DUI de manera frontal</label>
                         <input 
                         
                         id="fileDocumentos"
@@ -54,10 +55,46 @@
                         multiple max="4"
                         >
                     </div>
+                    <div class="col-md-6">
+                      <label for="fileDocumentos" class="label-form ">Ingresa el DUI de mantera trasera</label>
+                      <input 
+                      
+                      id="fileDUIback"
+                      type="file" 
+                      class="form-control-file" 
+                      name="fileDUIback"
+                      multiple max="4"
+                      >
+                  </div>
                 </div>
               </p>
               <p class="text-center">
-                <button class="btn btn-success" id="btnEnviarDoc">Enviar documentación</button>
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <label for="fileNITfront" class="label-form ">Ingresa el NIT de manera frontal (Obligatorio para menores de 18 años)</label>
+                        <input 
+                        
+                        id="fileNITfront"
+                        type="file" 
+                        class="form-control-file" 
+                        name="fileNITfront"
+                        multiple max="4"
+                        >
+                    </div>
+                    <div class="col-md-6">
+                      <label for="fileNITBack" class="label-form ">Ingresa el NIT de manera trasera (Obligatorio para menores de 18 años)</label>
+                      <input 
+                      id="fileNITBack"
+                      type="file" 
+                      class="form-control-file" 
+                      name="fileNITBack"
+                      multiple max="4"
+                      >
+                  </div>
+                </div>
+              </p>
+              <p class="text-center">
+                <button class="btn btn-success" id="btnEnviarDoc">Ingresa el NIT de manera trasera (Obligatorio para menores de 18 años)</button>
               </p>
             </div>
           </div>

@@ -31,6 +31,8 @@ const deleteNotificacion = (idSolicitud) => {
       allowOutsideClick: () => !Swal.isLoading(),
     }).then((result) => {
       console.log(result);
+      location.reload();
+
       if (result.value.status) {
         location.reload();
       }

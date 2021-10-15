@@ -8,6 +8,16 @@ const subidaHabil = {};
 
 //SECCION DE ASOCIACIÓN DEL BUCKET CON LA SUBIDA DE DATOS
 subidaHabil.archivos = async (req, res) => {
+  const {tipo} = req.params;
+  let codigoTipo ;
+  if(tipo == 'dui-frontal')
+    codigoTipo = 0;
+  if(tipo == 'dui-trasero')
+    codigoTipo = 1;
+  if(tipo == 'nit-frontal')
+    codigoTipo = 2;
+  if(tipo == 'nit-trasero')
+    codigoTipo = 3;
   //Validamos que exista el file
     if (!req.files) return res.json({ status: false, error: "FILE_NOT_EXIST" });
     //Obtenemos la propiedad name del objeto req.files
@@ -55,8 +65,8 @@ subidaHabil.archivos = async (req, res) => {
             key = element.key;
             inserts.push(
               pool.query(
-                "INSERT INTO tb_habil_documentos( id_solicitud, s3key, estado ) VALUES (?,?,?) ",
-                [idSolicitud, key , true]
+                "INSERT INTO tb_habil_documentos( id_solicitud, s3key, estado, tipo ) VALUES (?,?,?, ?) ",
+                [idSolicitud, key , true, codigoTipo]
               )
             );
           }

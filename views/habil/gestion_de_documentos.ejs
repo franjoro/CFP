@@ -45,7 +45,7 @@
           <div class="card-body">
             <div class="card shadow mb-3">
               <div class="card-body">
-                <h4>Archivos adjuntos empresa: <b>
+                <h4>Archivos adjuntos solicitud: <b>
                    <%=participante%>
                   </b></h4>
                 <h5>Curso: <b>
@@ -70,8 +70,22 @@
                     </thead>
                     <tbody>
                       <% documentos.forEach( (element)=> { 
+                        let nombreDocumento = "DOCUMENTO";
+                        if(element.tipo == 0){
+                          nombreDocumento = "DUI FRONTAL"
+                        }
+                        if(element.tipo == 1){
+                          nombreDocumento = "DUI TRASERO"
+                        }
+                        if(element.tipo == 2){
+                          nombreDocumento = "NIT FRONTAL"
+                        }
+                        if(element.tipo == 3){
+                          nombreDocumento = "NIT TRASERO"
+                        }
+                        
                         let tipoDocumento= element.tipo;
-                        let nombreDocumento= "DOCUMENTO";
+                        
                       %>
                       
                             <tr id="">

@@ -2,6 +2,9 @@
 $(document).ready(function () {
     $("#btnEnviarDoc").click(() => {
         //Llamamos el evento en subida de datos
-        SendFiles();
+        SendFiles('dui-frontal');
+        SendFiles('dui-trasero');
+        SendFiles('nit-frontal');
+        SendFiles('nit-trasero');
     });
 });
