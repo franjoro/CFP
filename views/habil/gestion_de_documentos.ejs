@@ -28,6 +28,9 @@
               <i class="fas fa-upload"></i>
               Subir archivos extra
             </button>
+            <button class="btn btn-secondary btn-sm d-inline float-right" onclick="createZipParticipant('<%=idSolicitud%>')">
+              <i class="fas fa-file-archive"></i> Descargar ZIP de documentos
+            </button>
             <button class="btn btn-primary btn-sm float-right d-inline mx-1" data-toggle="modal"
               data-target="#modal_compartir_documentacion"
               <% if(dui) {%>
@@ -167,3 +170,4 @@
       <script src="/static/js/habil/detalle/update.js"></script>
       <script src="/static/js/habil/detalle/delete.js"></script>
       <script src="/static/js/habil/detalle/clicks.js"></script>
+      <script src="/static/js/habil/detalle/zip.js"></script>

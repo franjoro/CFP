@@ -61,6 +61,7 @@ router.put("/", updateHabil.updateSolicitud);
 
 // #region zip
 router.post("/saveZipCourse", authcheck, zipCourse.getZipCouse);
+router.post("/saveZipParticipant", authcheck, zipCourse.getZipParticipant);
 router.get("/fileZipCourse/zip", authcheck, zipCourse.dowloadZipCourse);
 //#endregion
 
