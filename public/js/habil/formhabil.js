@@ -83,7 +83,6 @@ const ProgressChange = (texto, id, val) => {
 
 
 $(document).ready(function () {
-  inputDate("#fechanac");
   changeDateOfBirth();
   changeOtherSec3_1_2();
     changeTitleAndTecnology();

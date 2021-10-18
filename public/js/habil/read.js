@@ -281,4 +281,5 @@ const readDetSol = async () =>{
 $(document).ready(function () {
     // initialize arrow functions
     readDetSol();
+    inputDate("#fechanac");
 });
