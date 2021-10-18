@@ -53,7 +53,7 @@ const readDetSol = async () =>{
         busquedaDepartamentos(values.depNacimiento, '#depa_nac');
         busquedaMunicipio(values.depNacimiento, values.munNacimiento, "#municipioNac");
         $("#fechanac").val(values.fechNacimiento);
-        $("#edad").val(calcularEdad($("#fechanac").val()));
+        $("#edad").val(calcularEdad($("#fechanac").val().split("-").reverse().join()));
         busquedaDepartamentos(values.depDomicilio, "#depdomicilio");
         busquedaMunicipio(values.depDomicilio, values.munDomicilio, "#municipioDomicilio");
         $("#direccion").val(values.direccionDom);
@@ -281,5 +281,4 @@ const readDetSol = async () =>{
 $(document).ready(function () {
     // initialize arrow functions
     readDetSol();
-    inputDate("#fechanac");
 });
