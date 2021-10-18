@@ -26,7 +26,7 @@ const SendFiles = async (typeDocument) => {
         //Hacemos un for a pesar de que sea solo un file tiene diferentes archivos por eso mandamos un for
         for (let i = 0; i < cantidadDocumentos; i++) {
           //append para anidar y ponemos el name y id del file
-          fd.append(`fileDocumentos${i}`, $(`#fileDocumentos`)[0].files[i]);  
+          fd.append(`fileDocumentos${i}`, $(`#fileDUIback`)[0].files[i]);  
         }
       break;
       case 'nit-frontal':
@@ -34,7 +34,7 @@ const SendFiles = async (typeDocument) => {
         //Hacemos un for a pesar de que sea solo un file tiene diferentes archivos por eso mandamos un for
         for (let i = 0; i < cantidadDocumentos; i++) {
           //append para anidar y ponemos el name y id del file
-          fd.append(`fileDocumentos${i}`, $(`#fileDocumentos`)[0].files[i]);  
+          fd.append(`fileDocumentos${i}`, $(`#fileNITfront`)[0].files[i]);  
         }
       break;
       case 'nit-trasero':
@@ -42,7 +42,7 @@ const SendFiles = async (typeDocument) => {
         //Hacemos un for a pesar de que sea solo un file tiene diferentes archivos por eso mandamos un for
         for (let i = 0; i < cantidadDocumentos; i++) {
           //append para anidar y ponemos el name y id del file
-          fd.append(`fileDocumentos${i}`, $(`#fileDocumentos`)[0].files[i]);  
+          fd.append(`fileDocumentos${i}`, $(`#fileNITBack`)[0].files[i]);  
         }
       break;
       default:

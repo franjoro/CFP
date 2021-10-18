@@ -42,57 +42,86 @@
               <%}%>
               <img src="static/img/guia_documentos.png" alt="" style="width: 125px;" class="d-inline"/>
               <img src="/static/img/guia_documentos.png" style="width: 600px;" class="d-inline" />
-              <p class="text-center">
-                <div class="form-row">
-                    <div class="col-md-5 offset-1">
-                      <label for="fileDocumentos" class="label-form ">Ingresa el DUI de manera frontal</label>
+              <%if(documento.length>10){%>
+                <p class="text-center">
+                  <div class="form-row">
+                      <div class="col-md-6">
+                          <label for="fileNITfront" class="label-form ">Ingresa el NIT de manera frontal (Obligatorio para menores de 18 años)</label>
+                          <input 
+                          
+                          id="fileNITfront"
+                          type="file" 
+                          class="form-control-file" 
+                          name="fileNITfront"
+                          multiple max="4"
+                          >
+                      </div>
+                      <div class="col-md-6">
+                        <label for="fileNITBack" class="label-form ">Ingresa el NIT de manera trasera (Obligatorio para menores de 18 años)</label>
                         <input 
-                        
-                        id="fileDocumentos"
+                        id="fileNITBack"
                         type="file" 
                         class="form-control-file" 
-                        name="fileDocumentos"
+                        name="fileNITBack"
                         multiple max="4"
                         >
                     </div>
-                    <div class="col-md-6">
-                      <label for="fileDocumentos" class="label-form ">Ingresa el DUI de mantera trasera</label>
-                      <input 
-                      
-                      id="fileDUIback"
-                      type="file" 
-                      class="form-control-file" 
-                      name="fileDUIback"
-                      multiple max="4"
-                      >
                   </div>
-                </div>
-              </p>
-              <p class="text-center">
-                <div class="form-row">
-                    <div class="col-md-6">
-                        <label for="fileNITfront" class="label-form ">Ingresa el NIT de manera frontal (Obligatorio para menores de 18 años)</label>
+                </p>
+              <%} else {%>
+                <p class="text-center">
+                  <div class="form-row">
+                      <div class="col-md-5 offset-1">
+                        <label for="fileDocumentos" class="label-form ">Ingresa el DUI de manera frontal</label>
+                          <input 
+                          
+                          id="fileDocumentos"
+                          type="file" 
+                          class="form-control-file" 
+                          name="fileDocumentos"
+                          multiple max="4"
+                          >
+                      </div>
+                      <div class="col-md-6">
+                        <label for="fileDocumentos" class="label-form ">Ingresa el DUI de mantera trasera</label>
                         <input 
                         
-                        id="fileNITfront"
+                        id="fileDUIback"
                         type="file" 
                         class="form-control-file" 
-                        name="fileNITfront"
+                        name="fileDUIback"
                         multiple max="4"
                         >
                     </div>
-                    <div class="col-md-6">
-                      <label for="fileNITBack" class="label-form ">Ingresa el NIT de manera trasera (Obligatorio para menores de 18 años)</label>
-                      <input 
-                      id="fileNITBack"
-                      type="file" 
-                      class="form-control-file" 
-                      name="fileNITBack"
-                      multiple max="4"
-                      >
                   </div>
-                </div>
-              </p>
+                </p>
+                <p class="text-center">
+                  <div class="form-row">
+                      <div class="col-md-6">
+                          <label for="fileNITfront" class="label-form ">Ingresa el NIT de manera frontal (Obligatorio para menores de 18 años)</label>
+                          <input 
+                          
+                          id="fileNITfront"
+                          type="file" 
+                          class="form-control-file" 
+                          name="fileNITfront"
+                          multiple max="4"
+                          >
+                      </div>
+                      <div class="col-md-6">
+                        <label for="fileNITBack" class="label-form ">Ingresa el NIT de manera trasera (Obligatorio para menores de 18 años)</label>
+                        <input 
+                        id="fileNITBack"
+                        type="file" 
+                        class="form-control-file" 
+                        name="fileNITBack"
+                        multiple max="4"
+                        >
+                    </div>
+                  </div>
+                </p>
+              <%}%>
+              
               <p class="text-center">
                 <button class="btn btn-success" id="btnEnviarDoc">Ingresa el NIT de manera trasera (Obligatorio para menores de 18 años)</button>
               </p>
@@ -101,6 +130,7 @@
         </div>
       </div>
     </div>
+    <input type="hidden" id="txtdocumento" value="<%= documento %>">
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.6/dayjs.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/validate.js/0.13.1/validate.min.js"></script>
