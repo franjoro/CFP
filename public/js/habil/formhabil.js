@@ -21,6 +21,15 @@ const error = (error) => {
   });
 };
 
+function inputDate(id){
+  $(id).datepicker({
+      dateFormat: "yy-mm-dd",
+      changeMonth: true,
+      changeYear: true,
+      yearRange: "-100:+0"
+  });
+};
+
 //Loader
 const loader = () => {
   Swal.fire({
@@ -39,10 +48,15 @@ function calcularEdad(fecha) {
   console.log(date);
   let day = date.getDate();
   let month = date.getMonth()+1;
+  if(month <10)
+    month = "0"+month;
+  if(day < 10)
+    day = '0'+day;
   let year = date.getFullYear();
+  let fullDate = `${year}-${month}-${day}`;
   console.log(fullDate);
   console.log(fecha);
-  let fullDate = `${year}-${month}-${day}`;
+  
   const date1 = dayjs(fullDate);
   const date2 = dayjs(fechaActual());
   return date2.diff(date1, 'year');
@@ -69,6 +83,7 @@ const ProgressChange = (texto, id, val) => {
 
 
 $(document).ready(function () {
+  inputDate("#fechanac");
   changeDateOfBirth();
   changeOtherSec3_1_2();
     changeTitleAndTecnology();
