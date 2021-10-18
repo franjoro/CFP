@@ -29,21 +29,23 @@
             alt="logo Cfp Ricaldone"
           />
         </div>
-        <div class="col align-self-center">
+        <div class="col align-self-end">
+          <img
+            src="/static/img/htp.jpg"
+            class="logo d-inline float-right"
+            alt="logo insaforp"
+          />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 text-center">
           <h1><%=nombre%> </h1>
-          <h3>Horario: <%=horario%></h3>
+          <h6>Horario: <%=horario%></h6>
           <input type="hidden" value="<%=nombre%>" id="nombreCurso">
           <input type="hidden" value="<%=horario%>" id="horarioCurso">
           <%if(idSolicitud != ''){%>
             <input type="hidden" value="<%=idSolicitud%>" id="idSolicitud">
           <%}%>
-        </div>
-        <div class="col align-self-end">
-          <img
-            src="/static/img/uploads/1611934869304_INSAFORP TRASNPARENTE Y RESPLANDOR.png"
-            class="logo d-inline float-right"
-            alt="logo insaforp"
-          />
         </div>
       </div>
       <hr />
@@ -622,6 +624,14 @@
                     </select>
                   </div>
                   <div class="col-md-3 form-group">
+                    <label for="">Año que se impartio</label>
+                    <select
+                      name="syear1" 
+                      id="syear1" 
+                      class="form-control">
+                    </select>
+                  </div>
+                  <div class="col-md-3 form-group">
                     <label>Año que se impartio</label>
                     <input
                       type="text"
@@ -660,6 +670,14 @@
                       <option value="Si">Si</option>
                       <option value="No">No</option>
                       <option value="NoSe">No sabe</option>
+                    </select>
+                  </div>
+                  <div class="col-md-3 form-group">
+                    <label for="">Año que se impartio</label>
+                    <select
+                      name="syear2" 
+                      id="syear2" 
+                      class="form-control">
                     </select>
                   </div>
                   <div class="col-md-3 form-group">
@@ -705,13 +723,13 @@
                     </select>
                   </div>
                   <div class="col-md-3 form-group">
-                    <label>Año que se impartio</label>
-                    <input
-                      type="text"
-                      class="form-control form-control-sm"
-                      name="year3"
-                      id="year3"
-                    />
+                    <label for="">Año que se impartio</label>
+                    <select
+                      name="syear3" 
+                      id="syear3" 
+                      class="form-control">
+                      <option value=""></option>
+                    </select>
                   </div>
                   <div class="col-md-3 form-group">
                     <label>¿El curso le dio beneficios?</label>
@@ -1326,6 +1344,7 @@
     <script src="/static/js/habil/formhabil.js"></script>
     <script src="/static/js/habil/functions.js"></script>
     <script src="/static/js/habil/read-dui.js"></script>
+    <script src="/static/js/global/global_functions.js"></script>
     <%if(idSolicitud != ''){%>
       <script src="/static/js/habil/read.js"></script>
     <%}%>

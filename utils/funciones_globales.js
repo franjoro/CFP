@@ -21,4 +21,9 @@ funcionesGlobales.calcularEdad = (fecha) =>{
     return edad;
 };
 
+
+funcionesGlobales.noCopyNoPaste = (id) =>{
+    $(id).bind("cut")
+};
+
 module.exports = funcionesGlobales;

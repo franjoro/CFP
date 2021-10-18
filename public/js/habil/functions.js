@@ -16,14 +16,14 @@ const validationCompletePreviousCourses = () => {
     if(($("#beneficio1").val() == 'No' || $("#beneficio2").val() == 'No' || $("#beneficio3").val() == 'No') && $("#nobeneficioc").val() == ''){
         return ({
             status: false,
-            msg: 'Debe completar el item "¿Por que cree que no recibió beneficios como producto de la/las capacitación/es?o"'
+            msg: 'Debe completar el item <b>"¿Por que cree que no recibió beneficios como producto de la/las capacitación/es?"</b>'
         });
     }else if(($("#beneficio1").val() == 'Si' || $("#beneficio2").val() == 'Si' || $("#beneficio3").val() == 'Si') && 
         ($("#b2").prop('checked') == false && $("#b3").prop('checked') == false && $("#b4").prop('checked') == false && $("#b5").prop('checked') == false && $("#b6").prop('checked') == false))
     {
         return({
             status: false,
-            msg: 'Debe seleccionar al menos un item de la sección "¿Para que sirvió(eron) la(s) capacitacion(es) que recibió?"'
+            msg: 'Debe seleccionar al menos un item de la sección <b>"¿Para que sirvió(eron) la(s) capacitacion(es) que recibió?"</b>'
         });
     }
     else{
@@ -80,7 +80,7 @@ const validationCompleteNamePreviosCouses = () =>{
     }
     return({
         status: false,
-        msg: 'Dado que selecciono que si a recibido algun curso antes debe rellenar al menos un curso completamente'
+        msg: 'Dado que selecciono que si a <b>"¿Ha recibido antes algún(os) curso(s) de capacitación?"</b> debe rellenar al menos un curso completamente'
     });
 }
 //#endregion
@@ -132,13 +132,13 @@ const validateDisabilities = () =>{
     if(disabilities && !disability1 && !disability2 && !disability3 && !disability4 && !disability5 && !disability6 && !disability7 && !disability8){
         return({
             status: false,
-            msg: '<b>Mensaje: </b>Dado que selecciono que tiene alguna discapacidad permanente debe seleccionar al menos una.'
+            msg: '<b>Mensaje: </b>Dado que selecciono "SI" a "<b>Tiene algina discapacidad permanente?</b>" debe seleccionar al menos una.'
         });
     }
     if(disabilities && disability8 && txtDisability == ''){
         return({
             status: false,
-            msg: '<b>Mensaje: </b> Dado que selecciono otra limitación permanente por favor explique con mayor detalle.'
+            msg: '<b>Mensaje: </b> Dado que selecciono <b>"Otra limitación permanente"</b> por favor explique con mayor detalle.'
         });
     }
     return({
@@ -228,7 +228,7 @@ const validateSection3 = () =>{
     {
         return ({
             status: false,
-            msg: "<b>Mensaje: </b>Dado que en el item 'Si usted trabaja, ¿Qué tipo de trabajo tiene?' selecciono otro || Especifique que tipo de trabajo tiene."
+            msg: "<b>Mensaje: </b>Dado que en el item <b> 'Si usted trabaja, ¿Qué tipo de trabajo tiene?' </b> selecciono <b>'Otro'</b>. Especifique que tipo de trabajo tiene."
         });
     }
     return({
@@ -272,7 +272,7 @@ const validateSection4 = () =>{
     if($("#ingresos5").prop('checked') == true && $("#otrosIngresos").val() == ''){
         return({
             status: false,
-            msg: '<b>Mensaje: </b> Dado que en el item "De qué manera los obtiene" selecciono la opcion "Otros" especifique por favor.'
+            msg: '<b>Mensaje: </b> Dado que en el item <b>"¿De qué manera los obtiene?"</b> selecciono la opcion <b>"Otros"</b> especifique por favor.'
         })
     }
     return({
@@ -296,7 +296,7 @@ const validateSection5 = () =>{
     if($("#e7").prop('checked') == true && $("#otrosexpectativas").val() == ''){
         return({
             status: false,
-            msg: '<b>Mensaje</b>: Dado que en el item "¿Qué espera lograr con la capacitación a recibir?" selecciono la opción de "Otros" por favor especifique.'
+            msg: '<b>Mensaje</b>: Dado que en el item <b>"¿Qué espera lograr con la capacitación a recibir?"</b> selecciono la opción de <b>"Otros"</b> por favor especifique.'
         })
     }
     return({
@@ -453,3 +453,29 @@ const changeTitleAndTecnology = () =>{
         }
       });
   }
+
+
+//#region 
+/*
+name: actualYear
+description: to get 3 years prior to current one
+params: idIinput
+date: 18/10/2021 for OsmaroBonilla
+last update: 18/10/2021 for OsmaroBonilla 
+*/
+const actualYear = (idInput) =>{
+  let date = new Date();
+  let year = date.getFullYear();
+  let arrayYear = [];
+  arrayYear[0] = year;
+  arrayYear[1] = year+1;
+  arrayYear[2] = year+2;
+  for (let i = 0; i < arrayYear.length; i++) {
+    $(idInput).prepend($('<option />', {
+      text: '' + (arrayYear[i]),
+      value: arrayYear[i],
+    }));
+  }
+  
+};
+//#endregion

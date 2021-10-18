@@ -83,6 +83,10 @@ const ProgressChange = (texto, id, val) => {
 
 
 $(document).ready(function () {
+  actualYear("#syear1");
+  actualYear("#syear2");
+  actualYear("#syear3");
+  noCopyNoPaste("#fechanac");
   changeDateOfBirth();
   changeOtherSec3_1_2();
     changeTitleAndTecnology();
