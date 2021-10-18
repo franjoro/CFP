@@ -35,7 +35,12 @@ const loader = () => {
 };
 //Funcion de calculo de fecha
 function calcularEdad(fecha) {
-  const date1 = dayjs(fecha);
+  let date = new Date(fecha);
+  let day = date.getDate();
+  let month = date.getMonth()+1;
+  let year = date.getFullYear();
+  let fullDate = `${year}-${month}-${day}`;
+  const date1 = dayjs(fullDate);
   const date2 = dayjs(fechaActual());
   return date2.diff(date1, 'year');
 } 
