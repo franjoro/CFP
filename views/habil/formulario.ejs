@@ -583,7 +583,7 @@
               <h6 class="lead">CURSOS PASADOS</h6>
               <hr />
               <div class="form-row">
-                <div class="col-md-12 form-group">
+                <div class="col-md-8 form-group">
                   <label
                     >¿Ha recibido antes algún(os) curso(s) de
                     capacitación?</label
@@ -596,6 +596,9 @@
                     <option value="1">Si</option>
                     <option value="0">No</option>
                   </select>
+                </div>
+                <div class="col-md-4">
+                  <button class="btn btn-sm btn-danger" id="btnDeletePastCourses">Limpiar cursos</button>
                 </div>
               </div>
               <hr />
@@ -626,19 +629,10 @@
                   <div class="col-md-3 form-group">
                     <label for="">Año que se impartio</label>
                     <select
-                      name="syear1" 
-                      id="syear1" 
+                      name="year1" 
+                      id="year1" 
                       class="form-control">
                     </select>
-                  </div>
-                  <div class="col-md-3 form-group">
-                    <label>Año que se impartio</label>
-                    <input
-                      type="text"
-                      class="form-control form-control-sm"
-                      name="year1"
-                      id="year1"
-                    />
                   </div>
                   <div class="col-md-3 form-group">
                     <label>¿El curso le dio beneficios?</label>
@@ -675,19 +669,10 @@
                   <div class="col-md-3 form-group">
                     <label for="">Año que se impartio</label>
                     <select
-                      name="syear2" 
-                      id="syear2" 
+                      name="year2" 
+                      id="year2" 
                       class="form-control">
                     </select>
-                  </div>
-                  <div class="col-md-3 form-group">
-                    <label>Año que se impartio</label>
-                    <input
-                      type="text"
-                      class="form-control form-control-sm"
-                      name="year2"
-                      id="year2"
-                    />
                   </div>
                   <div class="col-md-3 form-group">
                     <label>¿El curso le dio beneficios?</label>
@@ -725,10 +710,9 @@
                   <div class="col-md-3 form-group">
                     <label for="">Año que se impartio</label>
                     <select
-                      name="syear3" 
-                      id="syear3" 
+                      name="year3" 
+                      id="year3" 
                       class="form-control">
-                      <option value=""></option>
                     </select>
                   </div>
                   <div class="col-md-3 form-group">
@@ -1101,6 +1085,7 @@
                       class="form-check-input"
                       type="checkbox"
                       value="Obtener oportunidades de promoción en mi empleo actual"
+                      name="espec"
                       id="e1"
                     />
                     <label class="form-check-label" for="e1">
@@ -1112,6 +1097,7 @@
                       class="form-check-input"
                       type="checkbox"
                       value="Cambiar a un empleo relacionado con la capacitación recibida"
+                      name="espec"
                       id="e2"
                     />
                     <label class="form-check-label" for="e2">
@@ -1124,6 +1110,7 @@
                       class="form-check-input"
                       type="checkbox"
                       value="Obtener un empleo formal"
+                      name="espec"
                       id="e3"
                     />
                     <label class="form-check-label" for="e3">
@@ -1135,6 +1122,7 @@
                       class="form-check-input"
                       type="checkbox"
                       value="Trabajar por cuenta propia"
+                      name="espec"
                       id="e4"
                     />
                     <label class="form-check-label" for="e4">
@@ -1146,6 +1134,7 @@
                       class="form-check-input"
                       type="checkbox"
                       value="Obtener ingresos extras"
+                      name="espec"
                       id="e5"
                     />
                     <label class="form-check-label" for="e5">
@@ -1166,6 +1155,7 @@
                       class="form-check-input"
                       type="checkbox"
                       value="Otros"
+                      name="espec"
                       id="e7"
                     />
                     <label>Otros</label>
@@ -1205,7 +1195,7 @@
               <p>
                 <b>IMPORTANTE:</b> Por favor brinde información de 1 persona, en
                 caso que el INSAFORP necesite ponerse en contacto con usted para
-                un seguimiento de la capacitación
+                un seguimiento de la capacitación. <b>RECUERDE QUE NO PUEDE SER USTED MISMO</b>
               </p>
               <hr />
               <div class="form-row">

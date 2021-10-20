@@ -21,6 +21,14 @@ const error = (error) => {
   });
 };
 
+const infoMsg = (msg) =>{
+  Swal.fire({
+    icon:"info",
+    title:"Información",
+    html: msg,
+  });
+};
+
 function inputDate(id){
   $(id).datepicker({
       dateFormat: "yy-mm-dd",
@@ -83,11 +91,13 @@ const ProgressChange = (texto, id, val) => {
 
 
 $(document).ready(function () {
-  actualYear("#syear1");
-  actualYear("#syear2");
-  actualYear("#syear3");
+  localStorage.setItem('section','1');
+  actualYear("#year1");
+  actualYear("#year2");
+  actualYear("#year3");
   noCopyNoPaste("#fechanac");
   changeDateOfBirth();
+  validate16("#fechanac");
   changeOtherSec3_1_2();
     changeTitleAndTecnology();
     $("#blockTitOr").css("display", "none");
@@ -96,6 +106,21 @@ $(document).ready(function () {
   $("#trabajaantes").val('0');
   // Cambiador de progress
   // BOTONES
+
+  /**INPUT CHECKED*/
+  $("input[name='espec']").click(()=>{
+    $("#e6").prop('checked',false);
+  });
+
+  $("#e6").click(()=>{
+    onlyNone();
+  });
+  /*
+  CLICK btnDeletePastCourses
+  */
+  $("#btnDeletePastCourses").click(function(){
+    clearPasrCourses();
+  });
   $("#next1").click(() => {
     if(validateDisabilities().status){
         //Comenzamos las validaciones de la sección1
@@ -271,7 +296,9 @@ $(document).ready(function () {
       $("#sec5").css("display", "none");
       $("#sec6").css("display", "block");
       global_json2 = json2();
+      localStorage.setItem('section','2');
       console.log(global_json2);
+      infoMsg("<b>IMPORTANTE</b> Recuerde que en el seguimiento debe colocar una persona distinta a usted.");
     }else{
       return error(validateSection5().msg);
     } 
@@ -340,9 +367,6 @@ $(document).ready(function () {
   // #region Mascara
   $("#dui").mask("00000000-0");
   $("#nit").mask("0000-000000-000-0");
-  $("#year1").mask("0000");
-  $("#year2").mask("0000");
-  $("#year3").mask("0000");
   $("#fijoContact").mask("0000-0000");
   $("#movilContacto").mask("0000-0000");
   $("#fijo").mask("0000-0000");
@@ -882,7 +906,6 @@ $(document).ready(function () {
         });
         Swal.close();
         if(respuesta){
-          alert("actualizado con exito");
           //tiene que redireccionar
         }else{
           error(respuesta);

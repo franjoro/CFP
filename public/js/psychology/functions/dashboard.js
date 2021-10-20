@@ -14,7 +14,7 @@ function calcularEdad(fecha) {
     const date1 = dayjs(fecha, 'MM/DD/YYYY');
     const date2 = dayjs(fechaActual(), 'MM/DD/YYYY');
     return date2.diff(date1, 'year');
-  } 
+} 
   //Fecha actual formaro yy-mm-dd
   function fechaActual(){
     let date = new Date();

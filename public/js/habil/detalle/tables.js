@@ -11,6 +11,13 @@ function applicationTable() {
         { data: "telefono" },
         { data: "email"},
         {
+          render(data, type, row){
+            let edad = calcularEdad(row.fechaNacimiento);
+            return(edad);
+          }
+        },
+        { data: "fechaNacimiento"},
+        {
           render(data,type,row){
             if(row.sexo == "Masculino"){
               return 'Hombre';

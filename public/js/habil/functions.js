@@ -464,6 +464,8 @@ date: 18/10/2021 for OsmaroBonilla
 last update: 18/10/2021 for OsmaroBonilla 
 */
 const actualYear = (idInput) =>{
+  console.log("Id del año");
+  console.log(idInput);
   let date = new Date();
   let year = date.getFullYear();
   let arrayYear = [];
@@ -476,6 +478,67 @@ const actualYear = (idInput) =>{
       value: arrayYear[i],
     }));
   }
+  $(idInput).prepend($('<option selected />', {
+    text: '',
+    value: '',
+  }));
   
 };
+//#endregion
+
+
+//#region 
+/*
+name: clearPastCourses
+description: clear section past courses
+params: null
+date: 20/10/2021 for OsmaroBonilla 
+lastupdate: 20/10/2021 for OsmaroBonilla 
+*/
+const clearPasrCourses = () => {
+  $("#curso1").val("");
+  $("#impartio1").val("");
+  $("#year1").val("");
+  $("#beneficio1").val("");
+  $("#curso2").val("");
+  $("#impartio2").val("");
+  $("#year2").val("");
+  $("#beneficio2").val("");
+  $("#curso3").val("");
+  $("#impartio3").val("");
+  $("#year3").val("");
+  $("#beneficio3").val("");
+};
+//#endregion
+
+//#region 
+/*
+name : onlyNone
+dascription: in chekbox not selct other option for none
+params: null
+date: 20/10/2021 for OsmaroBonilla
+lastupdate: 20/10/2021 for OsmaroBonilla
+*/
+const onlyNone =  () =>{
+  if($("#e6").prop('checked') == true){
+    $("#e1").prop('checked',false);
+    $("#e2").prop('checked',false);
+    $("#e3").prop('checked',false);
+    $("#e4").prop('checked',false);
+    $("#e5").prop('checked',false);
+    $("#e7").prop('checked',false);
+  }
+};
+//#endregion
+
+
+
+//#region 
+/*
+name: selectSection
+description: select section whit cache
+params: localStorage(section)
+date: 20/10/2021 for OsmaroBonilla
+lastupdate: 20/10/2021 for OsmaroBonilla
+*/
 //#endregion
