@@ -423,7 +423,7 @@ $("#form_curso").submit(async function (e) {
   try {
     const data = await $.ajax({
       url: "/admin/cursos/add",
-      type: "GET",
+      type: "POST",
       data: t,
     });
     if (data.status) {
