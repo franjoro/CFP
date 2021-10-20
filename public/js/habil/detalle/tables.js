@@ -6,14 +6,25 @@ function applicationTable() {
     $("#applicationTable").DataTable({
       ajax: `/admin/habil/application-table/${idCourse}`,
       columns: [
-        { data: "dui" },
+        { render(data, type,row){
+          let html;
+          console.log(row);
+          if(row){
+            html = `<div class="" id="row${row.idSolicitud}">${row.dui}</div>`
+          }else{
+            html = `<div class="bg-danger">${row.dui}</div>`
+          }
+            return(html)
+          }
+        },
         { data: "nombre" },
         { data: "telefono" },
         { data: "email"},
         {
           render(data, type, row){
-            let edad = calcularEdad(row.fechaNacimiento);
-            return(edad);
+            let edad = calcularEdad(""+row.fechaNacimiento);
+          
+            return(edad+`${row.fechaNacimiento}`);
           }
         },
         { data: "fechaNacimiento"},
@@ -31,11 +42,11 @@ function applicationTable() {
               let html = ``;
               if($("#tipo").val() == 'oferta'){
                 html = `
-                  <div class="btn-group" role="group" aria-label="Basic example">
+                  <div class="btn-group" role="group" aria-label="Basic example" >
                     <a href="../../../../habil/gestor-de-documentos/habil/${row.id_curso}/${row.idSolicitud}/${row.dui}/${row.programa}/oferta" class="btn btn-primary btn-sm">Ver documentos</a>
                     <a href="../../../../../habil/formulario/${row.idSolicitud}/" class="btn btn-info btn-sm">Ver solicitud</a>
                     <button 
-                        type="button" data-toggle="modal" data-target="#modal_compartir_documentacion" class="btn btn-secondary btn-sm" 
+                        type="button" data-toggle="modal" data-target="#modal_compartir_documentacion" class="btn btn-secondary btn-sm " 
                           onclick="GetLinkToShareDocuments('${row.idSolicitud}', '${row.dui}')">
                         Obtener enlace documentación
                     </button>
@@ -64,7 +75,32 @@ function applicationTable() {
     });
 };
 
+
+const changeColor= async () =>{
+  const data = await $.ajax({
+    url: `/admin/habil/changecolor-table/${$("#idCourse").val()}`,
+    type: 'GET',
+    data: ''
+  });
+  if(data.status){
+    $.each(data.data, function(i, item){
+      console.log(item.idSolicitud);
+      //Cambiamos el color del id
+      try {
+        $(`#row${item.idSolicitud}`).css({'background-color': 'blue', 'color': 'white'});
+      } catch (error) {
+        
+      }
+    })
+  }
+
+  
+    // console.log("Esta es la data");
+  
+};
+
 $(document).ready(function () {
   applicationTable();
+  changeColor();
 });
 

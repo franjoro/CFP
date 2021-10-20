@@ -10,6 +10,7 @@ const tablesHabil = {};
 tablesHabil.aplicationsTable = async(req,res) =>{
     const {idCourse} = req.params;
     try {
+
         const sql = `SELECT DISTINCT par.DUI as dui, REPLACE(JSON_EXTRACT(json1, '$.nit'), '"','' ) as nit , 
         REPLACE(JSON_EXTRACT(json1, '$.fechNacimiento'), '"','') as fechaNacimiento, par.Nombre as nombre, 
         par.Telefono as telefono,par.Email as email, par.Genero as sexo, sol.id as idSolicitud, 
@@ -20,7 +21,26 @@ tablesHabil.aplicationsTable = async(req,res) =>{
         const params = [idCourse];
         const data = await pool.query(sql, params);
         res.json({
-            data
+            data,
+        });
+    } catch (error) {
+        res.json({status: false, error: error})
+    }
+};
+
+
+tablesHabil.changeColor = async(req,res) =>{
+    try {
+        const {idCourse} = req.params;
+        console.log(idCourse)
+        const sql = `SELECT DISTINCT doc.id_solicitud as idSolicitud FROM 
+        tb_habil_documentos as doc inner join tb_habil_solicitudes as sol on sol.id = doc.id_solicitud 
+        WHERE sol.Codigo_curso = ?;`;
+        const params = [idCourse];
+        const data = await pool.query(sql, params);
+        res.json({
+            data,
+            status: true,
         });
     } catch (error) {
         res.json({status: false, error: error})

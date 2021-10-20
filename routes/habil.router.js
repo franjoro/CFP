@@ -17,6 +17,7 @@ const zipCourse  = require('../controllers/habil/zip.controller');
 // Llamamos al router
 const router = express.Router();
 const fileUpload = require("express-fileupload");// proteccion para fileUpload
+const tablesHabil = require('../controllers/habil/tablesHabil.controller');
 
 
 //SENTANCIAS RES.GET
@@ -34,7 +35,8 @@ router.get("/gracias/habil", habil.agradecimiento);
 router.get("/documentacion/habil/:idSolicitud/documento/:documento?/:documento2?", habil.documentacion);
 router.get("/gestor-de-documentos/habil/:idCurso/:idSolicitud/:dui/:programa/:tipo?", authcheck, habil.gestorDeDocumentacion);
 //#region tables
-router.get('/application-table/:idCourse', authcheck, tableaHabil.aplicationsTable)
+router.get('/application-table/:idCourse', authcheck, tableaHabil.aplicationsTable);
+router.get("/changecolor-table/:idCourse", authcheck, tablesHabil.changeColor);
 //#endregion
 
 //#region delete sentences
