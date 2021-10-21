@@ -26,6 +26,14 @@ const GetLinkToShareDocuments = (idSolicitud, documento) =>{
   global_linkDocuments = link;
   return;
 };
+
+const GetLinkToShareSolicitude = (idSolicitud, documento) =>{
+  let link = `https://${document.domain}/habil/formulario/${idSolicitud}/2`;
+  $("#link_solicitud").val(link);
+  global_linkDocuments = link;
+  return;
+};
+
 /*@description: Descarga los documentos agregados en la nube S3AWS
   @params: key, name
   @date: 20/08/2021

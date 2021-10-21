@@ -73,6 +73,44 @@ $(document).ready(function () {
       console.log(error);
     }
   });
+
+
+
+  $("#btnCorreoSol").click(async () => {
+    const cursoNombre = $("#cursoNombre").val();
+    const email = $("#emailLink2").val(),
+    text = $("#mensaje2").val(),
+    enlace = global_linkDocuments;
+    if (!email || !text || !enlace) alert("Debe completar todos los campos");
+    try {
+      loader();
+      const peticion = $.ajax({
+        url: "/habil/sendEmailSol",
+        type: "POST",
+        data: { email, text, enlace, cursoNombre },
+      });
+      console.log(peticion);
+      if (peticion) {
+        swal.close();
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+        });
+        Toast.fire({
+          icon: "success",
+          title: "Mensaje enviado correctamente",
+        });
+        $("#modal_compartir_solicitud").modal("toggle");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
+
   $("#commentCompleto").click(() => {
     Swal.fire({
       title: '¿Estas seguro?',

@@ -905,8 +905,14 @@ $(document).ready(function () {
           dataType: "json"
         });
         Swal.close();
+        console.log(respuesta);
         if(respuesta){
           //tiene que redireccionar
+          if($("#type").val() == 1){
+            location.replace(`/admin/cursos/detallectz/${$("#codigoCurso").val()}/28/oferta`);
+          }else{
+            location.replace('/habil/gracias/habil'); 
+          }
         }else{
           error(respuesta);
         }

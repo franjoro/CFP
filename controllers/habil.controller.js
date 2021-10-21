@@ -80,7 +80,7 @@ habil.main = async (req, res) => {
 };
 
 habil.renderFormulario = async(req,res) =>{
-    const {idSolicitud} = req.params;
+    const {idSolicitud, type} = req.params;
     try {
         const sql = `SELECT C.Nombre as nombre, C.Horario as horario, C.Codigo_curso as codigoCurso FROM tb_habil_solicitudes AS S INNER JOIN tb_cursos C ON S.Codigo_curso = C.Codigo_curso WHERE id = ?`;
         const curso = await pool.query(sql,[idSolicitud]);
@@ -91,7 +91,8 @@ habil.renderFormulario = async(req,res) =>{
             nombre,
             horario,
             idSolicitud,
-            codigoCurso
+            codigoCurso,
+            type,
         });
     } catch (error) {
         return res.status(400).json(error);
@@ -147,6 +148,28 @@ habil.sendMailDocument = async (req,res) =>{
     <b>Enlace:</b>
     <a href="${enlace}">${enlace}</a> <br>
     <p>Mensaje adjunto: ${text}</p>
+    `;
+    try {
+      await sendEmail(to, asunto, html);
+      res.status(200).json({ status: true });
+    } catch (error) {
+      console.log(error);
+      res.status(400).json({ status: false, error });
+    }
+};
+
+
+habil.sendEmailSol = async (req,res) =>{
+    const to = req.body.email;
+    const { text } = req.body;
+    const { enlace } = req.body;
+    const { cursoNombre } = req.body;
+    const asunto = `INFORMACIÓN DEL CURSO ${cursoNombre.toUpperCase()}`;
+    const html = `<h5>Reciba un cordial saludo de parte del Centro de Formación Profesional Don Pedro Ricaldone<h5> <p> por este medio solicitamos la revisión de su información si tiene alguna observación en el correo revisela detenidamente.</p><br>
+    <b>Este link esta habilitado para la solicitud del curso ${cursoNombre}</b>
+    <b>Enlace:</b>
+    <a href="${enlace}">${enlace}</a> <br>
+    <p>Observaciones: ${text}</p>
     `;
     try {
       await sendEmail(to, asunto, html);
