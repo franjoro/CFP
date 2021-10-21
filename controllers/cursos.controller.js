@@ -228,11 +228,11 @@ cursos.oferta = async (req, res) => {
 cursos.ofertaNoctz = async (req, res) => {
   if (!req.body.programa || !req.body.codigo_curso || !req.body.nombre)
     return res.status(400).json({ status: false, error: "empty_params" });
-  const {codigo_curso , role, nombre , horario, programa } = req.body;
+  const {codigo_curso , role, nombre , horario, programa, cupo } = req.body;
   try {
     await pool.query(
-      "INSERT INTO tb_cursos(Codigo_curso, Nombre, Horario, id_programa, Estado )  VALUES(?,?,?,?,?)",
-      [codigo_curso , nombre,  horario , programa , role]
+      "INSERT INTO tb_cursos(Codigo_curso, Nombre, Horario, id_programa, Estado, cupo )  VALUES(?,?,?,?,?,?)",
+      [codigo_curso , nombre,  horario , programa , role, cupo]
     );
     return res.json({ status: true });
   } catch (error) {

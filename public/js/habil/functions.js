@@ -542,3 +542,30 @@ date: 20/10/2021 for OsmaroBonilla
 lastupdate: 20/10/2021 for OsmaroBonilla
 */
 //#endregion
+
+
+//#region 
+/*
+name: countSolicitud()
+description count
+date: 21/10/2021 for OsmaroBonilla
+lastupdate: 21/10/2021 for OsmaroBonilla
+*/
+const countSolicitud = async () =>{
+  const data = await $.ajax({
+    url: `/admin/habil/count-solicitud/${$("#codigoCurso").val()}`,
+  });
+  if(data.status){
+    const count = data.data[0].count;
+    const cupo = data.data[0].cupo;
+    const type = $("#type").val();
+    console.log((count+1))
+    if(type == 0){
+      localStorage.setItem('estado', 4);
+      if((count+1) > cupo){
+        warningMsg("<b>Mensaje:</b> Los cupos de este curso estan llenos pero puedes llenar el formulario y quedar pendiente para confirmación de apertura de algun cupo.")
+      }
+    }
+  }
+};
+//#endregion

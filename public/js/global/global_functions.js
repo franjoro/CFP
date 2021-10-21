@@ -29,6 +29,13 @@ const validate16 = (id) =>{
 };
 //#endregion
 
+const warningMsg =(msg) =>{
+  Swal.fire({
+    icon: "warning",
+    title: "ADVERTENCIA",
+    html: msg
+  });
+};
 
 
 function calcularEdad(fecha) {

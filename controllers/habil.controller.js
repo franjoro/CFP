@@ -2,6 +2,7 @@ const pool = require("../models/db");
 const { upload, getFiles } = require("../utils/s3");// Lo usaremos para subir u obtener archivos
 const {sendEmail} = require("../utils/mailer");
 const { getUserDataByToken } = require("../middlewares/auth");
+const { query } = require("express");
 
 // declarar variable a exportar
 const habil = {};
@@ -62,6 +63,7 @@ habil.gestorDeDocumentacion = async(req,res) =>{
 habil.main = async (req, res) => {
     //global.global_codigoCurso = req.params.codigoCurso;//ALERTA ESTA ES UNA VARIABLE GLOBAL QUE SE UTILIZARA POCO TIEMPO TOMAR EN CUENTA QUE LAS VARIABLE GLOBALES NO SON VIABLES POR MEMORIA
     const { codigoCurso } = req.params;
+    const type =0;
     const idSolicitud =''; //Pasamos esta variabñe vacia
     try {
         const sql ="SELECT Nombre, Horario from tb_cursos WHERE Codigo_curso = ?";
@@ -72,7 +74,8 @@ habil.main = async (req, res) => {
             nombre,
             horario,
             idSolicitud,
-            codigoCurso
+            codigoCurso,
+            type
         });
     } catch (error) {
             return res.status(400).json(error);
@@ -180,5 +183,23 @@ habil.sendEmailSol = async (req,res) =>{
     }
 };
 
+
+
+habil.countSolicitud = async (req,res) =>{
+    const {idCourse} = req.params;
+    const sql = `
+    SELECT (SELECT DISTINCT cupo FROM tb_cursos WHERE Codigo_curso = ?) as cupo, 
+    (SELECT DISTINCT COUNT(*) from tb_habil_solicitudes as sol 
+    WHERE sol.Codigo_curso = ?) as count;
+    `;
+    const params = [idCourse, idCourse];
+    const data = await pool.query(sql, params);
+    console.log(data);
+    console.log(data[0])
+    res.json({
+        data,
+        status: true,
+    });
+};
 
 module.exports = habil;

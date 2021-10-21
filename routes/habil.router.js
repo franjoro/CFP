@@ -14,6 +14,7 @@ const deleteSolicitud = require('../controllers/habil/deleteSolicitud.controller
 const readHabil = require('../controllers/habil/readHabil.controller');
 const tableaHabil = require('../controllers/habil/tablesHabil.controller');
 const zipCourse  = require('../controllers/habil/zip.controller');
+const updateStatusRequest = require('../controllers/habil/updateStatusRequest');
 // Llamamos al router
 const router = express.Router();
 const fileUpload = require("express-fileupload");// proteccion para fileUpload
@@ -37,6 +38,8 @@ router.get("/gestor-de-documentos/habil/:idCurso/:idSolicitud/:dui/:programa/:ti
 //#region tables
 router.get('/application-table/:idCourse', authcheck, tableaHabil.aplicationsTable);
 router.get("/changecolor-table/:idCourse", authcheck, tablesHabil.changeColor);
+router.get("/changeColorWait/:idCourse", authcheck, tablesHabil.changeColorWait);
+router.get('/count-solicitud/:idCourse', habil.countSolicitud);
 //#endregion
 
 //#region delete sentences
@@ -59,6 +62,8 @@ router.put("/editOferta" ,authcheck , updateHabil.editOferta);
 router.put("/updateComment", authcheck, updateComment.update);
 router.put("/matricular", authcheck, updateHabil.cambiarCurso);
 router.put("/", updateHabil.updateSolicitud);
+router.put('/updateStatusRequest', updateStatusRequest.update);
+
 //#endregion
 
 

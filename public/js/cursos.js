@@ -129,6 +129,7 @@ $(document).ready(() => {
       nombre: $("#nombre_oferta_noCtz").val(),
       horario: $("#horario_fecha_noCtz").val(),
       programa: $("#programa_oferta_noCtz").val(),
+      cupo: $("#txtCupo").val(),
     };
     try {
       const query = await $.ajax({

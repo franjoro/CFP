@@ -6,6 +6,14 @@ const error = (error) => {
     });
   };
 
+  const warningMsg =(msg) =>{
+    Swal.fire({
+      icon: "warning",
+      title: "ADVERTENCIA",
+      html: msg
+    });
+  };
+
   const successMsg = (msg) => {
     Swal.fire({
       icon: "success",

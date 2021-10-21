@@ -8,7 +8,6 @@ function applicationTable() {
       columns: [
         { render(data, type,row){
           let html;
-          console.log(row);
           if(row){
             html = `<div class="" id="row${row.idSolicitud}">${row.dui}</div>`
           }else{
@@ -89,23 +88,41 @@ const changeColor= async () =>{
   });
   if(data.status){
     $.each(data.data, function(i, item){
-      console.log(item.idSolicitud);
       //Cambiamos el color del id
       try {
-        $(`#row${item.idSolicitud}`).css({'background-color': 'blue', 'color': 'white'});
+        $(`#row${item.idSolicitud}`).addClass('bg-info text-white');
       } catch (error) {
         
       }
     })
   }
 
-  
     // console.log("Esta es la data");
   
+};
+
+const changeColorWait = async () =>{
+  
+  const data = await $.ajax({
+    url: `/admin/habil/changeColorWait/${$("#idCourse").val()}`,
+    type: 'GET',
+    data: ''
+  });
+  if(data.status){
+    $.each(data.data, function(i, item){
+      //Cambiamos el color del id
+      try {
+        $(`#row${item.idSolicitud}`).addClass('bg-warning');
+      } catch (error) {
+        
+      }
+    })
+  }
 };
 
 $(document).ready(function () {
   applicationTable();
   changeColor();
+  changeColorWait();
 });
 

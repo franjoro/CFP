@@ -47,4 +47,21 @@ tablesHabil.changeColor = async(req,res) =>{
     }
 };
 
+tablesHabil.changeColorWait = async(req,res) =>{
+    try {
+        const {idCourse} = req.params;
+        console.log(idCourse)
+        const sql = `SELECT id as idSolicitud FROM tb_habil_solicitudes
+         WHERE estado = 4 and Codigo_curso=?;`;
+        const params = [idCourse];
+        const data = await pool.query(sql, params);
+        res.json({
+            data,
+            status: true,
+        });
+    } catch (error) {
+        res.json({status: false, error: error})
+    }
+};
+
 module.exports = tablesHabil;
