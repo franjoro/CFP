@@ -5,7 +5,25 @@
 //INICIAMOS CON LA FUNCION READY DE JQUERY
 $(document).ready(function () {
   $("#btnCopy").click(() => {
-      
+    console.log("entra");
+    var copyTextarea = document.querySelector("#link");
+    copyTextarea.select();
+    try {
+      document.execCommand("copy");
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+      });
+      Toast.fire({
+        icon: "success",
+        title: "Copiado en portapapeles",
+      });
+    } catch (err) {
+      console.log("Oops, unable to copy");
+    }
   });
   $("#btnCorreo").click(async () => {
       const cursoNombre = $("#cursoNombre").val();
