@@ -28,6 +28,14 @@ $(document).ready(() => {
   $("#date_fin").datepicker({ dateFormat: "yy-mm-dd" });
   $("#date_inicio_oferta").datepicker({ dateFormat: "yy-mm-dd" });
 
+  $("#modadlidad_id").change(function(){
+    changeHabil();
+  });
+
+  $("#documento_id").change(function(){
+    changeInver();
+  });
+
   $("#select_empresa").select2({
     width: "100%",
     ajax: {
@@ -441,6 +449,8 @@ $("#form_curso").submit(async function (e) {
     errorMessage();
   }
 });
+
+
 $("#instructor").select2({
   width: "100%",
   ajax: {
@@ -492,5 +502,33 @@ const createZipCurso = async (curso) => {
   } catch (error) {
     console.log(error);
     errorMessage();
+  }
+};
+
+
+
+const changeHabil = () =>{
+  const program = $("#programa").val();
+  if(program == 28){
+    if($("#modadlidad_id").val() == '252'){
+      $("#documento_id").val('26598');
+    }
+    if($("#modadlidad_id").val() == '378'){
+      $("#documento_id").val('27667');
+    }
+  }
+};
+
+
+const changeInver =  () =>{
+  const program = $("#programa").val();
+  const idDocument = $("#documento_id").val();
+  if(program == 28){
+    if(idDocument == '26598'){
+      $("#modadlidad_id").val('252');
+    }
+    if(idDocument == '27667'){
+      $("#modadlidad_id").val('378');
+    }
   }
 };

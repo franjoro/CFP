@@ -24,22 +24,18 @@ aria-hidden="true">
             </div>
             </div>
             <div class="form-row">
-            <div class="col-3">
-                <label for="date_inicio">Fecha de inicio</label>
-                <input type="text" class="form-control" name="date_inicio" id="date_inicio">
-            </div>
-            <div class="col-3">
-                <label for="date_fin">Fecha de finalización</label>
-                <input type="text" class="form-control" name="date_fin" id="date_fin">
-            </div>
-            <div class="col-3">
-                <label for="orden">Orden de inicio</label>
-                <input type="text" class="form-control" name="orden" id="orden">
-            </div>
-            <div class="col-3">
-                <label for="agrupacion">Agrupación</label>
-                <input type="text" class="form-control" name="agrupacion" id="agrupacion">
-            </div>
+                <div class="col-3">
+                    <label for="date_inicio">Fecha de inicio</label>
+                    <input type="text" class="form-control" name="date_inicio" id="date_inicio">
+                </div>
+                <div class="col-3">
+                    <label for="date_fin">Fecha de finalización</label>
+                    <input type="text" class="form-control" name="date_fin" id="date_fin">
+                </div>
+                <div class="col-3">
+                    <label for="orden">Orden de inicio</label>
+                    <input type="text" class="form-control" name="orden" id="orden">
+                </div>
             </div>
             <div class="form-row">
             <div class="col-3">
@@ -52,20 +48,22 @@ aria-hidden="true">
             <div class="col-3">
                 <label for="modadlidad_id">Oferta de compra</label>
                 <select class="form-control" name="modadlidad_id" id="modadlidad_id">
-                    <option value="Contrato">252</option>
-                    <option value="Orden">378</option>
+                    <option value="252">252</option>
+                    <option value="378">378</option>
                 </select>
             </div>
             <div class="col-3">
                 <label for="documento">Documento de contratación</label>
                 <select class="form-control" name="documento" id="documento">
-                <option value="Contrato">Contrato</option>
-                <option value="Orden">Orden de compra</option>
+                <option value="Contrato" selected>Contrato</option>
                 </select>
             </div>
             <div class="col-3">
                 <label for="documento_id">Identificador de documento</label>
-                <input type="text" class="form-control" name="documento_id" id="documento_id">
+                <select class="form-control" name="documento_id" id="documento_id">
+                    <option value="26598" selected>26598</option>
+                    <option value="27667" selected>27667</option>
+                </select>
             </div>
             </div>
             <div class="form-row">
@@ -79,10 +77,6 @@ aria-hidden="true">
             </div>
             </div>
             <div class="form-row">
-            <div class="form-group col-md-4">
-                <label for="factura">Factura</label>
-                <input type="text" class="form-control" name="factura" id="factura" placeholder="000000">
-            </div>
             <div class="form-group col-md-4">
                 <label for="instructor">Instructor</label>
                 <select id="instructor" name="instructor" class="form-control">
