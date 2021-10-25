@@ -37,6 +37,13 @@ const warningMsg =(msg) =>{
   });
 };
 
+const errorMsg = (msg) => {
+  Swal.fire({
+    icon: "error",
+    title: "Oops...",
+    html: msg,
+  });
+};
 
 function calcularEdad(fecha) {
     let date = new Date(fecha);
@@ -74,3 +81,16 @@ function calcularEdad(fecha) {
 
 
 
+const toastSucces = (msg) =>{
+  const Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 2000,
+    timerProgressBar: true,
+  });
+  Toast.fire({
+    icon: "success",
+    title: msg,
+  });
+};

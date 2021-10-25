@@ -12,12 +12,11 @@ tablesHabil.aplicationsTable = async(req,res) =>{
     try {
 
         const sql = `SELECT DISTINCT par.DUI as dui, REPLACE(JSON_EXTRACT(json1, '$.nit'), '"','' ) as nit , 
-        REPLACE(JSON_EXTRACT(json1, '$.fechNacimiento'), '"','') as fechaNacimiento, par.Nombre as nombre, 
-        par.Telefono as telefono,par.Email as email, par.Genero as sexo, sol.id as idSolicitud, 
-        sol.estado as estadoSolicitud, sol.Codigo_curso as id_curso, C.id_programa as programa 
-        FROM tb_habil_solicitudes AS sol INNER JOIN tb_participante par on par.DUI = sol.documento 
-        INNER JOIN tb_cursos AS C on C.Codigo_curso = sol.Codigo_curso WHERE sol.Codigo_curso = ? 
-        AND (sol.estado = 0 OR sol.estado = 3 OR sol.estado = 4);`;
+        REPLACE(JSON_EXTRACT(json1, '$.fechNacimiento'), '"','') as fechaNacimiento, par.Nombre as nombre, par.Telefono as 
+        telefono,par.Email as email, par.Genero as sexo, sol.id as idSolicitud, sol.estado as estadoSolicitud, 
+        sol.Codigo_curso as id_curso, C.id_programa as programa, sol.timestamp as fecha_inscripcion FROM tb_habil_solicitudes 
+        AS sol INNER JOIN tb_participante par on par.DUI = sol.documento INNER JOIN tb_cursos AS C on C.Codigo_curso = sol.Codigo_curso 
+        WHERE sol.Codigo_curso = ? AND (sol.estado = 0 OR sol.estado = 3 OR sol.estado = 4);`;
         const params = [idCourse];
         const data = await pool.query(sql, params);
         res.json({

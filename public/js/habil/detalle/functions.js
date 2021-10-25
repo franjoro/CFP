@@ -46,7 +46,6 @@ const DowloadS3File = async (key, name) => {
       type: "POST",
       data: { key },
     });
-    console.log(query);
     if (query.status) {
       window.open(`/public/archivo/${query.ext}?Name=${name}`);
       Swal.close();
@@ -68,7 +67,6 @@ const SeeS3File = async (key, id) => {
       data: { key },
     });
     if (query.status) {
-      console.log(query);
        const html = ` <iframe src="https://cfp.ricaldone.edu.sv/public/seefile/${
          query.ext
        }?date=${Date.now()}" width="100%" height="100%"></iframe>`;
@@ -136,3 +134,39 @@ const idSolicitudChangue = (id) =>{
   $("#txtIdSolicitud").val(id);
 };
 
+
+const RequestEnabled = () =>{
+  if($("#habilitado").val() == 1){
+    $("#swRequest").prop('checked', true);
+  }else{
+    $("#swRequest").prop('checked', false);
+  }
+};
+
+const RecuestIf = () =>{
+  if($("#habilitado").val() == 1){
+    $("#swRequest").prop('checked', false);
+    $("#habilitado").val(0);
+    updateRequest(0,$("#idCourse").val(),'Inscripciones deshabilitadas');
+  }else{
+    $("#swRequest").prop('checked', true);
+    $("#habilitado").val(1);
+    updateRequest(1,$("#idCourse").val(),'Inscripciones habilitadas');
+  }
+};
+
+const updateRequest = async (enabled, idCourse, msg) =>{
+  const res = await $.ajax({
+    type: "PUT",
+    url: "/admin/habil/updateRequest",
+    data: {
+      enabled: enabled,
+      idCourse: idCourse
+    }
+  });
+  console.log("update")
+  console.log(res)
+  if(res.status){
+    toastSucces(msg);
+  }
+};

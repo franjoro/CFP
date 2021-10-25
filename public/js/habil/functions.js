@@ -558,14 +558,23 @@ const countSolicitud = async () =>{
   if(data.status){
     const count = data.data[0].count;
     const cupo = data.data[0].cupo;
-    const type = $("#type").val();
-    console.log((count+1))
-    if(type == 0){
-      localStorage.setItem('estado', 4);
-      if((count+1) > cupo){
-        warningMsg("<b>Mensaje:</b> Los cupos de este curso estan llenos pero puedes llenar el formulario y quedar pendiente para confirmación de apertura de algun cupo.")
+    const habilitado = data.data[0].habilitado;
+    if(habilitado == 0){
+      errorMsg("<b>Mensaje: </b>Se han deshabilitado las inscripciones");
+      setTimeout(function(){
+        history.back();
+      },2000);
+    }else{
+      const type = $("#type").val();
+      console.log((count+1))
+      if(type == 0){
+        localStorage.setItem('estado', 4);
+        if((count+1) > cupo){
+          warningMsg("<b>Mensaje:</b> Los cupos de este curso estan llenos pero puedes llenar el formulario y quedar pendiente para confirmación de apertura de algun cupo.")
+        }
       }
     }
+    
   }
 };
 //#endregion

@@ -532,3 +532,29 @@ const changeInver =  () =>{
     }
   }
 };
+
+//================ USO DE FECHAS =======================
+//Funcion de calculo de fecha
+function calcularEdad(fecha) {
+  const date1 = dayjs(fecha, 'MM/DD/YYYY');
+  const date2 = dayjs(fechaActual(), 'MM/DD/YYYY');
+  return date2.diff(date1, 'year');
+} 
+//Fecha actual formaro yy-mm-dd
+function fechaActual(){
+  let date = new Date();
+  let day = date.getDate();
+  let month = date.getMonth() + 1;
+  let year = date.getFullYear();
+
+  if(month < 10){
+    return `${year}-0${month}-${day}`;
+  }else{
+    return `${year}-${month}-${day}`;
+  }
+}
+function convertDateFormat(string) {
+  var info = string.split('/').reverse().join('/');
+  return info;
+}
+//================ FIN USO DE FECHAS =======================

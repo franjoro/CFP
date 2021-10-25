@@ -4,7 +4,11 @@
   @*/
 //INICIAMOS CON LA FUNCION READY DE JQUERY
 $(document).ready(function () {
-  $("#btnCopy").click(() => {
+  $("#swRequest").click(function(){
+    RecuestIf();
+  });
+  RequestEnabled();
+    $("#btnCopy").click(() => {
     console.log("entra");
     var copyTextarea = document.querySelector("#link");
     copyTextarea.select();
@@ -160,6 +164,7 @@ $(document).ready(function () {
     updateCommentFunction(comentario, 3, idSolicitud);
   });
 
+  
 
   
 });

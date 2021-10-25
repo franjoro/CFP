@@ -52,4 +52,17 @@
       return res.status(400).json({ status: false, error: error });
     }
   };
+
+  updateHabil.updateRequest = async (req, res) =>{
+    try {
+      const { enabled, idCourse } = req.body;
+      const query = `UPDATE tb_cursos SET habilitado = ? WHERE Codigo_curso = ?`;
+      await pool.query(query,[enabled, idCourse]);
+      console.log(enabled);
+      console.log(idCourse);
+      return res.status(200).json({status: true});
+    } catch (error) {
+      return res.status(400).json({ status: false, error: error });
+    }
+  };
   module.exports = updateHabil;

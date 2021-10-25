@@ -74,7 +74,11 @@
                   -->
                   
                 <%} else{ %>
-                  <h5> Oferta : <%= curso.Nombre %></h5>
+                  <h5> Oferta : <%= curso.Nombre %> - <%= curso.Horario %></h5>
+                  <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="swRequest" checked>
+                    <label class="custom-control-label" for="swRequest"><span>Inscripción Habilitada</span></label>
+                  </div>
                   <hr>
                   <button id="enlaceTrue" class="btn btn-success btn-sm d-inline" data-toggle="modal"
                     data-target="#modal_compartir" onclick="GetLinkToShare('<%=curso.Codigo_curso%>')">Obtener enlace de inscripción
@@ -157,6 +161,7 @@
   <input type="hidden" name="curso" id="idCourse" value="<%=curso.Codigo_curso%>">
   <input type="hidden" name="cursoNombre" id="cursoNombre" value="<%=curso.Nombre%>">
   <input type="hidden" name="programa" id="programa" value="<%= programa%>">
+  <input type="hidden" name="habilitado" id="habilitado" value="<%= curso.habilitado%>">
   <!-- SCRIPT -->
   <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.6/dayjs.min.js"></script>
   <script src="/static/js/jquery.mask.min.js"></script>

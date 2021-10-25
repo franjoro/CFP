@@ -1,11 +1,19 @@
-function applicationTable() {
+const applicationTable = () => {
     // DataTable Usuarios
     const idCourse = $("#idCourse").val();
     
     // console.log(idCourde);
-    $("#applicationTable").DataTable({
-      ajax: `/admin/habil/application-table/${idCourse}`,
+     $("#applicationTable").DataTable({
+      ajax: {
+        'type': "GET",
+        "url": `/admin/habil/application-table/${idCourse}`,
+        
+      },
       columns: [
+        {render(data,type,row){
+          html = `${row.fecha_inscripcion }`;
+          return(html);
+        }},
         { render(data, type,row){
           let html;
           if(row){
@@ -76,21 +84,25 @@ function applicationTable() {
             },
         },
       ],
+     
     });
 };
 
 
 const changeColor= async () =>{
-  const data = await $.ajax({
+  const data =  await $.ajax({
     url: `/admin/habil/changecolor-table/${$("#idCourse").val()}`,
     type: 'GET',
     data: ''
   });
+  console.log(data)
+  console.log(data.status)
   if(data.status){
     $.each(data.data, function(i, item){
       //Cambiamos el color del id
       try {
         $(`#row${item.idSolicitud}`).addClass('bg-info text-white');
+
       } catch (error) {
         
       }
@@ -108,11 +120,13 @@ const changeColorWait = async () =>{
     type: 'GET',
     data: ''
   });
+  console.log('data')
+  console.log(data)
   if(data.status){
     $.each(data.data, function(i, item){
       //Cambiamos el color del id
       try {
-        $(`#row${item.idSolicitud}`).addClass('bg-warning');
+        $(`#row${item.idSolicitud}`).addClass('bg-warning text-black');
       } catch (error) {
         
       }
@@ -122,7 +136,7 @@ const changeColorWait = async () =>{
 
 $(document).ready(function () {
   applicationTable();
-  changeColor();
-  changeColorWait();
+  setTimeout(changeColorWait, 100);
+  setTimeout(changeColor, 100);
 });
 

@@ -63,6 +63,7 @@ router.put("/updateComment", authcheck, updateComment.update);
 router.put("/matricular", authcheck, updateHabil.cambiarCurso);
 router.put("/", updateHabil.updateSolicitud);
 router.put('/updateStatusRequest', updateStatusRequest.update);
+router.put("/updateRequest", authcheck, updateHabil.updateRequest);
 
 //#endregion
 
