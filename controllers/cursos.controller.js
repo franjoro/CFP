@@ -24,14 +24,21 @@ cursos.cursos = async (req, res) => {
     const queries = [];
     queries.push(
       pool.query(
-        "SELECT CONCAT(tb_cursos.Codigo_curso,' - ', tb_cursos.Nombre) AS Nombre, tb_instructor.Nombre AS instructor , tb_cursos.Horario , tb_cursos.Codigo_curso , (SELECT COUNT(*) FROM union_matricula WHERE id_curso = tb_cursos.Codigo_curso ) AS cantidadAlumnos FROM `tb_cursos` INNER JOIN `tb_instructor` ON `tb_cursos`.`id_instructor` = `tb_instructor`.`DUI` WHERE tb_cursos.id_programa = ? AND tb_cursos.Estado != 0  AND tb_cursos.Estado != 5  ORDER BY tb_cursos.Codigo_curso ASC",
+        `SELECT CONCAT(tb_cursos.Codigo_curso,' - ', tb_cursos.Nombre) AS Nombre, tb_instructor.Nombre AS instructor , 
+        tb_cursos.Date_inicio as fecha_inicio, tb_cursos.Date_fin as fecha_fin, tb_cursos.Horario , tb_cursos.Codigo_curso , 
+        (SELECT COUNT(*) FROM union_matricula WHERE id_curso = tb_cursos.Codigo_curso ) AS cantidadAlumnos FROM tb_cursos 
+        INNER JOIN tb_instructor ON tb_cursos.id_instructor = tb_instructor.DUI WHERE tb_cursos.id_programa = ? 
+        AND tb_cursos.Estado != 0 AND tb_cursos.Estado != 5 ORDER BY tb_cursos.Codigo_curso ASC;`,
         [programa]
       )
     );
 
     queries.push(
       pool.query(
-        "SELECT CONCAT(Nombre,' - ',Horario) AS Nombre , Codigo_curso, (SELECT COUNT(*) FROM union_matricula WHERE id_curso = tb_cursos.Codigo_curso ) AS cantidadAlumnos , (SELECT COUNT(*) FROM union_curso_empresa WHERE id_curso = tb_cursos.Codigo_curso ) AS cantidadEmpresas , Estado FROM tb_cursos WHERE (Estado = 5 || Estado = 15)  AND id_programa=?",
+        `SELECT CONCAT(Nombre,' - ',Horario) AS Nombre , Codigo_curso, (SELECT COUNT(*) FROM union_matricula 
+        WHERE id_curso = tb_cursos.Codigo_curso ) AS cantidadAlumnos , (SELECT COUNT(*) FROM union_curso_empresa 
+        WHERE id_curso = tb_cursos.Codigo_curso ) AS cantidadEmpresas , Estado , tb_cursos.Date_inicio as fecha_inicio, 
+        tb_cursos.Date_fin as fecha_fin FROM tb_cursos WHERE (Estado = 5 || Estado = 15) AND id_programa=?;`,
         [programa]
       )
     );

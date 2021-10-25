@@ -92,6 +92,8 @@
                                   <%= datos[i].cantidadAlumnos %> <br>
                                   <b><i class="fas fa-calendar"></i> Horario:</b>
                                   <%= datos[i].Horario %> <br>
+                                  <b>Fecha de inicio: </b><%= datos[i].fecha_inicio%>
+                                  <b>Fecha de finalización: </b><%= datos[i].fecha_fin%>
                                 </p>
                               </a>
                                 <button class="btn btn-success float-right btn-sm d-inline" onclick="ReporteAlumnos('<%= datos[i].Codigo_curso %>')"> <i class="fas fa-file-excel"></i> Descargar participantes</button>
