@@ -107,11 +107,19 @@
       <div class="col-lg-12">
         <div class="card shadow mb-4">
           <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary d-inline">Alumnos inscritos</h6>
+            <div class="row">
+              <div class="col-3">
+                <h6 class="m-0 font-weight-bold text-primary d-inline">Alumnos inscritos</h6>
+              </div>
+              <div class="col-9 blockChecked pt-1 pb-1">
+                <span id="blockChecked" class="mt-4 mb-4"></span>
+              </div>
+            </div>
             
             <p class="text-secondary">Descripción:</p>
             <p><span><button class="btn btn-info"></button> Solicitantes que enviaron documentación</span></p>
             <p><span><button class="btn btn-warning"></button> Solicitantes en lista de espera</span></p>
+            <p><span><button class="btn btn-danger"></button> Solicitantes que no han llenado documentación</span></p>
           </div>
           <div class="card-body row table-responsive">
             <!--Tabla detalle alumnos-->
@@ -162,6 +170,7 @@
   <input type="hidden" name="cursoNombre" id="cursoNombre" value="<%=curso.Nombre%>">
   <input type="hidden" name="programa" id="programa" value="<%= programa%>">
   <input type="hidden" name="habilitado" id="habilitado" value="<%= curso.habilitado%>">
+  <input type="hidden" name ="countPart" id="countPart" value="<%= conteo%>">
   <!-- SCRIPT -->
   <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.6/dayjs.min.js"></script>
   <script src="/static/js/jquery.mask.min.js"></script>

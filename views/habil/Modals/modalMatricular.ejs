@@ -34,3 +34,39 @@ aria-hidden="true">
 </div>
 
 
+
+
+<div class="modal " id="modal_matricular_c" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Matricular alumnos seleccionados</h5>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="col">
+                    <label for="name">Curso de matriculación</label>
+                    <input type="hidden" name="txtIdSolicitudC" id="txtIdSolicitudC" value="">
+                    <select class="custom-select" required name="cmbCursoC" id="cmbCursoC">
+                        <option value="" selected>Selecciona un curso</option>
+                        <% cursosNoCotz.forEach((element)=> { %>
+                            <option value="<%=element.Codigo_curso%>"><%=element.Nombre%> || <%=element.Codigo_curso%></option>
+                        <% }); %>
+                    </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button"  class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" id="btnEnrollParticipants" class="btn btn-primary">Matricular</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+

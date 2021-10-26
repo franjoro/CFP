@@ -1,6 +1,7 @@
 <table class="table table-striped table-responsive col-12" id="applicationTable" >
 <thead>
     <tr>
+    <th>N°</th>
     <th>Fecha Inscripción</th>
     <th>Documento</th>
     <th>Nombre</th>
@@ -13,42 +14,6 @@
     </tr>
 </thead>
 <tbody>
-    <!--
-        <%let n=0;%>
-    <% query.forEach((element)=> { n = n+1;%>
-        <tr>
-        <td><%= element.dui %></td>
-        <td><%= element.nombre %> </td>
-        <td><%= element.telefono %></td>
-        <td><%= element.email %></td>
-        <td><%= element.sexo %></td>
-        <td>
-            <div class="btn-group" role="group" aria-label="Basic example">
-            <a href="../../../../habil/gestor-de-documentos/habil/<%= element.id_curso %>/<%= element.idSolicitud %>/<%= element.dui %>/<%=programa%>/<%=tipo%>" class="btn btn-primary btn-sm">Ver documentos</a>
-            <a href="../../../../../habil/formulario/<%= element.idSolicitud %>/" class="btn btn-info btn-sm">Ver solicitud</a>
-            <button 
-                type="button" data-toggle="modal" data-target="#modal_compartir_documentacion" class="btn btn-secondary btn-sm" 
-                <% if(element.dui) {%>
-                    onclick="GetLinkToShareDocuments(<%=element.idSolicitud%>, '<%=element.dui%>')">
-                <% }else{%>
-                    onclick="GetLinkToShareDocuments(<%=element.idSolicitud%>, '<%=element.nit%>')">
-                <% }%>
-
-                Obtener enlace documentación
-            </button>
-            <%if(tipo == 'oferta'){%>
-                <a type="button" data-toggle="modal" data-target="#modal_matricular" class="btn btn-success btn-sm" onclick="idSolicitudChangue('<%=element.idSolicitud%>')">Matricular Solicitante</a>
-            <%}%>
-            
-                 <button type="button" class="btn btn-success btn-sm">Descargar documentos</button>
-        
-            <button type="button" class="btn btn-danger btn-sm" onclick="deleteNotificacion('<%=element.idSolicitud%>')">Eliminar</button>
-            </div>
-        </td>
-        </tr>
-    <% }); %>
-    Cantidad de participantes <%=n%>
-    -->
     
 </tbody>
 </table>
