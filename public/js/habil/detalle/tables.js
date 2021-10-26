@@ -115,8 +115,6 @@ const changeColor= async () =>{
     type: 'GET',
     data: ''
   });
-  console.log(data)
-  console.log(data.status)
   if(data.status){
     $.each(data.data, function(i, item){
       //Cambiamos el color del id
@@ -142,8 +140,6 @@ const changeColorWait = async () =>{
     type: 'GET',
     data: ''
   });
-  console.log('data')
-  console.log(data)
   if(data.status){
     $.each(data.data, function(i, item){
       //Cambiamos el color del id
@@ -175,16 +171,18 @@ const selectParticipants = async () =>{
 };
 
 const enrollParticipants = () =>{
-  $(JSON.parse(localStorage.getItem('participants'))).each((index, element) =>{
+  $(JSON.parse(localStorage.getItem('participants'))).each(async(index, element) =>{
     try {
-      const data =  $.ajax({
+      const data = await $.ajax({
         url: "/admin/habil/matricular",
         type: "PUT",
         data: {
-          cmbCurso: $("#txtIdSolicitudC").val(),
-          txtIdSolicitud: $("#cmbCursoC").val()
+          cmbCurso: $("#cmbCursoC").val(),
+          txtIdSolicitud: element
         },
       });
+      console.log(data);
+      console.log(data.responseJSON);
       if (data.status) {
         swal.close();
         Swal.fire(
@@ -192,6 +190,7 @@ const enrollParticipants = () =>{
           "success"
         );
         $("#modal_matricular_c").modal("hide");
+        location.reload();
       }
     } catch (error) {
       swal.close();
@@ -225,20 +224,21 @@ const blockChecked = () =>{
       data-toggle="modal" data-target="#modal_matricular_c"
       onclick="selectParticipants()"
     >
-      <i class="fas fa-exchange-alt"></i>
+      <i class="fas fa-exchange-alt"></i> Matricular
     </button>
     <button 
       class="btn btn-danger btnBlock btn-sm"
       data-toggle="tooltip" data-placement="top" title="Eliminar estudiantes seleccionados"
+      onclick="deleteParticipants()"
     >
-      <i class="fas fa-trash-alt"></i>
+      <i class="fas fa-trash-alt"></i> Eliminar
     </button>
   `);
   },100)
   
 };
 
-$(document).ready(function () {
+$(document).ready( ()  => {
   $("#btnEnrollParticipants").click(() =>{
     enrollParticipants();
   });
