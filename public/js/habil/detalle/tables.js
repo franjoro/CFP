@@ -237,6 +237,11 @@ const blockChecked = () =>{
     >
       <i class="fas fa-trash-alt"></i> Eliminar
     </button>
+    <button
+      class="btn btn-warning btn-sm btnBlock"
+      >
+      <i class="fas fa-trash-alt"></i> Quitar de lista de espera
+    </button>
   `);
   },100)
   
