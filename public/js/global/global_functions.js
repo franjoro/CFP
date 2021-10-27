@@ -45,35 +45,43 @@ const errorMsg = (msg) => {
   });
 };
 
-function calcularEdad(fecha) {
-    let date = new Date(fecha);
-    console.log(fecha);
-    let day = date.getDate();
-    let month = date.getMonth()+1;
-    if(month <10)
-      month = "0"+month;
-    if(day < 10)
-      day = '0'+day;
-    let year = date.getFullYear();
-    let fullDate = `${year}-${month}-${day}`;
-    
-    const date1 = dayjs(fullDate);
-    const date2 = dayjs(fechaActual());
-    return date2.diff(date1, 'year');
-  } 
-  //Fecha actual formaro yy-mm-dd
-  function fechaActual(){
-    let date = new Date();
-    let day = date.getDate();
-    let month = date.getMonth() + 1;
-    let year = date.getFullYear();
+
+//Funcion de calculo de fecha
+function calculatedYearOld(fecha) {
+  let date = new Date(fecha);
+  console.log(date);
+  let day = date.getDate();
+  let month = date.getMonth()+1;
+  if(month <10)
+    month = "0"+month;
+  if(day < 10)
+    day = '0'+day;
+  let year = date.getFullYear();
+  let fullDate = `${year}-${month}-${day}`;
+  console.log(fullDate);
+  console.log(fecha);
   
-    if(month < 10){
-      return `${year}-0${month}-${day}`;
-    }else{
-      return `${year}-${month}-${day}`;
-    }
+  const date1 = dayjs(fullDate);
+  const date2 = dayjs(fechaActual());
+  return date2.diff(date1, 'year');
+} 
+
+//Fecha actual formaro yy-mm-dd
+function nowDate(){
+  let date = new Date();
+  let day = date.getDate();
+  let month = date.getMonth() + 1;
+  let year = date.getFullYear();
+
+  if(month < 10){
+    return `${year}-0${month}-${day}`;
+  }else{
+    return `${year}-${month}-${day}`;
   }
+}
+
+
+
   function convertDateFormat(string) {
     var info = string.split('/').reverse().join('/');
     return info;

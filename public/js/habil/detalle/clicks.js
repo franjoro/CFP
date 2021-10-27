@@ -9,8 +9,48 @@ $(document).ready(function () {
   });
   RequestEnabled();
     $("#btnCopy").click(() => {
-    console.log("entra");
     var copyTextarea = document.querySelector("#link");
+    copyTextarea.select();
+    try {
+      document.execCommand("copy");
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+      });
+      Toast.fire({
+        icon: "success",
+        title: "Copiado en portapapeles",
+      });
+    } catch (err) {
+      console.log("Oops, unable to copy");
+    }
+  });
+  $("#btnCopyRequest").click(()=>{
+    
+    var copyTextarea = document.querySelector("#link_solicitud");
+    copyTextarea.select();
+    try {
+      document.execCommand("copy");
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+      });
+      Toast.fire({
+        icon: "success",
+        title: "Copiado en portapapeles",
+      });
+    } catch (err) {
+      console.log("Oops, unable to copy");
+    }
+  });
+  $("#btnCopyDocument").click(()=>{
+    var copyTextarea = document.querySelector("#link_document");
     copyTextarea.select();
     try {
       document.execCommand("copy");
