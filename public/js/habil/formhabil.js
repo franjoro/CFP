@@ -865,18 +865,14 @@ $(document).ready(function () {
         });
         Swal.close();
         if(respuesta){
-          if($("#type").val() == 0){
-            if(localStorage.getItem('estado') == 4){
-              const response = await $.ajax({
-                url: '/admin/habil/updateStatusRequest',
-                type: 'PUT',
-                data: {
-                  idRequest: respuesta.idSolicitud,
-                  status: 4
-                }
-              });
+          const response = await $.ajax({
+            url: '/admin/habil/updateStatusRequest',
+            type: 'PUT',
+            data: {
+              idRequest: respuesta.idSolicitud,
+              status: localStorage.getItem("estado")
             }
-          }
+          });
           window.location.replace(`/habil/documentacion/habil/${respuesta.idSolicitud}/documento/${global_json1.dui}`);
         }else{
           error(respuesta);

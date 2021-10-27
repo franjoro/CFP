@@ -568,9 +568,11 @@ const countSolicitud = async () =>{
       const type = $("#type").val();
       console.log((count+1))
       if(type == 0){
-        localStorage.setItem('estado', 4);
         if((count+1) > cupo){
+          localStorage.setItem('estado', 4);
           warningMsg("<b>Mensaje:</b> Los cupos de este curso estan llenos pero puedes llenar el formulario y quedar pendiente para confirmación de apertura de algun cupo.")
+        }else{
+          localStorage.setItem('estado', 0);
         }
       }
     }

@@ -63,7 +63,7 @@ habil.gestorDeDocumentacion = async(req,res) =>{
 habil.main = async (req, res) => {
     //global.global_codigoCurso = req.params.codigoCurso;//ALERTA ESTA ES UNA VARIABLE GLOBAL QUE SE UTILIZARA POCO TIEMPO TOMAR EN CUENTA QUE LAS VARIABLE GLOBALES NO SON VIABLES POR MEMORIA
     const { codigoCurso } = req.params;
-    const type =0;
+    const type = 0 ;
     const idSolicitud =''; //Pasamos esta variabñe vacia
     try {
         const sql ="SELECT Nombre, Horario from tb_cursos WHERE Codigo_curso = ?";

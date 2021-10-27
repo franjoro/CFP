@@ -66,7 +66,7 @@
                     </div>
                   </div>
                   <hr>
-                  <%if (programa != 28 ){%>
+                  <%if (programa != 28 && programa != 32 ){%>
                     <button class="btn btn-success btn-sm d-inline" onclick="ReporteAlumnos('<%=curso.Codigo_curso%>')"><i
                       class="fas fa-file-excel"></i> Descargar participantes</button>
                     <button class="btn btn-primary btn-sm d-inline" onclick="createZipCurso('<%=curso.Codigo_curso%>')"><i
@@ -89,7 +89,7 @@
                     <% } %>
               </div>
             </div>
-            <%if (programa != 28 ){%>
+            <%if (programa != 28 && programa != 32 ){%>
               <p class="float-right">Cantidad de inscritos: <%= cAlumnos %></p>
             <%}%>
             
@@ -102,8 +102,8 @@
       <div class="col-lg-12">
         <div class="card shadow mb-4">
           <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary d-inline"><%if(programa == 28) {%> Participantes inscritos <% }else {%>Empresas registradas <%}%></h6>
-            <%if(programa != 28) {%> 
+            <h6 class="m-0 font-weight-bold text-primary d-inline"><%if(programa == 28 || programa == 32) {%> Participantes inscritos <% }else {%>Empresas registradas <%}%></h6>
+            <%if(programa != 28 && programa != 32) {%> 
               <button class="btn btn-sm btn-success d-inline float-right" data-toggle="modal" data-target="#exampleModal">
                 Agregar Empresa
               </button>
@@ -114,7 +114,7 @@
           <div class="container-fluid">
             <div class="row m-2">
               <div class="col-12">
-                <%if (programa == 28 ){%>
+                <%if (programa == 28  || programa = 32){%>
                   <%- include('../habil/Boards/tablaAlumnos'); %>
                 <%}%>
               </div>
@@ -611,8 +611,9 @@
             <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
             <script src="/static/js/curso_detalle.js"></script>
-            <%if (programa == 28 ){%>
+            <%if (programa == 28 || programa == 32 ){%>
               <%- include('../habil/Modals/modalEnlaceDocumentacion'); %>
+              <%- include('../habil/Modals/modal_compartir_solicitud'); %>
 
               <input type="hidden" id="idCourse" value="<%= curso.Codigo_curso  %>">
 
@@ -625,5 +626,12 @@
             <script src="/static/js/buttons.print.min.js"></script>
             <script src="/static/js/jszip.min.js"></script>
             <!--GLOBAL DEPENDENCES-->
+            <script src="/static/js/habil/detalle/functions.js"></script>
+            <script src="/static/js/habil/detalle/clicks.js"></script>
+            <script src="/static/js/habil/detalle/delete.js"></script>
+            <script src="/static/js/habil/detalle/update.js"></script>
+            <script src="/static/js/habil/detalle/update_oferta.js"></script>
+            <script src="/static/js/habil/detalle/notificacion.js"></script>
+            <script src="/static/js/global/global_functions.js"></script>
             <script src="/static/js/habil/detalle/tables.js"></script>
             <%}%>

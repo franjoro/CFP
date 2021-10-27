@@ -49,7 +49,6 @@ const errorMsg = (msg) => {
 //Funcion de calculo de fecha
 function calculatedYearOld(fecha) {
   let date = new Date(fecha);
-  console.log(date);
   let day = date.getDate();
   let month = date.getMonth()+1;
   if(month <10)
@@ -58,9 +57,6 @@ function calculatedYearOld(fecha) {
     day = '0'+day;
   let year = date.getFullYear();
   let fullDate = `${year}-${month}-${day}`;
-  console.log(fullDate);
-  console.log(fecha);
-  
   const date1 = dayjs(fullDate);
   const date2 = dayjs(fechaActual());
   return date2.diff(date1, 'year');
