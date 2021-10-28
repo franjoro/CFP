@@ -95,7 +95,7 @@ const deleteNotificacion = (idSolicitud) => {
       showLoaderOnConfirm: true,
       preConfirm: (text) => {
         if (text == "eliminar" || text == "Eliminar") {
-          $(JSON.parse(localStorage.getItem('participants'))).each(async(index, element) =>{
+          $(JSON.parse(sessionStorage.getItem('participants'))).each(async(index, element) =>{
             await $.ajax({
             url: "/admin/habil/deleteSolicitud",
             type: "DELETE",

@@ -90,7 +90,8 @@ cursos.curso_detalle = async (req, res) => {
     return res.status(400).json({ error: "TIPO_NOT_VALID" });
 
   try {
-
+    const queryCursos = `SELECT Nombre, Codigo_curso FROM tb_cursos where Estado = 1 AND id_programa = ?`;
+    const cursosNoCotz = await pool.query(queryCursos,[programa]);
 
     const queryString = `
         SELECT DISTINCT par.DUI as dui, REPLACE(JSON_EXTRACT(json1, '$.nit'), '"','' ) as nit , 
@@ -137,7 +138,8 @@ cursos.curso_detalle = async (req, res) => {
       cAlumnos: empresas[1].length,
       data: usuario.data,
       tipo,
-      query
+      query,
+      cursosNoCotz
     });
   } catch (error) {
     return res.status(400).json(error);

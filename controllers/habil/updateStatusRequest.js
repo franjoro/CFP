@@ -5,6 +5,8 @@ const pool = require("../../models/db");
 
 updateStatusRequest.update = async (req, res) => {
     const { status, idRequest } = req.body;
+    console.log(status);
+    console.log(idRequest);
     if (!status || !idRequest)
       return res
         .status(400)
@@ -14,7 +16,7 @@ updateStatusRequest.update = async (req, res) => {
         "UPDATE tb_habil_solicitudes SET estado=? WHERE id = ?",
         [status, idRequest]
       );
-      return res.status(200).json({ status: true });
+      return res.json({status: true});
     } catch (error) {
       return res.status(400).json({ status: false, error });
     }

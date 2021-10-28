@@ -68,7 +68,6 @@ readHabil.curso_detalle_NoCtoznts = async (req, res) => {
         };
         i += 1;
         });
-        console.log(empresas[2][0]);
         // Responder
         return res.render("./habil/curso_detalleCtz", {
         datos,

@@ -170,12 +170,43 @@ const selectParticipants = async () =>{
       arr.push(idRequest);
     }
   });
-  localStorage.setItem('participants',JSON.stringify(arr));
-  
+  sessionStorage.setItem('participants',JSON.stringify(arr));
+  console.log(JSON.parse(sessionStorage.getItem('participants')).length);
 };
-
+const removeForWaitingList =  () =>{
+  selectParticipants(); 
+  $(JSON.parse(sessionStorage.getItem('participants'))).each( async (index, element) =>{
+    try {
+      const data = await $.ajax({
+        url: "/admin/habil/updateStatusRequest",
+        type: "PUT",
+        data: {
+          status: 0,
+          idRequest: element
+        },
+      }).then(
+        () => {
+          if ((index+1 == JSON.parse(sessionStorage.getItem('participants')).length)) {
+            swal.close();
+            Swal.fire(
+              `${(index+1)} participante matriculado correctamente`,
+              "success"
+            );
+            $("#modal_matricular_c").modal("hide");
+            location.reload();
+          }
+        }
+      );
+      
+    } catch (error) {
+      swal.close();
+      console.log(error);
+      errorMessage();
+    }
+  });
+};
 const enrollParticipants = () =>{
-  $(JSON.parse(localStorage.getItem('participants'))).each(async(index, element) =>{
+  $(JSON.parse(sessionStorage.getItem('participants'))).each(async(index, element) =>{
     try {
       const data = await $.ajax({
         url: "/admin/habil/matricular",
@@ -210,6 +241,7 @@ const classClick = () =>{
     event.stopImmediatePropagation();
     if( $('.ck').is(':checked') ) {
       blockChecked();
+      selectParticipants();
     }else{
       $(".btnBlock").remove();
     }
@@ -230,6 +262,13 @@ const blockChecked = () =>{
     >
       <i class="fas fa-exchange-alt"></i> Matricular
     </button>
+    <button
+      class="btn btn-warning btn-sm btnBlock"
+      onclick = "removeForWaitingList()"
+      >
+      <i class="fas fa-exclamation"></i> Quitar de lista de espera
+     
+    </button>
     <button 
       class="btn btn-danger btnBlock btn-sm"
       data-toggle="tooltip" data-placement="top" title="Eliminar estudiantes seleccionados"
@@ -237,11 +276,7 @@ const blockChecked = () =>{
     >
       <i class="fas fa-trash-alt"></i> Eliminar
     </button>
-    <button
-      class="btn btn-warning btn-sm btnBlock"
-      >
-      <i class="fas fa-trash-alt"></i> Quitar de lista de espera
-    </button>
+    
   `);
   },100)
   
