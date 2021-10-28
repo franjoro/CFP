@@ -126,6 +126,9 @@ habil.sendEmail = async (req,res) =>{
     const { text } = req.body;
     const { enlace } = req.body;
     const { cursoNombre } = req.body;
+    console.log(text);
+    console.log(enlace);
+    console.log(cursoNombre);
     const asunto = `RELLENO DE FORMULARIO PARA CURSO ${cursoNombre.toUpperCase()}`;
     const html = `<h5>Reciba un cordial saludo de parte del Centro de Formación Profesional Don Pedro Ricaldone<h5> <p> por este medio solicitamos el relleno de formulario para aplicar a los cursos aperturados.</p><br>
     <b>Este link esta habilitado para el curso ${cursoNombre}</b>

@@ -71,9 +71,22 @@
                       class="fas fa-file-excel"></i> Descargar participantes</button>
                     <button class="btn btn-primary btn-sm d-inline" onclick="createZipCurso('<%=curso.Codigo_curso%>')"><i
                         class="fas fa-file-archive"></i> Descargar ZIP de documentos</button>
+                  <%} else{%>
+                    <div class="custom-control custom-switch">
+                      <input type="checkbox" class="custom-control-input" id="swRequest" checked>
+                      <label class="custom-control-label" for="swRequest"><span>Inscripción Habilitada</span></label>
+                    </div>
+                    <hr>
+                    <button id="enlaceTrue" class="btn btn-info btn-sm d-inline" data-toggle="modal"
+                      data-target="#modal_compartir" onclick="GetLinkToShare('<%=curso.Codigo_curso%>')">Obtener enlace de inscripción
+                    </button>
+                    <button class="btn btn-secondary btn-sm d-inline" onclick="createZipCourse('<%=curso.Codigo_curso%>')">
+                      <i class="fas fa-file-archive"></i> Descargar ZIP de documentos
+                    </button>
+                    <a href="/admin/habil/<%= curso.Codigo_curso%>" class="btn btn-success btn-sm d-inline">Agregar participante</a>
                   <%}%>
                       
-                  <%} else{ %>
+                <%} else{ %>
                     <h5> Oferta : <%= curso.Nombre %>
                     </h5>
                     <p> <b>Última fecha de recepción documentos:</b>
@@ -86,7 +99,7 @@
                     <button class="btn btn-secondary btn-sm d-inline"
                       onclick="createZipCurso('<%=curso.Codigo_curso%>')"><i class="fas fa-file-archive"></i> Descargar
                       ZIP de documentos</button>
-                    <% } %>
+                  <% } %>
               </div>
             </div>
             <%if (programa != 28 && programa != 32 ){%>
@@ -622,8 +635,11 @@
               <%- include('../habil/Modals/modal_compartir_solicitud'); %>
               <%- include('../habil/Modals/modalMigrarParticipante'); %>
               <%- include('../habil/Modals/modalMatricular'); %>
+              <%- include('../habil/Modals/modalEnlace');%>
 
               <input type="hidden" id="idCourse" value="<%= curso.Codigo_curso  %>">
+              <input type="hidden" id="habilitado">
+              <input type="hidden" name="cursoNombre" id="cursoNombre" value="<%=curso.Nombre%>">
 
               <!--DATATABLE DEPENDENCIES-->
             <script src="/static/vendor/datatables/datatables.min.js"></script>
@@ -642,4 +658,5 @@
             <script src="/static/js/habil/detalle/notificacion.js"></script>
             <script src="/static/js/global/global_functions.js"></script>
             <script src="/static/js/habil/detalle/tables.js"></script>
+            <script src="/static/js/habil/zip.js"></script>
             <%}%>
