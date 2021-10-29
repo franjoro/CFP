@@ -1,0 +1,38 @@
+<form id="form_oferta_NoCotizantes" style="display: none;">
+    <button class="btn btn-info btn-sm btn_back_menu"><i class="fas fa-arrow-left"></i></button>
+    <hr>
+    <input type="hidden" name="programa" id="programa_oferta_noCtz" required value="<%= programa %>">
+    <span class="badge badge-secondary">Oferta para personas no cotizantes</span>
+    <div class="form-row">
+      <div class="form-group col-md-8">
+        <label for="nombre">Nombre de la oferta</label>
+        <input type="text" class="form-control" required name="nombre" id="nombre_oferta_noCtz">
+      </div>
+      <div class="form-group col-md-4">
+        <label for="nombre">Cantidad de cupos</label>
+        <input type="text" class="form-control" required name="txtCupo" id="txtCupo">
+      </div>
+    </div>
+    <!-- <div class="form-row">
+        <div class="form-group col-md-10">
+            <select class="js-example-basic-multiple from-control" style="width: 100% !important;" name="states">
+                <option value="g">J</option>
+                <option value="h">h</option>
+                <option value="k">k</option>
+                <option value="f">g</option>
+            </select>
+        </div>
+        <div class="form-group col-md-2">
+            <button class="btn btn-success btn-sm" id="btnAddTeacher" style="display: none">Add</button>
+        </div>
+    </div> -->
+    <div class="form-row">
+      <div class="form-group col-md-12">
+        <label for="horario">Fechas de ejecución</label>
+        <input type="text" class="form-control" name="fecha" autocomplete="off" required id="horario_fecha_noCtz"
+          placeholder="Sábado...">
+      </div>
+    </div>
+    <button type="button" class="btn btn-secondary float-right m-1" data-dismiss="modal">Cerrar</button>
+    <button type="submit" class="btn btn-primary float-right m-1">Agregar oferta</button>
+  </form>

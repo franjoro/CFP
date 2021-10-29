@@ -1,0 +1,44 @@
+
+<form id="formInstructor">
+    <div class="form-row">
+        <div class="col">
+            <label for="DUI">DUI *requerido*</label>
+            <input type="text" id="DUI" name="DUI" required class="form-control"
+                placeholder="0000000-0">
+        </div>
+        <div class="col">
+            <label for="NIT">NIT </label>
+            <input type="text" id="NIT" name="NIT"  class="form-control"
+                placeholder="0000-000000-000-0">
+        </div>
+        <div class="col">
+            <label for="name">Nombre *requerido*</label>
+            <input type="text" id="name" name="name" required class="form-control"
+                placeholder="Nombre del instructor">
+        </div>
+    </div>  
+    <div class="form-row">
+        <div class="col">
+            <label for="tel">Teléfono</label>
+            <input type="text" id="tel" name="tel"  class="form-control">
+        </div>
+        <div class="col">
+            <label for="categoria">Categoría</label>
+            <select name="categoria" id="categoria" class="form-control">
+                <%  query.forEach(element => { %>
+                <option value="<%= element.id %>"><%= element.Categoria %>  </option>
+                <% }); %>
+            </select>
+        </div>
+        <div class="col">
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email"  class="form-control">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <input type="submit" class="btn btn-primary">
+        </div>
+    </div>                
+</form>

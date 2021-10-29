@@ -471,6 +471,12 @@ $("#instructor").select2({
     },
     cache: true,
   },
+  language: {
+        noResults: function(){
+          $("#btnAddTeacher").css({"display": "block"});
+          
+        }
+  },
 });
 
 const ReporteAlumnos = async (id) => {

@@ -170,3 +170,48 @@ const updateRequest = async (enabled, idCourse, msg) =>{
     toastSucces(msg);
   }
 };
+
+
+const addTeacher =  ()=>{
+  const { value: formValues } =  Swal.fire({
+    title: 'Multiple inputs',
+    html:
+      '<input id="swal-input1" class="swal2-input">' +
+      '<input id="swal-input2" class="swal2-input">',
+    focusConfirm: false,
+    preConfirm: () => {
+      return [
+        document.getElementById('swal-input1').value,
+        document.getElementById('swal-input2').value
+      ]
+    }
+  })
+  
+  if (formValues) {
+    Swal.fire(JSON.stringify(formValues))
+  }
+};
+
+// Agregar nuevo instructor
+$("#formInstructor").submit(async function (e) {
+  e.preventDefault();
+  const t = $(this).serialize();
+  loader();
+  try {
+     const data = await $.ajax({
+      url: "/admin/instructor/add",
+      type: "POST",
+      data: t,
+    });
+    if(data.status){
+      // LoadTablaInstructor($("#selector").children("option:selected").val());
+      swal.close();
+      // $("#exampleModal").modal("toggle");
+      $("#formInstructor")[0].reset();
+    }
+  } catch (error) {
+    swal.close();
+    console.log(error)
+    errorMessage();
+  }
+});

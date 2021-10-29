@@ -4,6 +4,14 @@
   @*/
 //INICIAMOS CON LA FUNCION READY DE JQUERY
 $(document).ready(function () {
+  $("#modalidad").change(()=>{
+    if($("#modalidad").val() == "Precalificacion"){
+      $("#blockIDC").css({"display": "none"});
+      $("#modadlidad_id").val("");
+    }else{
+      $("#blockIDC").css({"display": "block"})
+    }
+  });
   $("#swRequest").click(function(){
     RecuestIf();
   });

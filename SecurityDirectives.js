@@ -12,7 +12,12 @@ const Directivas = {
             "https://www.googletagmanager.com",
             "https://cdn.tiny.cloud"
         ],
-        connectSrc: ["'self'", "https://api.salud.gob.sv", "https://www.google-analytics.com"],
+        connectSrc: [
+            "'self'", 
+            "https://api.salud.gob.sv", 
+            "https://www.google-analytics.com",
+            "https://api.github.com"
+        ],
         styleSrc: [
             "'self'",
             "fonts.googleapis.com",

@@ -33,7 +33,33 @@ $(".btn_back_menu").click(() => {
   $("#menu").css("display", "block");
 });
 
+
+
 $(document).ready(() => {
+  $("#modalidad").change(()=>{
+    if($("#modalidad").val() == "Precalificacion"){
+      $("#blockIDC").css({"display": "none"});
+      $("#modadlidad_id").val("");
+    }else{
+      $("#blockIDC").css({"display": "block"})
+    }
+  });
+  // //#region 
+  // $("#btnAddTeacher").click(()=>{
+  //   console.log("Add")
+  // });
+  // $(".js-example-basic-multiple").select2({
+  //   language: {
+  //     noResults: function(){
+  //       $("#btnAddTeacher").css({"display": "block"});
+        
+  //     }
+  //   },
+  // });
+  // $(".js-example-basic-multiple").change(()=>{
+  //   $("#btnAddTeacher").css({"display": "none"});
+  // });
+  // //#endregion
   $("#costo").mask("000,000,000,000,000.00", { reverse: true });
   $("#costo_oferta").mask("000,000,000,000,000.00", { reverse: true });
   $("#date_inicio").datepicker({ dateFormat: "yy-mm-dd" });

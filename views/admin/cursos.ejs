@@ -1,7 +1,9 @@
+<link rel="stylesheet" href="/static/css/select2.min.css">
 <link rel="stylesheet" href="/static/vendor/datatables/datatables.min.css" />
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"
-  type="text/css" />
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" type="text/css" />
+
 <%- include('../partials/header.admin.ejs'); %>
   <div class="container-fluid">
 
@@ -141,6 +143,7 @@
                 <label for="date_fin">Fecha de finalización</label>
                 <input type="text" class="form-control" name="date_fin" id="date_fin">
               </div>
+              <%if(programa != 28 && programa != 32){%>
               <div class="col-3">
                 <label for="orden">Orden de inicio</label>
                 <input type="text" class="form-control" name="orden" id="orden">
@@ -149,6 +152,8 @@
                 <label for="agrupacion">Agrupación</label>
                 <input type="text" class="form-control" name="agrupacion" id="agrupacion">
               </div>
+              <%}%>
+              
             </div>
             <div class="form-row">
               <div class="col-3">
@@ -156,10 +161,12 @@
                 <select class="form-control" name="modalidad" id="modalidad">
                   <option value="Licitación">Licitación</option>
                   <option value="Bolpros">Bolpros</option>
+                  <option value="Precalificacion">Precalificación</option>
                 </select>
               </div>
-              <div class="col-3">
-                <label for="modadlidad_id">Identificador de modalidad</label>
+              <div class="col-3" id="blockIDC">
+                <!-- Antes esto era un identificador de modalidad lo encontraras en la base como id_modalidad -->
+                <label for="modadlidad_id">Identificador de contratación</label>
                 <input type="text" class="form-control" name="modadlidad_id" id="modadlidad_id">
               </div>
               <div class="col-3">
@@ -284,32 +291,9 @@
           </form>
 
 
-          <form id="form_oferta_NoCotizantes" style="display: none;">
-            <button class="btn btn-info btn-sm btn_back_menu"><i class="fas fa-arrow-left"></i></button>
-            <hr>
-            <input type="hidden" name="programa" id="programa_oferta_noCtz" required value="<%= programa %>">
-            <span class="badge badge-secondary">Oferta para personas no cotizantes</span>
-            <div class="form-row">
-            
-              <div class="form-group col-md-8">
-                <label for="nombre">Nombre de la oferta</label>
-                <input type="text" class="form-control" required name="nombre" id="nombre_oferta_noCtz">
-              </div>
-              <div class="form-group col-md-4">
-                <label for="nombre">Cantidad de cupos</label>
-                <input type="text" class="form-control" required name="txtCupo" id="txtCupo">
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group col-md-12">
-                <label for="horario">Fechas de ejecución</label>
-                <input type="text" class="form-control" name="fecha" autocomplete="off" required id="horario_fecha_noCtz"
-                  placeholder="Sábado...">
-              </div>
-            </div>
-            <button type="button" class="btn btn-secondary float-right m-1" data-dismiss="modal">Cerrar</button>
-            <button type="submit" class="btn btn-primary float-right m-1">Agregar oferta</button>
-          </form>
+          <%- include('Modals/frmOfertNoCot'); %>
+
+          
 
         </div>
       </div>
@@ -320,5 +304,5 @@
       <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-
+      <script src="/static/js/select2.min.js"></script>
       <script src="/static/js/cursos.js"></script>
