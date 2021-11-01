@@ -2,15 +2,22 @@
 <form id="formInstructor">
     <input type="hidden" value="1" id="categoria" name="categoria">
     <div class="form-row">
+        <div class="col-12">
+            <label for="name">Nombre *requerido*</label>
+            <input type="text" id="name" name="name" required class="form-control"
+                placeholder="Nombre del instructor">
+        </div>
+    </div>
+    <div class="form-row">
         <div class="col">
             <label for="DUI">DUI *requerido*</label>
             <input type="text" id="DUI" name="DUI" required class="form-control"
                 placeholder="0000000-0">
         </div>
         <div class="col">
-            <label for="name">Nombre *requerido*</label>
-            <input type="text" id="name" name="name" required class="form-control"
-                placeholder="Nombre del instructor">
+            <label for="NIT">NIT </label>
+            <input type="text" id="NIT" name="NIT"  class="form-control"
+                placeholder="0000-000000-000-0">
         </div>
     </div>  
     <br>
