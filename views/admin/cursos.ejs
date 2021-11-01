@@ -13,7 +13,7 @@
           <div class="card-header py-3">
             <a href="/admin/cursos" class="btn btn-success btn-sm float-left d-inline"><i
                 class="fas fa-arrow-left"></i></a>
-            <a data-toggle="modal" data-target="#modal_oferta" class="btn btn-info btn-sm float-right d-inline mx-1"><i
+            <a data-toggle="modal" data-target="#modal" class="btn btn-info btn-sm float-right d-inline mx-1"><i
                 class="fas fa-paperclip"></i>Agregar nueva oferta</a>
 
             <a data-toggle="modal" data-target="#insertar_modal"
@@ -109,123 +109,11 @@
     </div>
   </div>
 
-
-  <!-- Modal Insertar -->
-  <div class="modal fade" id="insertar_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog  modal-lg" role="document">
+  <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">AGREGAR NUEVO CURSO</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form id="form_curso">
-            <input type="hidden" name="programa" value="<%= programa%>">
-            <div class="form-row">
-              <div class="form-group col-md-4">
-                <label for="codigo_curso">Código de curso*</label>
-                <input type="text" class="form-control" required name="codigo_curso" id="codigo_curso">
-              </div>
-              <div class="form-group col-md-8">
-                <label for="nombre">Nombre del curso*</label>
-                <input type="text" class="form-control" required name="nombre" id="nombre">
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="col-3">
-                <label for="date_inicio">Fecha de inicio</label>
-                <input type="text" class="form-control" name="date_inicio" id="date_inicio">
-              </div>
-              <div class="col-3">
-                <label for="date_fin">Fecha de finalización</label>
-                <input type="text" class="form-control" name="date_fin" id="date_fin">
-              </div>
-              <%if(programa != 28 && programa != 32){%>
-              <div class="col-3">
-                <label for="orden">Orden de inicio</label>
-                <input type="text" class="form-control" name="orden" id="orden">
-              </div>
-              <div class="col-3">
-                <label for="agrupacion">Agrupación</label>
-                <input type="text" class="form-control" name="agrupacion" id="agrupacion">
-              </div>
-              <%}%>
-              
-            </div>
-            <div class="form-row">
-              <div class="col-3">
-                <label for="modalidad">Modalidad de contratación</label>
-                <select class="form-control" name="modalidad" id="modalidad">
-                  <option value="Licitación">Licitación</option>
-                  <option value="Bolpros">Bolpros</option>
-                  <option value="Precalificacion">Precalificación</option>
-                </select>
-              </div>
-              <div class="col-3" id="blockIDC">
-                <!-- Antes esto era un identificador de modalidad lo encontraras en la base como id_modalidad -->
-                <label for="modadlidad_id">Identificador de contratación</label>
-                <input type="text" class="form-control" name="modadlidad_id" id="modadlidad_id">
-              </div>
-              <div class="col-3">
-                <label for="documento">Documento de contratación</label>
-                <select class="form-control" name="documento" id="documento">
-                  <option value="Contrato">Contrato</option>
-                  <option value="Orden">Orden de compra</option>
-                </select>
-              </div>
-              <div class="col-3">
-                <label for="documento_id">Identificador de documento</label>
-                <input type="text" class="form-control" name="documento_id" id="documento_id">
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group col-md-8">
-                <label for="fechas">Fechas</label>
-                <input type="text" class="form-control" name="fechas" id="fechas" placeholder="Sábados...">
-              </div>
-              <div class="form-group col-md-4">
-                <label for="horario">Horario</label>
-                <input type="text" class="form-control" name="horario" id="horario" placeholder="De 0:00 a 0:00">
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group col-md-4">
-                <label for="factura">Factura</label>
-                <input type="text" class="form-control" name="factura" id="factura" placeholder="000000">
-              </div>
-              <div class="form-group col-md-4">
-                <label for="instructor">Instructor</label>
-                <select id="instructor" name="instructor" class="form-control">
-                  <option selected>Seleccionar instructor</option>
-                  <option>...</option>
-                </select>
-              </div>
-              <div class="form-group col-md-4">
-                <label for="costo">Costo Por alumno</label>
-                <input type="text" class="form-control" name="costo" id="costo" placeholder="$0.00">
-              </div>
-            </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-          <button type="submit" class="btn btn-primary">Agregar curso</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- Modal oferta -->
-  <div class="modal fade" id="modal_oferta" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog  modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Nueva oferta</h5>
+          <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -247,8 +135,6 @@
               </div>
             </div>
           </div>
-
-
 
           <form id="form_oferta_empresas" style="display: none;">
             <button class="btn btn-info btn-sm btn_back_menu"><i class="fas fa-arrow-left"></i></button>
@@ -293,11 +179,19 @@
 
           <%- include('Modals/frmOfertNoCot'); %>
 
-          
 
+        </div>
+        <div class="modal-footer">
+         
         </div>
       </div>
     </div>
+  </div>
+
+
+
+  <%- include("Modals/modalInsertCouse");%>
+
     <!-- /.container-fluid -->
     <%- include('../partials/footer'); %>
       <script src="/static/js/jquery.mask.min.js"></script>

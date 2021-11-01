@@ -174,6 +174,30 @@ $(document).ready(() => {
     }
   });
 
+
+  $("#formInstructor").submit(async function (e) {
+    e.preventDefault();
+    const t = $(this).serialize();
+    loader();
+    try {
+       const data = await $.ajax({
+        url: "/admin/instructor/add",
+        type: "POST",
+        data: t,
+      });
+      if(data.status){
+        // LoadTablaInstructor($("#selector").children("option:selected").val());
+        swal.close();
+        // $("#exampleModal").modal("toggle");
+        $("#formInstructor")[0].reset();
+      }
+    } catch (error) {
+      swal.close();
+      console.log(error)
+      errorMessage();
+    }
+  });
+
 const deleteOferta = async (id) => {
   const alerta = await Swal.fire({
     title: "¿Eliminar la oferta disponible?",

@@ -1,0 +1,91 @@
+<form id="form_curso">
+    <input type="hidden" name="programa" value="<%= programa%>">
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label for="codigo_curso">Código de curso*</label>
+        <input type="text" class="form-control" required name="codigo_curso" id="codigo_curso">
+      </div>
+      <div class="form-group col-md-8">
+        <label for="nombre">Nombre del curso*</label>
+        <input type="text" class="form-control" required name="nombre" id="nombre">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-3">
+        <label for="date_inicio">Fecha de inicio</label>
+        <input type="text" class="form-control" name="date_inicio" id="date_inicio">
+      </div>
+      <div class="col-3">
+        <label for="date_fin">Fecha de finalización</label>
+        <input type="text" class="form-control" name="date_fin" id="date_fin">
+      </div>
+      <%if(programa != 28 && programa != 32){%>
+      <div class="col-3">
+        <label for="orden">Orden de inicio</label>
+        <input type="text" class="form-control" name="orden" id="orden">
+      </div>
+      <div class="col-3">
+        <label for="agrupacion">Agrupación</label>
+        <input type="text" class="form-control" name="agrupacion" id="agrupacion">
+      </div>
+      <%}%>
+      
+    </div>
+    <div class="form-row">
+      <div class="col-3">
+        <label for="modalidad">Modalidad de contratación</label>
+        <select class="form-control" name="modalidad" id="modalidad">
+          <option value="Licitación">Licitación</option>
+          <option value="Bolpros">Bolpros</option>
+          <option value="Precalificacion">Precalificación</option>
+        </select>
+      </div>
+      <div class="col-3" id="blockIDC">
+        <!-- Antes esto era un identificador de modalidad lo encontraras en la base como id_modalidad -->
+        <label for="modadlidad_id">Identificador de contratación</label>
+        <input type="text" class="form-control" name="modadlidad_id" id="modadlidad_id">
+      </div>
+      <div class="col-3">
+        <label for="documento">Documento de contratación</label>
+        <select class="form-control" name="documento" id="documento">
+          <option value="Contrato">Contrato</option>
+          <option value="Orden">Orden de compra</option>
+        </select>
+      </div>
+      <div class="col-3">
+        <label for="documento_id">Identificador de documento</label>
+        <input type="text" class="form-control" name="documento_id" id="documento_id">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-8">
+        <label for="fechas">Fechas</label>
+        <input type="text" class="form-control" name="fechas" id="fechas" placeholder="Sábados...">
+      </div>
+      <div class="form-group col-md-4">
+        <label for="horario">Horario</label>
+        <input type="text" class="form-control" name="horario" id="horario" placeholder="De 0:00 a 0:00">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label for="factura">Factura</label>
+        <input type="text" class="form-control" name="factura" id="factura" placeholder="000000">
+      </div>
+      <div class="form-group col-md-4">
+        <label for="instructor">Instructor</label>
+        <select id="instructor" name="instructor" class="form-control">
+          <option selected>Seleccionar instructor</option>
+          <option>...</option>
+        </select>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="costo">Costo Por alumno</label>
+        <input type="text" class="form-control" name="costo" id="costo" placeholder="$0.00">
+      </div>
+      <div class="form-group col-md-4">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-primary">Agregar curso</button>
+      </div>
+    </form>
+</div>
