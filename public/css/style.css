@@ -732,3 +732,23 @@ button {
 .redClass{
     background-color: red;
 }
+
+.button-rounded{
+    width: 30px !important;
+    height: 30px !important;
+    padding: 6px 0px !important;
+    border-radius: 15px !important;
+    font-size: 12px !important;
+    text-align: center !important;
+}
+
+.btn-xs{
+    width: 65px !important;
+    height: 25px !important;
+    font-size: 10px !important;
+}
+
+.mp-0{
+    margin: 0 !important;
+    padding: 0 !important;
+}

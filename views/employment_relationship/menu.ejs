@@ -1,0 +1,45 @@
+<link rel="stylesheet" href="/static/vendor/datatables/datatables.min.css" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"type="text/css" />
+  
+  <%- include('../partials/header.admin.ejs'); %>
+  <div class="container">
+      <div class="row">
+          <div class="col-12">
+              <div class="card shadow rounded">
+                  <div class="card-header">
+                    <h3 style="color: rgb(60, 60, 60);">Menú vinculación laboral</h3>
+                  </div>
+                  <div class="card-body">
+                    <p class="small" style="color: rgb(0, 166, 255);">Tabla de estudiantes</p>
+                    <%- include("./Boards/table_students");%>
+                  </div>
+                  <div class="card-footer">
+                    <p class="text-center small" style="color: gray;">Administración de vinculación laboral</p>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <!-- include footer -->
+  <%- include('../partials/footer'); %>
+  <!-- SCRIPT -->
+  <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.6/dayjs.min.js"></script>
+  <script src="/static/js/jquery.mask.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="/static/js/sweetalert2.all.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+  <!--DATATABLE DEPENDENCIES-->
+  <script src="/static/vendor/datatables/datatables.min.js"></script>
+  <script src="/static/js/dataTables.buttons.min.js"></script>
+  <script src="/static/js/pdfmake.min.js"></script>
+  <script src="/static/js/vfs_fonts.js"></script>
+  <script src="/static/js/buttons.html5.min.js"></script>
+  <script src="/static/js/buttons.print.min.js"></script>
+  <script src="/static/js/jszip.min.js"></script>
+  <!-- SCRIP IN MENU -->
+  <script src="/static/js/employment_relationship/menu/tb-students.js"></script>
+  <script src="/static/js/global/global_functions.js"></script>
+
+  
+  

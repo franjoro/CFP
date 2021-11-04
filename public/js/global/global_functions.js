@@ -58,7 +58,7 @@ function calculatedYearOld(fecha) {
   let year = date.getFullYear();
   let fullDate = `${year}-${month}-${day}`;
   const date1 = dayjs(fullDate);
-  const date2 = dayjs(fechaActual());
+  const date2 = dayjs(nowDate());
   return date2.diff(date1, 'year');
 } 
 
