@@ -62,7 +62,7 @@ habil.gestorDeDocumentacion = async(req,res) =>{
 
 habil.main = async (req, res) => {
     //global.global_codigoCurso = req.params.codigoCurso;//ALERTA ESTA ES UNA VARIABLE GLOBAL QUE SE UTILIZARA POCO TIEMPO TOMAR EN CUENTA QUE LAS VARIABLE GLOBALES NO SON VIABLES POR MEMORIA
-    const { codigoCurso } = req.params;
+    const { codigoCurso, view } = req.params;
     const type = 0 ;
     const idSolicitud =''; //Pasamos esta variabñe vacia
     try {
@@ -75,7 +75,8 @@ habil.main = async (req, res) => {
             horario,
             idSolicitud,
             codigoCurso,
-            type
+            type,
+            view
         });
     } catch (error) {
             return res.status(400).json(error);
@@ -83,7 +84,7 @@ habil.main = async (req, res) => {
 };
 
 habil.renderFormulario = async(req,res) =>{
-    const {idSolicitud, type} = req.params;
+    const {idSolicitud, type, view} = req.params;
     try {
         const sql = `SELECT C.Nombre as nombre,C.habilitado as habilitado, C.Horario as horario, C.Codigo_curso as codigoCurso FROM tb_habil_solicitudes AS S INNER JOIN tb_cursos C ON S.Codigo_curso = C.Codigo_curso WHERE id = ?`;
         const curso = await pool.query(sql,[idSolicitud]);
@@ -98,6 +99,7 @@ habil.renderFormulario = async(req,res) =>{
             codigoCurso,
             type,
             habilitado,
+            view,
         });
     } catch (error) {
         return res.status(400).json(error);

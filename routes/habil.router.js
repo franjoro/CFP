@@ -25,7 +25,7 @@ const tablesHabil = require('../controllers/habil/tablesHabil.controller');
 // Creamos una ruta para los métodos que tenemos en nuestros controladore
 router.get("/:codigoCurso/", habil.main);
 //renderizado especial
-router.get("/formulario/:idSolicitud/:type?", habil.renderFormulario);
+router.get("/formulario/:idSolicitud/:type?/:view?", habil.renderFormulario);
 //recoleccion de información
 router.get("/readSolicitud/detalle/:idSolicitud?", readHabil.readDet);
 //recoleccion de informacion a partir del DUI

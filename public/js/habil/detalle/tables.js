@@ -71,7 +71,7 @@ const applicationTable = () => {
                 html = `
                   <div class="btn-group" role="group" aria-label="Basic example" >
                     <a href="../../../../habil/gestor-de-documentos/habil/${row.id_curso}/${row.idSolicitud}/${row.dui}/${row.programa}/oferta" class="btn btn-primary btn-sm">Ver documentos</a>
-                    <a href="../../../../../habil/formulario/${row.idSolicitud}/1" class="btn btn-info btn-sm">Ver solicitud</a>
+                    <a href="../../../../../habil/formulario/${row.idSolicitud}/1/view" class="btn btn-info btn-sm">Ver solicitud</a>
                     <button 
                         type="button" data-toggle="modal" data-target="#modal_compartir_documentacion" class="btn btn-secondary btn-sm " 
                           onclick="GetLinkToShareDocuments('${row.idSolicitud}', '${row.dui}')">
