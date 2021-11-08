@@ -30,6 +30,29 @@ empresas.add = async (req, res) => {
   }
 };
 
+empresas.add2 = async (req,res) =>{
+  if (!req.body.name)
+    return res.status(400).json({ status: false, error: "empty_name" });
+  const data = [
+    req.body.name,
+    req.body.direccion,
+    req.body.actividad,
+    req.body.tel,
+  ];
+  try {
+    await pool.query(
+      `
+      INSERT INTO tb_empresa(Nombre, Direccion, Actividad_eco, Tel, NIT, Aportacion_insaforp, Num_Patronal, Num_Empleados, email, Estado) 
+      VALUES (?,?,?,?,?,?,?,?,?,1)
+      `,
+      data
+    );
+    return res.json({ status: true });
+  } catch (error) {
+    return res.status(400).json({ status: false, error });
+  }
+};
+
 // Editar empresa
 empresas.editar_empresa = async (req, res) => {
   if (!req.body.name_edit)

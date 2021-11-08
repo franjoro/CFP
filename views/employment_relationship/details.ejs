@@ -4,7 +4,6 @@
 <link rel="stylesheet" href="/static/css/style.css">
   
 <%- include('../partials/header.admin.ejs'); %>
-<%- include('./Blocks/test.ejs'); %>
 
   <div class="container">
       <div class="row">
@@ -71,8 +70,7 @@
                                         Proceso de vinculación
                                         <span class="badge badge-success m-1 " 
                                             style="cursor: pointer;" 
-                                            data-toggle="modal"
-                                            data-target="#modalJobOrientation"
+                                            data-toggle="modal" data-target="#modalAddEnterprice"
                                             onclick=""> 
                                             Agregar empresa
                                         </span>
@@ -102,6 +100,9 @@
           </div>
       </div>
   </div>
+
+
+  <div id="FrmEnterprice"></div>
   <!-- include footer -->
   <%- include('../partials/footer'); %>
   <!-- Add ejs elements -->
@@ -123,14 +124,14 @@
   <!-- SCRIP IN MENU -->
   <script src="/static/js/employment_relationship/detail/interactive.js"></script>
 
-  <!-- DEPENDENCIES REACT -->
-  <!-- Load React. -->
+<!-- DEPENDENCIES REACT -->
 <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
 <script src="/static/js/axios.min.js"></script>
 <script src="/static/js/babel.min.js"></script>
-
 <script src="/static/js/react.development.js" crossorigin></script>
 <script src="/static/js/react-dom.production.min.js" crossorigin></script>
-<script src="/static/js/components/test.js" type="text/babel"></script>
+<!-- enterprice -->
+<script src="/static/React/Components/Forms/FrmEnterprice.js" type="text/babel"></script>
+<script src="/static/React/Components/Forms/actions/read-enterprice.js" type="text/babel"></script>
 
   
