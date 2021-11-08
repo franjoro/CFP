@@ -3,7 +3,9 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"type="text/css" />
 <link rel="stylesheet" href="/static/css/style.css">
   
-  <%- include('../partials/header.admin.ejs'); %>
+<%- include('../partials/header.admin.ejs'); %>
+<%- include('./Blocks/test.ejs'); %>
+
   <div class="container">
       <div class="row">
           <div class="col-12">
@@ -88,6 +90,8 @@
                             </div>
                             <%- include("./Blocks/blockInterview");%>
                             <%- include("./Blocks/blockTest");%>
+                            <%- include("./Blocks/blockDocuments");%>
+                            <%- include("./Blocks/blockFollowUp");%>
                         </div>
                     </div>
                   </div>
@@ -119,5 +123,14 @@
   <!-- SCRIP IN MENU -->
   <script src="/static/js/employment_relationship/detail/interactive.js"></script>
 
-  
+  <!-- DEPENDENCIES REACT -->
+  <!-- Load React. -->
+<!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+<script src="/static/js/axios.min.js"></script>
+<script src="/static/js/babel.min.js"></script>
+
+<script src="/static/js/react.development.js" crossorigin></script>
+<script src="/static/js/react-dom.production.min.js" crossorigin></script>
+<script src="/static/js/components/test.js" type="text/babel"></script>
+
   

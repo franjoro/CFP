@@ -1,6 +1,8 @@
 $(document).ready(function(){
 // hide elements
     $("#blockTest").css("display", "none");
+    $("#blockDocuments").css("display", "none");
+    $("#blockFollowUp").css("display", "none");
     $("#btn1").click(()=>{
         click1();
     });
@@ -23,7 +25,10 @@ const click1 = ()=>{
     $("#btn3").removeClass('btn-info').addClass('btn-primary');
     $("#btn4").removeClass('btn-info').addClass('btn-primary');
     $("#blockTest").css("display", "none");
+    $("#blockDocuments").css("display", "none");
     $("#blockInterview").css("display", "block");
+    $("#blockFollowUp").css("display", "none");
+
 };
 const click2 = ()=>{
     $("#btn1").removeClass('btn-info').addClass('btn-primary');
@@ -31,6 +36,8 @@ const click2 = ()=>{
     $("#btn3").removeClass('btn-info').addClass('btn-primary');
     $("#btn4").removeClass('btn-info').addClass('btn-primary');
     $("#blockTest").css("display", "block");
+    $("#blockDocuments").css("display", "none");
+    $("#blockFollowUp").css("display", "none");
     $("#blockInterview").css("display", "none");
 };
 const click3 = ()=>{
@@ -39,7 +46,11 @@ const click3 = ()=>{
     $("#btn3").removeClass('btn-primary').addClass('btn-info');
     $("#btn4").removeClass('btn-info').addClass('btn-primary');
     $("#blockTest").css("display", "none");
-    $("#blockInterview").css("display", "block");
+    $("#blockInterview").css("display", "none");
+    $("#blockDocuments").css("display", "block");
+    $("#blockFollowUp").css("display", "none");
+
+
 };
 const click4 = ()=>{
     $("#btn1").removeClass('btn-info').addClass('btn-primary');
@@ -47,5 +58,8 @@ const click4 = ()=>{
     $("#btn3").removeClass('btn-info').addClass('btn-primary');
     $("#btn4").removeClass('btn-primary').addClass('btn-info');
     $("#blockTest").css("display", "none");
-    $("#blockInterview").css("display", "block");
+    $("#blockDocuments").css("display", "none");
+    $("#blockInterview").css("display", "none");
+    $("#blockFollowUp").css("display", "block");
+
 };
