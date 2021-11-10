@@ -54,6 +54,13 @@
                                 <%}%>
                               </h5>
                             </a>
+                            
+                            <%if(programa == 28){%>
+                            <br>
+                            <br>
+                              <p><b>Cantidad de solicitudes incompletas: </b><span><%= (ofert.cantidadAlumnos-ofert.cantIncom)%></span><p>
+                              <p><b>Cantidad de solicitudes en espera: </b><%= ofert.cantEsp%></p>
+                            <%}%>
                             <p>
                               <b>Participantes:</b>
                               <%= ofert.cantidadAlumnos %> 
