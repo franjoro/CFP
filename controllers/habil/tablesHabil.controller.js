@@ -11,7 +11,8 @@ tablesHabil.aplicationsTable = async(req,res) =>{
     const {idCourse} = req.params;
     try {
 
-        const sql = `SELECT DISTINCT par.DUI as dui, REPLACE(JSON_EXTRACT(json1, '$.nit'), '"','' ) as nit , 
+        const sql = `SELECT DISTINCT par.DUI as dui, REPLACE(JSON_EXTRACT(json1, '$.nit'), '"','' ) as nit ,
+        REPLACE(JSON_EXTRACT(json1, '$.apellidos'), '"','' ) as apellidos,  
         REPLACE(JSON_EXTRACT(json1, '$.fechNacimiento'), '"','') as fechaNacimiento, par.Nombre as nombre, par.Telefono as 
         telefono,par.Email as email, par.Genero as sexo, sol.id as idSolicitud, sol.estado as estadoSolicitud, 
         sol.Codigo_curso as id_curso, C.id_programa as programa, sol.timestamp as fecha_inscripcion FROM tb_habil_solicitudes 

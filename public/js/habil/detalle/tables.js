@@ -44,7 +44,24 @@ const applicationTable = () => {
             return(html)
           }
         },
-        { data: "nombre" },
+        { 
+          render(data,type,row){
+            const html = `
+              <p> ${row.nombre}</p>
+              
+            `
+            return(html);
+
+          } },
+        {
+          render(data,type,row){
+            const html = `
+              <p> ${row.apellidos}</p>
+              
+            `
+            return(html);
+          }
+        },
         { data: "telefono" },
         { data: "email"},
         {
