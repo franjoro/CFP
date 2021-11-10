@@ -38,7 +38,7 @@ cursos.cursos = async (req, res) => {
         `SELECT CONCAT(Nombre,' - ',Horario) AS Nombre , Codigo_curso, (SELECT COUNT(*) FROM tb_habil_solicitudes 
         WHERE Codigo_curso = tb_cursos.Codigo_curso ) AS cantidadAlumnos , 
         (SELECT COUNT(*) FROM tb_habil_solicitudes as sol1 INNER JOIN tb_habil_documentos as doc1 ON sol1.id = doc1.id_solicitud AND sol1.Codigo_curso = tb_cursos.Codigo_curso) as cantIncom,
-        (SELECT COUNT(*) FROM tb_habil_solicitudes as sol2 WHERE sol2.estado = 4 and sol2.Codigo_curso = tb_cursos.Codigo_curso) AS cantEsp,
+      
         (SELECT COUNT(*) FROM union_curso_empresa 
         WHERE id_curso = tb_cursos.Codigo_curso ) AS cantidadEmpresas , Estado , tb_cursos.Date_inicio as fecha_inicio, 
         tb_cursos.Date_fin as fecha_fin FROM tb_cursos WHERE (Estado = 5 || Estado = 15) AND id_programa=?;`,
