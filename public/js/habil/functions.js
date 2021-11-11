@@ -470,8 +470,8 @@ const actualYear = (idInput) =>{
   let year = date.getFullYear();
   let arrayYear = [];
   arrayYear[0] = year;
-  arrayYear[1] = year+1;
-  arrayYear[2] = year+2;
+  arrayYear[1] = year-1;
+  arrayYear[2] = year-2;
   for (let i = 0; i < arrayYear.length; i++) {
     $(idInput).prepend($('<option />', {
       text: '' + (arrayYear[i]),
