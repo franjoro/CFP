@@ -4,6 +4,7 @@ const applicationTable = () => {
     
     // console.log(idCourde);
      $("#applicationTable").DataTable({
+      'iDisplayLength': 100,
       ajax: {
         'type': "GET",
         "url": `/admin/habil/application-table/${idCourse}`,
