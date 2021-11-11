@@ -38,6 +38,7 @@ router.get("/gestor-de-documentos/habil/:idCurso/:idSolicitud/:dui/:programa/:ti
 //#region tables
 router.get('/application-table/:idCourse', authcheck, tableaHabil.aplicationsTable);
 router.get("/changecolor-table/:idCourse", authcheck, tablesHabil.changeColor);
+router.get("/notComplete/:idCourse", authcheck, tablesHabil.notComplete);
 router.get("/changeColorWait/:idCourse", authcheck, tablesHabil.changeColorWait);
 router.get('/count-solicitud/:idCourse', habil.countSolicitud);
 //#endregion

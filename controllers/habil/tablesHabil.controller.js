@@ -47,6 +47,25 @@ tablesHabil.changeColor = async(req,res) =>{
     }
 };
 
+
+tablesHabil.notComplete = async (req,res) =>{
+    try {
+        const {idCourse} = req.params;
+        console.log(idCourse)
+        const sql = `SELECT doc.id_solicitud, count(sol.documento) as count FROM tb_habil_solicitudes as sol 
+        INNER JOIN tb_habil_documentos as doc ON doc.id_solicitud = sol.id 
+        WHERE sol.Codigo_curso = ?;`;
+        const params = [idCourse];
+        const data = await pool.query(sql, params);
+        res.json({
+            data,
+            status: true,
+        });
+    } catch (error) {
+        res.json({status: false, error: error})
+    }
+};
+
 tablesHabil.changeColorWait = async(req,res) =>{
     try {
         const {idCourse} = req.params;
