@@ -944,8 +944,6 @@ $(document).ready(function () {
           return error(" <b>errocode: </b> Rellene el campo 'Departamento'");
       if(!$("#municipiocontacto").val())
           return error(" <b>errocode: </b> Rellene el campo 'Municipio'");
-      if(!$("#fijoContact").val())
-          return error(" <b>errocode: </b> Rellene el campo 'Tel. Fijo'");
       if(!$("#movilContacto").val())
           return error(" <b>errocode: </b> Rellene el campo 'Tel. Movil'");
       
