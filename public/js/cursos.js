@@ -1,3 +1,4 @@
+
 errorMessage = () => {
   Swal.fire({
     icon: "error",
@@ -33,9 +34,31 @@ $(".btn_back_menu").click(() => {
   $("#menu").css("display", "block");
 });
 
-
+const listError = ()=>{
+  console.log(JSON.parse(sessionStorage.getItem('alerts')))
+  for (let index = 1; index <= Object.keys(JSON.parse(sessionStorage.getItem('alerts'))).length; index++) {
+    const element = JSON.parse(sessionStorage.getItem('alerts'))[index];
+    // alert(element);
+    $.toast({
+      title: '¡OJO!',
+      subtitle: 'Tener en cuenta',
+      content: `${element}`,
+      type: 'error',
+      delay: 30000,
+      dismissible: true,
+     
+    });  
+  }
+  
+  sessionStorage.setItem("alerts", '{}');
+  sessionStorage.setItem("count", 0);
+  
+  
+};
 
 $(document).ready(() => {
+  setTimeout(listError,300);
+  
   $("#modalidad").change(()=>{
     if($("#modalidad").val() == "Precalificacion"){
       $("#blockIDC").css({"display": "none"});

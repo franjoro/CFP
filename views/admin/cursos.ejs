@@ -1,9 +1,16 @@
 <link rel="stylesheet" href="/static/css/select2.min.css">
 <link rel="stylesheet" href="/static/vendor/datatables/datatables.min.css" />
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/static/css/toast.css">
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" type="text/css" />
 
+<script>
+  if(sessionStorage.getItem("alerts") == undefined){
+  sessionStorage.setItem("alerts", '{}');
+  sessionStorage.setItem("count", 0);
+}
+</script>
 <%- include('../partials/header.admin.ejs'); %>
   <div class="container-fluid">
 
@@ -56,9 +63,75 @@
                             </a>
                             
                             <%if((ofert.cantidadAlumnos-ofert.cantidadIncom) > 0){%>
-                              <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>                              
                               <script>
 
+                                var msg = "<%=ofert.cantidadAlumnos-ofert.cantidadIncom%> solicitudes incompletas en el curso <%= ofert.Nombre%>";
+                                sessionStorage.setItem('count',parseInt(sessionStorage.getItem('count'))+1);
+                                var conseguido = JSON.parse(sessionStorage.getItem('alerts'))
+                                conseguido[`${sessionStorage.getItem('count')}`] = msg;
+                                sessionStorage.setItem('alerts', JSON.stringify(conseguido))
+                                console.log(JSON.parse(sessionStorage.getItem('alerts')));
+                                // console.log(sessionStorage.getItem('alerts'))
+                                // objeto[`${sessionStorage.getItem("count")}`]='<%=ofert.cantidadAlumnos-ofert.cantidadIncom%> solicitudes incompletas en el curso <%= ofert.Nombre%>';
+                                // sessionStorage.setItem("alerts", JSON.stringify(objeto));
+                                // console.log(sessionStorage.getItem("alerts"));
+                                // alert[`${count}`]="Hello"
+                                // alerts.push("<%=ofert.cantidadAlumnos-ofert.cantidadIncom%> solicitudes incompletas en el curso <%= ofert.Nombre%>");
+                                
+                                // const Toast = Swal.mixin({
+                                //   toast: true,
+                                //   position: "top-end",
+                                //   showConfirmButton: false,
+                                //   timer: 5000,
+                                //   timerProgressBar: true,
+                                //   didOpen: (toast) => {
+                                //     toast.addEventListener("mouseenter", Swal.stopTimer);
+                                //     toast.addEventListener("mouseleave", Swal.resumeTimer);
+                                //   },
+                                // });
+                                // Toast.fire({
+                                //   icon: "error",
+                                //   title: `<%=ofert.cantidadAlumnos-ofert.cantidadIncom%> solicitudes incompletas en el curso <%= ofert.Nombre%>`,
+                                // });
+                                  
+                              </script>
+                            <%}%>
+                            <%if(ofert.cantEsp > 0){%>
+                             <script>
+                                var msg = "<%= ofert.Nombre%> ya tiene <%=ofert.cantEsp%> en espera'";
+                               sessionStorage.setItem('count',parseInt(sessionStorage.getItem('count'))+1);
+                                
+                                var conseguido = JSON.parse(sessionStorage.getItem('alerts'))
+                                conseguido[`${sessionStorage.getItem('count')}`] = msg;
+                                sessionStorage.setItem('alerts', JSON.stringify(conseguido))
+                                console.log(JSON.parse(sessionStorage.getItem('alerts')));
+                             </script>
+                              <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>       
+
+                              <script>
+                                const ToastEsp = Swal.mixin({
+                                  toast: true,
+                                  position: "top-end",
+                                  showConfirmButton: false,
+                                  timer: 5000,
+                                  timerProgressBar: true,
+                                  didOpen: (toast) => {
+                                    toast.addEventListener("mouseenter", Swal.stopTimer);
+                                    toast.addEventListener("mouseleave", Swal.resumeTimer);
+                                  },
+                                });
+                                
+                                for (let index = 0; index < 2; index++) {
+                                  ToastEsp.fire({
+                                  icon: "error",
+                                  title: `El curso <%= ofert.Nombre%> ya tiene <%=ofert.cantEsp%> en espera`,
+                                  });
+                                }
+                              </script> -->
+                              <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>       
+                                                     
+                              <script>
+                                alert("hello")
                                 const Toast = Swal.mixin({
                                   toast: true,
                                   position: "top-end",
@@ -72,10 +145,10 @@
                                 });
                                 Toast.fire({
                                   icon: "error",
-                                  title: `<%=ofert.cantidadAlumnos-ofert.cantidadIncom%> solicitudes incompletas en el curso <%= ofert.Nombre%>`,
+                                  title: `El curso <%= ofert.Nombre%> ya tiene <%=ofert.cantEsp%> en espera`,
                                 });
                                   
-                              </script>
+                              </script> -->
                             <%}%>
                             <%if(programa == 28){%>
                             <br>
@@ -228,4 +301,6 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
       <script src="/static/js/select2.min.js"></script>
+      <script src="/static/js/toast.js"></script>
+
       <script src="/static/js/cursos.js"></script>

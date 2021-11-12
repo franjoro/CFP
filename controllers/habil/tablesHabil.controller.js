@@ -10,7 +10,6 @@ const tablesHabil = {};
 tablesHabil.aplicationsTable = async(req,res) =>{
     const {idCourse} = req.params;
     try {
-
         const sql = `SELECT DISTINCT par.DUI as dui, REPLACE(JSON_EXTRACT(json1, '$.nit'), '"','' ) as nit ,
         REPLACE(JSON_EXTRACT(json1, '$.apellidos'), '"','' ) as apellidos,  
         REPLACE(JSON_EXTRACT(json1, '$.fechNacimiento'), '"','') as fechaNacimiento, par.Nombre as nombre, par.Telefono as 
@@ -19,7 +18,12 @@ tablesHabil.aplicationsTable = async(req,res) =>{
         AS sol INNER JOIN tb_participante par on par.DUI = sol.documento INNER JOIN tb_cursos AS C on C.Codigo_curso = sol.Codigo_curso 
         WHERE sol.Codigo_curso = ? AND (sol.estado = 0 OR sol.estado = 3 OR sol.estado = 4);`;
         const params = [idCourse];
+        console.log("Hellos")
         const data = await pool.query(sql, params);
+        console.log(data);
+        // .then((item)=>{
+        //     console.log(item);
+        // });
         res.json({
             data,
         });
