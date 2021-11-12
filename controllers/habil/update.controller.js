@@ -65,4 +65,18 @@
       return res.status(400).json({ status: false, error: error });
     }
   };
+
+
+  updateHabil.sgafp = async (req,res) =>{
+    try {
+      const { aceptado, idSolicitud } = req.body;
+      console.log(aceptado);
+      const query = `UPDATE tb_habil_solicitudes SET aceptado = ? WHERE id = ?`;
+      await pool.query(query,[aceptado, idSolicitud]);
+      return res.status(200).json({status: true});
+    } catch (error) {
+      return res.status(400).json({ status: false, error: error });
+      
+    }
+  };
   module.exports = updateHabil;

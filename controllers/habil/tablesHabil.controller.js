@@ -87,4 +87,35 @@ tablesHabil.changeColorWait = async(req,res) =>{
     }
 };
 
+
+tablesHabil.inscritosSgafp = async(req, res)=>{
+    try {
+        const {idCourse} = req.params;
+        const sql = `SELECT id as idSolicitud FROM tb_habil_solicitudes
+         WHERE aceptado = 'true' and Codigo_curso=?;`;
+        const params = [idCourse];
+        const data = await pool.query(sql, params);
+        res.json({
+            data,
+            status: true,
+        });
+    } catch (error) {
+        res.json({status: false, error: error})
+    }
+};
+tablesHabil.noInscritosSgafp = async(req,res)=>{
+    try {
+        const {idCourse} = req.params;
+        const sql = `SELECT id as idSolicitud FROM tb_habil_solicitudes
+         WHERE aceptado = 'false' and Codigo_curso=?;`;
+        const params = [idCourse];
+        const data = await pool.query(sql, params);
+        res.json({
+            data,
+            status: true,
+        });
+    } catch (error) {
+        res.json({status: false, error: error})
+    }
+};
 module.exports = tablesHabil;

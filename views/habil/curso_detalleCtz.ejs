@@ -120,6 +120,8 @@
             <p><span><button class="btn btn-info"></button> Solicitantes que enviaron documentación</span></p>
             <p><span><button class="btn btn-warning"></button> Solicitantes en lista de espera</span></p>
             <p><span><button class="btn btn-danger"></button> Solicitantes que no han llenado documentación</span></p>
+            <p><span><button class="btn btn-secondary"></button> Solicitantes rebotados de sgafp</span></p>
+            <p><span><button class="btn btn-success"></button> Solicitantes inscritos en sgafp</span></p>
           </div>
           <div class="card-body row table-responsive">
             <!--Tabla detalle alumnos-->
@@ -161,6 +163,7 @@
     <%- include('Modals/modal_compartir_solicitud'); %>
   <!-- Modal para matricular -->
   <%- include('Modals/modalMatricular'); %>
+  <%- include('Modals/modalsgafp');%>
   <!-- /.container-fluid -->
   <%- include('../partials/footer'); %>
   <!-- ASIGNANDO VARIABLES -->

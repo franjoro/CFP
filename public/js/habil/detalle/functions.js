@@ -134,6 +134,10 @@ const idSolicitudChangue = (id) =>{
   $("#txtIdSolicitud").val(id);
 };
 
+const txtSol1 = (id)=>{
+  $("#txtSol1").val(id);
+};
+
 
 const RequestEnabled = () =>{
   if($("#habilitado").val() == 1){

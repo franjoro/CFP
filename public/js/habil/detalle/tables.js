@@ -100,7 +100,9 @@ const applicationTable = () => {
                           onclick="GetLinkToShareSolicitude('${row.idSolicitud}', '${row.dui}')">
                         Obtener enlace de solicitud
                     </button>
-                        <a type="button" data-toggle="modal" data-target="#modal_matricular" class="btn btn-success btn-sm" onclick="idSolicitudChangue('${row.idSolicitud}')">Matricular Solicitante</a>
+                    <a type="button" data-toggle="modal" data-target="#modal_matricular" class="btn btn-success btn-sm" onclick="idSolicitudChangue('${row.idSolicitud}')">Matricular Solicitante</a>
+                    <a type="button" data-toggle="modal" data-target="#modal_sgafp" class="btn btn-info btn-sm" onclick="txtSol1('${row.idSolicitud}')">Información SGAFP</a>
+                    
                     <button type="button" class="btn btn-danger btn-sm" onclick="deleteNotificacion('${row.idSolicitud}')">Eliminar</button>
                   </div>`;
               }else{
@@ -118,7 +120,8 @@ const applicationTable = () => {
                           onclick="GetLinkToShareSolicitude('${row.idSolicitud}', '${row.dui}')">
                         Obtener enlace de solicitud
                     </button>
-                        <a type="button" data-toggle="modal" data-target="#modal_matricular" class="btn btn-success btn-sm" onclick="idSolicitudChangue('${row.idSolicitud}')">Matricular Solicitante</a>
+                    <a type="button" data-toggle="modal" data-target="#modal_matricular" class="btn btn-success btn-sm" onclick="idSolicitudChangue('${row.idSolicitud}')">Matricular Solicitante</a>
+                    <a type="button" data-toggle="modal" data-target="#modal_matricular" class="btn btn-info btn-sm" onclick="idSolicitudChangue('${row.idSolicitud}')">Información SGAFP</a>
                     <button type="button" class="btn btn-danger btn-sm" onclick="deleteNotificacion('${row.idSolicitud}')">Eliminar</button>
                   </div>`;
               }
@@ -150,9 +153,6 @@ const changeColor= async () =>{
       }
     })
   }
-
-    // console.log("Esta es la data");
-  
 };
 
 const changeColorWait = async () =>{
@@ -167,6 +167,46 @@ const changeColorWait = async () =>{
       //Cambiamos el color del id
       try {
         $(`#row${item.idSolicitud}`).append(`<span><button class= 'btn btn-warning'></button><span>`);
+      } catch (error) {
+        
+      }
+    })
+  }
+};
+
+
+const inscritosSgap = async () =>{
+  const data = await $.ajax({
+    url: `/admin/habil/inscritosSgafp/${$("#idCourse").val()}`,
+    type: 'GET',
+    data: ''
+  });
+  if(data.status){
+    console.log(data.data);
+
+    $.each(data.data, function(i, item){
+      //Cambiamos el color del id
+      try {
+        $(`#row${item.idSolicitud}`).append(`<span><button class= 'btn btn-success'></button><span>`);
+      } catch (error) {
+        
+      }
+    })
+  }
+};
+const noInscritosSgap = async () =>{
+  console.log(data.data);
+  console.log("Hello")
+  const data = await $.ajax({
+    url: `/admin/habil/noInscritosSgafp/${$("#idCourse").val()}`,
+    type: 'GET',
+    data: ''
+  });
+  if(data.status){
+    $.each(data.data, function(i, item){
+      //Cambiamos el color del id
+      try {
+        $(`#row${item.idSolicitud}`).append(`<span><button class= 'btn btn-secondary'></button><span>`);
       } catch (error) {
         
       }
@@ -253,6 +293,32 @@ const enrollParticipants = () =>{
   });
 };
 
+const sgafp = async ()=>{
+  try {
+    const data = await $.ajax({
+      url: "/admin/habil/sgafp",
+      type: "PUT",
+      data: {
+        aceptado: $("#cmbAceptado").val(),
+        idSolicitud: $("#txtSol1").val()
+      },
+    });
+    if (data.status) {
+      swal.close();
+      Swal.fire(
+        `Información guardada con exito`,
+        "success"
+      );
+      $("#modal_sgafp").modal("hide");
+      // location.reload();
+    }
+  } catch (error) {
+    swal.close();
+    console.log(error);
+    errorMessage();
+  }
+};
+
 const classClick = () =>{
   $(document).on('click','.ck',() =>{
     event.stopPropagation();
@@ -304,10 +370,15 @@ $(document).ready( ()  => {
   $("#btnEnrollParticipants").click(() =>{
     enrollParticipants();
   });
+  $("#btnSgafp").click(()=>{
+    sgafp();
+  });
   applicationTable();
   setTimeout(changeColorWait, 100);
   setTimeout(changeColor, 100);
   setTimeout(countParticipants, 100);
+  setTimeout(noInscritosSgap,300);
+  setTimeout(inscritosSgap,300);
   classClick();
 });
 

@@ -41,6 +41,8 @@ router.get("/changecolor-table/:idCourse", authcheck, tablesHabil.changeColor);
 router.get("/notComplete/:idCourse", authcheck, tablesHabil.notComplete);
 router.get("/changeColorWait/:idCourse", authcheck, tablesHabil.changeColorWait);
 router.get('/count-solicitud/:idCourse', habil.countSolicitud);
+router.get("/noInscritosSgafp/:idCourse", tablesHabil.noInscritosSgafp);
+router.get("/inscritosSgafp/:idCourse", tablesHabil.inscritosSgafp);
 //#endregion
 
 //#region delete sentences
@@ -65,6 +67,7 @@ router.put("/matricular", authcheck, updateHabil.cambiarCurso);
 router.put("/", updateHabil.updateSolicitud);
 router.put('/updateStatusRequest', updateStatusRequest.update);
 router.put("/updateRequest", authcheck, updateHabil.updateRequest);
+router.put("/sgafp", authcheck, updateHabil.sgafp);
 
 //#endregion
 
