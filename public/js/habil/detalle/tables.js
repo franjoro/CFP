@@ -365,9 +365,9 @@ $(document).ready( ()  => {
     sgafp();
   });
   applicationTable();
-  setTimeout(changeColorWait, 100);
-  setTimeout(changeColor, 100);
-  setTimeout(countParticipants, 100);
+  setTimeout(changeColorWait, 300);
+  setTimeout(changeColor, 300);
+  setTimeout(countParticipants, 300);
   setTimeout(noInscritosSgap,300);
   setTimeout(inscritosSgap,300);
   classClick();
