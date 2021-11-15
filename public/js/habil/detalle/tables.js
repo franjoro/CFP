@@ -1,8 +1,6 @@
 const applicationTable = () => {
     // DataTable Usuarios
     const idCourse = $("#idCourse").val();
-    
-    // console.log(idCourde);
      $("#applicationTable").DataTable({
       'iDisplayLength': 100,
       ajax: {
@@ -182,8 +180,6 @@ const inscritosSgap = async () =>{
     data: ''
   });
   if(data.status){
-    console.log(data.data);
-
     $.each(data.data, function(i, item){
       //Cambiamos el color del id
       try {
@@ -195,8 +191,6 @@ const inscritosSgap = async () =>{
   }
 };
 const noInscritosSgap = async () =>{
-  console.log(data.data);
-  console.log("Hello")
   const data = await $.ajax({
     url: `/admin/habil/noInscritosSgafp/${$("#idCourse").val()}`,
     type: 'GET',
@@ -229,7 +223,6 @@ const selectParticipants = async () =>{
     }
   });
   sessionStorage.setItem('participants',JSON.stringify(arr));
-  console.log(JSON.parse(sessionStorage.getItem('participants')).length);
 };
 const removeForWaitingList =  () =>{
   selectParticipants(); 
@@ -274,8 +267,6 @@ const enrollParticipants = () =>{
           txtIdSolicitud: element
         },
       });
-      console.log(data);
-      console.log(data.responseJSON);
       if (data.status) {
         swal.close();
         Swal.fire(
@@ -310,7 +301,7 @@ const sgafp = async ()=>{
         "success"
       );
       $("#modal_sgafp").modal("hide");
-      // location.reload();
+      location.reload();
     }
   } catch (error) {
     swal.close();
