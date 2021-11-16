@@ -101,13 +101,18 @@ const toastSucces = (msg) =>{
 
 
 
-// const firtWordUppercase = (text)=>{
-//   return text
-//   .toLowerCase()
-//     .split(' ')
-//     .map(function(Word) {
-//         return Word[0].toUpperCase() + Word.substr(1);
-//     })
-//     .join(' ');
-// };
+const firtWordUppercase = (text)=>{
+  return text
+  .toLowerCase()
+    .split(' ')
+    .map(function(Word) {
+        if(Word[0] !=""){
+          return Word[0].toUpperCase() + Word.substr(1);
+        }else{
+          return text
+        }
+        
+    })
+    .join(' ');
+};
  
