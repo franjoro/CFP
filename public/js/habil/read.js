@@ -170,6 +170,7 @@ const readDetSol = async () =>{
           }
         }
         const actividad = JSON.parse(values2.actividades);
+        
         if(actividad.estudia == 'true'){
           $("#c1").prop("checked", true);
         }
@@ -231,9 +232,12 @@ const readDetSol = async () =>{
             $("#ingresos5").prop("checked", true);
           }
           $("#otrosIngresos").val(ingresosjson.otrosIngresos);
+
           // ¿Qué espera lograr con la capacitación a recibir? espectativaLogro
           //convertimos a json
-          const espectativasJson = JSON.parse(values2.espectativaLogro);
+          
+        }
+        const espectativasJson = JSON.parse(values2.espectativaLogro);
           if(espectativasJson.oportunidadProm == 'true'){
             $("#e1").prop("checked", true);
           }
@@ -257,7 +261,6 @@ const readDetSol = async () =>{
           }
           $("#otrosexpectativas").val(espectativasJson.otrosexpectativas);
           $("#pertinencia").val(values2.pertinencia);
-        }
         //Recolectando los valores de json2
         values3 = data.data3[0];
         $("#nombrecontacto").val(values3.nombreContacto);
