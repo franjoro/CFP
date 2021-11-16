@@ -88,7 +88,7 @@ const applicationTable = () => {
           render(data,type,row){
             console.log(row.nombre)
             const html = `
-              <p> ${(row.nombre)}</p>
+              <p> ${firtWordUppercase(row.nombre)}</p>
               
             `
             return(html);
@@ -97,7 +97,7 @@ const applicationTable = () => {
         {
           render(data,type,row){
             const html = `
-              <p> ${(row.apellidos)}</p>
+              <p> ${firtWordUppercase(row.apellidos)}</p>
               
             `
             return(html);

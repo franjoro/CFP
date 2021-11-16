@@ -106,10 +106,10 @@ const firtWordUppercase = (text)=>{
   .toLowerCase()
     .split(' ')
     .map(function(Word) {
-        if(Word[0] !=""){
+        if(Word !=""){
           return Word[0].toUpperCase() + Word.substr(1);
         }else{
-          return text
+          return ""
         }
         
     })
