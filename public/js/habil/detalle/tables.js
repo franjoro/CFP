@@ -107,7 +107,7 @@ const applicationTable = () => {
         { data: "email"},
         {
           render(data, type, row){
-            let edad = calculatedYearOld(row.fechaNacimiento.split('-').reverse().join('-'));
+            let edad = calculatedYearOld(row.fechaNacimiento);
           
             return(edad);
           }

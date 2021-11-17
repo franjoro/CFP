@@ -53,7 +53,7 @@ const readDetSol = async () =>{
         busquedaDepartamentos(values.depNacimiento, '#depa_nac');
         busquedaMunicipio(values.depNacimiento, values.munNacimiento, "#municipioNac");
         $("#fechanac").val(values.fechNacimiento);
-        $("#edad").val(calcularEdad($("#fechanac").val().split("-").reverse().join()));
+        $("#edad").val(calcularEdad($("#fechanac").val()));
         busquedaDepartamentos(values.depDomicilio, "#depdomicilio");
         busquedaMunicipio(values.depDomicilio, values.munDomicilio, "#municipioDomicilio");
         $("#direccion").val(values.direccionDom);
