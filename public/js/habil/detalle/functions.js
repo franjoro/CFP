@@ -75,8 +75,11 @@ const SeeS3File = async (key, id) => {
       //   html = ` <iframe src="http://localhost:8080/public/seefile/${query.ext}?date=${Date.now()}" width="100%" height="100%">
       //   </iframe>`;
       // }else{
-      //   html = `<img src="http://localhost:8080/public/seefile/${query.ext}?date=${Date.now()}" alt="" class="img-fluid">`
+      //   html = `<img src="http://localhost:8080/public/seefile/${query.ext}?date=${Date.now()}" alt="" class="img-fluid"
+      //   width="500px" height="500x"
+      //   >`
       // }
+
 
 
 
@@ -84,8 +87,11 @@ const SeeS3File = async (key, id) => {
         html = ` <iframe src="https://cfp.ricaldone.edu.sv/public/seefile/${query.ext}?date=${Date.now()}" width="100%" height="100%">
         </iframe>`;
       }else{
-        html = `<img src="https://cfp.ricaldone.edu.sv/public/seefile/${query.ext}?date=${Date.now()}" alt="" class="img-fluid">`
+        html = `<img src="https://cfp.ricaldone.edu.sv/public/seefile/${query.ext}?date=${Date.now()}" alt="" class="img-fluid"
+        width="500px" height="500x"
+        >`
       }
+
       $("#framediv").css("height", "1200px");
       $("#framediv").html(html);
       // $("#framediv").html(html1);
