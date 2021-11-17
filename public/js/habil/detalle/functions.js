@@ -156,8 +156,9 @@ const idSolicitudChangue = (id) =>{
   $("#txtIdSolicitud").val(id);
 };
 
-const txtSol1 = (id)=>{
+const txtSol1 = (id, documentssgafp)=>{
   $("#txtSol1").val(id);
+  $("#documentssgafp").val(documentssgafp);
 };
 
 

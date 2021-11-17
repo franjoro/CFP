@@ -69,9 +69,17 @@
 
   updateHabil.sgafp = async (req,res) =>{
     try {
-      const { aceptado, idSolicitud } = req.body;
-      console.log(aceptado);
+      const { aceptado, idSolicitud, documentssgafp } = req.body;
+      let overdrawn;
+      if(aceptado == 'true'){
+        overdrawn=0;//fue aceptado en la plataforma
+      }else{
+        overdrawn=1;//fue rechazado en la plataforma
+      }
+
       const query = `UPDATE tb_habil_solicitudes SET aceptado = ? WHERE id = ?`;
+      const queryUpdateUser = `UPDATE tb_participante SET sobregirado = ? WHERE DUI = ?`;
+      await pool.query(queryUpdateUser, [overdrawn, documentssgafp]);
       await pool.query(query,[aceptado, idSolicitud]);
       return res.status(200).json({status: true});
     } catch (error) {

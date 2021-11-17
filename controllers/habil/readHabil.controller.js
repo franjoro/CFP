@@ -88,6 +88,8 @@ readHabil.curso_detalle_NoCtoznts = async (req, res) => {
 readHabil.readDetWhitDUI = async(req,res) =>{
     const { dui } = req.params;
     try {
+        const sqlOverdrawn = `SELECT count(*) as count FROM tb_participante WHERE sobregirado = '1' AND DUI = ?;`;
+        const returnOverdrawn = await pool.query(sqlOverdrawn, [dui]);
         const sqlJson1 = `
         SELECT 
         REPLACE(JSON_EXTRACT(json1, '$.dui'), '"','' ) as dui, 
@@ -174,7 +176,8 @@ readHabil.readDetWhitDUI = async(req,res) =>{
             status: true,
             data: dataJson1 ,
             data2: dataJson2,
-            data3: dataJson3
+            data3: dataJson3,
+            returnOverdrawn: returnOverdrawn
         });
 
 

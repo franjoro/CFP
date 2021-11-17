@@ -141,7 +141,7 @@ const applicationTable = () => {
                         Obtener enlace de solicitud
                     </button>
                     <a type="button" data-toggle="modal" data-target="#modal_matricular" class="btn btn-success btn-sm" onclick="idSolicitudChangue('${row.idSolicitud}')">Matricular Solicitante</a>
-                    <a type="button" data-toggle="modal" data-target="#modal_sgafp" class="btn btn-info btn-sm" onclick="txtSol1('${row.idSolicitud}')">Información SGAFP</a>
+                    <a type="button" data-toggle="modal" data-target="#modal_sgafp" class="btn btn-info btn-sm" onclick="txtSol1('${row.idSolicitud}', '${row.dui}')">Información SGAFP</a>
                     
                     <button type="button" class="btn btn-danger btn-sm" onclick="deleteNotificacion('${row.idSolicitud}')">Eliminar</button>
                   </div>`;
@@ -161,7 +161,7 @@ const applicationTable = () => {
                         Obtener enlace de solicitud
                     </button>
                     <a type="button" data-toggle="modal" data-target="#modal_matricular" class="btn btn-success btn-sm" onclick="idSolicitudChangue('${row.idSolicitud}')">Matricular Solicitante</a>
-                    <a type="button" data-toggle="modal" data-target="#modal_matricular" class="btn btn-info btn-sm" onclick="idSolicitudChangue('${row.idSolicitud}')">Información SGAFP</a>
+                    <a type="button" data-toggle="modal" data-target="#modal_sgafp" class="btn btn-info btn-sm" onclick="txtSol1('${row.idSolicitud} , ${row.dui}')">Información SGAFP</a>
                     <button type="button" class="btn btn-danger btn-sm" onclick="deleteNotificacion('${row.idSolicitud}')">Eliminar</button>
                   </div>`;
               }
@@ -333,7 +333,8 @@ const sgafp = async ()=>{
       type: "PUT",
       data: {
         aceptado: $("#cmbAceptado").val(),
-        idSolicitud: $("#txtSol1").val()
+        idSolicitud: $("#txtSol1").val(),
+        documentssgafp: $("#documentssgafp").val(),
       },
     });
     if (data.status) {
@@ -365,6 +366,18 @@ const classClick = () =>{
   });
 };
 
+const clickCkAll = ()=>{
+  $(document).on('click','#ckAll',() =>{
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+
+    $(".ck").each((index,element)=>{
+      $(element).prop("checked", true);
+    });
+    blockChecked();
+    selectParticipants();
+  });
+};
 const blockChecked = () =>{
   setTimeout(function(){
     $(".btnBlock").remove();
@@ -413,5 +426,13 @@ $(document).ready( ()  => {
   setTimeout(noInscritosSgap,300);
   setTimeout(inscritosSgap,300);
   classClick();
+  clickCkAll();
 });
 
+
+// function asignar (){
+//   for (let i = 0; i < constante.length; i++) {
+//     alert("Hoekj");
+//   }
+// }
+// asignar();
