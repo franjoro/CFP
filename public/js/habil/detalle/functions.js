@@ -66,13 +66,29 @@ const SeeS3File = async (key, id) => {
       type: "POST",
       data: { key },
     });
+    let html ;
     if (query.status) {
-       const html = ` <iframe src="https://cfp.ricaldone.edu.sv/public/seefile/${
-         query.ext
-       }?date=${Date.now()}" width="100%" height="100%"></iframe>`;
-       //const html = ` <iframe src="http://localhost:8080/public/seefile/${query.ext}?date=${Date.now()}" width="100%" height="100%"></iframe>`;
+      //  const html = ` <iframe src="https://cfp.ricaldone.edu.sv/public/seefile/${
+      //    query.ext
+      //  }?date=${Date.now()}" width="100%" height="100%"></iframe>`;
+      // if(query.ext == 'pdf'){
+      //   html = ` <iframe src="http://localhost:8080/public/seefile/${query.ext}?date=${Date.now()}" width="100%" height="100%">
+      //   </iframe>`;
+      // }else{
+      //   html = `<img src="http://localhost:8080/public/seefile/${query.ext}?date=${Date.now()}" alt="" class="img-fluid">`
+      // }
+
+
+
+      if(query.ext == 'pdf'){
+        html = ` <iframe src="https://cfp.ricaldone.edu.sv/public/seefile/${query.ext}?date=${Date.now()}" width="100%" height="100%">
+        </iframe>`;
+      }else{
+        html = `<img src="https://cfp.ricaldone.edu.sv/public/seefile/${query.ext}?date=${Date.now()}" alt="" class="img-fluid">`
+      }
       $("#framediv").css("height", "1200px");
       $("#framediv").html(html);
+      // $("#framediv").html(html1);
       $("html, body").animate(
         {
           scrollTop: $("#framediv").offset().top,
