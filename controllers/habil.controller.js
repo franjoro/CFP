@@ -12,6 +12,10 @@ habil.agradecimiento = async(req, res) =>{
     res.render('habil/gracias');
 };
 
+habil.disabled = async (req, res)=>{
+    res.render("habil/deshabilitado");
+}
+
 habil.documentacion = async(req, res) =>{
     let id_solicitud = req.params.idSolicitud;
     let documento = req.params.documento;
