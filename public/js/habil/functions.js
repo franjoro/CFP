@@ -563,7 +563,7 @@ const countSolicitud = async () =>{
       if(habilitado == 0){
         errorMsg("<b>Mensaje: </b>Se han deshabilitado las inscripciones");
         setTimeout(function(){
-          window.location.href = "./habil/deshabilitado/habil";
+          window.location.href = "./deshabilitado/habil";
         },2000);
       }else{
         const type = $("#type").val();
