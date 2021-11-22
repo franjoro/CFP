@@ -14,8 +14,6 @@ $(document).ready(function () {
             }else{
                 error("Tiene que cargar sus documentos tanto frontal como posterior en las casillas especificadas en la ventana actual");
             }
-            
-            
         }
     });
 });

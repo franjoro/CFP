@@ -127,7 +127,7 @@ $(document).ready(function () {
         //Comenzamos las validaciones de la sección1
         clearDisabilities();
         validateDisabilities();
-        if ($("#dui").val().length < 10 && $("#nit").val().length < 17)
+        if (($("#dui").val().length < 10 || $("#dui").val() =="00000000-0") && ($("#nit").val().length < 17 || $("#nit").val() =="0000-000000-000-0") )
           return error(`<b>errocode: </b> Debe de colocar al menos un documento para poder enviar la solicitud`);
         if (!$("#nombres").val())
           return error(" <b>errocode: </b> Colocar el campo Nombres correctamente");
