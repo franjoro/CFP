@@ -1,7 +1,7 @@
 const applicationTable = () => {
     // DataTable Usuarios
     const idCourse = $("#idCourse").val();
-     $("#applicationTable").DataTable({
+    var table = $("#applicationTable").DataTable({
       fixedHeader: true,
       'iDisplayLength': 100,
       ajax: {
@@ -170,7 +170,12 @@ const applicationTable = () => {
             },
         },
       ],
-     
+      responsive: true,
+      paging: false,
+      columnDefs: [{
+        "defaultContent": "-",
+        "targets": "_all"
+      }]
     });
 };
 
