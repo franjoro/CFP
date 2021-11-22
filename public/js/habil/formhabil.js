@@ -948,6 +948,8 @@ $(document).ready(function () {
       
 
       //FINALIZAMOS EL PROCESO DE VALIDACION DEL LADO DEL CLIENTE EN LA QUINTA PARTE DEL FORMULARIO
+      global_json1 = json1();
+      global_json2 = json2();
       global_json3 = json3();
       updateFormulario();
   });

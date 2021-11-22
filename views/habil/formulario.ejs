@@ -55,6 +55,11 @@
         </h3>
         <p class="text-dark">
           <b>Ayuda: </b>Siga las instrucciones de cada paso, recuerde que, si tiene 16 o 17 años debe de ingresar solamente su NIT, en caso de ser mayor de 18 años debe ingresar su DUI obligatoriamente y su NIT de forma opcional.
+          <%if(idSolicitud != ''){%>
+            <button class="btn btn-success float-right" id="btnUpdate">
+              MODIFICAR
+            </button>
+          <%}%>
         </p>
       </div>
       <div class="row">
@@ -1305,9 +1310,9 @@
               </div>
               <hr />
               <%if(idSolicitud != ''){%>
-                <button class="btn btn-success float-right" id="btnUpdate">
+                <!-- <button class="btn btn-success float-right" id="btnUpdate">
                   MODIFICAR
-                </button>
+                </button> -->
               <%}else{%>
                 <button class="btn btn-success float-right" id="next6">
                   FINALIZAR
