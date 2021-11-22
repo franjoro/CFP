@@ -752,3 +752,14 @@ button {
     margin: 0 !important;
     padding: 0 !important;
 }
+
+table .r0{
+    position: sticky !important;
+    left: 0 !important; 
+}
+tbody tr .r0{
+    position: sticky !important;
+    left: 0 !important; 
+	background: white !important;
+  	color: #333 !important;
+}

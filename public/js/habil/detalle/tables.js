@@ -2,6 +2,7 @@ const applicationTable = () => {
     // DataTable Usuarios
     const idCourse = $("#idCourse").val();
      $("#applicationTable").DataTable({
+      fixedHeader: true,
       'iDisplayLength': 100,
       ajax: {
         'type': "GET",
@@ -88,7 +89,7 @@ const applicationTable = () => {
           render(data,type,row){
             console.log(row.nombre)
             const html = `
-              <p> ${firtWordUppercase(row.nombre)}</p>
+              <p class="r0"> ${firtWordUppercase(row.nombre)}</p>
               
             `
             return(html);
@@ -97,7 +98,7 @@ const applicationTable = () => {
         {
           render(data,type,row){
             const html = `
-              <p> ${firtWordUppercase(row.apellidos)}</p>
+              <p class="r1"> ${firtWordUppercase(row.apellidos)}</p>
               
             `
             return(html);

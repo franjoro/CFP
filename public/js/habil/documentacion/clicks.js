@@ -6,10 +6,16 @@ $(document).ready(function () {
             SendFiles('nit-frontal');
             SendFiles('nit-trasero');    
         }else{
-            SendFiles('dui-frontal');
-            SendFiles('dui-trasero');
-            SendFiles('nit-frontal');
-            SendFiles('nit-trasero');
+            if($("#fileDocumentos").val() != '' && $("#fileDUIback").val() !=''){
+                SendFiles('dui-frontal');
+                SendFiles('dui-trasero');
+                // SendFiles('nit-frontal');
+                // SendFiles('nit-trasero');
+            }else{
+                error("Tiene que cargar sus documentos tanto frontal como posterior en las casillas especificadas en la ventana actual");
+            }
+            
+            
         }
     });
 });
