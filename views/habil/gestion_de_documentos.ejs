@@ -23,8 +23,8 @@
               Descargar todos los archivos en .zip
             </button>
             -->
-            <button class="btn btn-success btn-sm float-right d-inline mx-1" data-toggle="modal"
-              onclick="" data-target="#modificar_modal">
+            <button class="btn btn-success btn-sm float-right d-inline mx-1"
+              data-toggle="modal" data-target="#modal_send_file">
               <i class="fas fa-upload"></i>
               Subir archivos extra
             </button>
@@ -173,6 +173,7 @@
     <input type="hidden" name="cursoNombre" id="cursoNombre" value="<%=nCurso%>">
     <input type="hidden" name="idSolicitud" id="idSolicitud" value="<%=idSolicitud%>">
     <%- include('Modals/modalEnlaceDocumentacion.ejs'); %>
+    <%- include('Modals/modalSendFile.ejs'); %>
     <%- include('../partials/footer'); %>
       <script src="/static/js/jquery.mask.min.js"></script>
       <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -185,3 +186,4 @@
       <script src="/static/js/habil/detalle/delete.js"></script>
       <script src="/static/js/habil/detalle/clicks.js"></script>
       <script src="/static/js/habil/detalle/zip.js"></script>
+      <script src="/static/js/habil/documentacion/subidaDatos.js"></script>
