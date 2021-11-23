@@ -116,3 +116,8 @@ const firtWordUppercase = (text)=>{
     .join(' ');
 };
  
+$(document).on('keyup', function(e) {
+  if (e.key == "Escape") {
+    window.history.back();
+  }
+});
