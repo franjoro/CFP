@@ -30,6 +30,50 @@ empresas.add = async (req, res) => {
   }
 };
 
+empresas.addAll = async (req,res) =>{
+  // if(!res.body.name)
+  //   return res.status(400).json({ status: false, error: "empty_name" });
+  if(!req.body.address)
+    return res.status(400).json({ status: false, error: "empty_address" });
+  if(!req.body.economicAct)
+  return res.status(400).json({ status: false, error: "empty_economic_activity" });
+  if(!req.body.phone)
+  return res.status(400).json({ status: false, error: "empty_phone" });
+  if(!req.body.nit)
+  return res.status(400).json({ status: false, error: "empty_nit" });
+  if(!req.body.insaforp)
+  return res.status(400).json({ status: false, error: "empty_insaforp" });
+  if(!req.body.numberP)
+  return res.status(400).json({ status: false, error: "empty_employer_number" });
+  if(!req.body.numEmp)
+  return res.status(400).json({ status: false, error: "empty_number_of_employees" });
+  if(!req.body.email)
+  return res.status(400).json({ status: false, error: "empty_email" });
+  try {
+    const data = [
+      req.body.name,
+      req.body.address,
+      req.body.economicAct,
+      req.body.phone,
+      req.body.nit,
+      req.body.insaforp,
+      req.body.numP,
+      req.body.numEmp,
+      req.body.email,
+    ];
+    await pool.query(
+      `INSERT INTO tb_empresa(Nombre, Direccion, Actividad_eco, Tel, NIT, Aportacion_insaforp, Num_Patronal, Num_Empleados, email, Estado) 
+      VALUES (?,?,?,?,?,?,?,?,?,1)`,data
+    );
+    return(res.json({
+      status: true
+    }))
+  } catch (error) {
+    return res.status(400).json({ status: false, error });
+    
+  }
+};
+
 empresas.add2 = async (req,res) =>{
   if (!req.body.name)
     return res.status(400).json({ status: false, error: "empty_name" });

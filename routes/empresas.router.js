@@ -18,6 +18,7 @@ router.post("/solicitudes", authcheck ,  empresas.Aprobarsolicitudes);
 router.get("/contacto/:empresa*?",  authcheck ,  empresas.renderContacto);
 // AGregar nueva empres
 router.post("/add",    empresas.add);
+router.post("/addAll", authcheck, empresas.addAll);
 // Agregar nuevo contacto
 router.post("/ContactoAdd",  authcheck,  empresas.contactoAdd);
 // Editar contacto
