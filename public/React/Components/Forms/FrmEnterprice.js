@@ -73,7 +73,7 @@ const App = (props) =>{
                                 />
                             </div>
                             <div class="col-4">
-                                <label htmlFor="txtTel">NIT</label>
+                                <label htmlFor="txtTel">NIT*</label>
                                 <input 
                                     type="text" 
                                     class="form-control" 
@@ -85,7 +85,7 @@ const App = (props) =>{
                         </div>
                         <div class="form-row m-2">
                             <div class="col-4">
-                                <label htmlFor="txtInput">Aportación insaforp</label>
+                                <label htmlFor="txtInput">Aportación insaforp*</label>
                                 <input 
                                     type="number" 
                                     class="form-control" 
@@ -95,7 +95,7 @@ const App = (props) =>{
                                 />
                             </div>
                             <div class="col-4">
-                                <label htmlFor="txtNumP">N° Patronal</label>
+                                <label htmlFor="txtNumP">N° Patronal*</label>
                                 <input 
                                     type="number" 
                                     class="form-control" 
@@ -105,7 +105,7 @@ const App = (props) =>{
                                 />
                             </div>
                             <div class="col-4">
-                                <label htmlFor="txtNumEmp">N° Empleados</label>
+                                <label htmlFor="txtNumEmp">N° Empleados*</label>
                                 <input 
                                     type="number" 
                                     class="form-control" 
@@ -117,7 +117,7 @@ const App = (props) =>{
                         </div>
                         <div class="form-row m-2">
                             <div class="col-4">
-                                <label htmlFor="txtEmail">Correo</label>
+                                <label htmlFor="txtEmail">Correo*</label>
                                 <input 
                                     type="number" 
                                     class="form-control" 

@@ -11,6 +11,7 @@ const router = express.Router();
 // CONTROLLERS SECTION
 const renderController = require('../controllers/employment_relationship/render.controller');
 const readController = require('../controllers/employment_relationship/read.controller');
+const createRelationShipController = require("../controllers/employment_relationship/createRelationShipController");
 
 // GET SECTION
 router.get("/menu", authcheck, renderController.menu);
@@ -19,5 +20,6 @@ router.get("/detalle/:idStudent?", authcheck, renderController.detail)
 router.get("/tb-students",authcheck, readController.tbStudents);
 // PUT SECTION
 // POST SECTION
+router.post("/add-workshop", authcheck, createRelationShipController.addWorkShop);
 
 module.exports = router;
