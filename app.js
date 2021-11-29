@@ -93,5 +93,7 @@ app.get("*", (req, res) => {
   res.status(200).send("Page Not Found");
 });
 
+
+
 // exportamos este módulo para poder usar la constiable app fuera de este archivo
 module.exports = app;
