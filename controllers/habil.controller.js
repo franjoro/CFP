@@ -202,7 +202,7 @@ habil.countSolicitud = async (req,res) =>{
     SELECT (SELECT DISTINCT cupo FROM tb_cursos WHERE Codigo_curso = ?) as cupo,
     (SELECT DISTINCT habilitado FROM tb_cursos WHERE Codigo_curso = ?) as habilitado, 
     (SELECT DISTINCT COUNT(*) from tb_habil_solicitudes as sol 
-    WHERE sol.Codigo_curso = ?) as count;
+    WHERE sol.Codigo_curso = ? AND (sol.estado = 4 OR sol.estado = 0)) as count;
     `;
     const params = [idCourse,idCourse, idCourse];
     const data = await pool.query(sql, params);

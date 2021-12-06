@@ -573,7 +573,7 @@ const countSolicitud = async () =>{
             localStorage.setItem('estado', 4);
             warningMsg("<b>Mensaje:</b> Los cupos de este curso estan llenos pero puedes llenar el formulario y quedar pendiente para confirmación de apertura de algun cupo.")
           }else{
-            localStorage.setItem('estado', 0);
+            localStorage.setItem('estado', 1);
           }
         }
       }

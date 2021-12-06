@@ -1,6 +1,6 @@
 //INICIAMOS CON LA FUNCION READY DE JQUERY
 $(document).ready(function () {
-    $("#btnEnviarDoc").click(() => {
+    $("#btnEnviarDoc").click(async() => {
         //Llamamos el evento en subida de datos
         if($("#txtdocumento").val().length >10){
             SendFiles('nit-frontal');
@@ -9,8 +9,6 @@ $(document).ready(function () {
             if($("#fileDocumentos").val() != '' && $("#fileDUIback").val() !=''){
                 SendFiles('dui-frontal');
                 SendFiles('dui-trasero');
-                // SendFiles('nit-frontal');
-                // SendFiles('nit-trasero');
             }else{
                 error("Tiene que cargar sus documentos tanto frontal como posterior en las casillas especificadas en la ventana actual");
             }

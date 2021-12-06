@@ -7,6 +7,15 @@ const SendFiles = async (typeDocument) => {
   
   //Recolectamos los valores de los input
     let idSolicitud = $("#id_solicitud").val();
+    if( localStorage.getItem("estado") == 1){localStorage.setItem("estado", 0)}
+    const response = await $.ajax({
+        url: '/admin/habil/updateStatusRequest',
+        type: 'PUT',
+        data: {
+          idRequest: idSolicitud,
+          status: localStorage.getItem("estado")
+        }
+    });
     //Objeto de js utilizado para mandar ficheros
     const fd = new FormData(); // Objeto de javascript utilizado para mandar documentos
     //Recolectamos la longitud de archivos almacenados tanto en plantilla, recibo y cancelacion
