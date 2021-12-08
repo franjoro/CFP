@@ -64,6 +64,8 @@ app.use("/admin/psicologia", require("./src/components/psychology/dashboard/rout
 
 app.use("/admin/vinculacion-laboral", require("./routes/employment_relationship.router"));
 
+app.use('/configuration-courses', require('./routes/configuration_courses.router'));
+
 app.get("/terms", (req, res) => {
   res.render("terms");
 });

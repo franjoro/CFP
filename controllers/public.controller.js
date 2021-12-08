@@ -125,6 +125,7 @@ PublicFunctions.main = async (req, res) => {
       }
     });
     const DatosFormat = {
+      idProgram: programa,
       programa: datos[0][0],
       cursos: cursos,
       update: datos[2][0],

@@ -12,6 +12,7 @@
 }
 </script>
 <%- include('../partials/header.admin.ejs'); %>
+  <%- include("Modals/modalConfigurationCourse");%>
   <div class="container-fluid">
 
     <div class="row container-fluid">
@@ -26,6 +27,13 @@
             <a data-toggle="modal" data-target="#insertar_modal"
               class="btn btn-success btn-sm float-right d-inline mx-1"><i class="fas fa-plus"></i>Agregar nuevo
               curso</a>
+            <%if(programa != 28){%>
+              <a data-toggle="modal" data-target="#configuration_courses_modal" class="btn btn-secondary btn-sm float-right d-inline mx-1">
+                <i class="fas fa-ellipsis-h"></i>
+                Configuración del programa
+              </a>
+            <%}%>
+            
           </div>
           <div class="card-body">
             <a href="/admin/cursos/finalizados/<%= programa%>">

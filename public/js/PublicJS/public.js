@@ -90,6 +90,20 @@ const AsginarGlobalEmpresa = () => {
   });
 };
 const AsginarGlobalCursos = () => {
+  console.log($("#id_program").val())
+  $.ajax({
+    url: `/configuration-courses/read/${$("#id_program").val()}`,
+    type: "GET"
+  }).then((data)=>{
+    console.log(data)
+    Swal.fire({
+      icon: 'warning',
+      title: 'IMPORTANTE',
+      text: `RECUERDE QUE LA FECHA DE LA DOCUMENTACIÓN TIENE QUE SER DEL MÉS DE ${data[0].month_documentation}`,
+    });
+    
+  });
+
   let local = localStorage.getItem("storage");
   if (!local) return error("Debe ingresar participantes para continuar");
   local = JSON.parse(local);

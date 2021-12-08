@@ -57,6 +57,41 @@ const listError = ()=>{
 };
 
 $(document).ready(() => {
+  // chargue programOfert month configuration
+  $.ajax({
+    url: `/configuration-courses/read/${$("#programa_oferta").val()}`,
+    type: "GET"
+  }).then((data)=>{
+    $("#txtMonthDoc").val(data[0].month_documentation)
+  });
+
+  $("#btnConfigCourses").click(async ()=>{
+    const idProgram = $("#programa_oferta").val();
+    const monthDocumentation = $("#txtMonthDoc").val();
+    try {
+      const data = await $.ajax({
+        url: "/configuration-courses/update",
+        type: "PUT",
+        data:{
+          idProgram: idProgram,
+          monthDocumentation: monthDocumentation
+        }
+      });
+      if (data.status) {
+        swal.close();
+        Swal.fire({
+          icon: 'success',
+          title: 'Exito',
+          text: 'Guardado con exito',
+        });
+        $('#configuration_courses_modal').modal('toggle');
+      }
+    } catch (error) {
+      swal.close();
+      console.log(error);
+      errorMessage();
+    }
+  })
   setTimeout(listError,300);
   
   $("#modalidad").change(()=>{
