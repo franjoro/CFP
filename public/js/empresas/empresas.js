@@ -179,6 +179,12 @@ const ChangePassword = (id) => {
 
 // Call the dataTables jQuery plugin
 $(document).ready(() => {
+  $.ajax({
+    url: `http://localhost:3000/er-work-shop/read/${$.cookie("tokenapi")}`, 
+    type: "GET",
+  }).then((res)=>{
+    console.log(res);
+  })
   LoadTablaEmpresas();
 
   $("#tablaContacto").DataTable();

@@ -28,6 +28,7 @@ login.signin = async (req, res) => {
       "SELECT Nombre,Password,Estado,Role FROM tb_usuarios WHERE id_usuario = ? ",
       req.body.username
     );
+    
     // Error si no existe
     if (!Array.isArray(data) || !data.length)
       return res.status(400).json({ error: "ERROR_NOT_EXIST", status: false });
@@ -49,6 +50,7 @@ login.signin = async (req, res) => {
 };
 
 login.signout = async (req, res) => {
+  res.clearCookie("tokenapi");
   res.cookie("token", null);
   res.redirect("/");
 };

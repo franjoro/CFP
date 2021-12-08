@@ -3,6 +3,7 @@ const Directivas = {
         defaultSrc: ["'self'"],
         scriptSrc: [
             "'self'",
+            "http://localhost:3000",
             "'unsafe-inline'",
             "'unsafe-eval'",
             "https://cdn.jsdelivr.net",
@@ -14,6 +15,7 @@ const Directivas = {
         ],
         connectSrc: [
             "'self'", 
+            "http://localhost:3000",
             "https://api.salud.gob.sv", 
             "https://www.google-analytics.com",
             "https://api.github.com"
@@ -40,7 +42,7 @@ const Directivas = {
             "https://sp.tinymce.com/",
             "https://cfppruebas.s3.us-east-2.amazonaws.com/"
         ],
-        frameSrc: ["'self'", "https://www.google.com"],
+        frameSrc: ["'self'", "https://www.google.com", "http://localhost:3000",],
     },
 };
 
