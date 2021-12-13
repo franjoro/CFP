@@ -16,7 +16,7 @@ cursos.main = async (req, res) => {
     }else{
        sql =  `SELECT 
       Codigo_curso as codigo_curso, Nombre as nombre, Date_inicio as fecha_inicio, Date_fin as fecha_fin, Horario as horario, 
-      Fechas as fechas FROM tb_cursos WHERE (Estado = 15 OR Estado = 5 )`;
+      Fechas as fechas FROM tb_cursos WHERE (Estado = 15 OR Estado = 5 ) AND (id_programa = 32 OR id_programa = 31 OR id_programa = 28)`;
     }
     
     const cursos = await pool.query(sql,[idPrograma]);

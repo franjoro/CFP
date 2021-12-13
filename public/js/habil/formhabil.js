@@ -91,6 +91,7 @@ const ProgressChange = (texto, id, val) => {
 
 
 $(document).ready(function () {
+  
   countSolicitud();
   localStorage.setItem('section','1');
   actualYear("#year1");

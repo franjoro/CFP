@@ -99,7 +99,7 @@ const AsginarGlobalCursos = () => {
     Swal.fire({
       icon: 'warning',
       title: 'IMPORTANTE',
-      text: `RECUERDE QUE LA FECHA DE LA DOCUMENTACIÓN TIENE QUE SER DEL MÉS DE ${data[0].month_documentation}`,
+      html:`<p>Los documentos de respaldo para esta inscripción, deben corresponder al mes de: <span><h4 style="text-transform: uppercase;"><b>${data[0].month_documentation}</b></h4></span></p>`
     });
     
   });

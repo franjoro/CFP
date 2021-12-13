@@ -27,7 +27,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-2">
-					<div class="logo"><a href="/landing/28"><img class="img-fluid" src="/static/img/logoblanco.png"></a></div>
+					<div class="logo"><a href="/landing/"><img class="img-fluid" src="/static/img/logoblanco.png"></a></div>
                
 				</div>
 				<div class="col-sm-6">
@@ -40,7 +40,9 @@
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav mr-auto">
                                <li class="nav-item active">
-                                <a class="nav-link" href="/landing/28">Proyectos especiales<span class="sr-only">(current)</span></a> </li>
+                                <a class="nav-link" href="/landing/28">Hábil técnico permanente<span class="sr-only">(current)</span></a> </li>
+                                <a class="nav-link" href="/landing/31">Formación en el idioma inglés<span class="sr-only">(current)</span></a> </li>
+                                <a class="nav-link" href="/landing/32">Proyectos especiales<span class="sr-only">(current)</span></a> </li>
                             </ul>
                         </div>
                     </nav>
@@ -138,15 +140,15 @@
     		<div class="row">
             <% data.forEach( cursos => {   %>
                <div class="col-md-4">
-                  <div class="card">
+                  <div class="card mt-2 mb-2" style="height: 400px;">
                      <img class="card-img-top" src="/static/img/logoi.png" alt="Card image cap">
                      <div class="card-header">
                         <h3>Nombre: <%= cursos.nombre %><h3>
                       </div>
                      <div class="card-body">
                         <h5 class="card-title">Horario: <%= cursos.horario%></h5>
-                        <p class="card-text">Haz tú solicitud dando clic en el botón "Quiero registrarme"</p>
-                        <a href="/habil/<%= cursos.codigo_curso%>" class="btn btn-primary">Quiero registrarme</a>
+                        <p class="card-text">Haz tú solicitud dando clic en el botón "Ingresar solicitud"</p>
+                        <a href="/habil/<%= cursos.codigo_curso%>" class="btn btn-primary">Ingresar solicitud</a>
                      </div>
                    </div>
                </div>   
