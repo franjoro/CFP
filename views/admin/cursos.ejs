@@ -27,7 +27,7 @@
             <a data-toggle="modal" data-target="#insertar_modal"
               class="btn btn-success btn-sm float-right d-inline mx-1"><i class="fas fa-plus"></i>Agregar nuevo
               curso</a>
-            <%if(programa != 28){%>
+            <%if(programa != 28 && programa != 32 && programa != 31){%>
               <a data-toggle="modal" data-target="#configuration_courses_modal" class="btn btn-secondary btn-sm float-right d-inline mx-1">
                 <i class="fas fa-ellipsis-h"></i>
                 Configuración del programa
@@ -156,7 +156,7 @@
                                   
                               </script> -->
                             <%}%>
-                            <%if(programa == 28){%>
+                            <%if(programa == 28 || programa == 31 || programa == 32){%>
                             <br>
                             <br>
                               <p><b>Cantidad de solicitudes incompletas: </b><span><%= (ofert.cantidadAlumnos-ofert.cantidadIncom)%></span><p>

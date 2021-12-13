@@ -24,8 +24,7 @@ $("#loginForm").submit(async function (e) {
   try {
     // const data1 = await $.ajax({url: "http://localhost:3000/sesion/signin", type: "POST", data: t});
     // console.log("Procesando");
-    // console.log(data1.token);
-    // if(data1 != ""){
+    // if(data1.status){
       const data = await $.ajax({ url: "/signin", type: "POST", data: t });
       if(data.status){
         //  $.cookie("tokenapi", data1.token);

@@ -8,12 +8,13 @@ const Interview = () => {
     const [name, setName] = useState('');
     const [modality, setModality] = useState('');
     const [date, setDate] = useState('');
-    const [importanteInformation, setImportanteInformation] = useState('');
+    const [importantInformation, setImportantInformation] = useState('');
     const [address, setAddress] = useState('');
     const [status, setStatus] = useState('');
     const [erCentralId, setErCentralId] = useState('');
     const [list, setList] = useState([]);
     const [urlServer, setUrlServer] = useState('http://localhost:3000');
+    // const [urlServer, setUrlServer] = useState('http://localhost:3000');
     const [show, setShow] = useState(false)
     const [ cookies ,  setCookie ,  removeCookie ]  =  useCookies ( [ 'tokenapi' ] ) ;
     //#endregion
@@ -29,6 +30,7 @@ const Interview = () => {
     const handleShow = ()=>{setShow(true)};
     //#endregion
 
+
     const create = (e) =>{
         e.preventdefault();
         alert("Creando");
@@ -38,7 +40,6 @@ const Interview = () => {
         axios.get(`${urlServer}/er-interview/read/${cookies.tokenapi}`)
         .then((res) => {
           setList(res.data);
-          console.log(res.data);
         });
     };
 
@@ -133,14 +134,83 @@ const Interview = () => {
                     <div className="row">
                         <div className="col-6">
                             <div class="mb-3">
-                                <label for="txtEnterpriceInterview" class="form-label">Empresa</label>
-                                <input type="text" class="form-control" id="txtEnterpriceInterview" placeholder="Ejem: Cocacola" />
+                                <label for="txtNameInterview" class="form-label">Nombre de entrevista</label>
+                                <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    id="txtNameInterview" 
+                                    placeholder="Ejem: Entrevista con Cocacola Julio 2021" 
+                                    value={name}
+                                    onChange={(e)=>{setName(e.target.value)}}
+                                />
                             </div>
                         </div>
                         <div className="col-6">
                             <div class="mb-3">
-                                <label for="txtTitleInterview" class="form-label">Titulo</label>
-                                <input type="text" class="form-control" id="txtTitleInterview" placeholder="Ejem: Primera entrevista" />
+                                <label for="txtNameInterview" class="form-label">Empresa</label>
+                                <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    id="txtNameInterview" 
+                                    placeholder="Ejem: Entrevista con Cocacola Julio 2021" 
+                                    value={name}
+                                    onChange={(e)=>{setName(e.target.value)}}
+                                />
+                            </div>
+                        </div>
+                        <div className="col-6">
+                            <div class="mb-3">
+                                <label for="txtModalityInteview" class="form-label">Modalidad</label>
+                                <select 
+                                    id="txtModalityInteview" 
+                                    class="form-control"
+                                    value={modality}
+                                    onChange={(e)=>{setModality(e.target.value)}}
+                                >
+                                    <option selected>Escoge una opción</option>
+                                    <option value="presencial">Presencial</option>
+                                    <option value="virtual">Virtual</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div className="col-4">
+                            <div class="mb-3">
+                                <label for="dtDateInterview" class="form-label">Fecha</label>
+                                <input 
+                                    type="date" 
+                                    class="form-control" 
+                                    id="dtDateInterview" 
+                                    placeholder="Ejem: Cocacola" 
+                                    value={date}
+                                    onChange={(e)=>{setDate(e.target.value)}}
+                                />
+                            </div>
+                        </div>
+                        <div className="col-8">
+                            <div class="mb-3">
+                                <label for="txtAddressInterview" class="form-label">Dirección</label>
+                                <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    id="txtAddressInterview" 
+                                    placeholder="Ejem: Res. San Benito Col 2 Psje 1 N° 2D" 
+                                    value={address}
+                                    onChange={(e)=>{setAddress(e.target.value)}}
+                                />
+                            </div>
+                        </div>
+                        <div className="col-12">
+                            <div class="mb-3">
+                                <label for="txtImportantInformationInterview" class="form-label">Información importante</label>
+                                <textarea 
+                                    type="text" 
+                                    class="form-control" 
+                                    id="txtImportantInformationInterview" 
+                                    placeholder="Ejem: Tiene que llegar a las 3 pm con 15 min de anticipación y preguntar en porteria por el Ing. Guillermo" 
+                                    rows="3"
+                                    value={importantInformation}
+                                    onChange={(e)=>{setImportantInformation(e.target.value)}}
+                                ></textarea>
                             </div>
                         </div>
                         <div className="col-12">
