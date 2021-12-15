@@ -32,7 +32,19 @@
       <%= programa.id_programa %>
     </label>
   </header>
+<%- include('../frequent_questions/index.ejs'); %>
+
   <main class="container-fluid">
+    <button 
+      type="button" 
+      class="btn btn-info btn-sm m-2" 
+      data-toggle="modal" data-target="#modalFrequentQuestions"
+      style="border-radius: 50px; height: 60px; width: 60px; right: 0;
+        bottom: 0; position: fixed; margin-right: 15px; margin-bottom: 15px;
+        font-size: 20px; box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.2); z-index: 100;"
+      >
+      <i class="fas fa-question"></i>
+    </button>
     <img src="/static/img/logo.png" style="width: 125px;" class="d-inline" />
     <img src="/static/img/uploads/<%= programa.ImgPortada %>" class="logo d-inline float-right" />
     <hr />

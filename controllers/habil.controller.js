@@ -70,17 +70,19 @@ habil.main = async (req, res) => {
     const type = 0 ;
     const idSolicitud =''; //Pasamos esta variabñe vacia
     try {
-        const sql ="SELECT Nombre, Horario from tb_cursos WHERE Codigo_curso = ?";
+        const sql ="SELECT Nombre, Horario, id_programa from tb_cursos WHERE Codigo_curso = ?";
         const curso = await pool.query(sql,[codigoCurso]);
         const nombre = curso[0].Nombre;
         const horario = curso[0].Horario;
+        const idPrograma = curso[0].id_programa;
         return res.render("habil/formulario", {
             nombre,
             horario,
             idSolicitud,
             codigoCurso,
             type,
-            view
+            view,
+            idPrograma
         });
     } catch (error) {
             return res.status(400).json(error);

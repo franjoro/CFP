@@ -66,6 +66,8 @@ app.use("/admin/vinculacion-laboral", require("./routes/employment_relationship.
 
 app.use('/configuration-courses', require('./routes/configuration_courses.router'));
 
+app.use('/frequent-questions', require('./routes/frequent_questions.router'));
+
 app.get("/terms", (req, res) => {
   res.render("terms");
 });

@@ -27,12 +27,10 @@
             <a data-toggle="modal" data-target="#insertar_modal"
               class="btn btn-success btn-sm float-right d-inline mx-1"><i class="fas fa-plus"></i>Agregar nuevo
               curso</a>
-            <%if(programa != 28 && programa != 32 && programa != 31){%>
-              <a data-toggle="modal" data-target="#configuration_courses_modal" class="btn btn-secondary btn-sm float-right d-inline mx-1">
-                <i class="fas fa-ellipsis-h"></i>
-                Configuración del programa
-              </a>
-            <%}%>
+            <a data-toggle="modal" data-target="#configuration_courses_modal" class="btn btn-secondary btn-sm float-right d-inline mx-1">
+              <i class="fas fa-ellipsis-h"></i>
+              Configuración del programa
+            </a>
             
           </div>
           <div class="card-body">
@@ -310,3 +308,18 @@
       <script src="/static/js/toast.js"></script>
 
       <script src="/static/js/cursos.js"></script>
+      <!--DATATABLE DEPENDENCIES-->
+      <script src="/static/vendor/datatables/datatables.min.js"></script>
+      <script src="/static/js/dataTables.buttons.min.js"></script>
+      <script src="/static/js/pdfmake.min.js"></script>
+      <script src="/static/js/vfs_fonts.js"></script>
+      <script src="/static/js/buttons.html5.min.js"></script>
+      <script src="/static/js/buttons.print.min.js"></script>
+      <script src="/static/js/jszip.min.js"></script>
+      <!-- CRUD FOR tb_frequent_questions -->
+      <script src="/static/js/setting/frequent_questions/read.js"></script>
+      <script src="/static/js/setting/frequent_questions/create.js"></script>
+      <script src="/static/js/setting/frequent_questions/tables.js"></script>
+      <script src="/static/js/setting/frequent_questions/delete.js"></script>
+      <script src="/static/js/setting/frequent_questions/update.js"></script>
+      <script src="/static/js/setting/frequent_questions/dynamic.js"></script>

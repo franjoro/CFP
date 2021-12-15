@@ -10,12 +10,30 @@
             </div>
             <div class="modal-body">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <%if(programa != 28 && programa != 32 && programa != 31){%>
+                        <li class="nav-item">
+                            <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Documentación</a>
+                        </li>
+                    <%}%>                    
                     <li class="nav-item">
-                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Documentación</a>
+                        <a class="nav-link" id="FQ-tab" data-toggle="tab" href="#FQ" role="tab" aria-controls="FQ">Preguntas frecuentes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="case-tab" data-toggle="tab" href="#case" role="tab" aria-controls="case">Casos especiales.</a>
                     </li>
                 </ul>
+                
                 <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="tab-pane fade show active" id="home1" role="tabpanel" aria-labelledby="home1-tab">
+                        <div class="row">
+                            <div class="col-12">
+                                <br><br><br>
+                                <h3 class="text-center">Seleccione una pestaña</h3>
+                                <br><br><br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade show" id="home" role="tabpanel" aria-labelledby="home-tab">
                        <div class="row">
                             <div class="col-12">
                                 <br>
@@ -44,8 +62,65 @@
                             </div>
                        </div>
                     </div>
-                    
+
+                    <div class="tab-pane fade show" id="FQ" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="row mt-5" id="blockTbFQ">
+                            <div class="col-12">
+                                <div class="">
+                                    <table class="table table-hover" id="tbFrequentQuestions" width="100%" cellspacing="0">
+                                        <thead>
+                                          <tr>
+                                            <th scope="col">Pregunta</th>
+                                            <th scope="col">Respuesta</th>
+                                            <th scope="col">Acciones</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          
+                                        </tbody>
+                                      </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" id="blockFrFQ">
+                             <div class="col-12">
+                                <br>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <input type="hidden" id="idFQ">
+                                            <p class="small"><span><b>Indicación:</b></span> Recuerde rellenar todos los campos y ser lo más descriptivo posible.</p>
+                                            <div class="form-group">
+                                                <label for="txtTrouble">Pregunta frecuente</label>
+                                                <input type="email" class="form-control" id="txtQuestion" placeholder="Ejem: ¿Como enviar la solicitud?">
+                                                <p class="small text-secondary" ><b>Importante:</b> Si es pregunta escribala con los signos de interrogación.</p>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="txtDescription">Respuesta (Detallada)</label>
+                                                <textarea class="form-control" id="txtAnswer" rows="3" placeholder="Envie la solicitud rellenando todos los campos necesarios y siguiendo los pasos que indica el sistema."></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <button class="btn btn-success m-1" id="btnSaveFrequentQuestion">Guardar</button>
+                                                <button class="btn btn-success m-1" id="btnUpdateFQ">Guardar</button>
+                                                <button class="btn btn-danger m-1" id="btnCancelFQ">Cancelar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                             </div>
+                        </div>
+                     </div>
+                    <div class="tab-pane fade show" id="case" role="tabpanel" aria-labelledby="case-tab">
+                        <div class="row">
+                            <div class="col-12">
+                                <br><br><br>
+                                <h3 class="text-center">Sección en desarrollo...</h3>
+                                <br><br><br>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                
             </div>
         </div>
     </div>

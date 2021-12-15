@@ -91,7 +91,7 @@ const ProgressChange = (texto, id, val) => {
 
 
 $(document).ready(function () {
-  
+  findForProgram();
   countSolicitud();
   localStorage.setItem('section','1');
   actualYear("#year1");
@@ -955,3 +955,28 @@ $(document).ready(function () {
       updateFormulario();
   });
 });
+
+
+
+const findForProgram = () => {
+  // DataTable Usuarios
+  const idProgram = $("#idPrograma").val();
+  $("#tbFrequentQuestions").DataTable({
+      ajax: `/frequent-questions/find-for-program/${idProgram}`,
+      destroy: true,
+      columns: [
+      {
+          render(data, type, row){
+              return(`${row.question}`)
+          }
+      },
+      {
+          render(date, type, row){
+              return(`${row.answer}`)
+              
+          }
+      },
+        { data: "id", visible: false },
+      ],
+  });
+};

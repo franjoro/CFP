@@ -3,6 +3,7 @@
   <input type="hidden" id="id_program" value="<%=  idProgram %>" />
   <!-- <div class="container"> -->
   <div class="mb-5 p-4 bg-white shadow-sm">
+    
     <div id="stepper1" class="bs-stepper">
       <div class="bs-stepper-header">
         <div class="step" data-target="#test-l-1">
@@ -209,4 +210,31 @@
     <script>
       var stepper1Node = document.querySelector("#stepper1");
       var stepper1 = new Stepper(document.querySelector("#stepper1"));
+    </script>
+    <script>
+      $(document).ready(()=>{
+        findForProgram();
+      });
+      const findForProgram = () => {
+  // DataTable Usuarios
+      const idProgram = $("#id_program").val();
+      $("#tbFrequentQuestions").DataTable({
+          ajax: `/frequent-questions/find-for-program/${idProgram}`,
+          destroy: true,
+          columns: [
+          {
+              render(data, type, row){
+                  return(`${row.question}`)
+              }
+          },
+          {
+              render(date, type, row){
+                  return(`${row.answer}`)
+                  
+              }
+          },
+            { data: "id", visible: false },
+          ],
+      });
+    };
     </script>
