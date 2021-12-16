@@ -15,21 +15,16 @@ const { authcheck } = require('../middlewares/auth');
 // call router
 const router = express.Router();
 
-// routeget
-//route /frequent-questions/find-for-program (select in tb_frequet_questions)
+//route get "/frequent-questions/find-for-program" (select in tb_frequet_questions)
 router.get("/find-for-program/:idProgram", read.findForProgram);
+// route get "/frequent-questions/find-for-id/:id"
 router.get("/find-for-id/:id", authcheck, read.findForId);
-// route post
 //route /frequent-questions/add (for create in tb_frequent_questions)
 router.post("/add", authcheck ,  create.add);
-// router put 
 //route /frequent-questions/update
 router.put("/update", authcheck, update.update);
-// route delete
 // route frequent-questions/delete (delete for tb_frequent_questions)
 router.delete("/delete", authcheck, remove.delete);
-
-
 
 // Exportamos la configuración
 module.exports = router;

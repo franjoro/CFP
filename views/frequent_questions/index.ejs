@@ -18,37 +18,92 @@
                             aria-controls="home" aria-selected="true">
                             Preguntas frecuentes
                         </a>
-                    </li>
-                    <!-- <li class="nav-item">
-                        <a 
-                            class="nav-link" 
-                            id="profile-tab" 
-                            data-toggle="tab" href="#profile" 
-                            role="tab" aria-controls="profile" aria-selected="false">
-                            Explica tu caso
-                        </a>
-                    </li> -->
+                    </li> 
+                    <%if(idProgram !=''){%>
+                        <li class="nav-item">
+                            <a 
+                                class="nav-link" 
+                                id="case-tab" 
+                                data-toggle="tab" href="#case" 
+                                role="tab" aria-controls="case" aria-selected="false">
+                                Explica tu caso 2
+                            </a>
+                        </li>
+                    <%}else{%>
+                        <li class="nav-item">
+                            <a 
+                                class="nav-link" 
+                                id="profile-tab" 
+                                data-toggle="tab" href="#profile" 
+                                role="tab" aria-controls="profile" aria-selected="false">
+                                Explica tu caso
+                            </a>
+                        </li>
+                    <%}%>
+                    
                   </ul>
                   <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                        
                         <div class="card">
                             <div class="card-body">
                                 <div class="row mt-3 mb-5 ">
                                     <div class="col-12">
                                         <div class="container">
-                                            <table class="table table-hover" id="tbFrequentQuestions" width="100%" cellspacing="0">
-                                                <thead>
-                                                  <tr>
-                                                    <th scope="col">Pregunta</th>
-                                                    <th scope="col">Respuesta</th>
-                                                  </tr>
-                                                </thead>
-                                                <tbody>
-                                                  
-                                                </tbody>
-                                              </table>
+                                            <div class="table-responsive">
+                                                <table class="table table-hover" id="tbFrequentQuestions" width="100%" cellspacing="0">
+                                                    <thead>
+                                                      <tr>
+                                                        <th scope="col">Pregunta</th>
+                                                        <th scope="col">Respuesta</th>
+                                                      </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                      
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade show" id="case" role="tabpanel" aria-labelledby="case-tab">
+                        <div class="container">
+                            <div class="row mt-5">
+                                <div class="col-12">
+                                    <p class="small"><span><b>Indicación:</b></span> Recuerde rellenar todos los campos y ser lo más descriptivo posible (La captura de pantalla es opcional).</p>
+                                    <div class="form-group">
+                                        <div class="row mt-2">
+                                            <div class="col-6">
+                                                <label for="txtPhone">Teléfono</label>
+                                                <input type="tel" class="form-control" id="txtPhone" placeholder="Ejem: 71212121">
+                                            </div>
+                                            <div class="col-6">
+                                                <label for="txtTrouble">Problema</label>
+                                                <input type="email" class="form-control" id="txtTrouble" placeholder="Ejem: No me deja enviar la solicitud">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="txtDescription">Descripción (Detallada)</label>
+                                        <textarea 
+                                            class="form-control" 
+                                            id="txtDescription" rows="3" 
+                                            placeholder="Intento seguir con las instrucciones pero me sale el siguiente error."
+                                        ></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                    <label for="fileSS">Adjunta tu captura de pantalla (Opcional).</label>
+                                                    <input type="file" id="fileSS" lang="es">
+                                                  </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-success m-1" id="btnSaveProblem">Enviar</button>
                                     </div>
                                 </div>
                             </div>
@@ -61,25 +116,46 @@
                                 <div class="col-12">
                                     <p class="small"><span><b>Indicación:</b></span> Recuerde rellenar todos los campos y ser lo más descriptivo posible (Las imagenes del son opcionales).</p>
                                     <div class="form-group">
-                                        <label for="txtTrouble">Problema</label>
-                                        <input type="email" class="form-control" id="txtTrouble" placeholder="Ejem: No me deja avanzar">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="txtDescription">Descripción (Detallada)</label>
-                                        <textarea class="form-control" id="txtDescription" rows="3"></textarea>
-                                    </div>
-                                    <div class="form-group">
                                         <div class="row">
-                                            <div class="col-12">
-                                                <label for="">Adjuntar imagen</label>
-                                                <button class="btn btn-info" style="border-radius: 100%;">
-                                                    <i class="fas fa-paperclip"></i>
-                                                </button>
+                                            <div class="col-6">
+                                                <label for="txtName">Nombre</label>
+                                                <input type="text" class="form-control" id="txtName" placeholder="Ejem: Oscar Alejandro Zalazar">
+                                            </div>
+                                            <div class="col-6">
+                                                <label for="txtEmail">Correo</label>
+                                                <input type="email" class="form-control" id="txtEmail" placeholder="Ejem: ejemplo@gmail.com">
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2">
+                                            <div class="col-6">
+                                                <label for="txtPhone">Teléfono</label>
+                                                <input type="tel" class="form-control" id="txtPhone" placeholder="Ejem: 71212121">
+                                            </div>
+                                            <div class="col-6">
+                                                <label for="txtTrouble">Problema</label>
+                                                <input type="email" class="form-control" id="txtTrouble" placeholder="Ejem: No me deja enviar la solicitud">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <button class="btn btn-success m-1">Enviar</button>
+                                        <label for="txtDescription">Descripción (Detallada)</label>
+                                        <textarea 
+                                            class="form-control" 
+                                            id="txtDescription" rows="3" 
+                                            placeholder="Intento seguir con las instrucciones pero me sale el siguiente error."
+                                        ></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                    <label for="fileSS">Adjunta tu captura de pantalla (Opcional).</label>
+                                                    <input type="file" id="fileSS" lang="es">
+                                                  </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-success m-1" id="btnSaveProblem">Enviar</button>
                                     </div>
                                 </div>
                             </div>

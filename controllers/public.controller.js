@@ -112,6 +112,9 @@ PublicFunctions.main = async (req, res) => {
      `,
       [req.params.id, programa, data.usuario]
     );
+    const userData = await pool.query(`SELECT Nombre, Email FROM tb_usuarios WHERE id_usuario = ?`,[data.usuario]);
+    const emailUser = userData[0].Email;
+    const nameUser = userData[0].Nombre;
     if (!datos.length) return res.redirect("/public/");
     const cursos = [];
     let today = new Date();
@@ -129,6 +132,8 @@ PublicFunctions.main = async (req, res) => {
       programa: datos[0][0],
       cursos: cursos,
       update: datos[2][0],
+      emailUser,
+      nameUser
     };
     return res.render("./public_empresas/empresa", DatosFormat);
   } catch (error) {

@@ -57,6 +57,7 @@ const listError = ()=>{
 };
 
 $(document).ready(() => {
+  tbProblemCases("#programa_oferta");
   // chargue programOfert month configuration
   $.ajax({
     url: `/configuration-courses/read/${$("#programa_oferta").val()}`,

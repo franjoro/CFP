@@ -1,13 +1,12 @@
-// Utilizar funcionalidades del Ecmascript 6
-// Cargamos los módulos de express y body-parser, morgan, cors
+// call dependencies
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const compression = require("compression");
-// Llamamos a express para poder crear el servidor
 const app = express();
 const helmet = require("helmet");
 const { directives } = require("./SecurityDirectives");
+const cookieParser = require("cookie-parser");
 app.use(
   helmet({
     contentSecurityPolicy: {
@@ -15,19 +14,21 @@ app.use(
     },
   })
 );
-const cookieParser = require("cookie-parser");
 // const setCache = require("./middlewares/cache");
 app.use(cookieParser());
 app.use(compression());
-// Llamamos cors
+// call cors
 app.use(cors());
-// Seteamos ejs como motor de vistas
+// use ejs for views motor
 app.set("view engine", "ejs");
-// Seteamos carpeta de archivos estaticos
+// use "/static" for public views and js
 app.use("/static", express.static(`${__dirname}/public`));
+// accept json un app
 app.use(express.json());
+// accept urlencoded
 app.use(express.urlencoded({ extended: true }));
-// Cargamos las rutas
+
+// charging all routes
 
 // Router principal de admin y sus controladores
 app.use("/admin", require("./routes/admin.router"));
@@ -41,32 +42,25 @@ app.use("/admin/ec", require("./routes/ec.router"));
 app.use("/admin/habil", require("./routes/habil.router"));
 //ROUTER DE LANDING PAGE
 app.use("/landing", require("./src/components/landing/routes/landing.router"));
-
-
 // Router de login
-
 app.use("/", require("./routes/login.router"));
-
 // Router public
 app.use("/public", require("./routes/public.router"));
-
 // Router Formulario de Habil
 app.use("/habil", require("./routes/habil.router"));
-
-
 app.use("/pruebas", require("./routes/pruebas.router"));
-
 // Router Formulario de Habil
 app.use("/reportes", require("./routes/reportes.router"));
-
-
+// router module psychology
 app.use("/admin/psicologia", require("./src/components/psychology/dashboard/routes/dashboard.router"))
-
+// router module employment relationship
 app.use("/admin/vinculacion-laboral", require("./routes/employment_relationship.router"));
-
+// router module configuration courses
 app.use('/configuration-courses', require('./routes/configuration_courses.router'));
-
+// router for module frequent questions
 app.use('/frequent-questions', require('./routes/frequent_questions.router'));
+// router for module problem cases
+app.use('/problem-cases', require('./routes/problem_cases.router'));
 
 app.get("/terms", (req, res) => {
   res.render("terms");
@@ -99,5 +93,5 @@ app.get("*", (req, res) => {
 
 
 
-// exportamos este módulo para poder usar la constiable app fuera de este archivo
+// export app for use in other files
 module.exports = app;

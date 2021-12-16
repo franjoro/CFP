@@ -1,6 +1,8 @@
 <%- include('../partials/header.public.ejs'); %>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css" />
   <input type="hidden" id="id_program" value="<%=  idProgram %>" />
+  <input type="hidden" id="emailUser" value="<%= emailUser%>">
+  <input type="hidden" id="nameUser" value="<%= nameUser%>">
   <!-- <div class="container"> -->
   <div class="mb-5 p-4 bg-white shadow-sm">
     
@@ -214,6 +216,9 @@
     <script>
       $(document).ready(()=>{
         findForProgram();
+        $("#btnSaveProblem").click(()=>{
+          createProblem();
+        });
       });
       const findForProgram = () => {
   // DataTable Usuarios
@@ -236,5 +241,42 @@
             { data: "id", visible: false },
           ],
       });
-    };
+      };
+
+      const createProblem = async()=>{
+        const nameUser = $("#nameUser").val();
+        const emailUser = $("#emailUser").val();
+        const phone = $("#txtPhone").val();
+        const problem = $("#txtTrouble").val();
+        const description = $("#txtDescription").val();
+        const idProgram= $("#id_program").val();
+        const data = await $.ajax({
+            url:'/problem-cases/add',
+            type: 'POST',
+            data:{
+                name: nameUser,
+                email: emailUser,
+                phone,
+                problem,
+                description,
+                idProgram
+            }
+        });
+        console.log(data)
+        if(data.affectedRows>0){
+            Swal.fire({
+                icon: 'success',
+                title: 'Exito',
+                text: 'Su caso fue enviado con exito, nos comunicaremos con usted lo más pronto posible.'
+            });
+            const insertId = data.insertId;
+            clearFrProblems();
+        }else{
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Paso un error inesperado por favor pongase en contacto con soporte técnico.'
+            });
+        }
+      };
     </script>

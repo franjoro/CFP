@@ -75,6 +75,7 @@ habil.main = async (req, res) => {
         const nombre = curso[0].Nombre;
         const horario = curso[0].Horario;
         const idPrograma = curso[0].id_programa;
+        const idProgram ="";
         return res.render("habil/formulario", {
             nombre,
             horario,
@@ -82,7 +83,8 @@ habil.main = async (req, res) => {
             codigoCurso,
             type,
             view,
-            idPrograma
+            idPrograma,
+            idProgram
         });
     } catch (error) {
             return res.status(400).json(error);
