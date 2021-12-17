@@ -6,10 +6,13 @@
 
 // module express init
 const express = require('express');
+const fileUpload = require('express-fileupload');
 // create controller
 const create = require('../controllers/problem_cases/create.controller');
 const read = require('../controllers/problem_cases/read.controller');
+const files = require('../controllers/problem_cases/send_file.controller');
 const { authcheck } = require('../middlewares/auth');
+const { uploadGlobal } = require("../utils/s3Folder/s3_habil");
 // call router
 const router = express.Router();
 
@@ -18,6 +21,8 @@ const router = express.Router();
 router.post("/add", create.add);
 // route "/problem-cases/find-for-program"
 router.get("/find-for-program/:idProgram", authcheck, read.findForProgram);
+// route "/problem-cases/send-file"
+router.get("/send-file", fileUpload(), files.sendFile);
 
 // Exportamos la configuración
 module.exports = router;

@@ -61,7 +61,6 @@ app.use('/configuration-courses', require('./routes/configuration_courses.router
 app.use('/frequent-questions', require('./routes/frequent_questions.router'));
 // router for module problem cases
 app.use('/problem-cases', require('./routes/problem_cases.router'));
-
 app.get("/terms", (req, res) => {
   res.render("terms");
 });
