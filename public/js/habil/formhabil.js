@@ -12,14 +12,7 @@ let global_json1;
 let global_json2;
 let global_json3;
 
-//Funciones globales
-const error = (error) => {
-  Swal.fire({
-    icon: "error",
-    title: "Oops...",
-    html: error,
-  });
-};
+
 
 const infoMsg = (msg) =>{
   Swal.fire({
@@ -980,3 +973,6 @@ const findForProgram = () => {
       ],
   });
 };
+
+
+

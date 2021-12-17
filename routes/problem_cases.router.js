@@ -21,8 +21,10 @@ const router = express.Router();
 router.post("/add", create.add);
 // route "/problem-cases/find-for-program"
 router.get("/find-for-program/:idProgram", authcheck, read.findForProgram);
+// route "/problem-cases/detalles-de-casos/:idProblem"
+router.get("/detalles-de-casos/:idProblem", authcheck, read.renderDetails);
 // route "/problem-cases/send-file"
-router.get("/send-file", fileUpload(), files.sendFile);
+router.post("/send-file", fileUpload(), files.sendFile);
 
 // Exportamos la configuración
 module.exports = router;

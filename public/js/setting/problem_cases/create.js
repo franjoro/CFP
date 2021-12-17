@@ -1,3 +1,49 @@
+
+const SendFiles = async (idProblem) => {
+  
+  
+    //Objeto de js utilizado para mandar ficheros
+    const fd = new FormData(); // Objeto de javascript utilizado para mandar documentos
+    //append para anidar y ponemos el name y id del file
+    fd.append(`fileDocumentos`, $(`#fileSS`)[0].files[0]);  
+    //AGREGAMOS LAS VARIABLES A ENVIAR AL SERVER
+    fd.append("idProblem", idProblem);
+
+    //Ejecutamos un try e intentamos mandar los archivos a la nube
+    try {
+      //ventana emergente de carga
+      archivosLoader();
+      //const respuesta para recolectar lo traido del .ajax
+      const respuesta = await $.ajax({
+        url: `/problem-cases/send-file`,
+        type: "POST",
+        data: fd,
+        processData: false,
+        contentType: false,
+      });
+      //validamos el estado de la const respuesta
+      if(respuesta.status){
+        swal.close();
+        Swal.fire({
+          icon: "success",
+          title: "Su caso a sido enviado con éxito.",
+          showConfirmButton: false,
+        });
+        
+      }else{
+        swal.close();
+        error(`No se pudo realizar la operación, verifica la información o comuniquese con el encargado del programa o soporte ${respuesta.error}`);
+        console.log(respuesta);
+      }
+    } catch (e) {
+      console.log(e);
+      error(
+        "No se pudo realizar la operación, verifica la información o comuniquese con el encargado del programa o soporte  <b> errorcode: </b>  " +
+          e.responseJSON.error
+      );
+    }
+  };
+
 const createProblemCase = async()=>{
     try {
         const name = $("#txtName").val();
@@ -67,6 +113,9 @@ const createProblemCase = async()=>{
                 text: 'Su caso fue enviado con exito, nos comunicaremos con usted lo más pronto posible.'
             });
             const insertId = data.insertId;
+            if(document.getElementById("fileSS").files.length != 0 ){
+                SendFiles(insertId);    
+            }
             clearFrProblems();
         }else{
             Swal.fire({

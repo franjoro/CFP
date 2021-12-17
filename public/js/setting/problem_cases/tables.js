@@ -48,7 +48,7 @@ const tbProblemCases = (idInput)=>{
             render(date, type, row){
                 return(`
                     <div >
-                        <a href="" class="btn btn-sm btn-success"><i class="fas fa-eye"></i></a>
+                        <a href="/problem-cases/detalles-de-casos/${row.id}" class="btn btn-sm btn-success"><i class="fas fa-eye"></i></a>
                     </div>
                 `)
                 

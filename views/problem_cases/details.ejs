@@ -1,0 +1,56 @@
+<link rel="stylesheet" href="/static/vendor/datatables/datatables.min.css" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" type="text/css" />
+  <%- include('../partials/header.admin.ejs'); %>
+  <div class="container">
+      <div class="row">
+          <div class="col-12">
+              <div class="card shadow">
+                  <div class="card-body">
+                      <h3 class="text-center">Detalles del caso</h3>
+                  </div>
+              </div>
+              <div class="card shadow  mt-3 mb-3">
+                  <div class="card-body">
+                      <div class="row">
+                        <% dataProblem.forEach( item => {   %>
+                            <div class="col-4"><b>Nombre:</b> <%= item.name%></div>
+                            <div class="col-4"><b>Teléfono:</b> <%= item.phone%></div>
+                            <div class="col-4"><b>Correo:</b> <%= item.email%></div>
+                            <div class="col-12"><b>Problema:</b> <%= item.problem%></div>
+                            <div class="col-12"><b>Descripción:</b><%= item.description%></div>
+                        <% }) %>
+                      </div>
+                  </div>
+              </div>
+              <div class="card shadow mt-3 mb-3">
+                  <div class="card-body">
+                      <div class="row">
+                          <div class="col-12">
+                              <p class="text-center">
+                                  Captura de pantalla del problema.
+                              </p>
+                          </div>
+                          <div class="col-12">
+                            <div id="framediv"></div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <%- include('../partials/footer.ejs'); %>
+<script src="/static/js/jquery.mask.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+<script src="/static/js/global/alerts.js"></script>
+<script src="/static/js/setting/problem_cases/read.js"></script>
+<% dataDetails.forEach( item => {   %>
+    <script>
+        $(document).ready(()=>{
+            SeeS3File("<%= item.key_aws%>", "<%= item.id%>");
+        });
+    </script> 
+<% }) %>
