@@ -290,6 +290,7 @@ $("#dui").blur(async function () {//cuando pierde el foco es diferente al onfocu
       $("#genero").val(values.Genero);
       $("#isss").val(values.ISSS);
       $("#cargo").val(values.Cargo);
+      $("#txtCorrelativoPlanilla").val(values.correlativo_planilla);
     }
   } catch (error) {
     global_estado_participante = false;
@@ -357,6 +358,7 @@ $(document).ready(() => {
     const email = $("#email").val();
     const genero = $("#genero").val();
     const cursoCodigo = $("#curso").children("option:selected").val();
+    const correlativo_planilla = $("#txtCorrelativoPlanilla").val();
     curso_text = $("#curso").children("option:selected").text();
 
     if (
@@ -365,7 +367,8 @@ $(document).ready(() => {
       !tel ||
       !email ||
       !genero || 
-      !cursoCodigo
+      !cursoCodigo ||
+      ! correlativo_planilla
     ) {
       return error(
         "No se pudo realizar la operación, verifica la información o comuniquese con el encargado del programa o soporte "
@@ -381,6 +384,7 @@ $(document).ready(() => {
       curso_text.trim(),
       cursoCodigo.trim(),
       genero,
+      correlativo_planilla,
     ];
     populateTable(data);
     CreateOrStorage(data);
@@ -390,10 +394,22 @@ $(document).ready(() => {
     });
     $('input[type="text"]').val("");
     if (!global_estado_participante) {
-      data = { dui, name: nombre, tel, email, genero,  isss, cargo };
+      data = { dui, name: nombre, tel, email, genero,  isss, cargo, correlativo_planilla };
       $.ajax({
         url: "/admin/participantes/add",
         type: "POST",
+        data,
+      });
+    }else{
+      var duiNew = dui;
+      var nameEdit = nombre;
+      var emailEdit = email;
+      var telEdit = tel;
+      var duiEdit = dui;
+      data = { duiNew, nameEdit, emailEdit, telEdit, duiEdit, correlativo_planilla };
+      $.ajax({
+        url: "/admin/participantes/edit",
+        type: "PUT",
         data,
       });
     }

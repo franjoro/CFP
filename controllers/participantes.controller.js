@@ -15,12 +15,14 @@ participantes.loadTable = async (req, res) => {
   res.json({ data });
 };
 
+//sql query add participant in tb_participante 
 participantes.add = async (req, res) => {
   try {
     if (
       isEmpty(req.body.dui) ||
       isEmpty(req.body.name) ||
-      isEmpty(req.body.email)
+      isEmpty(req.body.email) ||
+      isEmpty(req.body.correlativo_planilla)
     )
       throw new Error("Empty");
     const data = [
@@ -31,9 +33,10 @@ participantes.add = async (req, res) => {
       req.body.genero,
       req.body.isss,
       req.body.cargo,
+      req.body.correlativo_planilla,
     ];
     const statment =
-      "INSERT INTO tb_participante(DUI,Nombre,Telefono,Email,Genero, ISSS, Cargo) VALUES(?,?,?,?,?,?,?)";
+      "INSERT INTO tb_participante(DUI,Nombre,Telefono,Email,Genero, ISSS, Cargo, correlativo_planilla) VALUES(?,?,?,?,?,?,?,?)";
     const query = await pool.query(statment, data);
     return res.status(200).json({ status: true, data: query });
   } catch (err) {
@@ -50,10 +53,11 @@ participantes.edit = async (req, res) => {
       req.body.nameEdit,
       req.body.emailEdit,
       req.body.telEdit,
+      req.body.correlativo_planilla,
       req.body.duiEdit,
     ];
     const statment =
-      "UPDATE tb_participante SET dui = ? , Nombre = ? , Email = ?, Telefono = ?  WHERE DUI= ? ";
+      "UPDATE tb_participante SET dui = ? , Nombre = ? , Email = ?, Telefono = ?, correlativo_planilla = ? WHERE DUI= ?";
     const query = await pool.query(statment, data);
     return res.json(query);
   } catch (err) {
