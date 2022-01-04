@@ -1,7 +1,7 @@
 const html_to_pdf = require("html-pdf-node");
 imgSrc =
   "https://globaleducation.academy/wp-content/uploads/2020/09/Insaforp-Logo.jpg";
-imgIngles = "http://localhost:8080/static/img/uploads/1611934886035_INGL%C3%89S%20PARA%20EL%20TRABAJO_TRANSPARENTE.png";
+imgIngles = "https://cfp.ricaldone.edu.sv/static/img/uploads/1611934886035_INGL%C3%89S%20PARA%20EL%20TRABAJO_TRANSPARENTE.png";
 
 const GenerarPdf = (data) => {
   return new Promise((resolver, rechazar) => {
