@@ -3,6 +3,7 @@
   <input type="hidden" id="id_program" value="<%=  idProgram %>" />
   <input type="hidden" id="emailUser" value="<%= emailUser%>">
   <input type="hidden" id="nameUser" value="<%= nameUser%>">
+  <input type="hidden" id="typeProgram">
   <!-- <div class="container"> -->
   <div class="mb-5 p-4 bg-white shadow-sm">
     
@@ -96,7 +97,7 @@
           <p class="text-dark">
             <b>Instrucciones: </b>Rellenar la información de los participantes que
             desea inscribir y verificar la información de la tabla. Posteriormente
-            continuar al siguiente paso
+            continuar al siguiente paso.
           </p>
           <div class="form-row">
             <div class="col">
@@ -119,10 +120,14 @@
               <label for="tel">Teléfono celular</label>
               <input type="text" id="tel" class="form-control" placeholder="0000-0000" />
             </div>
-            <div class="col">
-              <label for="txtCorrelativoPlanilla">Correlativo planilla</label>
-              <input type="text" id="txtCorrelativoPlanilla" class="form-control" placeholder="" />
-            </div>
+            <!-- idProgram == 30 (Ingles para el trabajo) -->
+            <%if(idProgram == 30){%>
+              <div class="col">
+                <label for="txtCorrelativoPlanilla">Correlativo planilla</label>
+                <input type="text" id="txtCorrelativoPlanilla" class="form-control" placeholder="" />
+              </div>
+            <%}%>
+            
           </div>
           <div class="form-row">
             <div class="col-3">
@@ -219,6 +224,12 @@
     </script>
     <script>
       $(document).ready(()=>{
+        // Section for analitys program
+        if("<%= idProgram %>" == 30){
+          $("#typeProgram").val(true);
+        }else{
+          $("#typeProgram").val(false);
+        }
         findForProgram();
         $("#btnSaveProblem").click(()=>{
           createProblem();

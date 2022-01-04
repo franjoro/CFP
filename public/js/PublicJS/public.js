@@ -358,9 +358,14 @@ $(document).ready(() => {
     const email = $("#email").val();
     const genero = $("#genero").val();
     const cursoCodigo = $("#curso").children("option:selected").val();
-    const correlativo_planilla = $("#txtCorrelativoPlanilla").val();
+    let correlativo_planilla;
+    let typeProgram = $("#typeProgram").val();
+    if(typeProgram){
+      correlativo_planilla = $("#txtCorrelativoPlanilla").val()
+    }else{
+      correlativo_planilla = "indefinido";
+    }
     curso_text = $("#curso").children("option:selected").text();
-
     if (
       !dui ||
       !nombre ||
@@ -401,6 +406,7 @@ $(document).ready(() => {
         data,
       });
     }else{
+      alert(correlativo_planilla)
       var duiNew = dui;
       var nameEdit = nombre;
       var emailEdit = email;

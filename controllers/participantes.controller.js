@@ -61,6 +61,7 @@ participantes.edit = async (req, res) => {
     const query = await pool.query(statment, data);
     return res.json(query);
   } catch (err) {
+    console.log(err);
     return res.status(400).json(err);
   }
 };

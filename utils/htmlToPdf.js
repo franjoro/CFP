@@ -30,7 +30,6 @@ const GenerarPdf = (data) => {
             <td>${element[1]}</td>
             <td>${element[4]}</td>
             <td>${element[3]}</td>
-            <td>${element[9]}</td>
             <td>${element[0]}</td>
             <td>
               <input type="checkbox" ${m} />
@@ -311,7 +310,6 @@ const GenerarPdf = (data) => {
                     <th>Nombre</th>
                     <th>Cargo</th>
                     <th>N° ISSS</th>
-                    <th>N° CORRELATIVO ISSS</th>
                     <th>N° DUI</th>
                     <th>F</th>
                     <th>M</th>
