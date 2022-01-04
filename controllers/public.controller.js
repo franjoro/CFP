@@ -304,6 +304,7 @@ PublicFunctions.CreateSolicitud = async (req, res) => {
 
 PublicFunctions.FichaRegistro = async (req, res) => {
   const cursos = req.params.data;
+  const { program } = req.body;
   const { empresa } = req.params;
   let { alumnos } = req.body;
   let { firmante } = req.body;
@@ -342,7 +343,7 @@ PublicFunctions.FichaRegistro = async (req, res) => {
     alumnos = JSON.parse(alumnos);
     firmante = JSON.parse(firmante);
     const MainQuery = await Promise.all(queries);
-    const pdf = await GenerarPdf({ data: MainQuery, alumnos, firmante });
+    const pdf = await GenerarPdf({ data: MainQuery, alumnos, firmante, program });
     return res.status(200).json({ status: true, data: pdf });
   } catch (error) {
     console.log(error);

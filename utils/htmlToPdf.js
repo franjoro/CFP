@@ -1,6 +1,7 @@
 const html_to_pdf = require("html-pdf-node");
 imgSrc =
   "https://globaleducation.academy/wp-content/uploads/2020/09/Insaforp-Logo.jpg";
+imgIngles = "http://localhost:8080/static/img/uploads/1611934886035_INGL%C3%89S%20PARA%20EL%20TRABAJO_TRANSPARENTE.png";
 
 const GenerarPdf = (data) => {
   return new Promise((resolver, rechazar) => {
@@ -9,10 +10,15 @@ const GenerarPdf = (data) => {
     let nit = data.data[0][0].NIT.split("-");
     const d = new Date();
     const { firmante } = data;
+    const { program } = data;
 
     const { Horario, Nombre, programa, Fechas, horas, CostoAlumno } = data.data[1][0];
     const { NombreContacto, EmailContacto } = data.data[2][0];
     itineracion = "";
+    thead = "";
+    anexo = "";
+    imgSelector = "";
+    console.log(program);
     console.log(data.alumnos);
     data.alumnos.forEach((element, index) => {
       let h = "", m = "";
@@ -23,7 +29,65 @@ const GenerarPdf = (data) => {
         m = "checked";
 
       }
-      itineracion +=
+      if(program == 30){
+        imgSelector += 
+        `
+          <img
+            src="${imgIngles}"
+            alt=""
+            style="width: 250px; margin-left: 0px; margin-right: 10px"
+            class="img-fluid float-right"
+          />
+          <img
+            src="${imgSrc}"
+            alt=""
+            style="width: 250px; margin-left: -10px; margin-right: 50px"
+            class="img-fluid float-left"
+          />
+        `;
+        anexo += `<p class="text-center"><b>ANEXO 7</b></p>`;
+        itineracion +=
+        `
+          <tr>
+            <td>${index + 1}</td>
+            <td>${element[1]}</td>
+            <td>${element[4]}</td>
+            <td>${element[3]}</td>
+            <td>${element[9]}</td>
+            <td>${element[0]}</td>
+            <td>
+              <input type="checkbox" ${m} />
+            </td>
+            <td>
+              <input type="checkbox" ${h} />
+            </td>
+          </tr>
+           `;
+        thead +=
+        `
+          <tr>
+            <th>N°</th>
+            <th>Nombre</th>
+            <th>Cargo</th>
+            <th>N° ISSS</th>
+            <th>N° CORRELATIVO ISSS</th>
+            <th>N° DUI</th>
+            <th>F</th>
+            <th>M</th>
+          </tr>
+        `;
+      }else{
+        imgSelector += 
+        `
+          <img
+            src="${imgSrc}"
+            alt=""
+            style="width: 250px; margin-left: 0px; margin-right: 10px"
+            class="img-fluid float-right"
+          />
+        `;
+        anexo += `<p><b>ANEXO 6</b></p>`;
+        itineracion +=
         `
           <tr>
             <td>${index + 1}</td>
@@ -38,8 +102,21 @@ const GenerarPdf = (data) => {
               <input type="checkbox" ${h} />
             </td>
           </tr>
-           `;
+        `;
 
+        thead +=
+        `
+          <tr>
+            <th>N°</th>
+            <th>Nombre</th>
+            <th>Cargo</th>
+            <th>N° ISSS</th>
+            <th>N° DUI</th>
+            <th>F</th>
+            <th>M</th>
+          </tr>
+        `;
+      }
     });
 
     const options = {
@@ -113,18 +190,13 @@ const GenerarPdf = (data) => {
             }
           </style>
           <div class="container-fluid topheader">
-            <img
-              src="${imgSrc}"
-              alt=""
-              style="width: 250px; margin-left: -120px; margin-right: 50px"
-              class="img-fluid float-right"
-            />
+            ${imgSelector}
             <div class="text-center">
               <h5><b>SOLICITUD DE CAPACITACIÓN </b></h5>
               <h5><b>${programa}</b></h5>
             </div>
             <div class="container">
-              <p><b>ANEXO 6</b></p>
+              ${anexo}
               <div class="divisor">
                 <p class="d-inline">FECHA :</p>
                 <br />
@@ -305,15 +377,7 @@ const GenerarPdf = (data) => {
               <p>NOMBRE DE LOS PARTICIPANTES PROPUESTOS:</p>
               <table class="table-sm">
                 <thead>
-                  <tr>
-                    <th>N°</th>
-                    <th>Nombre</th>
-                    <th>Cargo</th>
-                    <th>N° ISSS</th>
-                    <th>N° DUI</th>
-                    <th>F</th>
-                    <th>M</th>
-                  </tr>
+                  ${thead}
                 </thead>
                 <tbody>
                   ${itineracion}

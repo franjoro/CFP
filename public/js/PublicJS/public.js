@@ -123,7 +123,7 @@ const AsginarGlobalCursos = () => {
         <div class="row"><div class="col-md-3">
           <p class="text-justify">1. Solicitud de capacitación firmada y sellada. Puede descargar la ficha aquí: 
             <i class="fas fa-arrow-right"></i> 
-            <a onclick="GenerarPdf('${element[7]}')" href="#">DESCARGAR PLANTILLA</a>
+            <a onclick="GenerarPdf('${element[7]}', '${$("#id_program").val()}')" href="#">DESCARGAR PLANTILLA</a>
           </p>
         </div>
         <div class="col-md-3">
@@ -296,7 +296,7 @@ $("#dui").blur(async function () {//cuando pierde el foco es diferente al onfocu
     global_estado_participante = false;
   }
 });
-const GenerarPdf = async (curso) => {
+const GenerarPdf = async (curso, program) => {
   loader();
   AlumnosParaEnviar = [];
   try {
@@ -311,7 +311,7 @@ const GenerarPdf = async (curso) => {
     let query = await $.ajax({
       url: `/public/ficha/${global_empresa_seleccionada}/${curso} `,
       type: "POST",
-      data: { alumnos: AlumnosParaEnviar, firmante },
+      data: { alumnos: AlumnosParaEnviar, firmante, program },
     });
     if (query.status) {
       swal.close();
@@ -359,7 +359,7 @@ $(document).ready(() => {
     const genero = $("#genero").val();
     const cursoCodigo = $("#curso").children("option:selected").val();
     let correlativo_planilla;
-    let typeProgram = $("#typeProgram").val();
+    let typeProgram = $("#id_program").val();
     if(typeProgram == 30){
       correlativo_planilla = $("#txtCorrelativoPlanilla").val();
     }else{
