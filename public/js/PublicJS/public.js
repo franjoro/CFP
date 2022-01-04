@@ -360,10 +360,12 @@ $(document).ready(() => {
     const cursoCodigo = $("#curso").children("option:selected").val();
     let correlativo_planilla;
     let typeProgram = $("#typeProgram").val();
-    if(typeProgram){
+    if(typeProgram == 30){
       correlativo_planilla = $("#txtCorrelativoPlanilla").val()
+      alert("true");
     }else{
       correlativo_planilla = "indefinido";
+      alert("false");
     }
     curso_text = $("#curso").children("option:selected").text();
     if (
