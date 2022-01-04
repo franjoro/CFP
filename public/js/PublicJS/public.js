@@ -361,11 +361,9 @@ $(document).ready(() => {
     let correlativo_planilla;
     let typeProgram = $("#typeProgram").val();
     if(typeProgram == 30){
-      correlativo_planilla = $("#txtCorrelativoPlanilla").val()
-      alert("true");
+      correlativo_planilla = $("#txtCorrelativoPlanilla").val();
     }else{
       correlativo_planilla = "indefinido";
-      alert("false");
     }
     curso_text = $("#curso").children("option:selected").text();
     if (
@@ -408,7 +406,6 @@ $(document).ready(() => {
         data,
       });
     }else{
-      alert(correlativo_planilla)
       var duiNew = dui;
       var nameEdit = nombre;
       var emailEdit = email;
