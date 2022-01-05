@@ -161,11 +161,14 @@
                               <p><b>Cantidad de solicitudes en espera: </b><%= ofert.cantEsp%></p>
                             <%}%>
                             <p>
-                              <b>Participantes:</b>
-                              <%= ofert.cantidadAlumnos %> 
                               <% if(ofert.Estado == 5) { %>
+                              <b>Participantes:</b>
+                              <%= ofert.cantParticipantes%>
                               <b>- Empresas:</b>
                               <%= ofert.cantidadEmpresas %>
+                              <%}else{%>
+                                <b>Participantes:</b>
+                                <%= ofert.cantidadAlumnos %> 
                               <%}%>
                             </p>
                             <% if(ofert.Estado == 5) { %> <span class="badge badge-pill badge-primary">Oferta para empresas</span> <%}%>
