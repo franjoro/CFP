@@ -34,7 +34,7 @@ const PrintPdf = (data) => {
           <style>
             html { -webkit-print-color-adjust: exact; }
             .block-height{
-                height: 30px;
+                height: auto !important;
             }
             .img-size{
                 height: 60px !important;
@@ -97,7 +97,7 @@ const PrintPdf = (data) => {
               border: 2px solid black;
             }
             .topheader{
-              padding-top:50px
+              padding-top:20px
             }
           </style>
           
@@ -230,12 +230,14 @@ const PrintPdf = (data) => {
                 </div>
             </div>
             <br>
-            <div class="container ">
-                <div class="row">
-                    <div class="col-12 block-height">
-                        <p class=" text-aling-top-left">
-                             ${data1.reason}
-                        </p>
+            <div class="row">
+                <div class="container ">
+                    <div class="row">
+                        <div class="col-12 block-height">
+                            <p class=" text-aling-top-left" style="text-align: justify !important;">
+                                ${data1.reason}
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -253,7 +255,7 @@ const PrintPdf = (data) => {
             <div class="container ">
                 <div class="row">
                     <div class="col-12 block-height">
-                        <p class=" text-aling-top-left">
+                        <p class=" text-aling-top-left" style="text-align: justify !important;">
                              ${data1.description}
                         </p>
                     </div>
@@ -273,7 +275,7 @@ const PrintPdf = (data) => {
             <div class="container ">
                 <div class="row">
                     <div class="col-12 block-height">
-                        <p class=" text-aling-top-left">
+                        <p class=" text-aling-top-left" style="text-align: justify !important;">
                              ${data1.approach}
                         </p>
                     </div>
@@ -293,7 +295,7 @@ const PrintPdf = (data) => {
             <div class="container ">
                 <div class="row">
                     <div class="col-12 block-height">
-                        <p class=" text-aling-top-left">
+                        <p class=" text-aling-top-left" style="text-align: justify !important;">
                              ${data1.recommendations}
                         </p>
                     </div>
@@ -313,7 +315,7 @@ const PrintPdf = (data) => {
             <div class="container ">
                 <div class="row">
                     <div class="col-12 block-height">
-                        <p class=" text-aling-top-left">
+                        <p class=" text-aling-top-left" style="text-align: justify !important;">
                              ${data1.follow_up}
                         </p>
                     </div>

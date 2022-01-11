@@ -22,7 +22,7 @@ $("#loginForm").submit(async function (e) {
   const t = $(this).serialize();
   loader();
   try {
-    // const data1 = await $.ajax({url: "http://localhost:3000/sesion/signin", type: "POST", data: t});
+    // const data1 = await $.ajax({url: `${routeApiCfp}/sesion/signin`, type: "POST", data: t});
     // console.log("Procesando");
     // if(data1.status){
       const data = await $.ajax({ url: "/signin", type: "POST", data: t });
