@@ -62,19 +62,36 @@ $("#selector").on("change", function () {
 });
 // cambiar estado de empresa de activo a inactivo y viceversa
 async function changeEstado(estado, id) {
-  try {
-    loader();
-    const query = await $.ajax({
-      url: "/admin/empresas/changeEstado",
-      type: "PUT",
-      data: { estado, id },
-    });
-    LoadTablaEmpresas($("#selector").children("option:selected").val());
-    swal.close();
-  } catch (error) {
-    swal.close();
-    console.log(error.responseJSON.error);
-    errorMessage();
+  const alerta = await Swal.fire({
+    title: "¿Decea ocultar la empresa?",
+    text: "Para habilitarla nuevamente tendra que remitirlo a soporte técnico",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Si, ocultar",
+  });
+
+  if (alerta.isConfirmed) {
+    try {
+      try {
+        loader();
+        const query = await $.ajax({
+          url: "/admin/empresas/changeEstado",
+          type: "PUT",
+          data: { estado, id },
+        });
+        LoadTablaEmpresas($("#selector").children("option:selected").val());
+        swal.close();
+      } catch (error) {
+        swal.close();
+        console.log(error.responseJSON.error);
+        errorMessage();
+      }
+    } catch (error) {
+      console.log(error);
+      errorMessage();
+    }
   }
 }
 

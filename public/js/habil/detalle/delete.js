@@ -111,8 +111,6 @@ const deleteNotificacion = (idSolicitud) => {
               Swal.showValidationMessage(`Request failed: ${error}`);
             });
           });
-
-         
         }else{
           Swal.showValidationMessage(`Debe escribir correctamente eliminar`);
         }
@@ -121,7 +119,6 @@ const deleteNotificacion = (idSolicitud) => {
     }).then((result) => {
       console.log(result);
       location.reload();
-
       if (result.value.status) {
         location.reload();
       }
