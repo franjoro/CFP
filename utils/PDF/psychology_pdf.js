@@ -29,7 +29,6 @@ const PrintPdf = (data) => {
           />
           <title>Hello, world!</title>
         </head>
-      
         <body style="font-size: 15px; font-family: Arial">
           <style>
             html { -webkit-print-color-adjust: exact; }
@@ -157,7 +156,7 @@ const PrintPdf = (data) => {
               <div class="row">
                   <div class="col-12 block-height bg-info" >
                       <h6 class=" text-aling-top-left">
-                          I. IDENTIFICACIÓN:
+                          I. IDENTIFICACIÓN
                       </h6>
                   </div>
               </div>
@@ -224,7 +223,7 @@ const PrintPdf = (data) => {
                 <div class="row">
                     <div class="col-12 bg-info block-height">
                         <h6 class=" text-aling-top-left">
-                             II. MOTIVO DE ATENCIÓN:
+                             II. MOTIVO DE ATENCIÓN
                         </h6>
                     </div>
                 </div>
@@ -246,7 +245,7 @@ const PrintPdf = (data) => {
                 <div class="row">
                     <div class="col-12 block-height bg-info" >
                         <h6 class=" text-aling-top-left">
-                             III. DESCRIPCIÓN DEL CASO:
+                             III. DESCRIPCIÓN DEL CASO
                         </h6>
                     </div>
                 </div>
@@ -266,7 +265,7 @@ const PrintPdf = (data) => {
                 <div class="row">
                     <div class="col-12 bg-info block-height">
                         <h6 class=" text-aling-top-left">
-                             IV. ABORDAJE:
+                             IV. ABORDAJE
                         </h6>
                     </div>
                 </div>
@@ -327,6 +326,12 @@ const PrintPdf = (data) => {
                 <div class="col-12">
                     <p class="text-center"><b>${data1.nowDate}</b></p>
                 </div>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
                 <div class="col-12">
                     <p class="text-center">
                         <label class="text-center">F.________________________ 
