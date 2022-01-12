@@ -22,6 +22,15 @@ const infoMsg = (msg) =>{
   });
 };
 
+const hidenAll = ()=>{
+  $("#sec1").css("display", "none");
+  $("#sec2").css("display", "none");
+  $("#sec3").css("display", "none");
+  $("#sec4").css("display", "none");
+  $("#sec5").css("display", "none");
+  $("#sec6").css("display", "none");
+};
+
 function inputDate(id){
   $(id).datepicker({
       dateFormat: "yy-mm-dd",
@@ -84,6 +93,9 @@ const ProgressChange = (texto, id, val) => {
 
 
 $(document).ready(function () {
+  if($("#view").val() ==""){
+    $("#headerSection").css("display", "none");
+  }
   findForProgram();
   countSolicitud();
   localStorage.setItem('section','1');
@@ -116,7 +128,8 @@ $(document).ready(function () {
   $("#btnDeletePastCourses").click(function(){
     clearPasrCourses();
   });
-  $("#next1").click(() => {
+  // FUNCTION SECTIONS
+  const next1 = ()=>{
     if(validateDisabilities().status){
         //Comenzamos las validaciones de la sección1
         clearDisabilities();
@@ -153,21 +166,18 @@ $(document).ready(function () {
           return error(" <b>errocode: </b> Colocar un correo valido");
         if(calcularEdad($("#fechanac").val()) < 16)
           return error(" <b>errocode: </b> El participante tiene ser mayor o igual a 16 años");
-  
+
         //Ya completas las validaciones procedemos a pasar a la siguiente seccion (Seccion2 )
         ProgressChange("Educación formal y formación ocupacional", "2", "33.33");
-        $("#sec1").css("display", "none");
+        hidenAll();
         $("#sec2").css("display", "block");
         global_json1 = json1();
     }else{
       return error(validateDisabilities().msg);
     }
-  });
+  }
 
-  //========================================== 
-  //#region      SECCTION NEXT 2
-  // =========================================
-  $("#next2").click(() => {
+  const next2 = ()=>{
     // we validate that complete  previos courses
     if(validationCompleteNamePreviosCouses().status){
       if(validationCompletePreviousCourses().status){
@@ -198,7 +208,7 @@ $(document).ready(function () {
           
         //Finalizamos las validaciones seccion 2
         ProgressChange("Información sobre situación laboral", "3", "50");
-        $("#sec2").css("display", "none");
+        hidenAll();
         $("#sec3").css("display", "block");
         clearSection2();
 
@@ -208,20 +218,11 @@ $(document).ready(function () {
     }else{
       return error(`<b>errorcode</b> ${validationCompleteNamePreviosCouses().msg}`);
     }
-    
-  });
-//#endregion
+  }
 
-
-  //========================================== 
-  //#region    SECCTION NEXT 3
-  // =========================================
-  $("#next3").click(() => {
-  // valitade 
-  
-
+  const next3 = ()=>{
     if(validateSection3().status){
-        //INICIAMOS EL PROCESO DE VALIDACION DEL LADO DEL CLIENTE EN LA TERCERA PARTE DEL FORMULARIO
+      //INICIAMOS EL PROCESO DE VALIDACION DEL LADO DEL CLIENTE EN LA TERCERA PARTE DEL FORMULARIO
         if($("#c1").is(":checked") == false && $("#c2").is(":checked") == false && $("#c3").is(":checked") == false && $("#c4").is(":checked") == false && $("#c5").is(":checked")==false)
         return error(" <b>errocode: </b> Seleccione a que se dedica actualmente.");
         if($("#c5").is(":checked")==true && $("#txtOtro").val() == ''){
@@ -241,16 +242,15 @@ $(document).ready(function () {
         }
         //FINALIZAMOS EL PROCESO DE VALIDACION DEL LADO DEL CLIENTE EN LA TERCERA PARTE DEL FORMULARIO
         ProgressChange("Información sobre ingresos", "4", "66.33");
-        $("#sec3").css("display", "none");
+        hidenAll();
         $("#sec4").css("display", "block");
         clearSection3();
     }else{
       return error(validateSection3().msg);
     }
-  });
-//#endregion
+  }
 
-  $("#next4").click(() => {
+  const next4 = ()=>{
     if(validateSection4().status){
         //INICIAMOS EL PROCESO DE VALIDACION DEL LADO DEL CLIENTE EN LA CUARTA PARTE DEL FORMULARIO
         if(!$("#recibeingresosselect").val()){
@@ -269,14 +269,15 @@ $(document).ready(function () {
           "5",
           "82.66"
         );
-        $("#sec4").css("display", "none");
+        hidenAll();
         $("#sec5").css("display", "block");
         clearSection4();
     }else{
       return error(validateSection4().msg);
     }
-  });
-  $("#next5").click(() => {
+  }
+
+  const next5 = ()=>{
     if(validateSection5().status){
       //INICIAMOS EL PROCESO DE VALIDACION DEL LADO DEL CLIENTE EN LA QUINTA PARTE DEL FORMULARIO
       if($("#e1").is(":checked") == false && $("#e2").is(":checked") == false && $("#e3").is(":checked") == false && $("#e4").is(":checked") == false && $("#e5").is(":checked") == false && $("#e6").is(":checked") == false && $("#e7").is(":checked") == false)
@@ -288,7 +289,7 @@ $(document).ready(function () {
 
       //FINALIZAMOS EL PROCESO DE VALIDACION DEL LADO DEL CLIENTE EN LA QUINTA PARTE DEL FORMULARIO
       ProgressChange("Seguimiento", "6", "100");
-      $("#sec5").css("display", "none");
+      hidenAll();
       $("#sec6").css("display", "block");
       global_json2 = json2();
       localStorage.setItem('section','2');
@@ -296,12 +297,10 @@ $(document).ready(function () {
       infoMsg("<b>IMPORTANTE</b> Recuerde que en el seguimiento debe colocar una persona distinta a usted.");
     }else{
       return error(validateSection5().msg);
-    } 
-  });
+    }
+  }
 
-
-  //CRAMOS BOTON FINALIZAR PARA ENVIAR EL PEDIDO AL SERVIDOR
-  $("#next6").click(() => {
+  const next6 =() =>{
     //INICIAMOS EL PROCESO DE VALIDACION DEL LADO DEL CLIENTE EN LA QUINTA PARTE DEL FORMULARIO
     if(!$("#nombrecontacto").val())
       return error(" <b>errocode: </b> Rellene el campo 'Nombre completo del contacto.'");
@@ -321,13 +320,50 @@ $(document).ready(function () {
     //FINALIZAMOS EL PROCESO DE VALIDACION DEL LADO DEL CLIENTE EN LA QUINTA PARTE DEL FORMULARIO
     global_json3 = json3();
     SendFormulario();
+  }
+
+  const ant2 = () =>{
+    ProgressChange("Educación formal y formación ocupacional", "1", "10");
+    hidenAll();
+    $("#sec1").css("display", "block");
+  };
+
+  $("#next1").click(() => {
+    next1();
+  });
+  //========================================== 
+  //#region      SECCTION NEXT 2
+  // =========================================
+  $("#next2").click(() => {
+    next2();
+  });
+//#endregion
+  //========================================== 
+  //#region    SECCTION NEXT 3
+  // =========================================
+  $("#next3").click(() => {
+    next3();
+  });
+//#endregion
+
+  $("#next4").click(() => {
+    next4();
+  });
+
+  $("#next5").click(() => {
+    next5();
   });
 
 
+  //CRAMOS BOTON FINALIZAR PARA ENVIAR EL PEDIDO AL SERVIDOR
+  $("#next6").click(() => {
+    next6();
+  });
+
+
+
   $("#ant2").click(() => {
-    ProgressChange("Educación formal y formación ocupacional", "1", "10");
-    $("#sec1").css("display", "block");
-    $("#sec2").css("display", "none");
+    ant2();
   });
   $("#ant3").click(() => {
     ProgressChange("Información sobre situación laboral", "2", "33");
@@ -356,7 +392,24 @@ $(document).ready(function () {
 
   
 
- 
+  $("#next1N").click(()=>{
+    next1();
+  });
+  $("#next2N").click(()=>{
+    next2();
+  });
+  $("#next3N").click(()=>{
+    next3();
+  });
+  $("#next4N").click(()=>{
+    next4();
+  });
+  $("#next5N").click(()=>{
+    next5();
+  });
+  $("#ant2N").click(()=>{
+    ant2();
+  });
   
   // #region Mascara
   $("#dui").mask("00000000-0");

@@ -11,7 +11,6 @@
       type="text/css"
     />
     <link href="/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-
     <link
       rel="stylesheet"
       href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
@@ -76,1271 +75,1320 @@
         </p>
       </div>
       <div class="row">
-        <div class="col">
-          <div class="card mb-4 shadow-sm form">
-            <div class="card-header">
-              <small
-                ><span id="texto">Datos de identificación </span>:
-                <span id="id"> 1</span> de 6</small
-              >
-              <progress value="16.66" max="100" id="progBar"></progress>
-              
-            </div>
-            <form id="form_habil"></form>
-            <input type="hidden" value="<%=codigoCurso%>" id="codigoCurso" name="codigoCurso">
-            <div class="card-body" id="sec1" >
-              <h3>SECCIÓN 1. DATOS DE IDENTIFICACIÓN</h3>
-              <h6 class="lead">DATOS PERSONALES</h6>
-              <hr />
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header" id="headerSection">
               <div class="row">
-                <div class="col-md-3">
-                  <label>DUI</label
-                  ><input
-                    type="text"
-                    class="form-control form-control-sm"
-                    name="dui"
-                    id="dui"
-                  />
+                <div 
+                  id="ant2"
+                  class="col-1 m-1 text-white" 
+                  style="border: 1px solid rgb(26, 166, 197); border-radius: 100px; background-color: rgb(26, 166, 197); cursor:pointer;">
+                  <small>Sección 1</small>
                 </div>
-                <div class="col-md-3">
-                  <label>NIT</label
-                  ><input
-                    type="text"
-                    class="form-control form-control-sm"
-                    name="NIT"
-                    id="nit"
-                  />
+                <div 
+                  id="next1"
+                  class="col-1 m-1 text-white" 
+                  style="border: 1px solid rgb(26, 166, 197); border-radius: 100px; background-color: rgb(26, 166, 197); cursor:pointer;">
+                  <small>Sección 2</small>
                 </div>
-                <div class="col-md-6">
-                  <label>Nombres</label
-                  ><input
-                    type="text"
-                    class="form-control form-control-sm text-uppercase"
-                    name="nombres"
-                    id="nombres"
-                  />
+                <div 
+                  id="next2"
+                  class="col-1 m-1 text-white" 
+                  style="border: 1px solid rgb(26, 166, 197); border-radius: 100px; background-color: rgb(26, 166, 197); cursor:pointer;">
+                  <small>Sección 3</small>
                 </div>
-                <div class="col-md-6">
-                  <label>Apellidos</label
-                  ><input
-                    type="text"
-                    class="form-control form-control-sm text-uppercase"
-                    name="apellidos"
-                    id="apellidos"
-                  />
+                <div 
+                  id="next3"
+                  class="col-1 m-1 text-white" 
+                  style="border: 1px solid rgb(26, 166, 197); border-radius: 100px; background-color: rgb(26, 166, 197); cursor:pointer;">
+                  <small>Sección 4</small>
                 </div>
-                <div class="col-md-3">
-                  <label>Sexo</label>
-                  <select id="sexo" class="form-control form-control-sm">
-                    <option selected disabled>Seleccione sexo</option>
-                    <option value="Masculino">Masculino</option>
-                    <option value="Femenino">Femenino</option>
-                  </select>
+                <div 
+                  id="next4"
+                  class="col-1 m-1 text-white" 
+                  style="border: 1px solid rgb(26, 166, 197); border-radius: 100px; background-color: rgb(26, 166, 197); cursor:pointer;">
+                  <small>Sección 5</small>
                 </div>
-                <div class="col-md-4">
-                  <label for="cfamilia"
-                    >Cuantas personas integran su grupo familiar</label
-                  >
-                  <input
-                    type="number"
-                    class="form-control form-control-sm"
-                    value="0"
-                    min="0"
-                    name="cfamilia"
-                    id="cfamilia"
-                  />
+                <div 
+                  id="next5"
+                  class="col-1 m-1 text-white" 
+                  style="border: 1px solid rgb(26, 166, 197); border-radius: 100px; background-color: rgb(26, 166, 197); cursor:pointer;">
+                  <small>Sección 6</small>
                 </div>
-                <div class="col-md-3">
-                  <label>Estado familiar</label>
-                  <select
-                    id="estadofamiliar"
-                    class="form-control form-control-sm"
-                  >
-                    <option selected disabled>
-                      Seleccione Estado familiar
-                    </option>
-                    <option value="Soltero(a)">Soltero(a)</option>
-                    <option value="Casado(a)">Casado(a)</option>
-                    <option value="Acompanado">Acompañado</option>
-                    <option value="Divorciado(a)">Divorciado(a)</option>
-                    <option value="Separado(a)">Separado(a)</option>
-                    <option value="Viudo(a)">Viudo(a)</option>
-                  </select>
-                </div>
-                <div class="col-md-2">
-                  <label>Jefe(a) de hogar</label>
-                  <select id="jefehogar" class="form-control form-control-sm">
-                    <option selected disabled>Seleccione</option>
-                    <option value="Si">Si</option>
-                    <option value="No">No</option>
-                    <option value="Compartida">Compartida</option>
-                  </select>
-                </div>
-
-                <div class="col-md-3">
-                  <label for="nhijos">N° Hijos</label>
-                  <input
-                    type="number"
-                    class="form-control form-control-sm"
-                    value="0"
-                    min="0"
-                    name="nhijos"
-                    id="nhijos"
-                  />
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label>Se dedica a alguna Profesión u Oficio</label>
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="flexRadioDefault"
-                        id="flexRadioDefault1"
-                        value="si"
-                      />
-                      <label class="form-check-label" for="flexRadioDefault1">
-                        Si
-                      </label>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <div class="card mb-4 shadow-sm form">
+                    <div class="card-header">
+                      <small
+                        ><span id="texto">Datos de identificación </span>:
+                        <span id="id"> 1</span> de 6</small
+                      >
+                      <progress value="16.66" max="100" id="progBar"></progress>
+                      
                     </div>
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="flexRadioDefault"
-                        id="flexRadioDefault2"
-                        value="no"
-                        checked
-                      />
-                      <label class="form-check-label" for="flexRadioDefault2">
-                        No
-                      </label>
+                    <form id="form_habil"></form>
+                    <input type="hidden" value="<%=codigoCurso%>" id="codigoCurso" name="codigoCurso">
+                    <div class="card-body" id="sec1" >
+                      <h3>SECCIÓN 1. DATOS DE IDENTIFICACIÓN</h3>
+                      <h6 class="lead">DATOS PERSONALES</h6>
+                      <hr />
+                      <div class="row">
+                        <div class="col-md-3">
+                          <label>DUI</label
+                          ><input
+                            type="text"
+                            class="form-control form-control-sm"
+                            name="dui"
+                            id="dui"
+                          />
+                        </div>
+                        <div class="col-md-3">
+                          <label>NIT</label
+                          ><input
+                            type="text"
+                            class="form-control form-control-sm"
+                            name="NIT"
+                            id="nit"
+                          />
+                        </div>
+                        <div class="col-md-6">
+                          <label>Nombres</label
+                          ><input
+                            type="text"
+                            class="form-control form-control-sm text-uppercase"
+                            name="nombres"
+                            id="nombres"
+                          />
+                        </div>
+                        <div class="col-md-6">
+                          <label>Apellidos</label
+                          ><input
+                            type="text"
+                            class="form-control form-control-sm text-uppercase"
+                            name="apellidos"
+                            id="apellidos"
+                          />
+                        </div>
+                        <div class="col-md-3">
+                          <label>Sexo</label>
+                          <select id="sexo" class="form-control form-control-sm">
+                            <option selected disabled>Seleccione sexo</option>
+                            <option value="Masculino">Masculino</option>
+                            <option value="Femenino">Femenino</option>
+                          </select>
+                        </div>
+                        <div class="col-md-4">
+                          <label for="cfamilia"
+                            >Cuantas personas integran su grupo familiar</label
+                          >
+                          <input
+                            type="number"
+                            class="form-control form-control-sm"
+                            value="0"
+                            min="0"
+                            name="cfamilia"
+                            id="cfamilia"
+                          />
+                        </div>
+                        <div class="col-md-3">
+                          <label>Estado familiar</label>
+                          <select
+                            id="estadofamiliar"
+                            class="form-control form-control-sm"
+                          >
+                            <option selected disabled>
+                              Seleccione Estado familiar
+                            </option>
+                            <option value="Soltero(a)">Soltero(a)</option>
+                            <option value="Casado(a)">Casado(a)</option>
+                            <option value="Acompanado">Acompañado</option>
+                            <option value="Divorciado(a)">Divorciado(a)</option>
+                            <option value="Separado(a)">Separado(a)</option>
+                            <option value="Viudo(a)">Viudo(a)</option>
+                          </select>
+                        </div>
+                        <div class="col-md-2">
+                          <label>Jefe(a) de hogar</label>
+                          <select id="jefehogar" class="form-control form-control-sm">
+                            <option selected disabled>Seleccione</option>
+                            <option value="Si">Si</option>
+                            <option value="No">No</option>
+                            <option value="Compartida">Compartida</option>
+                          </select>
+                        </div>
+        
+                        <div class="col-md-3">
+                          <label for="nhijos">N° Hijos</label>
+                          <input
+                            type="number"
+                            class="form-control form-control-sm"
+                            value="0"
+                            min="0"
+                            name="nhijos"
+                            id="nhijos"
+                          />
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label>Se dedica a alguna Profesión u Oficio</label>
+                            <div class="form-check">
+                              <input
+                                class="form-check-input"
+                                type="radio"
+                                name="flexRadioDefault"
+                                id="flexRadioDefault1"
+                                value="si"
+                              />
+                              <label class="form-check-label" for="flexRadioDefault1">
+                                Si
+                              </label>
+                            </div>
+                            <div class="form-check">
+                              <input
+                                class="form-check-input"
+                                type="radio"
+                                name="flexRadioDefault"
+                                id="flexRadioDefault2"
+                                value="no"
+                                checked
+                              />
+                              <label class="form-check-label" for="flexRadioDefault2">
+                                No
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-5" style="display: none" id="profesiondiv">
+                          <label>¿A que Profesión u oficio se dedica?</label>
+                          <input
+                            type="text"
+                            class="form-control form-control-sm text-uppercase"
+                            name="profesion"
+                            id="profesion"
+                          />
+                        </div>
+                      </div>
+                      <hr />
+                      <h6 class="lead">FECHA/LUGAR DE NACIMIENTO</h6>
+                      <div class="row">
+                        <div class="col-md-4">
+                          <label>Departamento</label>
+                          <select id="depa_nac" class="form-control form-control-sm">
+                            <option selected disabled>Seleccione departamento</option>
+                          </select>
+                        </div>
+                        <div class="col-md-4">
+                          <label>Municipio</label>
+                          <select
+                            id="municipioNac"
+                            class="form-control form-control-sm"
+                          >
+                            <option selected disabled>Seleccione</option>
+                          </select>
+                        </div>
+                        <div class="col-md-2">
+                          <label>Fecha</label
+                          ><input
+                            type="text"
+                            class="form-control form-control-sm"
+                            name="fechanac"
+                            id="fechanac"
+                          />
+                        </div>
+                        <div class="col-md-2">
+                          <label>Edad</label
+                          ><input
+                            type="text"
+                            class="form-control form-control-sm"
+                            name="edad"
+                            id="edad"
+                            readonly
+                          />
+                        </div>
+                      </div>
+                      <hr />
+                      <h6 class="lead">DOMICILIO</h6>
+                      <div class="row">
+                        <div class="col-md-3">
+                          <label>Departamento</label>
+                          <select
+                            id="depdomicilio"
+                            class="form-control form-control-sm"
+                          >
+                            <option selected disabled>Seleccione departamento</option>
+                            <option value="salvadoreno">Salvadoreño</option>
+                            <option value="extranjero">Extranjero</option>
+                          </select>
+                        </div>
+                        <div class="col-md-3">
+                          <label>Municipio</label>
+                          <select
+                            id="municipioDomicilio"
+                            class="form-control form-control-sm"
+                          >
+                            <option selected disabled>Seleccione</option>
+                          </select>
+                        </div>
+                        <div class="col-md-6">
+                          <label>Dirección</label
+                          ><input
+                            type="text"
+                            class="form-control form-control-sm text-uppercase"
+                            name="direccion"
+                            id="direccion"
+                          />
+                          <small id="" class="form-text text-muted">
+                            Colonia, caserío, asentamiento o comunidad, seguido del 
+                            nombre de la calle o pasaje y por ultimo el número de casa o lote.
+                          </small>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-3">
+                          <label>Tel. Fijo</label
+                          ><input
+                            type="text"
+                            class="form-control form-control-sm"
+                            name="fijo"
+                            id="fijo"
+                          />
+                        </div>
+                        <div class="col-md-3">
+                          <label>Tel. Movil</label
+                          ><input
+                            type="text"
+                            class="form-control form-control-sm"
+                            name="movil"
+                            id="movil"
+                          />
+                          <small id="" class="form-text text-muted">El número ingresado debe tener whatsApp</small>
+                        </div>
+                        <div class="col-md-6">
+                          <label>E-mail</label
+                          ><input
+                            type="email"
+                            class="form-control form-control-sm"
+                            name="mail"
+                            id="mail"
+                          />
+                        </div>
+                      </div>
+                      <hr />
+                      <h6 class="lead">Discapacidades</h6>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <label>
+                            Tiene alguna discapacidad permanente?
+                          </label>
+                          <small id="" class="form-text text-muted">
+                            Responda "Si" sollo si tiene alguna o varias dificultades para realizar
+                            actividades de la vida diaria.
+                          </small>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              name="discapacidadesc"
+                              id="discapacidades1"
+                              value="si"
+                            />
+                            <label class="form-check-label" for="discapacidades1">
+                              Si
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              name="discapacidadesc"
+                              id="discapacidades2"
+                              checked
+                              value="no"
+                            />
+                            <label class="form-check-label" for="discapacidades2">
+                              No
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="container" id="discapacidades" style="display: none">
+                        <hr />
+                        <p>Por favor seleccione su discapacidad:</p>
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            name='disability'
+                            value="Moverse o caminar"
+                            id="discapacidad1"
+                          />
+                          <label class="form-check-label" for="defaultCheck1">
+                            Moverse o caminar
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            name='disability'
+                            value="Usar sus brazos o manos"
+                            id="discapacidad2"
+                          />
+                          <label class="form-check-label" for="defaultCheck2">
+                            Usar sus brazos o manos
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            name='disability'
+                            value="Ver, aun usando lentes"
+                            id="discapacidad3"
+                          />
+                          <label class="form-check-label" for="defaultCheck3">
+                            Ver, aun usando lentes
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            name='disability'
+                            value="Oír, aun usando aparatos especiales"
+                            id="discapacidad4"
+                          />
+                          <label class="form-check-label" for="defaultCheck4">
+                            Oír, aun usando aparatos especiales
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            name='disability'
+                            value="Hablar"
+                            id="discapacidad5"
+                          />
+                          <label class="form-check-label" for="defaultCheck5">
+                            Hablar
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            name='disability'
+                            value="Tiene algún retraso o deficiencia mental"
+                            id="discapacidad6"
+                          />
+                          <label class="form-check-label" for="defaultCheck6">
+                            Tiene algún retraso o deficiencia mental
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            name='disability'
+                            value="Bañarse, vestirse, alimentarse por si mismo"
+                            id="discapacidad7"
+                          />
+                          <label class="form-check-label" for="defaultCheck7">
+                            Bañarse, vestirse, alimentarse por si mismo
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            name='disability'
+                            value=""
+                            id="discapacidad8"
+                          />
+                          <label class="form-check-label" for="defaultCheck8">Otra limitación permanente. Explique: </label>
+                          <input
+                            type="text"
+                            name="otrosdiscapacidades"
+                            id="otrosdiscapacidades"
+                          />
+                        </div>
+                      </div>
+                      <hr />
+                      <button class="btn btn-success float-right" id="next1N">
+                        Continuar a : EDUCACIÓN FORMAL Y FORMACIÓN OCUPACIONAL
+                      </button>
                     </div>
+                    <div class="card-body" id="sec2" style="display: none;">
+                      <h3>SECCIÓN 2. EDUCACIÓN FORMAL Y FORMACIÓN OCUPACIONAL</h3>
+                      <h6 class="lead">EDUCACIÓN</h6>
+                      <hr />
+                      <div class="form-row">
+                        <div class="form-group col-md-3">
+                          <label>¿Sabe usted leer y escribir?</label>
+                          <select
+                            id="leerescribir"
+                            class="form-control form-control-sm"
+                          >
+                            <option selected disabled>Seleccione</option>
+                            <option value="1">Si</option>
+                            <option value="0">No</option>
+                          </select>
+                        </div>
+                        <div class="form-group col-md-3 analfabeta">
+                          <label>¿Solo sabe escribir o leer?</label>
+                          <select
+                            id="soloescribir"
+                            class="form-control form-control-sm"
+                          >
+                            <option selected disabled>Seleccione</option>
+                            <option value="Leer">Solo Leer</option>
+                            <option value="Ninguno">Ni leer ni escribir</option>
+                            <option value="Escribir">Solo Escribir</option>
+                            <option value="soloFirma">Solo firma</option>
+                          </select>
+                        </div>
+                        <!-- <div class="form-group col-md-3 analfabeta">
+                          <label>¿Solo firma ?</label>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              value="firmahuella"
+                              id="firmahuella"
+                            />
+                            <label class="form-check-label" for="firmahuella">
+                              (firma ó huella):
+                            </label>
+                          </div>
+                        </div> -->
+                      </div>
+                      <div class="form-row">
+                        <div class="col-md-5 form-group">
+                          <label>¿Cuál es el último grado de estudio finalizado?</label>
+                          <select id="ultgrado" class="form-control form-control-sm">
+                            <option selected disabled>Seleccione</option>
+                            <option value="Ninguno">Ninguno</option>
+                            <option value="1">1er. Gdo</option>
+                            <option value="2">2° Gdo</option>
+                            <option value="3">3er. Gdo</option>
+                            <option value="4">4° Gdo</option>
+                            <option value="5">5° Gdo</option>
+                            <option value="6">6° Gdo</option>
+                            <option value="7">7° Gdo</option>
+                            <option value="8">8° Gdo</option>
+                            <option value="9">9° Gdo</option>
+                            <option value="BachInc">Bachillerato Incompleto</option>
+                            <option value="BachCom">Bachillerato Completo</option>
+                            <option value="UniInc">Universidad Incompleta</option>
+                            <option value="UniCom">Universidad Completa</option>
+                            <option value="TecInc">Tecnológica Incompleta</option>
+                            <option value="TecCom">Tecnológica Completa</option>
+                          </select>
+                        </div>
+                        <div class="col-md-2 form-group">
+                          <label>Otra educación formal</label>
+                          <select name="educacionFormal" id="educacionFormal" class="form-control form-control-sm">
+                            <option value="">No seleccionado</option>
+                            <option value="no">No</option>
+                            <option value="si">Si</option>
+                          </select>
+                        </div>
+                        <div class="col-md-3 form-group" id="blockEduForm">
+                          <label>Escribe otra educación formal</label>
+                          <input type="text" class="form-control form-control-sm" id="txtOtherEduc"/>
+                        </div>
+                        <div class="col-md-3 form-group">
+                          <label>Titulo o certificado obtenido</label>
+                          <select name="titCer" id="titleOrCert" class="form-control form-control-sm">
+                            <option value="">No Seleccionado</option>
+                            <option value="no">No</option>
+                            <option value="si">Si</option>
+                          </select>
+                        </div>
+                        <div class="col-md-3 form-group" id="blockTitOr">
+                          <label for="txtTitleOr">Escribe que titulo o certificado</label>
+                          <input type="text" class="form-control" id="txtTitleOr">
+                        </div>
+                        <div class="col-md-2 form-group">
+                          <label>¿Estudia actualmente?</label>
+                          <select
+                            id="estudiaactualmente"
+                            class="form-control form-control-sm"
+                          >
+                            <option selected disabled>Seleccione</option>
+                            <option value="1">Si</option>
+                            <option value="0">No</option>
+                          </select>
+                        </div>
+                        <div
+                          class="col-md-4 form-group"
+                          id="tiempodejoestudio"
+                          style="display: none"
+                        >
+                          <label>¿Hace cuánto tiempo dejó de estudiar?</label>
+                          <select
+                            id="tiempoestudio"
+                            class="form-control form-control-sm"
+                          >
+                            <option selected disabled>Seleccione</option>
+                            <option value="1y">1 año</option>
+                            <option value="2-3y">2-3 años</option>
+                            <option value="3y">Más de 3 años</option>
+                            <option value="No recuerda">No recuerda</option>
+                          </select>
+                        </div>
+                      </div>
+                      <h6 class="lead">CURSOS PASADOS</h6>
+                      <hr />
+                      <div class="form-row">
+                        <div class="col-md-8 form-group">
+                          <label
+                            >¿Ha recibido antes algún(os) curso(s) de
+                            capacitación?</label
+                          >
+                          <select
+                            id="cursospasados"
+                            class="form-control form-control-sm"
+                          >
+                            <option selected disabled>Seleccione</option>
+                            <option value="1">Si</option>
+                            <option value="0">No</option>
+                          </select>
+                        </div>
+                        <div class="col-md-4">
+                          <button class="btn btn-sm btn-danger" id="btnDeletePastCourses">Limpiar cursos</button>
+                        </div>
+                      </div>
+                      <hr />
+                      <div class="container" id="beneficiocursos" style="display: none">
+                        <p>
+                          Si, ¿Cuál(es)? Mencione solamente las recibida los últimos 3
+                          años
+                        </p>
+                        <div class="form-row">
+                          <div class="col-md-3 form-group">
+                            <label>Nombre del curso</label>
+                            <input
+                              type="text"
+                              class="form-control form-control-sm text-uppercase"
+                              name="curso1"
+                              id="curso1"
+                            />
+                          </div>
+                          <div class="col-md-3 form-group">
+                            <label>¿Lo impartio INSAFORP?</label>
+                            <select id="impartio1" class="form-control form-control-sm">
+                              <option selected disabled>Seleccione</option>
+                              <option value="Si">Si</option>
+                              <option value="No">No</option>
+                              <option value="NoSe">No sabe</option>
+                            </select>
+                          </div>
+                          <div class="col-md-3 form-group">
+                            <label for="">Año que se impartio</label>
+                            <select
+                              name="year1" 
+                              id="year1" 
+                              class="form-control">
+                            </select>
+                          </div>
+                          <div class="col-md-3 form-group">
+                            <label>¿El curso le dio beneficios?</label>
+                            <select
+                              id="beneficio1"
+                              class="form-control form-control-sm beneficios"
+                            >
+                              <option selected disabled>Seleccione</option>
+                              <option value="Si">Si</option>
+                              <option value="No">No</option>
+                              <option value="NR">NR</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="col-md-3 form-group">
+                            <label>Nombre del curso</label>
+                            <input
+                              type="text"
+                              class="form-control form-control-sm text-uppercase"
+                              name="curso2"
+                              id="curso2"
+                            />
+                          </div>
+                          <div class="col-md-3 form-group">
+                            <label>¿Lo impartio INSAFORP?</label>
+                            <select id="impartio2" class="form-control form-control-sm">
+                              <option selected disabled>Seleccione</option>
+                              <option value="Si">Si</option>
+                              <option value="No">No</option>
+                              <option value="NoSe">No sabe</option>
+                            </select>
+                          </div>
+                          <div class="col-md-3 form-group">
+                            <label for="">Año que se impartio</label>
+                            <select
+                              name="year2" 
+                              id="year2" 
+                              class="form-control">
+                            </select>
+                          </div>
+                          <div class="col-md-3 form-group">
+                            <label>¿El curso le dio beneficios?</label>
+                            <select
+                              id="beneficio2"
+                              class="form-control form-control-sm beneficios"
+                            >
+                              <option selected disabled>Seleccione</option>
+                              <option value="Si">Si</option>
+                              <option value="No">No</option>
+                              <option value="NR">NR</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="col-md-3 form-group">
+                            <label>Nombre del curso</label>
+                            <input
+                              type="text"
+                              class="form-control form-control-sm text-uppercase"
+                              name="curso3"
+                              id="curso3"
+                            />
+                          </div>
+                          <div class="col-md-3 form-group">
+                            <label>¿Lo impartio INSAFORP?</label>
+                            <select id="impartio3" class="form-control form-control-sm">
+                              <option selected disabled>Seleccione</option>
+                              <option value="Si">Si</option>
+                              <option value="No">No</option>
+                              <option value="NoSe">No sabe</option>
+        
+                            </select>
+                          </div>
+                          <div class="col-md-3 form-group">
+                            <label for="">Año que se impartio</label>
+                            <select
+                              name="year3" 
+                              id="year3" 
+                              class="form-control">
+                            </select>
+                          </div>
+                          <div class="col-md-3 form-group">
+                            <label>¿El curso le dio beneficios?</label>
+                            <select
+                              id="beneficio3"
+                              class="form-control form-control-sm beneficios"
+                            >
+                              <option selected disabled>Seleccione</option>
+                              <option value="Si">Si</option>
+                              <option value="No">No</option>
+                              <option value="NR">NR</option>
+                            </select>
+                          </div>
+                        </div>
+                        <hr />
+                        <div id="cursopositivo" style="display: none;">
+                          <p>
+                            ¿Para que sirvió(eron) la(s) capacitacion(es) que recibió?
+                          </p>
+                          <small id="" class="form-text text-muted">
+                            Puede marcar más de una casilla.
+                          </small>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              value="Para trabajar por cuenta propia"
+                              id="b2"
+                            />
+                            <label class="form-check-label" for="b2">
+                              Para trabajar por cuenta propia
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              value="Obtener oportunidades de promoción en mi empleo actual"
+                              id="b3"
+                            />
+                            <label class="form-check-label" for="b3">
+                              Obtener oportunidades de promoción en mi empleo actual
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              value="Obtener otros ingresos por trabajos extras"
+                              id="b4"
+                            />
+                            <label class="form-check-label" for="b4">
+                              Obtener otros ingresos por trabajos extras
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              value="Cambiar a un empleo relacionado con la capacitación recibida"
+                              id="b5"
+                            />
+                            <label class="form-check-label" for="b5">
+                              Cambiar a un empleo relacionado con la capacitación
+                              recibida
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              value="Para obtener un empleo"
+                              id="b6"
+                            />
+                            <label class="form-check-label" for="b6">
+                              Para obtener un empleo
+                            </label>
+                          </div>
+                        </div>
+        
+                        <hr />
+                        <div class="form-row" id="cursonegativo" style="display: none;">
+                          <div class="col-md-12 form-group">
+                            <label
+                              >¿Por que cree que no recibió beneficios como producto de
+                              la/las capacitación/es?</label
+                            >
+                            <input
+                              type="text"
+                              class="form-control form-control-sm text-uppercase"
+                              name="nobeneficioc"
+                              id="nobeneficioc"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <button class="btn btn-success float-right" id="next2N">
+                        Continuar a : INFORMACIÓN SOBRE SU SITUACIÓN LABORAL
+                      </button>
+                      <button class="btn btn-primary float-left" id="ant2N">
+                        Regresar a : SECCIÓN 1 DATOS DE IDENTIFICACIÓN.
+                      </button>
+                    </div>
+                    <div class="card-body" id="sec3" style="display: none">
+                      <h3>SECCION 3. INFORMACIÓN SOBRE SU SITUACIÓN LABORAL</h3>
+                      <hr />
+                      <p>¿A qué actividad se dedica usted actualmente?</p>
+                      <small id="" class="form-text text-muted">
+                        Puede marcar más de una casilla.
+                      </small>
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          value="Estudia"
+                          id="c1"
+                        />
+                        <label class="form-check-label" for="c1"> Estudia </label>
+                      </div>
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          value="Oficios del hogar"
+                          id="c2"
+                        />
+                        <label class="form-check-label" for="c2">
+                          Oficios del hogar
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          value="Busca trabajo"
+                          id="c3"
+                        />
+                        <label class="form-check-label" for="c3"> Busca trabajo </label>
+                      </div>
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          value="Trabaja"
+                          id="c4"
+                        />
+                        <label class="form-check-label" for="c4"> Trabaja </label>
+                      </div>
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          value="Otro"
+                          id="c5"
+                        />
+                        <label class="form-check-label" for="c5">Otro</label>
+                      </div>
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="text"
+                          id="txtOtro"
+                          placeholder="Escribe si selecciona el check otro"
+                        />
+                      </div>
+                      <br><br>
+                      <hr />
+                      <div class="form-row" id="ifnottrabaja">
+                        <div class="col-md-3 form-group">
+                          <label>¿Ha trabajado antes?</label>
+                          <select
+                            id="trabajaantes"
+                            class="form-control form-control-sm"
+                          >
+                            <option selected disabled>Seleccione</option>
+                            <option value="1">Si</option>
+                            <option value="0">No</option>
+                          </select>
+                        </div>
+                        <div
+                          class="col-md-4 form-group"
+                          id="tiempoSinTrabajar"
+                          style="display: none"
+                        >
+                          <label>¿Cuánto tiempo hace que no trabaja?</label>
+                          <select
+                            id="tiempoSinTrabajarselect"
+                            class="form-control form-control-sm"
+                            name="tiempoSinTrabajarselect"
+                          >
+                            <option selected disabled>Seleccione</option>
+                            <option value="1y-">1 año o menos</option>
+                            <option value="2y">2 años</option>
+                            <option value="3y">3 años</option>
+                            <option value="3y+">Más de 3 años</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div id="iftrabaja" style="display: none">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <p>Si usted trabaja, ¿Qué tipo de trabajo tiene?</p>
+                            <select
+                              id="tipoempleo"
+                              class="form-control form-control-sm"
+                            >
+                              <option selected disabled>Seleccione</option>
+                              <option value="tmpcompleto">
+                                Empleo a tiempo completo
+                              </option>
+                              <option value="tmpparcial">
+                                Empleo a tiempo parcial
+                              </option>
+                              <option value="temporal">Empleo temporal</option>
+                              <option value="negocio">Negocio familiar</option>
+                              <option value="inde">
+                                Independiente o cuenta propia
+                              </option>
+                              <option value="informal">Trabajo informal</option>
+                              <option value="otro">Otro</option>
+                            </select>
+                          </div>
+                          <div class="col-md-4" id="otherWork">
+                            <label for="txtOtherWork" class="form-label">Especifique que tipo de trabajo tiene</label>
+                            <input 
+                              type="text" 
+                              id="txtOtherWork" 
+                              placeholder="Especifique que tipo de trabajo tiene"
+                              class="form-control"  
+                            >
+                          </div>
+                          <!-- <div class="col-md-4">
+                            <p>¿Cotiza ISSS y AFP?</p>
+                            <select name="cotiza" id="cotiza">
+                              <option value="">Seleccione</option>
+                              <option value="no">No</option>
+                              <option value="si">Si</option>
+                            </select>
+                          </div> -->
+                          <div
+                            class="col-md-6"
+                            id="sectordetrabajo"
+                            style="display: none"
+                          >
+                            <p>¿En que Sector trabaja?</p>
+                            <select
+                              id="sectortrabajo"
+                              class="form-control form-control-sm"
+                            >
+                              <option selected disabled>Seleccione</option>
+                              <option value="privado">Sector Privado</option>
+                              <option value="publico">Sector Público</option>
+                            </select>
+                            <small id="" class="form-text text-muted">Seleccione solamente si tiene un trabajo formal es decir si cotiza en ISSS y AFP</small>
+                          </div>
+                        </div>
+                      </div>
+                      <hr />
+                      <button class="btn btn-success float-right" id="next3N">
+                        Continuar a : INFORMACIÓN SOBRE LOS INGRESOS
+                      </button>
+                      <button class="btn btn-primary float-left" id="ant3">
+                        Regresar a : EDUCACIÓN FORMAL Y FORMACIÓN OCUPACIONAL
+                      </button>
+                    </div>
+                    <div class="card-body" id="sec4" style="display: none">
+                      <h3>SECCIÓN 4. INFORMACIÓN SOBRE LOS INGRESOS</h3>
+                      <hr />
+                      <div class="row">
+                        <div class="col-md-6">
+                          <p>¿Usted recibe ingresos?</p>
+                          <select
+                            id="recibeingresosselect"
+                            class="form-control form-control-sm"
+                          >
+                            <option selected disabled>Seleccione</option>
+                            <option value="1">Si</option>
+                            <option value="0">No</option>
+                          </select>
+                        </div>
+                        <div
+                          class="col-md-6"
+                          id="sirecibeingresos"
+                          style="display: none"
+                        >
+                          <p>¿De qué manera los obtiene?</p>
+        
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              value="Trabajo"
+                              id="ingresos1"
+                            />
+                            <label class="form-check-label" for="ingresos1">
+                              Trabajo
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              value="Ayuda familiar"
+                              id="ingresos2"
+                            />
+                            <label class="form-check-label" for="ingresos2">
+                              Ayuda familiar
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              value="Remesa"
+                              id="ingresos3"
+                            />
+                            <label class="form-check-label" for="ingresos3">
+                              Remesa
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              value="Pensión"
+                              id="ingresos4"
+                            />
+                            <label class="form-check-label" for="ingresos4">
+                              Pensión
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              value="otros"
+                              id="ingresos5"
+                            />
+                            <label class="form-check-label" for="ingresos4">
+                              Otros
+                            </label>
+                            <input
+                              type="text"
+                              name="otrosexpectativas"
+                              id="otrosIngresos"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <hr />
+                      <button class="btn btn-success float-right" id="next4N">
+                        Continuar a : EXPECTATIVA Y PERTINENCIA DE LA FORMACIÓN
+                      </button>
+                      <button class="btn btn-primary float-left" id="ant4">
+                        Regresar a : INFORMACIÓN SOBRE SU SITUACIÓN LABORAL.
+                      </button>
+                    </div>
+                    <div class="card-body" id="sec5" style="display: none">
+                      <h3>SECCIÓN 5. EXPECTATIVA Y PERTINENCIA DE LA FORMACIÓN</h3>
+                      <hr />
+                      <div class="row">
+                        <div class="col-md-6">
+                          <p>¿Qué espera lograr con la capacitación a recibir?</p>
+                          <small id="" class="form-text text-muted">
+                            Puede marcar más de una casilla.
+                          </small>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              value="Obtener oportunidades de promoción en mi empleo actual"
+                              name="espec"
+                              id="e1"
+                            />
+                            <label class="form-check-label" for="e1">
+                              Obtener oportunidades de promoción en mi empleo actual
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              value="Cambiar a un empleo relacionado con la capacitación recibida"
+                              name="espec"
+                              id="e2"
+                            />
+                            <label class="form-check-label" for="e2">
+                              Cambiar a un empleo relacionado con la capacitación
+                              recibida
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              value="Obtener un empleo formal"
+                              name="espec"
+                              id="e3"
+                            />
+                            <label class="form-check-label" for="e3">
+                              Obtener un empleo formal
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              value="Trabajar por cuenta propia"
+                              name="espec"
+                              id="e4"
+                            />
+                            <label class="form-check-label" for="e4">
+                              Trabajar por cuenta propia
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              value="Obtener ingresos extras"
+                              name="espec"
+                              id="e5"
+                            />
+                            <label class="form-check-label" for="e5">
+                              Obtener ingresos extras
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              value="Ninguno"
+                              id="e6"
+                            />
+                            <label class="form-check-label" for="e6"> Ninguno </label>
+                          </div>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              value="Otros"
+                              name="espec"
+                              id="e7"
+                            />
+                            <label>Otros</label>
+                            <input
+                              type="text"
+                              name="otrosexpectativas"
+                              id="otrosexpectativas"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <p>
+                            Pertinencia del curso que está solicitando con su ocupación
+                            actual
+                          </p>
+                          <select id="pertinencia" class="form-control form-control-sm">
+                            <option selected disabled>Seleccione</option>
+                            <option value="trabajoactual">
+                              El curso esta relacionado con su trabajo actual
+                            </option>
+                            <option value="nuevotrabajo">
+                              El curso esta relacionado con un nuevo trabajo
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <hr />
+                      <button class="btn btn-success float-right" id="next5N">
+                        Continuar a : SEGUIMIENTO
+                      </button>
+                      <button class="btn btn-primary float-left" id="ant5">
+                        Regresar a : INFORMACIÓN SOBRE LOS INGRESOS.
+                      </button>
+                    </div>
+                    <div class="card-body" id="sec6" style="display: none">
+                      <h3>SECCIÓN 6. SEGUIMIENTO</h3>
+                      <p>
+                        <b>IMPORTANTE:</b> Por favor brinde información de 1 persona, en
+                        caso que el INSAFORP necesite ponerse en contacto con usted para
+                        un seguimiento de la capacitación. <b>RECUERDE QUE NO PUEDE SER USTED MISMO</b>
+                      </p>
+                      <hr />
+                      <div class="form-row">
+                        <div class="col-md-6">
+                          <label>Nombre completo del contacto</label>
+                          <input
+                            type="text"
+                            class="form-control form-control-sm text-uppercase"
+                            name="nombrecontacto"
+                            id="nombrecontacto"
+                          />
+                        </div>
+                        <div class="col-md-6">
+                          <label>Parentesco:</label>
+                          <select id="parentesco" class="form-control form-control-sm">
+                            <option selected disabled>Seleccione</option>
+                            <option value="Abuelo(a)">Abuelo(a)</option>
+                            <option value="Amigo(a)">Amigo(a)</option>
+                            <option value="Comadre(a)">Comadre(a)</option>
+                            <option value="Compadre(a)">Compadre(a)</option>
+                            <option value="Compañero de vida(a)">
+                              Compañero de vida(a)
+                            </option>
+                            <option value="Consuegro(a)">Consuegro(a)</option>
+                            <option value="Cuñado(a)">Cuñado(a)</option>
+                            <option value="Esposo(a)">Esposo(a)</option>
+                            <option value="Familiar(a)">Familiar(a)</option>
+                            <option value="Hermano(a)">Hermano(a)</option>
+                            <option value="Hijastro(a)">Hijastro(a)</option>
+                            <option value="Hijo(a)">Hijo(a)</option>
+                            <option value="Madrastra">Madrastra</option>
+                            <option value="Madre">Madre</option>
+                            <option value="Madrina">Madrina</option>
+                            <option value="Nieto(a)">Nieto(a)</option>
+                            <option value="Nuera">Nuera</option>
+                            <option value="Padrastro">Padrastro</option>
+                            <option value="Padre">Padre</option>
+                            <option value="Padrino">Padrino</option>
+                            <option value="Primo(a)">Primo(a)</option>
+                            <option value="Sobrino(a)">Sobrino(a)</option>
+                            <option value="Suegro(a)">Suegro(a)</option>
+                            <option value="Tio(a)">Tio(a)</option>
+                            <option value="Yerno">Yerno</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-row">
+                        <div class="col-md-12">
+                          <label>Dirección:</label>
+                          <input
+                            type="text"
+                            class="form-control form-control-sm text-uppercase"
+                            name="direccioncontacto"
+                            id="direccioncontacto"
+                          />
+                        </div>
+                      </div>
+        
+                      <div class="form-row">
+                        <div class="col-md-6">
+                          <label>Departamento</label>
+                          <select
+                            id="departcontact"
+                            class="form-control form-control-sm"
+                          >
+                            <option selected disabled>Seleccione Departamento</option>
+                          </select>
+                        </div>
+                        <div class="col-md-6">
+                          <label>Municipio</label>
+                          <select
+                            id="municipiocontacto"
+                            class="form-control form-control-sm"
+                          >
+                            <option selected disabled>Seleccione municipio</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-row">
+                        <div class="col-md-4">
+                          <label>Tel. Fijo:</label>
+                          <input
+                            type="text"
+                            class="form-control form-control-sm"
+                            name="fijoContact"
+                            id="fijoContact"
+                          />
+                        </div>
+                        <div class="col-md-4">
+                          <label>Tel. Movil:</label>
+                          <input
+                            type="text"
+                            class="form-control form-control-sm"
+                            name="movilContacto"
+                            id="movilContacto"
+                          />
+                        </div>
+                        <div class="col-md-4">
+                          <label>E-mail:</label>
+                          <input
+                            type="text"
+                            class="form-control form-control-sm"
+                            name="emailcontacto"
+                            id= "emailcontacto"
+                          />
+                        </div>
+                      </div>
+                      <hr />
+                      <%if(idSolicitud != ''){%>
+                        <!-- <button class="btn btn-success float-right" id="btnUpdate">
+                          MODIFICAR
+                        </button> -->
+                      <%}else{%>
+                        <button class="btn btn-success float-right" id="next6">
+                          FINALIZAR
+                        </button>
+                      <%}%>
+                      
+                      <button class="btn btn-primary float-left" id="ant6">
+                        EXPECTATIVA Y PERTINENCIA DE LA FORMACIÓN
+                      </button>
+                    </div>
+                  </form>
                   </div>
                 </div>
-                <div class="col-md-5" style="display: none" id="profesiondiv">
-                  <label>¿A que Profesión u oficio se dedica?</label>
-                  <input
-                    type="text"
-                    class="form-control form-control-sm text-uppercase"
-                    name="profesion"
-                    id="profesion"
-                  />
-                </div>
               </div>
-              <hr />
-              <h6 class="lead">FECHA/LUGAR DE NACIMIENTO</h6>
-              <div class="row">
-                <div class="col-md-4">
-                  <label>Departamento</label>
-                  <select id="depa_nac" class="form-control form-control-sm">
-                    <option selected disabled>Seleccione departamento</option>
-                  </select>
-                </div>
-                <div class="col-md-4">
-                  <label>Municipio</label>
-                  <select
-                    id="municipioNac"
-                    class="form-control form-control-sm"
-                  >
-                    <option selected disabled>Seleccione</option>
-                  </select>
-                </div>
-                <div class="col-md-2">
-                  <label>Fecha</label
-                  ><input
-                    type="text"
-                    class="form-control form-control-sm"
-                    name="fechanac"
-                    id="fechanac"
-                  />
-                </div>
-                <div class="col-md-2">
-                  <label>Edad</label
-                  ><input
-                    type="text"
-                    class="form-control form-control-sm"
-                    name="edad"
-                    id="edad"
-                    readonly
-                  />
-                </div>
-              </div>
-              <hr />
-              <h6 class="lead">DOMICILIO</h6>
-              <div class="row">
-                <div class="col-md-3">
-                  <label>Departamento</label>
-                  <select
-                    id="depdomicilio"
-                    class="form-control form-control-sm"
-                  >
-                    <option selected disabled>Seleccione departamento</option>
-                    <option value="salvadoreno">Salvadoreño</option>
-                    <option value="extranjero">Extranjero</option>
-                  </select>
-                </div>
-                <div class="col-md-3">
-                  <label>Municipio</label>
-                  <select
-                    id="municipioDomicilio"
-                    class="form-control form-control-sm"
-                  >
-                    <option selected disabled>Seleccione</option>
-                  </select>
-                </div>
-                <div class="col-md-6">
-                  <label>Dirección</label
-                  ><input
-                    type="text"
-                    class="form-control form-control-sm text-uppercase"
-                    name="direccion"
-                    id="direccion"
-                  />
-                  <small id="" class="form-text text-muted">
-                    Colonia, caserío, asentamiento o comunidad, seguido del 
-                    nombre de la calle o pasaje y por ultimo el número de casa o lote.
-                  </small>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-3">
-                  <label>Tel. Fijo</label
-                  ><input
-                    type="text"
-                    class="form-control form-control-sm"
-                    name="fijo"
-                    id="fijo"
-                  />
-                </div>
-                <div class="col-md-3">
-                  <label>Tel. Movil</label
-                  ><input
-                    type="text"
-                    class="form-control form-control-sm"
-                    name="movil"
-                    id="movil"
-                  />
-                  <small id="" class="form-text text-muted">El número ingresado debe tener whatsApp</small>
-                </div>
-                <div class="col-md-6">
-                  <label>E-mail</label
-                  ><input
-                    type="email"
-                    class="form-control form-control-sm"
-                    name="mail"
-                    id="mail"
-                  />
-                </div>
-              </div>
-              <hr />
-              <h6 class="lead">Discapacidades</h6>
-              <div class="row">
-                <div class="col-md-12">
-                  <label>
-                    Tiene alguna discapacidad permanente?
-                  </label>
-                  <small id="" class="form-text text-muted">
-                    Responda "Si" sollo si tiene alguna o varias dificultades para realizar
-                    actividades de la vida diaria.
-                  </small>
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="discapacidadesc"
-                      id="discapacidades1"
-                      value="si"
-                    />
-                    <label class="form-check-label" for="discapacidades1">
-                      Si
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="discapacidadesc"
-                      id="discapacidades2"
-                      checked
-                      value="no"
-                    />
-                    <label class="form-check-label" for="discapacidades2">
-                      No
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div class="container" id="discapacidades" style="display: none">
-                <hr />
-                <p>Por favor seleccione su discapacidad:</p>
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    name='disability'
-                    value="Moverse o caminar"
-                    id="discapacidad1"
-                  />
-                  <label class="form-check-label" for="defaultCheck1">
-                    Moverse o caminar
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    name='disability'
-                    value="Usar sus brazos o manos"
-                    id="discapacidad2"
-                  />
-                  <label class="form-check-label" for="defaultCheck2">
-                    Usar sus brazos o manos
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    name='disability'
-                    value="Ver, aun usando lentes"
-                    id="discapacidad3"
-                  />
-                  <label class="form-check-label" for="defaultCheck3">
-                    Ver, aun usando lentes
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    name='disability'
-                    value="Oír, aun usando aparatos especiales"
-                    id="discapacidad4"
-                  />
-                  <label class="form-check-label" for="defaultCheck4">
-                    Oír, aun usando aparatos especiales
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    name='disability'
-                    value="Hablar"
-                    id="discapacidad5"
-                  />
-                  <label class="form-check-label" for="defaultCheck5">
-                    Hablar
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    name='disability'
-                    value="Tiene algún retraso o deficiencia mental"
-                    id="discapacidad6"
-                  />
-                  <label class="form-check-label" for="defaultCheck6">
-                    Tiene algún retraso o deficiencia mental
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    name='disability'
-                    value="Bañarse, vestirse, alimentarse por si mismo"
-                    id="discapacidad7"
-                  />
-                  <label class="form-check-label" for="defaultCheck7">
-                    Bañarse, vestirse, alimentarse por si mismo
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    name='disability'
-                    value=""
-                    id="discapacidad8"
-                  />
-                  <label class="form-check-label" for="defaultCheck8">Otra limitación permanente. Explique: </label>
-                  <input
-                    type="text"
-                    name="otrosdiscapacidades"
-                    id="otrosdiscapacidades"
-                  />
-                </div>
-              </div>
-              <hr />
-              <button class="btn btn-success float-right" id="next1">
-                Continuar a : EDUCACIÓN FORMAL Y FORMACIÓN OCUPACIONAL
-              </button>
             </div>
-            <div class="card-body" id="sec2" style="display: none;">
-              <h3>SECCIÓN 2. EDUCACIÓN FORMAL Y FORMACIÓN OCUPACIONAL</h3>
-              <h6 class="lead">EDUCACIÓN</h6>
-              <hr />
-              <div class="form-row">
-                <div class="form-group col-md-3">
-                  <label>¿Sabe usted leer y escribir?</label>
-                  <select
-                    id="leerescribir"
-                    class="form-control form-control-sm"
-                  >
-                    <option selected disabled>Seleccione</option>
-                    <option value="1">Si</option>
-                    <option value="0">No</option>
-                  </select>
-                </div>
-                <div class="form-group col-md-3 analfabeta">
-                  <label>¿Solo sabe escribir o leer?</label>
-                  <select
-                    id="soloescribir"
-                    class="form-control form-control-sm"
-                  >
-                    <option selected disabled>Seleccione</option>
-                    <option value="Leer">Solo Leer</option>
-                    <option value="Ninguno">Ni leer ni escribir</option>
-                    <option value="Escribir">Solo Escribir</option>
-                    <option value="soloFirma">Solo firma</option>
-                  </select>
-                </div>
-                <!-- <div class="form-group col-md-3 analfabeta">
-                  <label>¿Solo firma ?</label>
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      value="firmahuella"
-                      id="firmahuella"
-                    />
-                    <label class="form-check-label" for="firmahuella">
-                      (firma ó huella):
-                    </label>
-                  </div>
-                </div> -->
-              </div>
-              <div class="form-row">
-                <div class="col-md-5 form-group">
-                  <label>¿Cuál es el último grado de estudio finalizado?</label>
-                  <select id="ultgrado" class="form-control form-control-sm">
-                    <option selected disabled>Seleccione</option>
-                    <option value="Ninguno">Ninguno</option>
-                    <option value="1">1er. Gdo</option>
-                    <option value="2">2° Gdo</option>
-                    <option value="3">3er. Gdo</option>
-                    <option value="4">4° Gdo</option>
-                    <option value="5">5° Gdo</option>
-                    <option value="6">6° Gdo</option>
-                    <option value="7">7° Gdo</option>
-                    <option value="8">8° Gdo</option>
-                    <option value="9">9° Gdo</option>
-                    <option value="BachInc">Bachillerato Incompleto</option>
-                    <option value="BachCom">Bachillerato Completo</option>
-                    <option value="UniInc">Universidad Incompleta</option>
-                    <option value="UniCom">Universidad Completa</option>
-                    <option value="TecInc">Tecnológica Incompleta</option>
-                    <option value="TecCom">Tecnológica Completa</option>
-                  </select>
-                </div>
-                <div class="col-md-2 form-group">
-                  <label>Otra educación formal</label>
-                  <select name="educacionFormal" id="educacionFormal" class="form-control form-control-sm">
-                    <option value="">No seleccionado</option>
-                    <option value="no">No</option>
-                    <option value="si">Si</option>
-                  </select>
-                </div>
-                <div class="col-md-3 form-group" id="blockEduForm">
-                  <label>Escribe otra educación formal</label>
-                  <input type="text" class="form-control form-control-sm" id="txtOtherEduc"/>
-                </div>
-                <div class="col-md-3 form-group">
-                  <label>Titulo o certificado obtenido</label>
-                  <select name="titCer" id="titleOrCert" class="form-control form-control-sm">
-                    <option value="">No Seleccionado</option>
-                    <option value="no">No</option>
-                    <option value="si">Si</option>
-                  </select>
-                </div>
-                <div class="col-md-3 form-group" id="blockTitOr">
-                  <label for="txtTitleOr">Escribe que titulo o certificado</label>
-                  <input type="text" class="form-control" id="txtTitleOr">
-                </div>
-                <div class="col-md-2 form-group">
-                  <label>¿Estudia actualmente?</label>
-                  <select
-                    id="estudiaactualmente"
-                    class="form-control form-control-sm"
-                  >
-                    <option selected disabled>Seleccione</option>
-                    <option value="1">Si</option>
-                    <option value="0">No</option>
-                  </select>
-                </div>
-                <div
-                  class="col-md-4 form-group"
-                  id="tiempodejoestudio"
-                  style="display: none"
-                >
-                  <label>¿Hace cuánto tiempo dejó de estudiar?</label>
-                  <select
-                    id="tiempoestudio"
-                    class="form-control form-control-sm"
-                  >
-                    <option selected disabled>Seleccione</option>
-                    <option value="1y">1 año</option>
-                    <option value="2-3y">2-3 años</option>
-                    <option value="3y">Más de 3 años</option>
-                    <option value="No recuerda">No recuerda</option>
-                  </select>
-                </div>
-              </div>
-              <h6 class="lead">CURSOS PASADOS</h6>
-              <hr />
-              <div class="form-row">
-                <div class="col-md-8 form-group">
-                  <label
-                    >¿Ha recibido antes algún(os) curso(s) de
-                    capacitación?</label
-                  >
-                  <select
-                    id="cursospasados"
-                    class="form-control form-control-sm"
-                  >
-                    <option selected disabled>Seleccione</option>
-                    <option value="1">Si</option>
-                    <option value="0">No</option>
-                  </select>
-                </div>
-                <div class="col-md-4">
-                  <button class="btn btn-sm btn-danger" id="btnDeletePastCourses">Limpiar cursos</button>
-                </div>
-              </div>
-              <hr />
-              <div class="container" id="beneficiocursos" style="display: none">
-                <p>
-                  Si, ¿Cuál(es)? Mencione solamente las recibida los últimos 3
-                  años
-                </p>
-                <div class="form-row">
-                  <div class="col-md-3 form-group">
-                    <label>Nombre del curso</label>
-                    <input
-                      type="text"
-                      class="form-control form-control-sm text-uppercase"
-                      name="curso1"
-                      id="curso1"
-                    />
-                  </div>
-                  <div class="col-md-3 form-group">
-                    <label>¿Lo impartio INSAFORP?</label>
-                    <select id="impartio1" class="form-control form-control-sm">
-                      <option selected disabled>Seleccione</option>
-                      <option value="Si">Si</option>
-                      <option value="No">No</option>
-                      <option value="NoSe">No sabe</option>
-                    </select>
-                  </div>
-                  <div class="col-md-3 form-group">
-                    <label for="">Año que se impartio</label>
-                    <select
-                      name="year1" 
-                      id="year1" 
-                      class="form-control">
-                    </select>
-                  </div>
-                  <div class="col-md-3 form-group">
-                    <label>¿El curso le dio beneficios?</label>
-                    <select
-                      id="beneficio1"
-                      class="form-control form-control-sm beneficios"
-                    >
-                      <option selected disabled>Seleccione</option>
-                      <option value="Si">Si</option>
-                      <option value="No">No</option>
-                      <option value="NR">NR</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="form-row">
-                  <div class="col-md-3 form-group">
-                    <label>Nombre del curso</label>
-                    <input
-                      type="text"
-                      class="form-control form-control-sm text-uppercase"
-                      name="curso2"
-                      id="curso2"
-                    />
-                  </div>
-                  <div class="col-md-3 form-group">
-                    <label>¿Lo impartio INSAFORP?</label>
-                    <select id="impartio2" class="form-control form-control-sm">
-                      <option selected disabled>Seleccione</option>
-                      <option value="Si">Si</option>
-                      <option value="No">No</option>
-                      <option value="NoSe">No sabe</option>
-                    </select>
-                  </div>
-                  <div class="col-md-3 form-group">
-                    <label for="">Año que se impartio</label>
-                    <select
-                      name="year2" 
-                      id="year2" 
-                      class="form-control">
-                    </select>
-                  </div>
-                  <div class="col-md-3 form-group">
-                    <label>¿El curso le dio beneficios?</label>
-                    <select
-                      id="beneficio2"
-                      class="form-control form-control-sm beneficios"
-                    >
-                      <option selected disabled>Seleccione</option>
-                      <option value="Si">Si</option>
-                      <option value="No">No</option>
-                      <option value="NR">NR</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="form-row">
-                  <div class="col-md-3 form-group">
-                    <label>Nombre del curso</label>
-                    <input
-                      type="text"
-                      class="form-control form-control-sm text-uppercase"
-                      name="curso3"
-                      id="curso3"
-                    />
-                  </div>
-                  <div class="col-md-3 form-group">
-                    <label>¿Lo impartio INSAFORP?</label>
-                    <select id="impartio3" class="form-control form-control-sm">
-                      <option selected disabled>Seleccione</option>
-                      <option value="Si">Si</option>
-                      <option value="No">No</option>
-                      <option value="NoSe">No sabe</option>
-
-                    </select>
-                  </div>
-                  <div class="col-md-3 form-group">
-                    <label for="">Año que se impartio</label>
-                    <select
-                      name="year3" 
-                      id="year3" 
-                      class="form-control">
-                    </select>
-                  </div>
-                  <div class="col-md-3 form-group">
-                    <label>¿El curso le dio beneficios?</label>
-                    <select
-                      id="beneficio3"
-                      class="form-control form-control-sm beneficios"
-                    >
-                      <option selected disabled>Seleccione</option>
-                      <option value="Si">Si</option>
-                      <option value="No">No</option>
-                      <option value="NR">NR</option>
-                    </select>
-                  </div>
-                </div>
-                <hr />
-                <div id="cursopositivo" style="display: none;">
-                  <p>
-                    ¿Para que sirvió(eron) la(s) capacitacion(es) que recibió?
-                  </p>
-                  <small id="" class="form-text text-muted">
-                    Puede marcar más de una casilla.
-                  </small>
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      value="Para trabajar por cuenta propia"
-                      id="b2"
-                    />
-                    <label class="form-check-label" for="b2">
-                      Para trabajar por cuenta propia
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      value="Obtener oportunidades de promoción en mi empleo actual"
-                      id="b3"
-                    />
-                    <label class="form-check-label" for="b3">
-                      Obtener oportunidades de promoción en mi empleo actual
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      value="Obtener otros ingresos por trabajos extras"
-                      id="b4"
-                    />
-                    <label class="form-check-label" for="b4">
-                      Obtener otros ingresos por trabajos extras
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      value="Cambiar a un empleo relacionado con la capacitación recibida"
-                      id="b5"
-                    />
-                    <label class="form-check-label" for="b5">
-                      Cambiar a un empleo relacionado con la capacitación
-                      recibida
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      value="Para obtener un empleo"
-                      id="b6"
-                    />
-                    <label class="form-check-label" for="b6">
-                      Para obtener un empleo
-                    </label>
-                  </div>
-                </div>
-
-                <hr />
-                <div class="form-row" id="cursonegativo" style="display: none;">
-                  <div class="col-md-12 form-group">
-                    <label
-                      >¿Por que cree que no recibió beneficios como producto de
-                      la/las capacitación/es?</label
-                    >
-                    <input
-                      type="text"
-                      class="form-control form-control-sm text-uppercase"
-                      name="nobeneficioc"
-                      id="nobeneficioc"
-                    />
-                  </div>
-                </div>
-              </div>
-              <button class="btn btn-success float-right" id="next2">
-                Continuar a : INFORMACIÓN SOBRE SU SITUACIÓN LABORAL
-              </button>
-              <button class="btn btn-primary float-left" id="ant2">
-                Regresar a : SECCIÓN 1 DATOS DE IDENTIFICACIÓN.
-              </button>
-            </div>
-            <div class="card-body" id="sec3" style="display: none">
-              <h3>SECCION 3. INFORMACIÓN SOBRE SU SITUACIÓN LABORAL</h3>
-              <hr />
-              <p>¿A qué actividad se dedica usted actualmente?</p>
-              <small id="" class="form-text text-muted">
-                Puede marcar más de una casilla.
-              </small>
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  value="Estudia"
-                  id="c1"
-                />
-                <label class="form-check-label" for="c1"> Estudia </label>
-              </div>
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  value="Oficios del hogar"
-                  id="c2"
-                />
-                <label class="form-check-label" for="c2">
-                  Oficios del hogar
-                </label>
-              </div>
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  value="Busca trabajo"
-                  id="c3"
-                />
-                <label class="form-check-label" for="c3"> Busca trabajo </label>
-              </div>
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  value="Trabaja"
-                  id="c4"
-                />
-                <label class="form-check-label" for="c4"> Trabaja </label>
-              </div>
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  value="Otro"
-                  id="c5"
-                />
-                <label class="form-check-label" for="c5">Otro</label>
-              </div>
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="text"
-                  id="txtOtro"
-                  placeholder="Escribe si selecciona el check otro"
-                />
-              </div>
-              <br><br>
-              <hr />
-              <div class="form-row" id="ifnottrabaja">
-                <div class="col-md-3 form-group">
-                  <label>¿Ha trabajado antes?</label>
-                  <select
-                    id="trabajaantes"
-                    class="form-control form-control-sm"
-                  >
-                    <option selected disabled>Seleccione</option>
-                    <option value="1">Si</option>
-                    <option value="0">No</option>
-                  </select>
-                </div>
-                <div
-                  class="col-md-4 form-group"
-                  id="tiempoSinTrabajar"
-                  style="display: none"
-                >
-                  <label>¿Cuánto tiempo hace que no trabaja?</label>
-                  <select
-                    id="tiempoSinTrabajarselect"
-                    class="form-control form-control-sm"
-                    name="tiempoSinTrabajarselect"
-                  >
-                    <option selected disabled>Seleccione</option>
-                    <option value="1y-">1 año o menos</option>
-                    <option value="2y">2 años</option>
-                    <option value="3y">3 años</option>
-                    <option value="3y+">Más de 3 años</option>
-                  </select>
-                </div>
-              </div>
-              <div id="iftrabaja" style="display: none">
-                <div class="row">
-                  <div class="col-md-6">
-                    <p>Si usted trabaja, ¿Qué tipo de trabajo tiene?</p>
-                    <select
-                      id="tipoempleo"
-                      class="form-control form-control-sm"
-                    >
-                      <option selected disabled>Seleccione</option>
-                      <option value="tmpcompleto">
-                        Empleo a tiempo completo
-                      </option>
-                      <option value="tmpparcial">
-                        Empleo a tiempo parcial
-                      </option>
-                      <option value="temporal">Empleo temporal</option>
-                      <option value="negocio">Negocio familiar</option>
-                      <option value="inde">
-                        Independiente o cuenta propia
-                      </option>
-                      <option value="informal">Trabajo informal</option>
-                      <option value="otro">Otro</option>
-                    </select>
-                  </div>
-                  <div class="col-md-4" id="otherWork">
-                    <label for="txtOtherWork" class="form-label">Especifique que tipo de trabajo tiene</label>
-                    <input 
-                      type="text" 
-                      id="txtOtherWork" 
-                      placeholder="Especifique que tipo de trabajo tiene"
-                      class="form-control"  
-                    >
-                  </div>
-                  <!-- <div class="col-md-4">
-                    <p>¿Cotiza ISSS y AFP?</p>
-                    <select name="cotiza" id="cotiza">
-                      <option value="">Seleccione</option>
-                      <option value="no">No</option>
-                      <option value="si">Si</option>
-                    </select>
-                  </div> -->
-                  <div
-                    class="col-md-6"
-                    id="sectordetrabajo"
-                    style="display: none"
-                  >
-                    <p>¿En que Sector trabaja?</p>
-                    <select
-                      id="sectortrabajo"
-                      class="form-control form-control-sm"
-                    >
-                      <option selected disabled>Seleccione</option>
-                      <option value="privado">Sector Privado</option>
-                      <option value="publico">Sector Público</option>
-                    </select>
-                    <small id="" class="form-text text-muted">Seleccione solamente si tiene un trabajo formal es decir si cotiza en ISSS y AFP</small>
-                  </div>
-                </div>
-              </div>
-              <hr />
-              <button class="btn btn-success float-right" id="next3">
-                Continuar a : INFORMACIÓN SOBRE LOS INGRESOS
-              </button>
-              <button class="btn btn-primary float-left" id="ant3">
-                Regresar a : EDUCACIÓN FORMAL Y FORMACIÓN OCUPACIONAL
-              </button>
-            </div>
-            <div class="card-body" id="sec4" style="display: none">
-              <h3>SECCIÓN 4. INFORMACIÓN SOBRE LOS INGRESOS</h3>
-              <hr />
-              <div class="row">
-                <div class="col-md-6">
-                  <p>¿Usted recibe ingresos?</p>
-                  <select
-                    id="recibeingresosselect"
-                    class="form-control form-control-sm"
-                  >
-                    <option selected disabled>Seleccione</option>
-                    <option value="1">Si</option>
-                    <option value="0">No</option>
-                  </select>
-                </div>
-                <div
-                  class="col-md-6"
-                  id="sirecibeingresos"
-                  style="display: none"
-                >
-                  <p>¿De qué manera los obtiene?</p>
-
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      value="Trabajo"
-                      id="ingresos1"
-                    />
-                    <label class="form-check-label" for="ingresos1">
-                      Trabajo
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      value="Ayuda familiar"
-                      id="ingresos2"
-                    />
-                    <label class="form-check-label" for="ingresos2">
-                      Ayuda familiar
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      value="Remesa"
-                      id="ingresos3"
-                    />
-                    <label class="form-check-label" for="ingresos3">
-                      Remesa
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      value="Pensión"
-                      id="ingresos4"
-                    />
-                    <label class="form-check-label" for="ingresos4">
-                      Pensión
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      value="otros"
-                      id="ingresos5"
-                    />
-                    <label class="form-check-label" for="ingresos4">
-                      Otros
-                    </label>
-                    <input
-                      type="text"
-                      name="otrosexpectativas"
-                      id="otrosIngresos"
-                    />
-                  </div>
-                </div>
-              </div>
-              <hr />
-              <button class="btn btn-success float-right" id="next4">
-                Continuar a : EXPECTATIVA Y PERTINENCIA DE LA FORMACIÓN
-              </button>
-              <button class="btn btn-primary float-left" id="ant4">
-                Regresar a : INFORMACIÓN SOBRE SU SITUACIÓN LABORAL.
-              </button>
-            </div>
-            <div class="card-body" id="sec5" style="display: none">
-              <h3>SECCIÓN 5. EXPECTATIVA Y PERTINENCIA DE LA FORMACIÓN</h3>
-              <hr />
-              <div class="row">
-                <div class="col-md-6">
-                  <p>¿Qué espera lograr con la capacitación a recibir?</p>
-                  <small id="" class="form-text text-muted">
-                    Puede marcar más de una casilla.
-                  </small>
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      value="Obtener oportunidades de promoción en mi empleo actual"
-                      name="espec"
-                      id="e1"
-                    />
-                    <label class="form-check-label" for="e1">
-                      Obtener oportunidades de promoción en mi empleo actual
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      value="Cambiar a un empleo relacionado con la capacitación recibida"
-                      name="espec"
-                      id="e2"
-                    />
-                    <label class="form-check-label" for="e2">
-                      Cambiar a un empleo relacionado con la capacitación
-                      recibida
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      value="Obtener un empleo formal"
-                      name="espec"
-                      id="e3"
-                    />
-                    <label class="form-check-label" for="e3">
-                      Obtener un empleo formal
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      value="Trabajar por cuenta propia"
-                      name="espec"
-                      id="e4"
-                    />
-                    <label class="form-check-label" for="e4">
-                      Trabajar por cuenta propia
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      value="Obtener ingresos extras"
-                      name="espec"
-                      id="e5"
-                    />
-                    <label class="form-check-label" for="e5">
-                      Obtener ingresos extras
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      value="Ninguno"
-                      id="e6"
-                    />
-                    <label class="form-check-label" for="e6"> Ninguno </label>
-                  </div>
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      value="Otros"
-                      name="espec"
-                      id="e7"
-                    />
-                    <label>Otros</label>
-                    <input
-                      type="text"
-                      name="otrosexpectativas"
-                      id="otrosexpectativas"
-                    />
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <p>
-                    Pertinencia del curso que está solicitando con su ocupación
-                    actual
-                  </p>
-                  <select id="pertinencia" class="form-control form-control-sm">
-                    <option selected disabled>Seleccione</option>
-                    <option value="trabajoactual">
-                      El curso esta relacionado con su trabajo actual
-                    </option>
-                    <option value="nuevotrabajo">
-                      El curso esta relacionado con un nuevo trabajo
-                    </option>
-                  </select>
-                </div>
-              </div>
-              <hr />
-              <button class="btn btn-success float-right" id="next5">
-                Continuar a : SEGUIMIENTO
-              </button>
-              <button class="btn btn-primary float-left" id="ant5">
-                Regresar a : INFORMACIÓN SOBRE LOS INGRESOS.
-              </button>
-            </div>
-            <div class="card-body" id="sec6" style="display: none">
-              <h3>SECCIÓN 6. SEGUIMIENTO</h3>
-              <p>
-                <b>IMPORTANTE:</b> Por favor brinde información de 1 persona, en
-                caso que el INSAFORP necesite ponerse en contacto con usted para
-                un seguimiento de la capacitación. <b>RECUERDE QUE NO PUEDE SER USTED MISMO</b>
-              </p>
-              <hr />
-              <div class="form-row">
-                <div class="col-md-6">
-                  <label>Nombre completo del contacto</label>
-                  <input
-                    type="text"
-                    class="form-control form-control-sm text-uppercase"
-                    name="nombrecontacto"
-                    id="nombrecontacto"
-                  />
-                </div>
-                <div class="col-md-6">
-                  <label>Parentesco:</label>
-                  <select id="parentesco" class="form-control form-control-sm">
-                    <option selected disabled>Seleccione</option>
-                    <option value="Abuelo(a)">Abuelo(a)</option>
-                    <option value="Amigo(a)">Amigo(a)</option>
-                    <option value="Comadre(a)">Comadre(a)</option>
-                    <option value="Compadre(a)">Compadre(a)</option>
-                    <option value="Compañero de vida(a)">
-                      Compañero de vida(a)
-                    </option>
-                    <option value="Consuegro(a)">Consuegro(a)</option>
-                    <option value="Cuñado(a)">Cuñado(a)</option>
-                    <option value="Esposo(a)">Esposo(a)</option>
-                    <option value="Familiar(a)">Familiar(a)</option>
-                    <option value="Hermano(a)">Hermano(a)</option>
-                    <option value="Hijastro(a)">Hijastro(a)</option>
-                    <option value="Hijo(a)">Hijo(a)</option>
-                    <option value="Madrastra">Madrastra</option>
-                    <option value="Madre">Madre</option>
-                    <option value="Madrina">Madrina</option>
-                    <option value="Nieto(a)">Nieto(a)</option>
-                    <option value="Nuera">Nuera</option>
-                    <option value="Padrastro">Padrastro</option>
-                    <option value="Padre">Padre</option>
-                    <option value="Padrino">Padrino</option>
-                    <option value="Primo(a)">Primo(a)</option>
-                    <option value="Sobrino(a)">Sobrino(a)</option>
-                    <option value="Suegro(a)">Suegro(a)</option>
-                    <option value="Tio(a)">Tio(a)</option>
-                    <option value="Yerno">Yerno</option>
-                  </select>
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="col-md-12">
-                  <label>Dirección:</label>
-                  <input
-                    type="text"
-                    class="form-control form-control-sm text-uppercase"
-                    name="direccioncontacto"
-                    id="direccioncontacto"
-                  />
-                </div>
-              </div>
-
-              <div class="form-row">
-                <div class="col-md-6">
-                  <label>Departamento</label>
-                  <select
-                    id="departcontact"
-                    class="form-control form-control-sm"
-                  >
-                    <option selected disabled>Seleccione Departamento</option>
-                  </select>
-                </div>
-                <div class="col-md-6">
-                  <label>Municipio</label>
-                  <select
-                    id="municipiocontacto"
-                    class="form-control form-control-sm"
-                  >
-                    <option selected disabled>Seleccione municipio</option>
-                  </select>
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="col-md-4">
-                  <label>Tel. Fijo:</label>
-                  <input
-                    type="text"
-                    class="form-control form-control-sm"
-                    name="fijoContact"
-                    id="fijoContact"
-                  />
-                </div>
-                <div class="col-md-4">
-                  <label>Tel. Movil:</label>
-                  <input
-                    type="text"
-                    class="form-control form-control-sm"
-                    name="movilContacto"
-                    id="movilContacto"
-                  />
-                </div>
-                <div class="col-md-4">
-                  <label>E-mail:</label>
-                  <input
-                    type="text"
-                    class="form-control form-control-sm"
-                    name="emailcontacto"
-                    id= "emailcontacto"
-                  />
-                </div>
-              </div>
-              <hr />
-              <%if(idSolicitud != ''){%>
-                <!-- <button class="btn btn-success float-right" id="btnUpdate">
-                  MODIFICAR
-                </button> -->
-              <%}else{%>
-                <button class="btn btn-success float-right" id="next6">
-                  FINALIZAR
-                </button>
-              <%}%>
-              
-              <button class="btn btn-primary float-left" id="ant6">
-                EXPECTATIVA Y PERTINENCIA DE LA FORMACIÓN
-              </button>
-            </div>
-          </form>
           </div>
         </div>
       </div>
+      
     </main> 
     <input type="hidden" id="type" value="<%= type%>">
     <input type="hidden" id="view" value="<%= view%>">
