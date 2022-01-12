@@ -6,7 +6,7 @@ const error = (error) => {
     });
   };
 
-  const warningMsg =(msg) =>{
+  var warningMsg =(msg) =>{
     Swal.fire({
       icon: "warning",
       title: "ADVERTENCIA",
@@ -54,7 +54,7 @@ const error = (error) => {
       },
     });
   };
-  const loader = () => {
+  var loader = () => {
     Swal.fire({
       title: "Por favor, Espere",
       html: "Procesando información",

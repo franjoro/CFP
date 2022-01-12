@@ -93,15 +93,16 @@ habil.main = async (req, res) => {
 
 habil.renderFormulario = async(req,res) =>{
     const {idSolicitud, type, view} = req.params;
-    const idPrograma = '';
-    const idProgram = '';
     try {
-        const sql = `SELECT C.Nombre as nombre,C.habilitado as habilitado, C.Horario as horario, C.Codigo_curso as codigoCurso FROM tb_habil_solicitudes AS S INNER JOIN tb_cursos C ON S.Codigo_curso = C.Codigo_curso WHERE id = ?`;
+        const sql = `SELECT C.Nombre as nombre,C.habilitado as habilitado, C.Horario as horario, C.Codigo_curso as codigoCurso, C.id_programa AS idProgram FROM tb_habil_solicitudes AS S INNER JOIN tb_cursos C ON S.Codigo_curso = C.Codigo_curso WHERE id = ?`;
         const curso = await pool.query(sql,[idSolicitud]);
         const nombre = curso[0].nombre;
         const horario = curso[0].horario;
         const habilitado =curso[0].habilitado;
         const codigoCurso = curso[0].codigoCurso;
+        const idProgram = curso[0].idProgram;
+        const idPrograma = curso[0].idProgram;
+        console.log(idProgram)
         return res.render("habil/formulario", {
             nombre,
             horario,

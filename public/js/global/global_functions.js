@@ -29,7 +29,7 @@ const validate16 = (id) =>{
 };
 //#endregion
 
-const warningMsg =(msg) =>{
+var warningMsg =(msg) =>{
   Swal.fire({
     icon: "warning",
     title: "ADVERTENCIA",

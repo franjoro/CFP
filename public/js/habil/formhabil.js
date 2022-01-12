@@ -32,7 +32,7 @@ function inputDate(id){
 };
 
 //Loader
-const loader = () => {
+var loader = () => {
   Swal.fire({
     title: "Por favor, Espere",
     html: "Cargando Data",
