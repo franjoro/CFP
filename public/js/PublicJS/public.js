@@ -369,6 +369,7 @@ $(document).ready(() => {
     if (
       !dui ||
       !nombre ||
+      !isss ||
       !tel ||
       !email ||
       !genero || 
