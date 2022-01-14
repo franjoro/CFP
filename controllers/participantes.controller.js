@@ -54,10 +54,11 @@ participantes.edit = async (req, res) => {
       req.body.emailEdit,
       req.body.telEdit,
       req.body.correlativo_planilla,
+      req.body.isss_edit,
       req.body.duiEdit,
     ];
     const statment =
-      "UPDATE tb_participante SET dui = ? , Nombre = ? , Email = ?, Telefono = ?, correlativo_planilla = ? WHERE DUI= ?";
+      "UPDATE tb_participante SET dui = ? , Nombre = ? , Email = ?, Telefono = ?, correlativo_planilla = ?, ISSS = ? WHERE DUI= ?";
     const query = await pool.query(statment, data);
     return res.json(query);
   } catch (err) {

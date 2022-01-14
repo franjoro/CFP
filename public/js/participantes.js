@@ -27,6 +27,15 @@ table = () => {
       { data: "Telefono" },
       { data: "Email" },
       { data: "Genero" },
+      {
+        render(data,type,row){
+          if(row.ISSS !=""){
+            return row.ISSS
+          }else{
+            return " - "
+          }
+        }
+      },
 
       {
         "render": function (data, type, JsonResultRow, meta) {
@@ -91,5 +100,6 @@ $(document).ready(() => {
     $("#emailEdit").val(data.Email);
     $("#nameEdit").val(data.Nombre);
     $('#telEdit').val(data.Telefono);
+    $('#isss_edit').val(data.ISSS);
   } );
 });
