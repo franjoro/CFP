@@ -303,4 +303,14 @@ empresas.Aprobarsolicitudes = async (req, res) => {
   }
 };
 
+empresas.readId = async (req,res) =>{
+  try {
+    const query = `SELECT id_empresa, Nombre FROM tb_empresa;`;
+    const data = await pool.query(query);
+    return res.json({ results: data });
+  } catch (error) {
+    return res.status(400).json({ error });
+  }
+};
+
 module.exports = empresas;
