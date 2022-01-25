@@ -27,9 +27,10 @@ const  tbStudents = () =>{
         {
             render(data, type, row) {
               const html = `
-              <div class="btn-group" role = "group" aria - label="Basic example">
-              <a href="/admin/vinculacion-laboral/detalle/${row.id}" class="btn btn-success"><i class="fas fa-file-alt"></i></i></a>
-            </div >`;
+                <div class="btn-group" role = "group" aria - label="Basic example">
+                    <a href="/admin/vinculacion-laboral/detalle/${row.id}" class="btn btn-success"><i class="fas fa-address-card"></i></a>
+                    <a href="/admin/vinculacion-laboral/documentacion/${row.id}" class="btn btn-primary"><i class="fas fa-file-archive"></i></a>
+                </div >`;
               return html;
             },
           },

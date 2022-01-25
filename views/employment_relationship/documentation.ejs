@@ -1,0 +1,114 @@
+<link rel="stylesheet" href="/static/vendor/datatables/datatables.min.css" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"type="text/css" />
+  
+  <%- include('../partials/header.admin.ejs'); %>
+  <div class="container">
+      <div class="row">
+          <div class="col-12">
+              <div class="card shadow rounded">
+                <div class="card-header">
+                    <h3 style="color: rgb(60, 60, 60);">Documentos del estudiante</h3>
+                </div>
+                <div class="card-body">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <p class="" style="color: rgb(0, 166, 255);">Obten, sube y actuliza los documentos relevantes del estudiante</p>
+                            <p class="small" style="color: rgb(0, 166, 255);">Información general del estudiante</p>
+                            <div class="row mt-2 mb-2">
+                                <div class="col-2">
+                                    <h6>Carnet: <%= studentDato.carnet%></h6>
+                                </div>
+                                <div class="col-4">
+                                    <h6>Nombre: <%= studentDato.nombres%> <%= studentDato.apellidos%></h6>
+                                </div>
+                                <div class="col-4">
+                                    <h6>Nombre de carrera: <%= studentDato.carrera%></h6>
+                                </div>
+                                <div class="col-2">
+                                    <h6>Genero: <%= studentDato.genero%></h6>
+                                </div>
+                            </div>
+                            <div class="row mt-2 mb-2">
+                                <div class="col-2">
+                                    <h6>Teléfono: <%= studentDato.telefono_movil%></h6>
+                                </div>
+                                <div class="col-4">
+                                    <h6>Correo: <%= studentDato.correo%></h6>
+                                </div>
+                                <div class="col-4">
+                                    <h6>Dirección: <%= studentDato.direccion%></h6>
+                                </div>
+                            </div>
+                            <div class="row mt-2 mb-2">
+                                <div class="col-2">
+                                    <h6>Nivel academico: <%= studentDato.nivel_academico%></h6>
+                                </div>
+                                <div class="col-4">
+                                    <h6>Estado civil: <%= studentDato.estado_civil%></h6>
+                                </div>
+                                <div class="col-4">
+                                    <h6>Fecha de nacimiento: <%= studentDato.fechaNac%></h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mt-3 mb-3 shadow">
+                        <div class="card-body">
+                            <h5 class="mb-3 mt-3"><b>Documentación de <%= studentDato.nombres%> <%= studentDato.apellidos%></b></h5>
+                            <button class="btn btn-success mb-3" data-toggle="modal" data-target="#modalDocumentsStudent">Agregar documento <i class="fas fa-file-archive"></i></button>
+                            <a href="../detalle/<%= idStudent%>" class="btn btn-primary mb-3">Ver vinculación laboral <i class="fas fa-info-circle"></i></a>
+                            <%- include("./Boards/table_documents");%>
+                        </div>
+                    </div>
+                    <div class="card mt-3 mb-3">
+                        <div class="card-body">
+                            <h5 class="mb-3 mt-3"><b>Ver Documentación</b></h5>
+                            <div id="framediv"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <p class="text-center small" style="color: gray;">Administración de vinculación laboral</p>
+                </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <!-- modals include -->
+  <%- include("./Modals/modalDocuments");%>
+  <%- include("./Modals/modalUpdateDocuments");%>
+  <!-- inputs hidden -->
+  <!-- include footer -->
+  <input type="hidden" id="idStudent" value="<%= idStudent%>">
+  <input type="hidden" id="idDocument" value="">
+  <%- include('../partials/footer'); %>
+
+  <!-- SCRIPT -->
+  <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.6/dayjs.min.js"></script>
+  <script src="/static/js/jquery.mask.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="/static/js/sweetalert2.all.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+  <!--DATATABLE DEPENDENCIES-->
+  <script src="/static/vendor/datatables/datatables.min.js"></script>
+  <script src="/static/js/dataTables.buttons.min.js"></script>
+  <script src="/static/js/pdfmake.min.js"></script>
+  <script src="/static/js/vfs_fonts.js"></script>
+  <script src="/static/js/buttons.html5.min.js"></script>
+  <script src="/static/js/buttons.print.min.js"></script>
+  <script src="/static/js/jszip.min.js"></script>
+  <!-- SCRIP IN MENU -->
+  <script src="/static/js/jquery.cookie.js"></script>
+  <script src="/static/js/global/global_variables.js"></script>
+  <script src="/static/js/global/alerts.js"></script>
+  <script src="/static/js/global/global_functions.js"></script>
+  <script src="/static/js/global/aws_management.js"></script>
+  <script src="/static/js/employment_relationship/student_document/variables.js"></script>
+  <script src="/static/js/employment_relationship/student_document/insert.js"></script>
+  <script src="/static/js/employment_relationship/student_document/tb-document.js"></script>
+  <script src="/static/js/employment_relationship/student_document/update.js"></script>
+  <script src="/static/js/employment_relationship/student_document/delete.js"></script>
+  <script src="/static/js/employment_relationship/student_document/clicks.js"></script>
+  
+

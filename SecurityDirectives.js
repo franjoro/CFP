@@ -11,7 +11,8 @@ const Directivas = {
             "https://cdnjs.cloudflare.com",
             "https://cdn.datatables.net",
             "https://www.googletagmanager.com",
-            "https://cdn.tiny.cloud"
+            "https://cdn.tiny.cloud",
+            "https://unpkg.com"
         ],
         connectSrc: [
             "'self'", 

@@ -17,8 +17,13 @@ const Interview = () => {
     // const [urlServer, setUrlServer] = useState('http://localhost:3000');
     const [show, setShow] = useState(false)
     const [ cookies ,  setCookie ,  removeCookie ]  =  useCookies ( [ 'tokenapi' ] ) ;
+    const [listEnterprise, setListEnterprise] = useState([]);
     //#endregion
-
+    const options = [
+        { value: 'chocolate', label: 'Chocolate' },
+        { value: 'strawberry', label: 'Strawberry' },
+        { value: 'vanilla', label: 'Vanilla' },
+    ];
     
     useEffect(() => {
         read();
@@ -40,6 +45,12 @@ const Interview = () => {
         axios.get(`${urlServer}/er-interview/read/${cookies.tokenapi}`)
         .then((res) => {
           setList(res.data);
+        });
+
+        axios.get(`/admin/empresas/read-id`)
+        .then((res)=>{
+            setListEnterprise(res.data);
+            console.log(res.data)
         });
     };
 
@@ -147,15 +158,8 @@ const Interview = () => {
                         </div>
                         <div className="col-6">
                             <div class="mb-3">
-                                <label for="txtNameInterview" class="form-label">Empresa</label>
-                                <input 
-                                    type="text" 
-                                    class="form-control" 
-                                    id="txtNameInterview" 
-                                    placeholder="Ejem: Entrevista con Cocacola Julio 2021" 
-                                    value={name}
-                                    onChange={(e)=>{setName(e.target.value)}}
-                                />
+                            <label for="" class="form-label">Nombre de entrevista</label>
+                            <Select options={options} />
                             </div>
                         </div>
                         <div className="col-6">
