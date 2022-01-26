@@ -66,7 +66,7 @@
                     </div>
                   </div>
                   <hr>
-                  <%if (programa != 28 && programa != 32 && programa != 31){%>
+                  <%if (programa != 28 && programa != 32 && programa != 31  && programa != 33){%>
                     <button class="btn btn-success btn-sm d-inline" onclick="ReporteAlumnos('<%=curso.Codigo_curso%>')"><i
                       class="fas fa-file-excel"></i> Descargar participantes</button>
                     <button class="btn btn-primary btn-sm d-inline" onclick="createZipCurso('<%=curso.Codigo_curso%>')"><i
@@ -102,7 +102,7 @@
                   <% } %>
               </div>
             </div>
-            <%if (programa != 28 && programa != 32 && programa != 31){%>
+            <%if (programa != 28 && programa != 32 && programa != 31 && programa != 33){%>
               <p class="float-right">Cantidad de inscritos: <%= cAlumnos %></p>
             <%}%>
             
@@ -116,8 +116,8 @@
         <div class="card shadow mb-4">
           <div class="card-header py-3">
             <div class="col-3">
-              <h6 class="m-0 font-weight-bold text-primary d-inline"><%if(programa == 28 || programa == 32 || programa == 31) {%> Alumnos inscritos <% }else {%>Empresas registradas <%}%></h6>
-              <%if(programa != 28 && programa != 32 && programa != 31) {%> 
+              <h6 class="m-0 font-weight-bold text-primary d-inline"><%if(programa == 28 || programa == 32 || programa == 31 || programa == 33) {%> Alumnos inscritos <% }else {%>Empresas registradas <%}%></h6>
+              <%if(programa != 28 && programa != 32 && programa != 31 && programa != 33) {%> 
                 <button class="btn btn-sm btn-success d-inline float-right" data-toggle="modal" data-target="#exampleModal">
                   Agregar Empresa
                 </button>
@@ -133,7 +133,7 @@
           <div class="container-fluid">
             <div class="row m-2">
               <div class="col-12">
-                <%if (programa == 28  || programa == 32 || programa == 31){%>
+                <%if (programa == 28  || programa == 32 || programa == 31 || programa == 33){%>
                   <%- include('../habil/Boards/tablaAlumnos'); %>
                 <%}%>
               </div>
@@ -634,7 +634,7 @@
             <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
             <script src="/static/js/curso_detalle.js"></script>
-            <%if (programa == 28 || programa == 32 || programa == 31){%>
+            <%if (programa == 28 || programa == 32 || programa == 31 || programa == 33){%>
               <%- include('../habil/Modals/modalEnlaceDocumentacion'); %>
               <%- include('../habil/Modals/modal_compartir_solicitud'); %>
               <%- include('../habil/Modals/modalMigrarParticipante'); %>
