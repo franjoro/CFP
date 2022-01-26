@@ -31,7 +31,8 @@ router.get("/readSolicitud/detalle/:idSolicitud?", readHabil.readDet);
 //recoleccion de informacion a partir del DUI
 router.get("/readSolicitud/detalle-dui/:dui", readHabil.readDetWhitDUI);
 //Agregar vista de agradecimiento por rellenar el formulario
-router.get("/gracias/habil", habil.agradecimiento);
+// "/admin/habil/gracias/habil"
+router.get("/gracias/habil/:idProgram?", habil.agradecimiento);
 router.get("/deshabilitado/habil", habil.disabled);
 //Vista de subida de documentación
 router.get("/documentacion/habil/:idSolicitud/documento/:documento?/:documento2?", habil.documentacion);

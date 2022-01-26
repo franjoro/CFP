@@ -22,12 +22,12 @@ $("#loginForm").submit(async function (e) {
   const t = $(this).serialize();
   loader();
   try {
-    const data1 = await $.ajax({url: `${routeApiCfp}/sesion/signin`, type: "POST", data: t});
-    console.log("Procesando");
-    if(data1.status){
+    // const data1 = await $.ajax({url: `${routeApiCfp}/sesion/signin`, type: "POST", data: t});
+    // console.log("Procesando");
+    // if(data1.status){
       const data = await $.ajax({ url: "/signin", type: "POST", data: t });
       if(data.status){
-         $.cookie("tokenapi", data1.token);
+        //  $.cookie("tokenapi", data1.token);
           // CAMBIAR RUTAS
           if(data.role  === 0) window.location.replace('/admin/cursos');
           if(data.role  === 1) window.location.replace('/admin/');
@@ -38,7 +38,7 @@ $("#loginForm").submit(async function (e) {
           if(data.role  === 6) window.location.replace('/admin/psicologia');
           swal.close();
       }
-    }
+    // }
    
   } catch (error) {
     swal.close();

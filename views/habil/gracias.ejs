@@ -27,16 +27,40 @@
             <img src="/static/img/logo.png" style="width: 125px;" class="d-inline" />
             <img src="/static/img/uploads/1611934869304_INSAFORP%20TRASNPARENTE%20Y%20RESPLANDOR.png" class="logo d-inline float-right" />
             <div class="text-center">
-              <h1 class="text-danger">¡Gracias por rellenar nuestro formulario!</h1>
-              <h3 class="text-center"></h3>
-              <p>Tu solicitud ha sido ingresada y pronto nos estaremos comunicando por medio de un grupo de whatsApp en el cual se te 
-                ingresara por medio del número de la solicitud 
-                para hacerte saber el estado de tu
-                curso.</p>
+              <%if(idProgram == '31'){%>
+                <h1 class="text-danger">¡AVISO! Su solicitud ha sido recibida con exito.</h1>
+                <h3 class="text-center"></h3>
+                <div class="container">
+                  <div class="row">
+                    <div class="col-12">
+                      <p class="text-center">Su solicitud será revisada por uno de nuestros colaboradores.
+                        Nos contactaremos con usted para confirmarle el estado de su solicitud y posterior a eso, continuar con el cierre de su inscripcion
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <p> <b>¿Necesitas más información?</b> Te dejamos nuestros contactos</p>
+                <p> 
+                  <b>Soporte Técnico: </b> <a href="soporte_cfp@ricaldone.edu.sv">soporte_cfp@ricaldone.edu.sv</a> - 
+                  <b>Correos para información y dudas: </b> <a href="allan_guevara@ricaldone.edu.sv">allan_guevara@ricaldone.edu.sv</a> - 
+                  <a href="cfp@ricaldone.edu.sv">cfp@ricaldone.edu.sv</a>
+                  <b>Tel de consultas: <a href="+50379541465" >7954 1465</a></b>
+                  <b>Escribe por whatsApp: <a href="https://wa.link/9kfx3e" target="_blank">AQUI <i class="fab fa-whatsapp"></i></a></b> 
+                </p>
+              <%}else{%>
+                <h1 class="text-danger">¡Gracias por rellenar nuestro formulario!</h1>
+                <h3 class="text-center"></h3>
+                <p>Tu solicitud ha sido ingresada y pronto nos estaremos comunicando por medio de un grupo de whatsApp en el cual se te 
+                  ingresara por medio del número de la solicitud 
+                  para hacerte saber el estado de tu
+                  curso.
+                </p>
                 <p class="small" style='color: rgb(85, 85, 85)'><b>Se le notificara hasta un día antes del inicio del curso.</b></p>
-              <p> <b>¿Necesitas más información?</b> Te dejamos nuestros contactos</p>
-              <p> <b>Soporte Técnico: </b> soporte_cfp@ricaldone.edu.sv - <b>Habil Técnico Permanente: </b> htp@ricaldone.edu.sv
-                - <b>Tel de Habil Técnico Permanente: </b> 78550976
+                <p> <b>¿Necesitas más información?</b> Te dejamos nuestros contactos</p>
+                <p> <b>Soporte Técnico: </b> soporte_cfp@ricaldone.edu.sv - <b>Habil Técnico Permanente: </b> htp@ricaldone.edu.sv
+                  - <b>Tel de Habil Técnico Permanente: </b> 78550976
+                </p>
+              <%}%>
             </div>
           </div>
         </div>

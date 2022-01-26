@@ -9,7 +9,16 @@ const habil = {};
 
 //#region RENDERIZADOS
 habil.agradecimiento = async(req, res) =>{
-    res.render('habil/gracias');
+    const {idProgram} =req.params;
+    if(idProgram == null || idProgram == undefined){
+        idProgram = "";
+    }
+    try {
+        res.render('habil/gracias',{idProgram});
+    } catch (error) {
+        console.log(error);
+        res.send(error);        
+    }
 };
 
 habil.disabled = async (req, res)=>{
@@ -20,7 +29,12 @@ habil.documentacion = async(req, res) =>{
     let id_solicitud = req.params.idSolicitud;
     let documento = req.params.documento;
     let documento2 = req.params.documento2;
-    res.render('habil/documentacion',{id_solicitud, documento, documento2});
+    const query = `SELECT P.id_programa AS id_programa FROM tb_habil_solicitudes AS S 
+    INNER JOIN tb_cursos AS C ON C.Codigo_curso = S.Codigo_curso 
+    INNER JOIN tb_programa AS P ON P.id_programa = C.id_programa WHERE id = ?;`;
+    const data = await pool.query(query, [id_solicitud]);
+    const idProgram = data[0].id_programa;
+    res.render('habil/documentacion',{id_solicitud, documento, documento2, idProgram});
 };
 
 habil.gestorDeDocumentacion = async(req,res) =>{
@@ -70,12 +84,14 @@ habil.main = async (req, res) => {
     const type = 0 ;
     const idSolicitud =''; //Pasamos esta variabñe vacia
     try {
-        const sql ="SELECT Nombre, Horario, id_programa from tb_cursos WHERE Codigo_curso = ?";
+        const sql =`SELECT C.Nombre as Nombre, C.Horario as Horario, C.id_programa as id_programa, P.ImgPortada as img_programa 
+        FROM tb_cursos AS C INNER JOIN tb_programa AS P ON C.id_programa = P.id_programa WHERE Codigo_curso = ?`;
         const curso = await pool.query(sql,[codigoCurso]);
         const nombre = curso[0].Nombre;
         const horario = curso[0].Horario;
         const idPrograma = curso[0].id_programa;
         const idProgram ="";
+        const imgProgram = curso[0].img_programa
         return res.render("habil/formulario", {
             nombre,
             horario,
@@ -84,7 +100,8 @@ habil.main = async (req, res) => {
             type,
             view,
             idPrograma,
-            idProgram
+            idProgram,
+            imgProgram
         });
     } catch (error) {
             return res.status(400).json(error);

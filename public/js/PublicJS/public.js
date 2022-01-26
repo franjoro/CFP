@@ -412,7 +412,8 @@ $(document).ready(() => {
       var emailEdit = email;
       var telEdit = tel;
       var duiEdit = dui;
-      data = { duiNew, nameEdit, emailEdit, telEdit, duiEdit, correlativo_planilla };
+      var isss_edit = isss;
+      data = { duiNew, nameEdit, emailEdit, telEdit, duiEdit, correlativo_planilla, isss_edit };
       $.ajax({
         url: "/admin/participantes/edit",
         type: "PUT",

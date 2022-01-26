@@ -82,7 +82,7 @@ const SendFiles = async (typeDocument) => {
           title: "Solicitud enviada correctamente",
           showConfirmButton: false,
         });
-        window.location.replace('/habil/gracias/habil');
+        window.location.replace(`/habil/gracias/habil/${$("#idProgram").val()}`);
       }else{
         swal.close();
         error(`No se pudo realizar la operación, verifica la información o comuniquese con el encargado del programa o soporte ${respuesta.error}`);

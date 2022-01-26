@@ -57,6 +57,8 @@ participantes.edit = async (req, res) => {
       req.body.isss_edit,
       req.body.duiEdit,
     ];
+    console.log("Es una prueba unitaria");
+    console.log(isss_edit);
     const statment =
       "UPDATE tb_participante SET dui = ? , Nombre = ? , Email = ?, Telefono = ?, correlativo_planilla = ?, ISSS = ? WHERE DUI= ?";
     const query = await pool.query(statment, data);
