@@ -119,6 +119,7 @@ habil.renderFormulario = async(req,res) =>{
         const codigoCurso = curso[0].codigoCurso;
         const idProgram = curso[0].idProgram;
         const idPrograma = curso[0].idProgram;
+        const imgProgram ="";
         console.log(idProgram)
         return res.render("habil/formulario", {
             nombre,
@@ -129,7 +130,8 @@ habil.renderFormulario = async(req,res) =>{
             habilitado,
             view,
             idPrograma,
-            idProgram
+            idProgram,
+            imgProgram
         });
     } catch (error) {
         return res.status(400).json(error);
