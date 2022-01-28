@@ -186,6 +186,52 @@ readHabil.readDetWhitDUI = async(req,res) =>{
     }
 }
 
+
+readHabil.validateSchedule = async (req,res) =>{
+    const {document, idCourse} = req.params;
+    
+    try {
+        const sql = `SELECT C.Nombre as name_course, C.horario AS schedule FROM tb_habil_solicitudes AS S 
+        INNER JOIN tb_cursos AS C ON S.Codigo_curso = C.Codigo_curso WHERE S.documento = ? AND C.Estado != '0' and C.codigo_curso != ?;`;
+        const data = await pool.query(sql, [document, idCourse]);
+        return res.status(200).json({ 
+            list: data,
+        });
+    } catch (error) {
+        return res.status(400).json(error); 
+    }
+
+};
+
+readHabil.optionsSchedule = async (req,res) =>{
+    const {idCourse} = req.params;
+    try {
+        const sql = `SELECT C.Nombre as name_course, C.horario AS schedule 
+        FROM tb_cursos AS C WHERE C.Estado != '0' and C.codigo_curso != ?;`;
+        const data = await pool.query(sql, [idCourse]);
+        return res.status(200).json({ 
+            list: data,
+        });
+    } catch (error) {
+        return res.status(400).json(error); 
+    }
+};
+
+readHabil.nameInscriptions = async (req,res) =>{
+    const {document, idCourse} = req.params;
+    try {
+        const sql = `SELECT C.Nombre AS nombre_curso FROM tb_habil_solicitudes AS S 
+        INNER JOIN tb_cursos AS C ON S.Codigo_curso = C.Codigo_curso WHERE S.documento = ? AND C.Estado != '0' AND C.Codigo_curso != ?;`;
+        const data = await pool.query(sql,[document, idCourse]);
+        
+        return res.status(200).json({ 
+            listCourses: data,
+        });
+    } catch (error) {
+        return res.status(400).json(error); 
+    }
+};
+
 readHabil.readDet = async (req,res) => {
     const { idSolicitud } =req.params;
     try {

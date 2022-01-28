@@ -43,7 +43,6 @@ date: 12/20/2021
 */
 const validationCompleteNamePreviosCouses = () =>{
     // variables
-    console.log($("#cursospasados").val());
     const selectCourse = $("#cursospasados").val();
     const name1 = $("#curso1").val();
     const name2 = $("#curso2").val();
@@ -464,8 +463,6 @@ date: 18/10/2021 for OsmaroBonilla
 last update: 18/10/2021 for OsmaroBonilla 
 */
 const actualYear = (idInput) =>{
-  console.log("Id del año");
-  console.log(idInput);
   let date = new Date();
   let year = date.getFullYear();
   let arrayYear = [];
@@ -567,7 +564,6 @@ const countSolicitud = async () =>{
         },2000);
       }else{
         const type = $("#type").val();
-        console.log((count+1))
         if(type == 0){
           if((count+1) > cupo){
             localStorage.setItem('estado', 4);
@@ -582,6 +578,59 @@ const countSolicitud = async () =>{
   }
 };
 //#endregion
+const validateInscriptions = async () =>{
+  const dui = $("#dui").val();
+  let retorno = false;
+  const nameCourse = $("#nameCourse").val();
+  const idCourse = $("#idCourse").val();
+  const data = await $.ajax({
+    url: `/admin/habil/nameInscriptions/${dui}/${idCourse}`,
+  });
+  for (let i = 0; i < JSON.parse(JSON.stringify(data.listCourses)).length; i++) {
+    const element = JSON.parse(JSON.stringify(data.listCourses))[i];
+    if(nameCourse == element.nombre_curso){
+      retorno = true;
+    }
+  }
+  return(retorno);
+};
 
+const otherCourse = async (req,res) =>{
+  const idCourse = $("#idCourse").val();
+  const nameCourse = $("#nameCourse").val();
+  const schedule = $("#schedule").val();
+  let msg = '<b>errocode: </b> Existe un conflicto de horarios no puedes inscribir 2 cursos con los mismos horarios';
+  try {
+    const data = await $.ajax({ url: `/admin/habil/options-schedule/${idCourse}`});
+    for (let i = 0; i < JSON.parse(JSON.stringify(data.list)).length; i++) {
+      const element = JSON.parse(JSON.stringify(data.list))[i];
+      // console.log(`Horario Intentando: ${schedule} - Horario de otros cursos ${element.schedule}`);
+      console.log(`Nombre de curso intentado: ${nameCourse} - Nombre de otro curso: ${element.name_course}`);
+      if(nameCourse == element.name_course){
+        msg = `Tienes un curso ya en este horario pero te podemos recomendar el curso <b>${element.name_course} con los horarios ${element.schedule}</b>`;
+      }
+    }
+    return(msg);
+  } catch (error) {
+    console.log(error)
+  }
+};
 
-
+const validateSchedule = async () =>{
+  const dui = $("#dui").val();
+  const idCourse = $("#idCourse").val();
+  const schedule = $("#schedule").val();
+  let retorno = false;
+  try {
+    const data = await $.ajax({ url: `/admin/habil/validate-schedule/${dui}/${idCourse}`});
+    for (let i = 0; i < JSON.parse(JSON.stringify(data.list)).length; i++) {
+      const element = JSON.parse(JSON.stringify(data.list))[i];
+      if(schedule == element.schedule){
+        retorno = true;
+      }
+    }
+    return(retorno);  
+  } catch (error) {
+    console.log(error)
+  }
+}; 

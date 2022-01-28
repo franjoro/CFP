@@ -66,98 +66,28 @@
                               </h5>
                             </a>
                             
-                            <%if((ofert.cantidadAlumnos-ofert.cantidadIncom) > 0){%>
+                            <!-- <%if((ofert.cantidadAlumnos-ofert.cantidadIncom) > 0){%>
                               <script>
-
                                 var msg = "<%=ofert.cantidadAlumnos-ofert.cantidadIncom%> solicitudes incompletas en el curso <%= ofert.Nombre%>";
                                 sessionStorage.setItem('count',parseInt(sessionStorage.getItem('count'))+1);
                                 var conseguido = JSON.parse(sessionStorage.getItem('alerts'))
                                 conseguido[`${sessionStorage.getItem('count')}`] = msg;
                                 sessionStorage.setItem('alerts', JSON.stringify(conseguido))
-                                console.log(JSON.parse(sessionStorage.getItem('alerts')));
-                                // console.log(sessionStorage.getItem('alerts'))
-                                // objeto[`${sessionStorage.getItem("count")}`]='<%=ofert.cantidadAlumnos-ofert.cantidadIncom%> solicitudes incompletas en el curso <%= ofert.Nombre%>';
-                                // sessionStorage.setItem("alerts", JSON.stringify(objeto));
-                                // console.log(sessionStorage.getItem("alerts"));
-                                // alert[`${count}`]="Hello"
-                                // alerts.push("<%=ofert.cantidadAlumnos-ofert.cantidadIncom%> solicitudes incompletas en el curso <%= ofert.Nombre%>");
-                                
-                                // const Toast = Swal.mixin({
-                                //   toast: true,
-                                //   position: "top-end",
-                                //   showConfirmButton: false,
-                                //   timer: 5000,
-                                //   timerProgressBar: true,
-                                //   didOpen: (toast) => {
-                                //     toast.addEventListener("mouseenter", Swal.stopTimer);
-                                //     toast.addEventListener("mouseleave", Swal.resumeTimer);
-                                //   },
-                                // });
-                                // Toast.fire({
-                                //   icon: "error",
-                                //   title: `<%=ofert.cantidadAlumnos-ofert.cantidadIncom%> solicitudes incompletas en el curso <%= ofert.Nombre%>`,
-                                // });
-                                  
                               </script>
-                            <%}%>
+                            <%}%> -->
                             <%if(ofert.cantEsp > 0){%>
                              <script>
                                 var msg = "<%= ofert.Nombre%> ya tiene <%=ofert.cantEsp%> en espera'";
                                sessionStorage.setItem('count',parseInt(sessionStorage.getItem('count'))+1);
-                                
                                 var conseguido = JSON.parse(sessionStorage.getItem('alerts'))
                                 conseguido[`${sessionStorage.getItem('count')}`] = msg;
                                 sessionStorage.setItem('alerts', JSON.stringify(conseguido))
-                                console.log(JSON.parse(sessionStorage.getItem('alerts')));
                              </script>
-                              <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>       
-
-                              <script>
-                                const ToastEsp = Swal.mixin({
-                                  toast: true,
-                                  position: "top-end",
-                                  showConfirmButton: false,
-                                  timer: 5000,
-                                  timerProgressBar: true,
-                                  didOpen: (toast) => {
-                                    toast.addEventListener("mouseenter", Swal.stopTimer);
-                                    toast.addEventListener("mouseleave", Swal.resumeTimer);
-                                  },
-                                });
-                                
-                                for (let index = 0; index < 2; index++) {
-                                  ToastEsp.fire({
-                                  icon: "error",
-                                  title: `El curso <%= ofert.Nombre%> ya tiene <%=ofert.cantEsp%> en espera`,
-                                  });
-                                }
-                              </script> -->
-                              <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>       
-                                                     
-                              <script>
-                                alert("hello")
-                                const Toast = Swal.mixin({
-                                  toast: true,
-                                  position: "top-end",
-                                  showConfirmButton: false,
-                                  timer: 5000,
-                                  timerProgressBar: true,
-                                  didOpen: (toast) => {
-                                    toast.addEventListener("mouseenter", Swal.stopTimer);
-                                    toast.addEventListener("mouseleave", Swal.resumeTimer);
-                                  },
-                                });
-                                Toast.fire({
-                                  icon: "error",
-                                  title: `El curso <%= ofert.Nombre%> ya tiene <%=ofert.cantEsp%> en espera`,
-                                });
-                                  
-                              </script> -->
                             <%}%>
                             <%if(programa == 28 || programa == 31 || programa == 32 || programa == 33){%>
                             <br>
                             <br>
-                              <p><b>Cantidad de solicitudes incompletas: </b><span><%= (ofert.cantidadAlumnos-ofert.cantidadIncom)%></span><p>
+                              <!-- <p><b>Cantidad de solicitudes incompletas: </b><span><%= (ofert.cantidadAlumnos-ofert.cantidadIncom)%></span><p> -->
                               <p><b>Cantidad de solicitudes en espera: </b><%= ofert.cantEsp%></p>
                             <%}%>
                             <p>

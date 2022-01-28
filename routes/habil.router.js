@@ -31,6 +31,12 @@ router.get("/readSolicitud/detalle/:idSolicitud?", readHabil.readDet);
 //recoleccion de informacion a partir del DUI
 router.get("/readSolicitud/detalle-dui/:dui", readHabil.readDetWhitDUI);
 //Agregar vista de agradecimiento por rellenar el formulario
+// "/admin/habil/nameInscriptions/:document"
+router.get("/nameInscriptions/:document/:idCourse", authcheck, readHabil.nameInscriptions);
+// "/admin/habil/validate-schedule/:dui/idCourse"
+router.get("/validate-schedule/:document/:idCourse", authcheck, readHabil.validateSchedule);
+// /"admin/habil/options-schedule/:idCourse"
+router.get("/options-schedule/:idCourse", authcheck, readHabil.optionsSchedule);
 // "/admin/habil/gracias/habil"
 router.get("/gracias/habil/:idProgram?", habil.agradecimiento);
 router.get("/deshabilitado/habil", habil.disabled);
