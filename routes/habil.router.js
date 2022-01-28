@@ -37,7 +37,7 @@ router.get("/nameInscriptions/:document/:idCourse", authcheck, readHabil.nameIns
 router.get("/validate-schedule/:document/:idCourse", authcheck, readHabil.validateSchedule);
 // /"admin/habil/options-schedule/:idCourse"
 router.get("/options-schedule/:idCourse", authcheck, readHabil.optionsSchedule);
-// "/admin/habil/gracias/habil"
+// "/admin/habil/gracias/habil/:idProgram?"
 router.get("/gracias/habil/:idProgram?", habil.agradecimiento);
 router.get("/deshabilitado/habil", habil.disabled);
 //Vista de subida de documentación
