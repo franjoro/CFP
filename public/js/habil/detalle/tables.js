@@ -141,6 +141,13 @@ const applicationTable = () => {
                           onclick="GetLinkToShareSolicitude('${row.idSolicitud}', '${row.dui}')">
                         Obtener enlace de solicitud
                     </button>
+                    <button
+                      type="button"
+                      class="btn btn-primary btn-sm"
+                      onclick="downloadBallot('${row.idSolicitud}', '${row.dui}')"
+                    >
+                    Descargar boleta
+                    </button>
                     <a type="button" data-toggle="modal" data-target="#modal_matricular" class="btn btn-success btn-sm" onclick="idSolicitudChangue('${row.idSolicitud}')">Matricular Solicitante</a>
                     <a type="button" data-toggle="modal" data-target="#modal_sgafp" class="btn btn-info btn-sm" onclick="txtSol1('${row.idSolicitud}', '${row.dui}')">Información SGAFP</a>
                     
@@ -160,6 +167,12 @@ const applicationTable = () => {
                         type="button" data-toggle="modal" data-target="#modal_compartir_solicitud" class="btn btn-warning btn-sm " 
                           onclick="GetLinkToShareSolicitude('${row.idSolicitud}', '${row.dui}')">
                         Obtener enlace de solicitud
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-primary btn-sm"
+                    >
+                    Descargar boleta
                     </button>
                     <a type="button" data-toggle="modal" data-target="#modal_matricular" class="btn btn-success btn-sm" onclick="idSolicitudChangue('${row.idSolicitud}')">Matricular Solicitante</a>
                     <a type="button" data-toggle="modal" data-target="#modal_sgafp" class="btn btn-info btn-sm" onclick="txtSol1('${row.idSolicitud} , ${row.dui}')">Información SGAFP</a>
@@ -359,6 +372,14 @@ const sgafp = async ()=>{
   }
 };
 
+const printBallot = async () =>{
+  try {
+    
+  } catch (error) {
+    
+  }
+}
+
 const classClick = () =>{
   $(document).on('click','.ck',() =>{
     event.stopPropagation();
@@ -404,6 +425,9 @@ const blockChecked = () =>{
       >
       <i class="fas fa-exclamation"></i> Quitar de lista de espera
      
+    </button>
+    <button class="btn btn-primary btn-sm btnBlock">
+      <i class="fas fa-file-alt"></i> Descargar boletas
     </button>
     <button 
       class="btn btn-danger btnBlock btn-sm"
