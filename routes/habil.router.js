@@ -32,30 +32,30 @@ router.get("/readSolicitud/detalle/:idSolicitud?", readHabil.readDet);
 router.get("/readSolicitud/detalle-dui/:dui", readHabil.readDetWhitDUI);
 //Agregar vista de agradecimiento por rellenar el formulario
 // "/admin/habil/nameInscriptions/:document"
-router.get("/nameInscriptions/:document/:idCourse", authcheck, readHabil.nameInscriptions);
+router.get("/nameInscriptions/:document/:idCourse", readHabil.nameInscriptions);
 // "/admin/habil/validate-schedule/:dui/idCourse"
-router.get("/validate-schedule/:document/:idCourse", authcheck, readHabil.validateSchedule);
+router.get("/validate-schedule/:document/:idCourse", readHabil.validateSchedule);
 // /"admin/habil/options-schedule/:idCourse"
-router.get("/options-schedule/:idCourse", authcheck, readHabil.optionsSchedule);
+router.get("/options-schedule/:idCourse", readHabil.optionsSchedule);
 // "/admin/habil/gracias/habil/:idProgram?"
 router.get("/gracias/habil/:idProgram?", habil.agradecimiento);
 router.get("/deshabilitado/habil", habil.disabled);
 //Vista de subida de documentación
 router.get("/documentacion/habil/:idSolicitud/documento/:documento?/:documento2?", habil.documentacion);
-router.get("/gestor-de-documentos/habil/:idCurso/:idSolicitud/:dui/:programa/:tipo?", authcheck, habil.gestorDeDocumentacion);
+router.get("/gestor-de-documentos/habil/:idCurso/:idSolicitud/:dui/:programa/:tipo?", habil.gestorDeDocumentacion);
 //#region tables
-router.get('/application-table/:idCourse', authcheck, tableaHabil.aplicationsTable);
-router.get("/changecolor-table/:idCourse", authcheck, tablesHabil.changeColor);
-router.get("/notComplete/:idCourse", authcheck, tablesHabil.notComplete);
-router.get("/changeColorWait/:idCourse", authcheck, tablesHabil.changeColorWait);
+router.get('/application-table/:idCourse', tableaHabil.aplicationsTable);
+router.get("/changecolor-table/:idCourse", tablesHabil.changeColor);
+router.get("/notComplete/:idCourse", tablesHabil.notComplete);
+router.get("/changeColorWait/:idCourse", tablesHabil.changeColorWait);
 router.get('/count-solicitud/:idCourse', habil.countSolicitud);
 router.get("/noInscritosSgafp/:idCourse", tablesHabil.noInscritosSgafp);
 router.get("/inscritosSgafp/:idCourse", tablesHabil.inscritosSgafp);
 //#endregion
 
 //#region delete sentences
-router.delete("/deleteFiles3", authcheck , deleteDocumentos.deleteFiles3);
-router.delete("/deleteSolicitud", authcheck , deleteSolicitud.delete);
+router.delete("/deleteFiles3", deleteDocumentos.deleteFiles3);
+router.delete("/deleteSolicitud", deleteSolicitud.delete);
 //#endregion
 
 //#region post sentences 
