@@ -62,20 +62,20 @@ router.delete("/deleteSolicitud", deleteSolicitud.delete);
 router.post("/updateFile", fileUpload(), updateFile.archivos);
 router.post("/", habil.form);
 router.post("/EnviarFiles/:tipo?", fileUpload(), subida.archivos);
-router.post("/sendMail", authcheck, habil.sendEmail);
-router.post("/sendNotificacion", authcheck, sendNotificacion.send)
-router.post("/sendMailDocument", authcheck, habil.sendMailDocument);
-router.post("/sendEmailSol", authcheck, habil.sendEmailSol);
+router.post("/sendMail", habil.sendEmail);
+router.post("/sendNotificacion", sendNotificacion.send)
+router.post("/sendMailDocument", habil.sendMailDocument);
+router.post("/sendEmailSol", habil.sendEmailSol);
 //#endregion
 
 //#region put sentences
-router.put("/editOferta" ,authcheck , updateHabil.editOferta);
-router.put("/updateComment", authcheck, updateComment.update);
-router.put("/matricular", authcheck, updateHabil.cambiarCurso);
+router.put("/editOferta" , updateHabil.editOferta);
+router.put("/updateComment", updateComment.update);
+router.put("/matricular", updateHabil.cambiarCurso);
 router.put("/", updateHabil.updateSolicitud);
 router.put('/updateStatusRequest', updateStatusRequest.update);
-router.put("/updateRequest", authcheck, updateHabil.updateRequest);
-router.put("/sgafp", authcheck, updateHabil.sgafp);
+router.put("/updateRequest", updateHabil.updateRequest);
+router.put("/sgafp", updateHabil.sgafp);
 
 //#endregion
 
