@@ -315,8 +315,8 @@ $(document).ready(function () {
     if(!$("#movilContacto").val())
       return error(" <b>errocode: </b> Rellene el campo 'Tel. Movil'");
     //FINALIZAMOS EL PROCESO DE VALIDACION DEL LADO DEL CLIENTE EN LA QUINTA PARTE DEL FORMULARIO
-    if(await validateSchedule())
-      return error(await otherCourse());
+    // if(await validateSchedule())
+    //   return error(await otherCourse());
     // if(await validateInscriptions())
     //   return error(" <b>errocode: </b> No puedes estar inscrito en el mismo curso 2 veces, aunque sean horarios diferentes");
     global_json3 = json3();
