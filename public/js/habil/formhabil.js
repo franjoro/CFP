@@ -168,7 +168,7 @@ $(document).ready(function () {
           return error(" <b>errocode: </b> El participante tiene ser mayor o igual a 16 años");
 
         //Ya completas las validaciones procedemos a pasar a la siguiente seccion (Seccion2 )
-        ProgressChange("Educación formal y formación ocupacional", "2", "33.33");
+        ProgressChange("Educación formal y formación ocupacional", "2", "22.22");
         hidenAll();
         $("#sec2").css("display", "block");
         global_json1 = json1();
@@ -207,7 +207,7 @@ $(document).ready(function () {
         
           
         //Finalizamos las validaciones seccion 2
-        ProgressChange("Información sobre situación laboral", "3", "50");
+        ProgressChange("Información sobre situación laboral", "3", "33.33");
         hidenAll();
         $("#sec3").css("display", "block");
         clearSection2();
@@ -241,7 +241,7 @@ $(document).ready(function () {
           }
         }
         //FINALIZAMOS EL PROCESO DE VALIDACION DEL LADO DEL CLIENTE EN LA TERCERA PARTE DEL FORMULARIO
-        ProgressChange("Información sobre ingresos", "4", "66.33");
+        ProgressChange("Información sobre ingresos", "4", "44.44");
         hidenAll();
         $("#sec4").css("display", "block");
         clearSection3();
@@ -267,7 +267,7 @@ $(document).ready(function () {
         ProgressChange(
           "Expectativas y pertenencia de la información",
           "5",
-          "82.66"
+          "55.55"
         );
         hidenAll();
         $("#sec5").css("display", "block");
@@ -288,7 +288,7 @@ $(document).ready(function () {
       
 
       //FINALIZAMOS EL PROCESO DE VALIDACION DEL LADO DEL CLIENTE EN LA QUINTA PARTE DEL FORMULARIO
-      ProgressChange("Seguimiento", "6", "100");
+      ProgressChange("Seguimiento", "6", "66.66");
       hidenAll();
       $("#sec6").css("display", "block");
       global_json2 = json2();
@@ -324,7 +324,7 @@ $(document).ready(function () {
   }
 
   const ant2 = () =>{
-    ProgressChange("Educación formal y formación ocupacional", "1", "10");
+    ProgressChange("Educación formal y formación ocupacional", "1", "11.11");
     hidenAll();
     $("#sec1").css("display", "block");
   };
@@ -367,12 +367,12 @@ $(document).ready(function () {
     ant2();
   });
   $("#ant3").click(() => {
-    ProgressChange("Información sobre situación laboral", "2", "33");
+    ProgressChange("Información sobre situación laboral", "2", "22.22");
     $("#sec2").css("display", "block");
     $("#sec3").css("display", "none");
   });
   $("#ant4").click(() => {
-    ProgressChange("Información sobre ingresos", "3", "50");
+    ProgressChange("Información sobre ingresos", "3", "33.33");
     $("#sec3").css("display", "block");
     $("#sec4").css("display", "none");
   });
@@ -380,13 +380,13 @@ $(document).ready(function () {
     ProgressChange(
       "Expectativas y pertenencia de la información",
       "4",
-      "66.33"
+      "44.44"
     );
     $("#sec4").css("display", "block");
     $("#sec5").css("display", "none");
   });
   $("#ant6").click(() => {
-    ProgressChange("Seguimiento", "5", "82.66");
+    ProgressChange("Seguimiento", "5", "55.55");
     $("#sec5").css("display", "block");
     $("#sec6").css("display", "none");
   });
