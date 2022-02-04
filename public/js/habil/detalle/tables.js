@@ -142,9 +142,8 @@ const applicationTable = () => {
                         Obtener enlace de solicitud
                     </button>
                     <button
-                      type="button"
                       class="btn btn-primary btn-sm"
-                      onclick="downloadBallot('${row.idSolicitud}', '${row.dui}')"
+                      onclick="PrintPdf()"
                     >
                     Descargar boleta
                     </button>
@@ -171,6 +170,7 @@ const applicationTable = () => {
                     <button
                       type="button"
                       class="btn btn-primary btn-sm"
+                      onclick="PrintPdf()"
                     >
                     Descargar boleta
                     </button>
@@ -212,6 +212,17 @@ const changeColor= async () =>{
       }
     })
   }
+};
+
+const PrintPdf = async () =>{
+  const data = await $.ajax({
+    url : `/admin/habil/send/pdf`,
+    type: 'GET'
+  })
+  .done(function(){
+    window.open(`/admin/habil/download/pdf`);
+  });
+  console.log(data);
 };
 
 const changeColorWait = async () =>{

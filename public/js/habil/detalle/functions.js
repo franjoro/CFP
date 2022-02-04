@@ -195,6 +195,7 @@ const updateRequest = async (enabled, idCourse, msg) =>{
 };
 
 
+
 const addTeacher =  ()=>{
   const { value: formValues } =  Swal.fire({
     title: 'Multiple inputs',

@@ -3,6 +3,7 @@
 const express = require('express');
 //Traemos el middleware
 const { authcheck } = require('../middlewares/auth');
+const pdfController = require('../controllers/habil/pdfController.controller');
 const habil = require('../controllers/habil.controller');
 const subida = require('../controllers/habil/subidaDatos.controller');
 const updateHabil = require('../controllers/habil/update.controller');
@@ -63,7 +64,7 @@ router.post("/updateFile", fileUpload(), updateFile.archivos);
 router.post("/", habil.form);
 router.post("/EnviarFiles/:tipo?", fileUpload(), subida.archivos);
 router.post("/sendMail", habil.sendEmail);
-router.post("/sendNotificacion", sendNotificacion.send)
+router.post("/sendNotificacion", sendNotificacion.send);
 router.post("/sendMailDocument", habil.sendMailDocument);
 router.post("/sendEmailSol", habil.sendEmailSol);
 //#endregion
@@ -84,6 +85,13 @@ router.put("/sgafp", updateHabil.sgafp);
 router.post("/saveZipCourse", authcheck, zipCourse.getZipCouse);
 router.post("/saveZipParticipant", authcheck, zipCourse.getZipParticipant);
 router.get("/fileZipCourse/zip", authcheck, zipCourse.dowloadZipCourse);
+//#endregion
+
+
+//#region print ballot
+// router.get('/printpdf', pdfController.printPDF);
+router.get('/download/pdf', authcheck, pdfController.downloadFile);
+router.get("/send/pdf", pdfController.printPDF);
 //#endregion
 
 // export routes
