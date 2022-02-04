@@ -101,5 +101,9 @@ $(document).ready(() => {
     $("#nameEdit").val(data.Nombre);
     $('#telEdit').val(data.Telefono);
     $('#isss_edit').val(data.ISSS);
+    $("#genero_edit").val(data.Genero);
+    $("#cargo_edit").val(data.Cargo);
+    console.log(data.correlativo_planilla);
+    $("#correlativo_planilla_edit").val(data.correlativo_planilla);
   } );
 });

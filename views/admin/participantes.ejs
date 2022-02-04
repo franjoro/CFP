@@ -125,6 +125,20 @@
                  </div>
                  <div class="form-row">
                      <div class="col">
+                        <label for="genero_edit">Genero</label>
+                        <select class="custom-select" required name="genero_edit" id="genero_edit">
+                            <option value="Hombre">Hombre</option>
+                            <option value="Mujer">Mujer</option>
+                        </select>
+                     </div>
+                    <div class="col">
+                        <label for="cargo_edit">Cargo</label>
+                        <input type="text" id="cargo_edit" name="cargo_edit" required class="form-control"
+                            placeholder="Cargo">
+                    </div>
+                 </div>
+                 <div class="form-row">
+                     <div class="col">
                          <label for="email">Correo Electrónico</label>
                          <input type="email" id="emailEdit" name="emailEdit" required class="form-control"
                              placeholder="Correo Electrónico">
@@ -136,7 +150,7 @@
                     </div>
                     <div class="col">
                         <label for="correlativo_planilla">Correlativo planilla</label>
-                        <input type="text" id="correlativo_planilla" name="correlativo_planilla" class="form-control" placeholder="">
+                        <input type="text" id="correlativo_planilla_edit" name="correlativo_planilla" class="form-control" placeholder="">
                     </div>
                  </div>
                     <input type="hidden" id="duiEdit" name="duiEdit"  class="form-control" placeholder="Usuario">
