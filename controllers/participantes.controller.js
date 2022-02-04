@@ -49,18 +49,18 @@ participantes.edit = async (req, res) => {
   try {
     if (isEmpty(req.body.duiEdit)) throw new Error("Empty");
     const data = [
-      req.body.duiNew,
-      req.body.nameEdit,
-      req.body.emailEdit,
-      req.body.telEdit,
-      req.body.correlativo_planilla,
-      req.body.isss_edit,
-      req.body.duiEdit,
+      req.body.duiNew, 
+      req.body.nameEdit, 
+      req.body.emailEdit, 
+      req.body.telEdit, 
+      req.body.correlativo_planilla, 
+      req.body.isss_edit, 
+      req.body.cargo_edit,
+      req.body.genero_edit, 
+      req.body.duiEdit, 
     ];
-    console.log("Es una prueba unitaria");
-    console.log(isss_edit);
     const statment =
-      "UPDATE tb_participante SET dui = ? , Nombre = ? , Email = ?, Telefono = ?, correlativo_planilla = ?, ISSS = ? WHERE DUI= ?";
+      "UPDATE tb_participante SET dui = ? , Nombre = ? , Email = ?, Telefono = ?, correlativo_planilla = ?, ISSS = ?, Cargo = ?, Genero = ? WHERE DUI= ?";
     const query = await pool.query(statment, data);
     return res.json(query);
   } catch (err) {

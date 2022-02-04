@@ -358,13 +358,7 @@ $(document).ready(() => {
     const email = $("#email").val();
     const genero = $("#genero").val();
     const cursoCodigo = $("#curso").children("option:selected").val();
-    let correlativo_planilla;
-    let typeProgram = $("#id_program").val();
-    if(typeProgram == 30){
-      correlativo_planilla = $("#txtCorrelativoPlanilla").val();
-    }else{
-      correlativo_planilla = "indefinido";
-    }
+    const correlativo_planilla = $("#txtCorrelativoPlanilla").val();
     curso_text = $("#curso").children("option:selected").text();
     if (
       !dui ||
@@ -413,7 +407,10 @@ $(document).ready(() => {
       var telEdit = tel;
       var duiEdit = dui;
       var isss_edit = isss;
-      data = { duiNew, nameEdit, emailEdit, telEdit, duiEdit, correlativo_planilla, isss_edit };
+      var genero_edit = genero;
+      var cargo_edit = cargo;
+      data = { duiNew, nameEdit, emailEdit, telEdit, duiEdit, correlativo_planilla, isss_edit, genero_edit, cargo_edit };
+      console.log(data);
       $.ajax({
         url: "/admin/participantes/edit",
         type: "PUT",

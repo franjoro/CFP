@@ -302,6 +302,10 @@ $(document).ready(function () {
 
   const next6 = async () =>{
     //INICIAMOS EL PROCESO DE VALIDACION DEL LADO DEL CLIENTE EN LA QUINTA PARTE DEL FORMULARIO
+    const name1= $("#nombrecontacto").val().toLowerCase().replace(/ /g, "");
+    const name2= ($("#nombres").val() +" "+ $("#apellidos").val()).toLowerCase().replace(/ /g, ""); 
+    if(name1 == name2)
+      return error(`<b>Error: </b> No puede ser la misma persona el solicitante y el contacto de seguimiento`)
     if(!$("#nombrecontacto").val())
       return error(" <b>errocode: </b> Rellene el campo 'Nombre completo del contacto.'");
     if(!$("#parentesco").val())
@@ -314,11 +318,6 @@ $(document).ready(function () {
       return error(" <b>errocode: </b> Rellene el campo 'Municipio'");
     if(!$("#movilContacto").val())
       return error(" <b>errocode: </b> Rellene el campo 'Tel. Movil'");
-    //FINALIZAMOS EL PROCESO DE VALIDACION DEL LADO DEL CLIENTE EN LA QUINTA PARTE DEL FORMULARIO
-    // if(await validateSchedule())
-    //   return error(await otherCourse());
-    // if(await validateInscriptions())
-    //   return error(" <b>errocode: </b> No puedes estar inscrito en el mismo curso 2 veces, aunque sean horarios diferentes");
     global_json3 = json3();
     SendFormulario();
   }
