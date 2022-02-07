@@ -19,39 +19,15 @@ const SendFiles = async (typeDocument) => {
     //Objeto de js utilizado para mandar ficheros
     const fd = new FormData(); // Objeto de javascript utilizado para mandar documentos
     //Recolectamos la longitud de archivos almacenados tanto en plantilla, recibo y cancelacion
-    let cantidadDocumentos;
+    let cantidadDocumentos = 2;
     switch (typeDocument) {
-      case 'dui-frontal':
-        cantidadDocumentos = $(`#fileDocumentos`)[0].files.length;
-        //Hacemos un for a pesar de que sea solo un file tiene diferentes archivos por eso mandamos un for
-        for (let i = 0; i < cantidadDocumentos; i++) {
-          //append para anidar y ponemos el name y id del file
-          fd.append(`fileDocumentos${i}`, $(`#fileDocumentos`)[0].files[i]);  
-        }
+      case 'dui':
+        fd.append(`fileDocumentos0`, $(`#fileDocumentos`)[0].files[0]);  
+        fd.append(`fileDocumentos1`, $(`#fileDUIback`)[0].files[0]);  
       break;
-      case 'dui-trasero':
-        cantidadDocumentos = $(`#fileDUIback`)[0].files.length;
-        //Hacemos un for a pesar de que sea solo un file tiene diferentes archivos por eso mandamos un for
-        for (let i = 0; i < cantidadDocumentos; i++) {
-          //append para anidar y ponemos el name y id del file
-          fd.append(`fileDocumentos${i}`, $(`#fileDUIback`)[0].files[i]);  
-        }
-      break;
-      case 'nit-frontal':
-        cantidadDocumentos = $(`#fileNITfront`)[0].files.length;
-        //Hacemos un for a pesar de que sea solo un file tiene diferentes archivos por eso mandamos un for
-        for (let i = 0; i < cantidadDocumentos; i++) {
-          //append para anidar y ponemos el name y id del file
-          fd.append(`fileDocumentos${i}`, $(`#fileNITfront`)[0].files[i]);  
-        }
-      break;
-      case 'nit-trasero':
-        cantidadDocumentos = $(`#fileNITBack`)[0].files.length;
-        //Hacemos un for a pesar de que sea solo un file tiene diferentes archivos por eso mandamos un for
-        for (let i = 0; i < cantidadDocumentos; i++) {
-          //append para anidar y ponemos el name y id del file
-          fd.append(`fileDocumentos${i}`, $(`#fileNITBack`)[0].files[i]);  
-        }
+      case 'nit':
+        fd.append(`fileDocumentos0`, $(`#fileNITfront`)[0].files[0]);  
+        fd.append(`fileDocumentos1`, $(`#fileNITBack`)[0].files[0]);  
       break;
       default:
         break;
@@ -83,6 +59,7 @@ const SendFiles = async (typeDocument) => {
           showConfirmButton: false,
         });
         window.location.replace(`/habil/gracias/habil/${$("#idProgram").val()}`);
+        return true;
       }else{
         swal.close();
         error(`No se pudo realizar la operación, verifica la información o comuniquese con el encargado del programa o soporte ${respuesta.error}`);

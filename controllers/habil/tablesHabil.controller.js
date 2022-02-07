@@ -14,8 +14,9 @@ tablesHabil.aplicationsTable = async(req,res) =>{
         REPLACE(JSON_EXTRACT(json1, '$.nit'), '"','' ) as nit ,
         REPLACE(JSON_EXTRACT(json1, '$.apellidos'), '"','' ) as apellidos,  
         REPLACE(JSON_EXTRACT(json1, '$.fechNacimiento'), '"','') as fechaNacimiento, 
-        REPLACE(JSON_EXTRACT(json1, '$.nombres'), '"','' ) as nombre, par.Telefono as 
-        telefono,par.Email as email, par.Genero as sexo, sol.id as idSolicitud, sol.estado as estadoSolicitud, 
+        REPLACE(JSON_EXTRACT(json1, '$.telMovil'), '"','') as telefono, 
+        REPLACE(JSON_EXTRACT(json1, '$.nombres'), '"','' ) as nombre,
+        par.Email as email, par.Genero as sexo, sol.id as idSolicitud, sol.estado as estadoSolicitud, 
         sol.Codigo_curso as id_curso, C.id_programa as programa, sol.timestamp as fecha_inscripcion FROM tb_habil_solicitudes 
         AS sol INNER JOIN tb_participante par on par.DUI = sol.documento INNER JOIN tb_cursos AS C on C.Codigo_curso = sol.Codigo_curso 
         WHERE sol.Codigo_curso = ? AND (sol.estado = 0 OR sol.estado = 3 OR sol.estado = 4);`;

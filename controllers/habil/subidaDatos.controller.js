@@ -10,14 +10,10 @@ const subidaHabil = {};
 subidaHabil.archivos = async (req, res) => {
   const {tipo} = req.params;
   let codigoTipo ;
-  if(tipo == 'dui-frontal')
+  if(tipo == 'dui')
     codigoTipo = 0;
-  if(tipo == 'dui-trasero')
-    codigoTipo = 1;
-  if(tipo == 'nit-frontal')
+  if(tipo == 'nit')
     codigoTipo = 2;
-  if(tipo == 'nit-trasero')
-    codigoTipo = 3;
   //Validamos que exista el file
     if (!req.files) return res.json({ status: false, error: "FILE_NOT_EXIST" });
     //Obtenemos la propiedad name del objeto req.files
@@ -59,14 +55,28 @@ subidaHabil.archivos = async (req, res) => {
         
       //Asignamos 
       let key;
+      let type;
       for (let i = 0; i < cantidadDocumentos; i++) {
+        if(codigoTipo == 0){
+          if(i == 0){
+            type = 0;
+          }else{
+            type = 1;
+          }
+        }else{
+          if(i == 2){
+            type = 2;
+          }else{
+            type = 3;
+          }
+        }
         datos.forEach((element) => {
           if (element.posicion == `fileDocumentos${i}`) {
             key = element.key;
             inserts.push(
               pool.query(
                 "INSERT INTO tb_habil_documentos( id_solicitud, s3key, estado, tipo ) VALUES (?,?,?, ?) ",
-                [idSolicitud, key , true, codigoTipo]
+                [idSolicitud, key , true, type]
               )
             );
           }

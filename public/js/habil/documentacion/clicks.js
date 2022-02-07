@@ -4,15 +4,13 @@ $(document).ready(function () {
         //Llamamos el evento en subida de datos
         if($("#txtdocumento").val().length >10){
             if($("#fileNITfront").val() != '' && $("#fileNITBack").val() != ''){
-                SendFiles('nit-frontal');
-                SendFiles('nit-trasero');   
+                SendFiles('nit'); 
             }else{
                 error("Tiene que cargar sus documentos tanto frontal como posterior en las casillas especificadas en la ventana actual");
             }
         }else{
             if($("#fileDocumentos").val() != '' && $("#fileDUIback").val() !=''){
-                SendFiles('dui-frontal');
-                SendFiles('dui-trasero');
+                SendFiles('dui');
             }else{
                 error("Tiene que cargar sus documentos tanto frontal como posterior en las casillas especificadas en la ventana actual");
             }
