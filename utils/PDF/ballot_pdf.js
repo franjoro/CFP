@@ -367,6 +367,61 @@ const PrintPdf = () => {
                 </div>
             </div>
         </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-2" style="border-bottom: solid thin; border-left: solid thin; border-right: solid thin; background-color: #d9d9d9;">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="mt-2"></div>
+                            <b>5. Sexo:</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3" style="border-bottom: solid thin; border-right: solid thin;">
+                    <div class="row">
+                        <div class="col-6">
+                                <div class="mt-2"></div>
+                                <b>1 </b><input type="checkbox" aria-label="Checkbox for following text input"> <span style="font-size: 13px;">Masculino</span>
+                        </div>
+                        <div class="col-6">
+                                <div class="mt-2"></div>
+                                <b>2 </b><input type="checkbox" aria-label="Checkbox for following text input"> <span style="font-size: 13px;">Femenino</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-1" style="background-color: #d9d9d9; border-bottom: solid thin; border-right: solid thin;">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="mt-2"></div>
+                            <b>6. Edad:</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-2" style="border-bottom: solid thin; border-right: solid thin;">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="mt-2"></div>
+                            19 (años cumplidos)
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3" style="border-bottom: solid thin; border-right: solid thin;">
+                    <div class="row">
+                        <div class="col-12">
+                            <b>7. Cuantas personas integran su grupo familiar:</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-1" style="border-bottom: solid thin; border-right: solid thin;">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="mt-2"></div>
+                            4
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         </body>
       </html>                        
    `,

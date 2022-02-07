@@ -51,7 +51,7 @@ const GenerarPdf = (data) => {
     headerTable +=`
       <tr>
         <th>N°</th>
-        <th>N° CORRELATIVO ISSS</th>
+        <th>CORR. ISSS</th>
         <th>Nombre</th>
         <th>Cargo</th>
         <th>N° ISSS</th>
