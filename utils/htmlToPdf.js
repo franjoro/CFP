@@ -9,6 +9,9 @@ const GenerarPdf = (data) => {
   tmpName = "ficha.pdf";
   let empresa = data.data[0][0];
   let nit = data.data[0][0].NIT.split("-");
+  let anexo = "";
+  let headerTable = "";
+  let sectionImg = "";
   const d = new Date();
   const { firmante } = data;
 
@@ -16,9 +19,57 @@ const GenerarPdf = (data) => {
   const { NombreContacto, EmailContacto } = data.data[2][0];
   let imgProgram = '';
   if(program == 30){
+    headerTable +=`
+      <tr>
+        <th>N°</th>
+        <th>Nombre</th>
+        <th>Cargo</th>
+        <th>N° ISSS</th>
+        <th>N° CORRELATIVO ISSS</th>
+        <th>N° DUI</th>
+        <th>F</th>
+        <th>M</th>
+      </tr>
+    `;
     imgProgram = imgIngles;
+    anexo = `<p class="text-center"><b>ANEXO 7</b></p>`;
+    sectionImg +=`
+      <img
+        src="${imgProgram}"
+        alt=""
+        style="width: 250px; margin-left: 0px; margin-right: 10px"
+        class="img-fluid float-right"
+      />
+      <img
+        src="${imgSrc}"
+        alt=""
+        style="width: 250px; margin-left: -10px; margin-right: 50px"
+        class="img-fluid float-left"
+      />
+    `;
   }else{
-    imgProgram = imgOfimatica;
+    headerTable +=`
+      <tr>
+        <th>N°</th>
+        <th>N° CORRELATIVO ISSS</th>
+        <th>Nombre</th>
+        <th>Cargo</th>
+        <th>N° ISSS</th>
+        <th>N° DUI</th>
+        <th>F</th>
+        <th>M</th>
+      </tr>
+    `;
+    imgProgram = imgSrc;
+    anexo = `<p class="text-left"><b>ANEXO 6</b></p>`;
+    sectionImg +=`
+      <img
+        src="${imgSrc}"
+        alt=""
+        style="width: 250px; margin-left: -140px; margin-right: 0px"
+        class="img-fluid float-right"
+      />
+    `;
   }
   itineracion = "";
   return new Promise((resolver, rechazar) => {
@@ -31,23 +82,45 @@ const GenerarPdf = (data) => {
         m = "checked";
 
       }
-      itineracion +=
-      `
-        <tr>
-          <td>${index + 1}</td>
-          <td>${element[1]}</td>
-          <td>${element[4]}</td>
-          <td>${element[3]}</td>
-          <td>${element[9]}</td>
-          <td>${element[0]}</td>
-          <td>
-            <input type="checkbox" ${m} />
-          </td>
-          <td>
-            <input type="checkbox" ${h} />
-          </td>
-        </tr>
-          `;
+      if(program == 30){
+        itineracion +=
+        `
+          <tr>
+            <td>${index + 1}</td>
+            <td>${element[1]}</td>
+            <td>${element[4]}</td>
+            <td>${element[3]}</td>
+            <td>${element[9]}</td>
+            <td>${element[0]}</td>
+            <td>
+              <input type="checkbox" ${m} />
+            </td>
+            <td>
+              <input type="checkbox" ${h} />
+            </td>
+          </tr>
+            `;
+      }else{
+        itineracion +=
+        `
+          <tr>
+            <td>${index + 1}</td>
+            <td>${element[9]}</td>
+            <td>${element[1]}</td>
+            <td>${element[4]}</td>
+            <td>${element[3]}</td>
+            <td>${element[0]}</td>
+            <td>
+              <input type="checkbox" ${m} />
+            </td>
+            <td>
+              <input type="checkbox" ${h} />
+            </td>
+          </tr>
+            `;
+      }
+
+      
       
     });
 
@@ -122,24 +195,13 @@ const GenerarPdf = (data) => {
             }
           </style>
           <div class="container-fluid topheader">
-            <img
-              src="${imgProgram}"
-              alt=""
-              style="width: 250px; margin-left: 0px; margin-right: 10px"
-              class="img-fluid float-right"
-            />
-            <img
-              src="${imgSrc}"
-              alt=""
-              style="width: 250px; margin-left: -10px; margin-right: 50px"
-              class="img-fluid float-left"
-            />
+            ${sectionImg}
             <div class="text-center">
               <h5><b>SOLICITUD DE CAPACITACIÓN </b></h5>
               <h5><b>${programa}</b></h5>
             </div>
             <div class="container">
-              <p class="text-center"><b>ANEXO 7</b></p>
+              <p class="text-center"><b>${anexo}</b></p>
               <div class="divisor">
                 <p class="d-inline">FECHA :</p>
                 <br />
@@ -320,16 +382,7 @@ const GenerarPdf = (data) => {
               <p>NOMBRE DE LOS PARTICIPANTES PROPUESTOS:</p>
               <table class="table-sm">
                 <thead>
-                  <tr>
-                    <th>N°</th>
-                    <th>Nombre</th>
-                    <th>Cargo</th>
-                    <th>N° ISSS</th>
-                    <th>N° CORRELATIVO ISSS</th>
-                    <th>N° DUI</th>
-                    <th>F</th>
-                    <th>M</th>
-                  </tr>
+                  ${headerTable}
                 </thead>
                 <tbody>
                   ${itineracion}
