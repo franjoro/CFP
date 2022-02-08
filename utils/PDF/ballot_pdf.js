@@ -131,7 +131,7 @@ const PrintPdf = () => {
         <div class="container">
             <div class="row mt-5">
                 <div class="col-3">
-                    <img src="" alt="imagen">
+                    <img src="/static/img/nit-front.jpg" alt="imagen">
                 </div>
                 <div 
                     class="col-5"
@@ -170,7 +170,7 @@ const PrintPdf = () => {
                     <div class="row">
                         <div class="col-10">
                             <div class="row">
-                                <div class="col-12" style="border-left: solid thin; border-right: solid thin; border-bottom: solid thin;">
+                                <div class="col-12" style="border-left: solid thin; border-right: solid thin; border-bottom: solid thin; background-color: #d9d9d9;">
                                     <span style="font-size: 12px;"><b>N° de Formulario</b></span>
                                 </div>
                                 <div class="col-12">
@@ -209,13 +209,13 @@ const PrintPdf = () => {
                                 </div>
                             </div>
                             <div class="row text-center" style="border-style: solid;">
-                                <div class="col-12" style="border-bottom: solid black">Fecha de inscripción</div>
+                                <div class="col-12" style="border-bottom: solid black; background-color: #d9d9d9;">Fecha de inscripción</div>
                                 <div class="col-4" style="border-right: solid black;">22</div>
                                 <div class="col-4" style="border-right: solid black;">05</div>
                                 <div class="col-4">2021</div>
-                                <div class="col-4" style="font-size: 10px; border-top: solid black; border-right: solid black;">(Día)</div>
-                                <div class="col-4" style="font-size: 10px; border-top: solid black; border-right: solid black;">(Mes)</div>
-                                <div class="col-4" style="font-size: 10px; border-top: solid black;">(Año)</div>
+                                <div class="col-4" style="font-size: 10px; border-top: solid black; border-right: solid black; background-color: #FFCC99;">(Día)</div>
+                                <div class="col-4" style="font-size: 10px; border-top: solid black; border-right: solid black; background-color: #FFFF99;">(Mes)</div>
+                                <div class="col-4" style="font-size: 10px; border-top: solid black; background-color: #99CCFF;">(Año)</div>
                             </div>
                         </div>
                     </div>
@@ -969,6 +969,8 @@ const PrintPdf = () => {
                 </div>
             </div>
         </div>
+        <br /><br />
+        <br /><br />
         <div class="container">
             <div class="row">
                 <div class="col-5" style="border: solid thin; background-color: #d9d9d9;">
@@ -997,11 +999,19 @@ const PrintPdf = () => {
                         <div class="col-12">
                             <b>¿El curso le dio beneficios?</b>
                         </div>
-                        <div class="col-12 mt-1" style="border: solid; border-style: dotted; background-color: #ffff99;">
-                            <span>Si responde <b>Si</b>, conteste pregunta <b>6</b></span>
+                        <div class="col-12 mt-1">
+                            <div class="row">
+                                <div class="col-10 offset-1" style="border: solid; border-style: dotted; background-color: #ffff99;">
+                                    <span>Si responde <b>Si</b>, conteste pregunta <b>6</b></span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-12 mt-1" style="border: solid; border-style: dotted; background-color: #ffff99;">
-                            <span>Si responde <b>No</b>, conteste pregunta <b>7</b></span>
+                        <div class="col-12 mt-1">
+                            <div class="row">
+                                <div class="col-10 offset-1" style="border: solid; border-style: dotted; background-color: #ffff99;">
+                                    <span>Si responde <b>No</b>, conteste pregunta <b>7</b></span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1195,7 +1205,7 @@ const PrintPdf = () => {
             <div class="row">
                 <div class="col-12" style="border: solid thin;">
                     <div class="row">
-                        <div class="col-6 mt-1 mb-1">
+                        <div class="col-7 mt-1 mb-1">
                             <span style="border: solid thin; border-style: dotted; background-color: #ffff99;">Si no recibió beneficios como producto de la capacitación, <b>responda 7</b></span>
                         </div>
                     </div>
@@ -1329,6 +1339,444 @@ const PrintPdf = () => {
                         <div class="col-3 mt-1 mb-1">
                             <span style="font-size: 12px;">2</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Sector Público 
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <div class="container">
+            <div class="row">
+                <div class="col-12" style="border: solid thin; background-color: #ffcc00;">
+                    <b>SECCION 3.2. EMPLEO FORMAL ANTERIOR. (Completar sólo en caso de NO estar trabajando)</b>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-2" style="border: solid thin; background-color: #d9d9d9;">
+                    <b>1. ¿Ha trabajado antes?</b> 
+                </div>
+                <div class="col-2" style="border: solid thin; border-right: none;">
+                    <div class="row">
+                        <div class="col-6 mt-3">
+                            <span style="font-size: 12px;">1</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Si
+                        </div>
+                        <div class="col-6 mt-3">
+                            <span style="font-size: 12px;">2</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> No
+                        </div>
+                    </div>
+                </div>
+                <div class="col-8" style="border: solid thin; border-left: none;">
+                    <div class="row">
+                        <div class="col-6 mt-3 mb-1">
+                            <span style="border: solid thin; border-style: dotted; background-color: #ffff99;">
+                                (Si responde <b>“No”</b>, pase a <b>Sección 4</b> )
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                    <div class="col-3" style="border: solid thin; background-color: #d9d9d9;">
+                        <div class="row">
+                            <div class="col-12">
+                                <b>2. ¿Cuánto tiempo hace que no trabaja? </b>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-9" style="border: solid thin;">
+                        <div class="row">
+                            <div class="col-3 mt-2">
+                                <span style="font-size: 12px;">1</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> 1 año o menos
+                            </div>
+                            <div class="col-3 mt-2">
+                                <span style="font-size: 12px;">2</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> 2 años
+                            </div>
+                            <div class="col-3 mt-2">
+                                <span style="font-size: 12px;">3</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> 3 años
+                            </div>
+                            <div class="col-3 mt-2">
+                                <span style="font-size: 12px;">4</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Más de 3 años
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+        <br>
+        <div class="container">
+            <div class="row">
+                <div class="col-12" style="border: solid thin; background-color: #ffcc00;">
+                    <b>SECCION 4. INFORMACIÓN SOBRE LOS INGRESOS</b>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-3" style="border: solid thin; background-color: #d9d9d9;">
+                    <b>1. ¿Usted recibe ingresos? </b>
+                </div>
+                <div class="col-9" style="border: solid thin;">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="row">
+                                <div class="col-4">
+                                    <span style="font-size: 12px;">1</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Si
+                                </div>
+                                <div class="col-6">
+                                    <span style="font-size: 12px;">2</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> No
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-3" style="border: solid thin; background-color: #d9d9d9;">
+                    <b>2. ¿Cuánto tiempo hace que no trabaja? </b>
+                </div>
+                <div class="col-9">
+                    <div class="row">
+                        <div class="col-6" style="border: solid thin;">
+                            <div class="row">
+                                <div class="col-12">
+                                    <span style="font-size: 12px;">1</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Trabajo
+                                </div>
+                                <div class="col-12">
+                                    <span style="font-size: 12px;">2</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Ayuda familiar
+                                </div>
+                                <div class="col-12">
+                                    <span style="font-size: 12px;">3</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Remesa
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6" style="border: solid thin;">
+                            <div class="row mt-3">
+                                <div class="col-12">
+                                    <span style="font-size: 12px;">4</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Pensión
+                                </div>
+                                <div class="col-12">
+                                    <span style="font-size: 12px;">5</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Otra:
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br /><br /><br /><br /><br />
+        <br /><br /><br /><br /><br />
+        <br />
+        <br />
+        <br />
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center" style="border: solid thin; background-color: #ffcc00;">
+                    <b>SECCION 5. EXPECTATIVA Y PERTINENCIA DE LA FORMACIÓN</b>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12" style="border: solid thin; background-color: #ffcc00;">
+                    <b>SECCION 5.1 EXPECTATIVAS RESPECTO A LA FORMACIÓN</b>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12" style="border: solid thin; background-color: #d9d9d9;">
+                    <div class="row">
+                        <div class="col-12 mt-1 mb-1">
+                            <b>1. ¿Qué espera lograr con la capacitación a recibir?</b> <span style="border: solid; border-style: dotted; background-color: #ffff99;">(Puede marcar varios)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-6" style="border: solid thin;">
+                    <div class="row">
+                        <div class="col-12">
+                            <span style="font-size: 12px;">1</span> <span><input type="checkbox" aria-label="Checkbox for following text input">  Obtener oportunidades de promoción en mi empleo actual 
+                        </div>
+                        <div class="col-12">
+                            <span style="font-size: 12px;">2</span> <span><input type="checkbox" aria-label="Checkbox for following text input">  Cambiar a un empleo relacionado con la capacitación recibida
+                        </div>
+                        <div class="col-12">
+                            <span style="font-size: 12px;">3</span> <span><input type="checkbox" aria-label="Checkbox for following text input">   Obtener un empleo formal
+                        </div>
+                        <div class="col-12">
+                            <span style="font-size: 12px;">4</span> <span><input type="checkbox" aria-label="Checkbox for following text input">  Trabajar por cuenta propia 
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6" style="border: solid thin;">
+                    <div class="row">
+                        <div class="col-12">
+                            <span style="font-size: 12px;">5</span> <span><input type="checkbox" aria-label="Checkbox for following text input">  Obtener ingresos extras 
+                        </div>
+                        <div class="col-12">
+                            <span style="font-size: 12px;">6</span> <span><input type="checkbox" aria-label="Checkbox for following text input">  Otro:
+                        </div>
+                        <div class="col-12">
+                            <span style="font-size: 12px;">7</span> <span><input type="checkbox" aria-label="Checkbox for following text input">  Ninguno
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="container">
+            <div class="row">
+                <div class="col-12" style="border: solid thin; background-color: #ffcc00;">
+                    <b>SECCION 5.2 PERTINENCIA DE LA FORMACIÓN PROFESIONAL</b>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12" style="border: solid thin; background-color: #d9d9d9;">
+                    <div class="row">
+                        <div class="col-12 mt-1 mb-1">
+                            <b>1. Pertinencia del curso que está solicitando con su ocupación actual</b> <span style="border: solid; border-style: dotted; background-color: #ffff99;">(Marcar solo uno)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12" style="border: solid thin;">
+                    <div class="row">
+                        <div class="col-12">
+                            <span style="font-size: 12px;">1</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> El curso esta relacionado con su trabajo actual
+                        </div>
+                        <div class="col-12">
+                            <span style="font-size: 12px;">2</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> El curso esta relacionado con un nuevo trabajo
+                        </div>
+                        <div class="col-12">
+                            <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center" style="border: solid thin; background-color: #ffcc00;">
+                    <b>SECCION 6. SEGUIMIENTO</b>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12" style="border: solid thin; background-color: #ffcc00;">
+                    <div class="row">
+                        <div class="col-12 mt-2 mb-2" style="font-size: 12px;">
+                            <b>IMPORTANTE:</b> Por favor brinde información de 1 persona, en caso que el INSAFORP necesite ponerse en contacto con usted para un seguimiento de la capacitación.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-2" style="border: solid thin;">
+                    <div class="row">
+                        <div class="col-12 mt-4">
+                            <b>1. Nombre:</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6" style="border: solid thin;">
+                    <div class="row">
+                        <div class="col-12 mt-4">
+                            Ana Silvia Mestizo de Bonilla
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4" style="border: solid thin;">
+                    <div class="row">
+                        <div class="col-12 mt-1">
+                            <span style="border: solid; border-style: dotted; background-color: #ffff99;">(Si no hay parentesco escribir: Amigo(a))</span>
+                        </div>
+                        <div class="col-12">
+                            1.1 Parentesco: Abuela
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12" style="border: solid thin;">
+                    <b>1.2. Dirección:</b> Res. La gloria psje Ramos Lit 2A
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-6" style="border: solid thin;">
+                    <b>1.3. Municipio:</b> MEJICANOS
+                </div>
+                <div class="col-6" style="border: solid thin;">
+                    <b>1.4. Departamento:</b> SAN SALVADOR
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-4" style="border: solid thin;">
+                    <b>1.5. Tel. Fijo:</b> 2277-5588
+                </div>
+                <div class="col-4" style="border: solid thin;">
+                    <b>1.6. Tel. Movil:</b> 7775-2577
+                </div>
+                <div class="col-4" style="border: solid thin;">
+                    <b>1.7. E-mail:</b> <span style="font-size: 12px;">osma204bonillamestizo@hotmail.com</span>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="container">
+            <div class="row">
+                <div class="col-12 ml-3">
+                    <b>Por favor, ocupe este espacio para observaciones o sugerencias que considere útiles:</b>
+                </div>
+                <div class="col-12">
+                    <span class="mr-3" style="float: right !important;">Gracias por su colaboración</span>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row" style="border: solid thin;">
+                <div class="col-12" style="border-bottom: solid; border-bottom-style: dotted;">
+                    <br>
+                </div>
+                <div class="col-12" style="border-bottom: solid; border-bottom-style: dotted;">
+                    <br>
+                </div>
+                <div class="col-12" style="border-bottom: solid; border-bottom-style: dotted;">
+                    <br>
+                </div>
+                <div class="col-12">
+                    <br>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="container">
+            <div class="row">
+                <div class="col-10 offset-1">
+                    <div class="row">
+                        <div class="col-4" style="border: solid thin;">
+                            <div class="row">
+                                <div class="col-12">
+                                    <br>
+                                    <br>
+                                </div>
+                                <div class="col-12" style="border-top: solid thin; background-color: #CC99FF;">
+                                    <div class="text-center">Lugar:</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4" style="border: solid thin;">
+                            <div class="row">
+                                <div class="col-12">
+                                    <br>
+                                    <br>
+                                </div>
+                                <div class="col-12" style="border-top: solid thin; background-color: #CC99FF;">
+                                    <div class="text-center">Firma interesado(a):</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4" style="border: solid thin;">
+                            <div class="row">
+                                <div class="col-12">
+                                    <br>
+                                    <br>
+                                </div>
+                                <div class="col-12" style="border-top: solid thin; background-color: #CC99FF;">
+                                    <div class="text-center">Fecha:</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-10 offset-1">
+                    <div class="row">
+                        <div class="col-4" style="border: solid thin;">
+                            <div class="row">
+                                <div class="col-12">
+                                    <br>
+                                    <br>
+                                </div>
+                                <div class="col-12" style="border-top: solid thin; background-color: #CCFFCC;">
+                                    <div class="text-center">Entrevistó:</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4" style="border: solid thin;">
+                            <div class="row">
+                                <div class="col-12">
+                                    <br>
+                                    <br>
+                                </div>
+                                <div class="col-12" style="border-top: solid thin; background-color: #CCFFCC;">
+                                    <div class="text-center">Cargo de entrevistador(a):</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4" style="border: solid thin;">
+                            <div class="row">
+                                <div class="col-12">
+                                    <br>
+                                    <br>
+                                </div>
+                                <div class="col-12" style="border-top: solid thin; background-color: #CCFFCC;">
+                                    <div class="text-center">Firma de entrevistador(a):</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br><br><br>
+        <div class="container">
+            <div class="row">
+                <div class="col-4" style="border-bottom: solid; border-bottom-style: dotted;">
+                    <br>
+                </div>
+                <div class="col-3 offset-4" style="border: solid; border-style: dotted;">
+                    <br>
+                    <br>
+                    <br>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-4">
+                    <div class="text-center">
+                        Nombre y Firma de Coordinador(a) del Programa en el Centro de Formación
+                    </div>
+                </div>
+                <div class="col-3 offset-4">
+                    <div class="text-center">
+                        Sello
                     </div>
                 </div>
             </div>
