@@ -131,11 +131,11 @@ const PrintPdf = () => {
         <div class="container">
             <div class="row mt-5">
                 <div class="col-3">
-                    <img src="/static/img/nit-front.jpg" alt="imagen">
+                    <img src="https://cfp.ricaldone.edu.sv/static/img/logo-ant-insaforp.jpg" class="img-fluid" alt="imagen">
                 </div>
                 <div 
                     class="col-5"
-                    style="border-radius: 8px; height: 50px; border-top: solid; border-left: solid; border-right: solid;"
+                    style="border-radius: 8px; height: 50px; border: solid;"
                     >
                     <p class="text-center">
                         PROGRAMA: FORMACIÓN EN EL IDIOMA INGLÉS
