@@ -960,7 +960,379 @@ const PrintPdf = () => {
                 </div>
             </div>
         </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <br>
+                    <br>
+                    <br>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-5" style="border: solid thin; background-color: #d9d9d9;">
+                    <div class="row">
+                        <div class="col-12 mt-4">
+                            <b>5. Si, ¿Cuál(es)? Mencione solamente las recibida los últimos 3 años</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3" style="border-bottom: solid thin; border-top: solid thin; border-right: solid thin;">
+                    <div class="row">
+                        <div class="col-12 mt-4">
+                            <b>¿Lo impartió INSAFORP? </b>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-1" style="border-bottom: solid thin; border-top: solid thin; border-right: solid thin;">
+                    <div class="row">
+                        <div class="col-12 mt-4">
+                            <b>Año</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3" style="border-bottom: solid thin; border-top: solid thin; border-right: solid thin;">
+                    <div class="row">
+                        <div class="col-12">
+                            <b>¿El curso le dio beneficios?</b>
+                        </div>
+                        <div class="col-12 mt-1" style="border: solid; border-style: dotted; background-color: #ffff99;">
+                            <span>Si responde <b>Si</b>, conteste pregunta <b>6</b></span>
+                        </div>
+                        <div class="col-12 mt-1" style="border: solid; border-style: dotted; background-color: #ffff99;">
+                            <span>Si responde <b>No</b>, conteste pregunta <b>7</b></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-5" style="border: solid thin;">
+                    <div class="row">
+                        <div class="col-12">
+                            <span>1)</span> Administración de redes sociales y Social Manager
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3" style="border-bottom: solid thin; border-top: solid thin; border-right: solid thin;">
+                    <div class="row">
+                        <div class="col-3">
+                            <span style="font-size: 10px;">1</span> <span><input type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> Si</span>
+                        </div>
+                        <div class="col-3">
+                            <span style="font-size: 10px;">2</span> <span><input type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 11px;"> No</span>
+                        </div>
+                        <div class="col-6">
+                            <span style="font-size: 10px;">3</span> <span><input type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> No sabe</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-1" style="border-bottom: solid thin; border-top: solid thin; border-right: solid thin;">
+                    <div class="row">
+                        <div class="col-12">
+                            2021
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3" style="border-bottom: solid thin; border-top: solid thin; border-right: solid thin;">
+                    <div class="row">
+                        <div class="col-4">
+                            <span style="font-size: 10px;">1</span> <span><input type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> Si</span>
+                        </div>
+                        <div class="col-4">
+                            <span style="font-size: 10px;">2</span> <span><input type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> No</span>
+                        </div>
+                        <div class="col-4">
+                            <span style="font-size: 10px;">3</span> <span><input type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> NR</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-5" style="border: solid thin;">
+                    <div class="row">
+                        <div class="col-12">
+                            <span>2)</span> Administración de redes sociales y Social Manager
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3" style="border-bottom: solid thin; border-top: solid thin; border-right: solid thin;">
+                    <div class="row">
+                        <div class="col-3">
+                            <span style="font-size: 10px;">1</span> <span><input type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> Si</span>
+                        </div>
+                        <div class="col-3">
+                            <span style="font-size: 10px;">2</span> <span><input type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 11px;"> No</span>
+                        </div>
+                        <div class="col-6">
+                            <span style="font-size: 10px;">3</span> <span><input type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> No sabe</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-1" style="border-bottom: solid thin; border-top: solid thin; border-right: solid thin;">
+                    <div class="row">
+                        <div class="col-12">
+                            2021
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3" style="border-bottom: solid thin; border-top: solid thin; border-right: solid thin;">
+                    <div class="row">
+                        <div class="col-4">
+                            <span style="font-size: 10px;">1</span> <span><input type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> Si</span>
+                        </div>
+                        <div class="col-4">
+                            <span style="font-size: 10px;">2</span> <span><input type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> No</span>
+                        </div>
+                        <div class="col-4">
+                            <span style="font-size: 10px;">3</span> <span><input type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> NR</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-5" style="border: solid thin;">
+                    <div class="row">
+                        <div class="col-12">
+                            <span>3)</span> Administración de redes sociales y Social Manager
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3" style="border-bottom: solid thin; border-top: solid thin; border-right: solid thin;">
+                    <div class="row">
+                        <div class="col-3">
+                            <span style="font-size: 10px;">1</span> <span><input type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> Si</span>
+                        </div>
+                        <div class="col-3">
+                            <span style="font-size: 10px;">2</span> <span><input type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 11px;"> No</span>
+                        </div>
+                        <div class="col-6">
+                            <span style="font-size: 10px;">3</span> <span><input type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> No sabe</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-1" style="border-bottom: solid thin; border-top: solid thin; border-right: solid thin;">
+                    <div class="row">
+                        <div class="col-12">
+                            2021
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3" style="border-bottom: solid thin; border-top: solid thin; border-right: solid thin;">
+                    <div class="row">
+                        <div class="col-4">
+                            <span style="font-size: 10px;">1</span> <span><input type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> Si</span>
+                        </div>
+                        <div class="col-4">
+                            <span style="font-size: 10px;">2</span> <span><input type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> No</span>
+                        </div>
+                        <div class="col-4">
+                            <span style="font-size: 10px;">3</span> <span><input type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> NR</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12" style="border: solid thin;">
+                    <div class="row">
+                        <div class="col-6 mt-1 mb-1">
+                            <span style="border: solid thin; border-style: dotted; background-color: #ffff99;">Si recibió beneficios como producto de la capacitación, <b>responda 6</b></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12" style="border: solid thin; background-color: #d9d9d9;">
+                    <div class="row">
+                        <div class="col-12 mt-1 mb-1">
+                            <b>6. ¿Para que sirvió(eron) la(s) capacitacion(es) que recibió?</b> <span style="border: solid thin; border-style: dotted; background-color: #ffff99;">(Puede marcar más de 1)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-6" style="border: solid thin;">
+                    <div class="row">
+                        <div class="col-12">
+                            <span style="font-size: 12px;">1</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Para obtener un empleo
+                        </div>
+                        <div class="col-12">
+                            <span style="font-size: 12px;">3</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Para trabajar por cuenta propia 
+                        </div>
+                        <div class="col-12">
+                            <span style="font-size: 12px;">5</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Obtener oportunidades de promoción en mi empleo actual 
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6" style="border: solid thin;">
+                    <div class="row">
+                        <div class="col-12">
+                            <span style="font-size: 12px;">2</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Cambiar a un empleo relacionado con la capacitación recibida
+                        </div>
+                        <div class="col-12">
+                            <span style="font-size: 12px;">4</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Obtener otros ingresos por trabajos extras 
+                        </div>
+                        <div class="col-12">
+                            <span style="font-size: 12px;">6</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Otro:
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12" style="border: solid thin;">
+                    <div class="row">
+                        <div class="col-6 mt-1 mb-1">
+                            <span style="border: solid thin; border-style: dotted; background-color: #ffff99;">Si no recibió beneficios como producto de la capacitación, <b>responda 7</b></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-5" style="border: solid thin; background-color: #d9d9d9;">
+                    <b>7. ¿Por qué cree que no recibió beneficios como producto de la/las capacitación/es?</b>
+                </div>
+                <div class="col-7" style="border: solid thin;">
+                    <p>Lorem ipsum, dolor sit amet consec</p>
+                </div>
+            </div>
+        </div>
         <br>
+        <div class="container">
+            <div class="row">
+                <div class="col-12" style="border: solid thin; background-color: #ffcc00;">
+                    <b class="text-center">SECCION 3. INFORMACIÓN SOBRE SU SITUACIÓN LABORAL</b>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12" style="border: solid thin; background-color: #ffcc00;">
+                    <div class="row">
+                        <div class="col-12 mt-1 mb-1">
+                            <b>SECCION 3.1. INFORMACIÓN SOBRE LA OCUPACIÓN ACTUAL </b><span style="border: solid thin; border-style: dotted; background-color: #ffff99;">Si no recibió beneficios como producto de la capacitación, <b>responda 7</b></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-5" style="border: solid thin; background-color: #d9d9d9;">
+                    <b>1. ¿A qué actividad se dedica usted actualmente? </b>
+                </div>
+                <div class="col-7" style="border: solid thin;">
+                    <div class="row">
+                        <div class="col-12">
+                            <span style="font-size: 12px;">1</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Estudia 
+
+                        </div>
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-4">
+                                    <span style="font-size: 12px;">2</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Oficios del hogar
+                                </div>
+                                <div class="col-8">
+                                    <span style="font-size: 12px;">3</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Trabaja
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <span style="font-size: 12px;">4</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Busca trabajo
+                        </div>
+                        <div class="col-12">
+                            <span style="font-size: 12px;">5</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Otra:
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12" style="border: solid thin; background-color: #ffcc00;">
+                    <div class="row">
+                        <div class="col-12 mt-1 mb-1">
+                            <b>2. Si usted trabaja, ¿Qué tipo de trabajo tiene? </b><span style="border: solid thin; border-style: dotted; background-color: #ffff99;">(Marcar solo una casilla)</span> <b>(Completar sólo en caso de estar trabajando)</b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-6" style="border: solid thin;">
+                    <div class="row">
+                        <div class="col-12">
+                            <span style="font-size: 12px;">1</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Empleo a tiempo completo 
+                        </div>
+                        <div class="col-12">
+                            <span style="font-size: 12px;">2</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Empleo a tiempo parcial 
+
+                        </div>
+                        <div class="col-12">
+                            <span style="font-size: 12px;">3</span> <span><input type="checkbox" aria-label="Checkbox for following text input">  Empleo temporal
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6" style="border: solid thin;">
+                    <div class="row">
+                        <div class="col-12">
+                            <span style="font-size: 12px;">4</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Negocio familiar 
+
+                        </div>
+                        <div class="col-12">
+                            <span style="font-size: 12px;">5</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Independiente o cuenta propia 
+                        </div>
+                        <div class="col-12">
+                            <span style="font-size: 12px;">6</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Trabajo informal
+                        </div>
+                        <div class="col-12">
+                            <span style="font-size: 12px;">7</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Otro:
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12" style="border: solid thin; background-color: #ffcc00;">
+                    <div class="row">
+                        <div class="col-12 mt-1 mb-1">
+                            <b>3. ¿En que Sector trabaja? </b><span style="border: solid thin; border-style: dotted; background-color: #ffff99;">(Marcar solo una casilla, completar sólo en caso de tener un empleo formal)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12" style="border: solid thin;">
+                    <div class="row">
+                        <div class="col-2 mt-1 mb-1">
+                            <span style="font-size: 12px;">1</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Sector Privado 
+                        </div>
+                        <div class="col-3 mt-1 mb-1">
+                            <span style="font-size: 12px;">2</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Sector Público 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         </body>
       </html>                        
    `,
