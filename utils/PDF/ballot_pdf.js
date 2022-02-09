@@ -1,12 +1,37 @@
 //import library html-pdf-node
 const html_to_pdf = require("html-pdf-node");
+const moment = require('moment');
 
 imgSrc = "https://globaleducation.academy/wp-content/uploads/2020/09/Insaforp-Logo.jpg";
 
-const PrintPdf = () => {
-    console.log("hello");
-  return new Promise((resolver, rechazar) => {
-    // const data1 = JSON.parse();
+const PrintPdf = (dataJson1, dataJson2, dataJson3) => {
+    
+    const data1 = JSON.parse(JSON.stringify(dataJson1));
+    const dui = data1[0].dui;
+    const nit = data1[0].nit;
+    const nombres = ((data1[0].nombres).toUpperCase()).split(" ",3);
+    const apellidos = ((data1[0].apellidos).toUpperCase()).split(" ",3);
+    const sexo = data1[0].sexo;
+    const cfamilia = data1[0].cfamilia;
+    const estadoFamiliar = data1[0].estadoFamiliar;
+    const jefeDeHogar = data1[0].jefeDeHogar;
+    const nHijos = data1[0].nHijos;
+    const booltrabajoantes= data1[0].booltrabajoantes;
+    const profesion = data1[0].profesion;
+    const depNacimiento = data1[0].depNacimiento;
+    const munNacimiento = data1[0].munNacimiento;
+    const fechNacimiento = (data1[0].fechNacimiento).replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
+    const edad =  moment().diff(data1[0].fechNacimiento, 'year');
+    const depDomicilio = data1[0].depDomicilio;
+    const munDomicilio = data1[0].munDomicilio;
+    const direccionDom = data1[0].direccionDom;
+    const telFijo = data1[0].telFijo;
+    const telMovil = data1[0].telMovil;
+    const email = data1[0].email;
+    const discapacidadBool = data1[0].discapacidadBool;
+    const discapacidad = JSON.parse((data1[0].discapacidad).replace(/ /g, ""));
+    const textoDiscapacidad = data1[0].textoDiscapacidad;
+    return new Promise((resolver, rechazar) => {
     tmpName = "boleta_inscripcion.pdf";
     const options = {
       format: "Letter",
@@ -59,7 +84,11 @@ const PrintPdf = () => {
         </head>
         <body style="font-size: 15px; font-family: Arial">
           <style>
-            html { -webkit-print-color-adjust: exact; }
+            html { 
+                -webkit-print-color-adjust: exact; 
+                -webkit-filter: opacity(1);
+                -webkit-filter: blur(0);
+            }
             .block-height{
                 height: auto !important;
             }
@@ -130,17 +159,14 @@ const PrintPdf = () => {
           
         <div class="container">
             <div class="row mt-5">
-                <div class="col-3">
-                    <img src="https://cfp.ricaldone.edu.sv/static/img/logo-ant-insaforp.jpg" class="img-fluid" alt="imagen">
-                </div>
-                <div 
-                    class="col-5"
-                    style="border-radius: 8px; height: 50px; border: solid;"
-                    >
-                    <p class="text-center">
-                        PROGRAMA: FORMACIÓN EN EL IDIOMA INGLÉS
-                    </p>
-                </div>
+            <div class="col-3">
+                <img src="https://cfp.ricaldone.edu.sv/static/img/logo-ant-insaforp.jpg" class="img-fluid" alt="imagen" style="position: absolute; bottom: -18px; right: 5px;">
+            </div>
+            <div class="col-5 mb-1" style="border-radius: 8px; height: 50px; border: solid; box-shadow: 5px 5px 0 #ff5e00;">
+                <p class="text-center">
+                    PROGRAMA: FORMACIÓN EN EL IDIOMA INGLÉS
+                </p>
+            </div>
                 <div class="col-3 offset-1">
                     <div class="row">
                         <div class="col-10 offset-2" style="border-radius: 8px; border-style: solid; height: 50px;">
@@ -240,7 +266,7 @@ const PrintPdf = () => {
                         <div class="col-4">
                             <div class="row">
                                 <div class="col-12" style="border-right: solid thin; border-right-style: dotted;">
-                                    OSMARO
+                                    ${nombres[0]}
                                 </div>
                                 <div class="col-12 text-center" style="background-color: #d9d9d9; border-top: solid thin; border-top-style: dotted;  border-right: solid thin; border-right-style: dotted;">
                                         <span style="font-size: 10px;">1°Nombre</span>
@@ -250,7 +276,7 @@ const PrintPdf = () => {
                         <div class="col-4">
                             <div class="row">
                                 <div class="col-12" style="border-right: solid thin; border-right-style: dotted;">
-                                    ALFONSO
+                                    ${nombres[1] == 'undefined' ? nombres[1] : " - "}
                                 </div>
                                 <div class="col-12 text-center" style="background-color: #d9d9d9; border-top: solid thin; border-top-style: dotted; border-right: thin; border-right-style: dotted;">
                                         <span style="font-size: 10px;">2°Nombre</span>
@@ -260,7 +286,7 @@ const PrintPdf = () => {
                         <div class="col-4">
                             <div class="row">
                                 <div class="col-12" style="border-right: solid thin;">
-                                    -
+                                    ${nombres[2] == 'undefined' ? nombres[2] : " - "}
                                 </div>
                                 <div class="col-12 text-center" style="background-color: #d9d9d9; border-top: solid thin; border-top-style: dotted; border-right: solid thin;">
                                         <span style="font-size: 10px;">3°Nombre</span>
@@ -272,7 +298,7 @@ const PrintPdf = () => {
                         <div class="col-4">
                             <div class="row">
                                 <div class="col-12" style="border-right: solid thin; border-right-style: dotted;">
-                                    BONILLA
+                                    ${apellidos[0]}
                                 </div>
                                 <div class="col-12 text-center" style="background-color: #d9d9d9; border-bottom: solid thin; border-top: solid thin; border-top-style: dotted;  border-right: solid thin; border-right-style: dotted;">
                                         <span style="font-size: 10px;">1°Apellido</span>
@@ -282,7 +308,7 @@ const PrintPdf = () => {
                         <div class="col-4">
                             <div class="row">
                                 <div class="col-12" style="border-right: solid thin; border-right-style: dotted;">
-                                    MESTIZO
+                                    ${apellidos[1] == 'undefined' ? apellidos[1] : " - "}
                                 </div>
                                 <div class="col-12 text-center" style="background-color: #d9d9d9; border-bottom: solid thin; border-top: solid thin; border-top-style: dotted; border-right: thin; border-right-style: dotted;">
                                         <span style="font-size: 10px;">2°Apellido</span>
@@ -292,7 +318,7 @@ const PrintPdf = () => {
                         <div class="col-4">
                             <div class="row">
                                 <div class="col-12" style="border-right: solid thin;">
-                                    -
+                                    ${apellidos[2] == 'undefined' ? apellidos[2] : " - "}
                                 </div>
                                 <div class="col-12 text-center" style="background-color: #d9d9d9; border-bottom: solid thin; border-top: solid thin; border-top-style: dotted; border-right: solid thin;">
                                         <span style="font-size: 10px;">3°Apellido</span>
@@ -311,13 +337,13 @@ const PrintPdf = () => {
                 <div class="col-10" style="border-bottom: solid thin; border-right: solid thin;">
                     <div class="row">
                         <div class="col-4" style="border-bottom: solid thin; border-right: solid thin;">
-                            <b>2.1. DUI:</b> 059088445
+                            <b>2.1. DUI:</b> ${dui}
                         </div>
                         <div class="col-3" style="border-bottom: solid thin; border-right: solid thin;">
-                            <b>2.2. NIT:</b> 0614-290209-000-0
+                            <b>2.2. NIT:</b> ${nit}
                         </div>
                         <div class="col-5" style="border-bottom: solid thin;">
-                            <b>2.3. Carné de menoridad: </b> AMP-TN-0643/2012
+                            <b>2.3. Carné de menoridad: </b> -
                         </div>
                     </div>
                     <div class="row">
@@ -347,7 +373,7 @@ const PrintPdf = () => {
                     <div class="row">
                         <div class="col-8" style="border-right: solid thin;">
                             <div class="mt-1"></div>
-                            <b>3.1.</b><span><input type="checkbox" aria-label="Checkbox for following text input">
+                            <b>3.1.</b><span><input checked type="checkbox" aria-label="Checkbox for following text input">
                             </span> Salvadoreña <b>3.2.</b><span><input type="checkbox" aria-label="Checkbox for following text input"></span> Extranjera <span style="border: solid; background-color: #ffff99; border-style: dotted;">Si responde <b>"Extranjera" responda 3.3</b></span>
                         </div>
                         <div class="col-4">
@@ -386,7 +412,7 @@ const PrintPdf = () => {
                         <div class="col-4" style="border-bottom: solid thin; border-right: solid thin;">
                             <div class="row mt-2 mb-3">
                                 <div class="col-12">
-                                    <b>4.3 Fecha:</b> 08/02/2002
+                                    <b>4.3 Fecha:</b> ${fechNacimiento}
                                 </div>
                             </div>
                         </div>
@@ -408,11 +434,11 @@ const PrintPdf = () => {
                     <div class="row">
                         <div class="col-6">
                                 <div class="mt-2"></div>
-                                <b>1 </b><input type="checkbox" aria-label="Checkbox for following text input"> <span style="font-size: 13px;">Masculino</span>
+                                <b>1 </b><input ${ sexo == 'Masculino' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> <span style="font-size: 13px;">Masculino</span>
                         </div>
                         <div class="col-6">
                                 <div class="mt-2"></div>
-                                <b>2 </b><input type="checkbox" aria-label="Checkbox for following text input"> <span style="font-size: 13px;">Femenino</span>
+                                <b>2 </b><input ${ sexo == 'Femenino' ? 'checked' : '' }type="checkbox" aria-label="Checkbox for following text input"> <span style="font-size: 13px;">Femenino</span>
                         </div>
                     </div>
                 </div>
@@ -428,7 +454,7 @@ const PrintPdf = () => {
                     <div class="row">
                         <div class="col-12">
                             <div class="mt-2"></div>
-                            19 (años cumplidos)
+                            ${edad} (años cumplidos)
                         </div>
                     </div>
                 </div>
@@ -443,7 +469,7 @@ const PrintPdf = () => {
                     <div class="row">
                         <div class="col-12">
                             <div class="mt-2"></div>
-                            4
+                            ${cfamilia}
                         </div>
                     </div>
                 </div>
@@ -461,22 +487,22 @@ const PrintPdf = () => {
                 <div class="col-10" style="border-bottom: solid thin; border-right: solid thin;">
                     <div class="row mt-1" >
                         <div class="col-2">
-                            <b>1 </b><input type="checkbox" aria-label="Checkbox for following text input"> <span style="font-size: 11px;">Soltero(a)</span>
+                            <b>1 </b><input ${ estadoFamiliar == 'Soltero(a)' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> <span style="font-size: 11px;">Soltero(a)</span>
                         </div>
                         <div class="col-2">
-                            <b>2 </b><input type="checkbox" aria-label="Checkbox for following text input"> <span style="font-size: 11px;">Casado(a)</span>
+                            <b>2 </b><input ${ estadoFamiliar == 'Casado(a)' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> <span style="font-size: 11px;">Casado(a)</span>
                         </div>
                         <div class="col-2">
-                            <b>3 </b><input type="checkbox" aria-label="Checkbox for following text input"> <span style="font-size: 11px;">Acompañado(a)</span>
+                            <b>3 </b><input ${ estadoFamiliar == 'Acompanado' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> <span style="font-size: 11px;">Acompañado(a)</span>
                         </div>
                         <div class="col-2">
-                            <b>4 </b><input type="checkbox" aria-label="Checkbox for following text input"> <span style="font-size: 11px;">Divorciado(a)</span>
+                            <b>4 </b><input ${ estadoFamiliar == 'Divorciado(a)' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> <span style="font-size: 11px;">Divorciado(a)</span>
                         </div>
                         <div class="col-2">
-                            <b>5 </b><input type="checkbox" aria-label="Checkbox for following text input"> <span style="font-size: 11px;">Separado(a)</span>
+                            <b>5 </b><input ${ estadoFamiliar == 'Separado(a)' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> <span style="font-size: 11px;">Separado(a)</span>
                         </div>
                         <div class="col-2">
-                            <b>6 </b><input type="checkbox" aria-label="Checkbox for following text input"> <span style="font-size: 11px;">Viudo(a)</span>
+                            <b>6 </b><input ${ estadoFamiliar == 'Viudo(a)' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> <span style="font-size: 11px;">Viudo(a)</span>
                         </div>
                     </div>                    
                 </div>
@@ -494,13 +520,13 @@ const PrintPdf = () => {
                 <div class="col-3" style="border-bottom: solid thin; border-right: solid thin;">
                     <div class="row mt-2">
                         <div class="col-4">
-                        <b><span style="font-size: 10px;">1</span> </b><span><input type="checkbox" aria-label="Checkbox for following text input"> <span style="font-size: 10px;">Si</span>
+                        <b><span style="font-size: 10px;">1</span> </b><span><input ${ jefeDeHogar == 'Si' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> <span style="font-size: 10px;">Si</span>
                         </div>
                         <div class="col-4">
-                            <b><span style="font-size: 10px;">2</spans></b><span><input type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 10px;"> No</span>
+                            <b><span style="font-size: 10px;">2</spans></b><span><input ${ jefeDeHogar == 'No' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 10px;"> No</span>
                         </div>
                         <div class="col-4">
-                            <b><span style="font-size: 10px;">3</span> </b><span><input type="checkbox" aria-label="Checkbox for following text input"> <span style="font-size: 10px;">Compartida</span>
+                            <b><span style="font-size: 10px;">3</span> </b><span><input ${ jefeDeHogar == 'Compartida' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> <span style="font-size: 10px;">Compartida</span>
                         </div>
                     </div>
                 </div>
@@ -517,17 +543,17 @@ const PrintPdf = () => {
                 <div class="col-2" style="border-bottom: solid thin; border-right: solid thin;">
                     <div class="row mt-2">
                         <div class="col-6">
-                            <b>1 </b><span><input type="checkbox" aria-label="Checkbox for following text input"> Si
+                            <b>1 </b><span><input ${ nHijos > 0 ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> Si
                         </div>
                         <div class="col-6">
-                            <b>2 </b><span><input type="checkbox" aria-label="Checkbox for following text input"> No
+                            <b>2 </b><span><input ${ nHijos == 0 ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> No
                         </div>
                     </div>
                 </div>
                 <div class="col-2" style="border-bottom: solid thin; border-right: solid thin;">
                     <div class="row">
                         <div class="col-12 mt-2">
-                            <b>10.1</b> N° de hijos: 0
+                            <b>10.1</b> N° de hijos: ${ nHijos }
                         </div>
                     </div>
                 </div>
@@ -545,10 +571,10 @@ const PrintPdf = () => {
                 <div class="col-2" style="border-bottom: solid thin; border-right: solid thin;">
                     <div class="row">
                         <div class="col-6 mt-2">
-                            <b>1 </b><span><input type="checkbox" aria-label="Checkbox for following text input"> Si
+                            <b>1 </b><span><input ${booltrabajoantes == 'si' ? 'checked' : ''} type="checkbox" aria-label="Checkbox for following text input"> Si
                         </div>
                         <div class="col-6 mt-2">
-                            <b>2 </b><span><input type="checkbox" aria-label="Checkbox for following text input"> No
+                            <b>2 </b><span><input ${booltrabajoantes == 'no' ? 'checked' : ''} type="checkbox" aria-label="Checkbox for following text input"> No
                         </div>
                     </div>
                 </div>
@@ -558,7 +584,7 @@ const PrintPdf = () => {
                             <b>11.1 ¿A que Profesión u oficio se dedica?</b>
                         </div>
                         <div class="col-6 mt-1">
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" value="${ profesion }">
                         </div>
                     </div>
                 </div>
@@ -579,7 +605,7 @@ const PrintPdf = () => {
                             <span style="border: solid; background-color: #ffff99; border-style: dotted;">(Colonia, caserío, asentamiento o comunidad, seguido del nombre de la calle o pasaje, y por último el número de casa o lote)</span>
                         </div>
                         <div class="col-12">
-                            <b>12.1. Dirección:</b> URB. CUMBRES DE SAN BORTOLO SENDA 7, POL 45, CASA 62
+                            <b>12.1. Dirección:</b> ${ direccionDom }
                         </div>
                     </div>
                 </div>
@@ -598,17 +624,17 @@ const PrintPdf = () => {
                     <b>12.3. Departamento: </b> SAN SALVADOR
                 </div>
                 <div class="col-4" style="border-bottom: solid thin; border-right: solid thin;">
-                    <b>12.4. Tel. Fijo:</b> 2222-2222
+                    <b>12.4. Tel. Fijo:</b> ${ telFijo }
                 </div>
             </div>
         </div>
         <div class="container">
             <div class="row">
                 <div class="col-4" style="border-left: solid thin; border-bottom: solid thin; border-right: solid thin;">
-                    <b>12.5. Tel. Movil:</b> 74919648
+                    <b>12.5. Tel. Movil:</b> ${ telMovil }
                 </div>
                 <div class="col-8" style="border-bottom: solid thin; border-right: solid thin;">
-                    <b>12.6. E-mail:</b> osma204bonillamestizo@hotmail.com
+                    <b>12.6. E-mail:</b> ${ email }
                 </div>
             </div>
         </div>
@@ -624,10 +650,10 @@ const PrintPdf = () => {
                 <div class="col-6" style="border-bottom: solid thin; border-right: solid thin;">
                     <div class="row mt-2 mb-2">
                         <div class="col-2">
-                            <b>1 </b><span><input type="checkbox" aria-label="Checkbox for following text input"> Si
+                            <b>1 </b><span><input ${ discapacidadBool == 'si' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> Si
                         </div>
                         <div class="col-2">
-                            <b>2 </b><span><input type="checkbox" aria-label="Checkbox for following text input"> No
+                            <b>2 </b><span><input ${ discapacidadBool == 'no' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> No
                         </div>
                     </div>
                 </div>
@@ -643,37 +669,37 @@ const PrintPdf = () => {
                         <div class="col-4 mt-2" style="border-right: solid thin;">
                             <div class="row">
                                 <div class="col-12">
-                                    <b>1 </b><span><input type="checkbox" aria-label="Checkbox for following text input"> Moverse o caminar
+                                    <b>1 </b><span><input ${ discapacidad.moverseCaminar == 'true' ? 'checked': '' } type="checkbox" aria-label="Checkbox for following text input"> Moverse o caminar
                                 </div>
                                 <div class="col-12">
-                                    <b>2 </b><span><input type="checkbox" aria-label="Checkbox for following text input"> Usar sus brazos o manos
+                                    <b>2 </b><span><input ${ discapacidad.usarBrazosPiernas  == 'true' ? 'checked': '' } type="checkbox" aria-label="Checkbox for following text input"> Usar sus brazos o manos
                                 </div>
                                 <div class="col-12">
-                                    <b>3 </b><span><input type="checkbox" aria-label="Checkbox for following text input"> Ver, aun usando lentes
+                                    <b>3 </b><span><input ${ discapacidad.verLentes == 'true' ? 'checked': '' } type="checkbox" aria-label="Checkbox for following text input"> Ver, aun usando lentes
                                 </div>
                                 <div class="col-12">
-                                    <b>4 </b><span><input type="checkbox" aria-label="Checkbox for following text input"> Oír, aun usando aparatos especiales
+                                    <b>4 </b><span><input ${ discapacidad.oirAparatos == 'true' ? 'checked': '' } type="checkbox" aria-label="Checkbox for following text input"> Oír, aun usando aparatos especiales
                                 </div>
                             </div>
                         </div>
                         <div class="col-8 mt-2">
                             <div class="row">
                                 <div class="col-12">
-                                    <b>5 </b><span><input type="checkbox" aria-label="Checkbox for following text input"> Hablar
+                                    <b>5 </b><span><input ${ discapacidad.hablar == 'true' ? 'checked': '' } type="checkbox" aria-label="Checkbox for following text input"> Hablar
                                 </div>
                                 <div class="col-12">
-                                    <b>6 </b><span><input type="checkbox" aria-label="Checkbox for following text input"> Tiene algún retraso o deficiencia mental 
+                                    <b>6 </b><span><input ${ discapacidad.retrasoMental == 'true' ? 'checked': '' } type="checkbox" aria-label="Checkbox for following text input"> Tiene algún retraso o deficiencia mental 
                                 </div>
                                 <div class="col-12">
-                                    <b>7 </b><span><input type="checkbox" aria-label="Checkbox for following text input"> Bañarse, vestirse, alimentarse por si mismo
+                                    <b>7 </b><span><input ${ discapacidad.vestirseAlimentarse == 'true' ? 'checked': '' } type="checkbox" aria-label="Checkbox for following text input"> Bañarse, vestirse, alimentarse por si mismo
                                 </div>
                                 <div class="col-12">
                                     <div class="row">
                                         <div class="col-5 mt-2">
-                                            <b>8 </b><span><input type="checkbox" aria-label="Checkbox for following text input">  Otra limitación permanente. Explique:
+                                            <b>8 </b><span><input ${ discapacidad.otro == 'true' ? 'checked': '' } type="checkbox" aria-label="Checkbox for following text input">  Otra limitación permanente. Explique:
                                         </div>
                                         <div class="col-7 mb-1">
-                                            <input type="text" class="form-control">
+                                            <input type="text" class="form-control" value="${ textoDiscapacidad }">
                                         </div>
                                     </div>
                                 </div>

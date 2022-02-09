@@ -91,7 +91,7 @@ router.get("/fileZipCourse/zip", authcheck, zipCourse.dowloadZipCourse);
 //#region print ballot
 // router.get('/printpdf', pdfController.printPDF);
 router.get('/download/pdf', authcheck, pdfController.downloadFile);
-router.get("/send/pdf", pdfController.printPDF);
+router.get("/send/pdf/:idSolicitud", pdfController.printPDF);
 //#endregion
 
 // export routes

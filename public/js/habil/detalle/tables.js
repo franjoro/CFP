@@ -143,7 +143,7 @@ const applicationTable = () => {
                     </button>
                     <button
                       class="btn btn-primary btn-sm"
-                      onclick="PrintPdf()"
+                      onclick="PrintPdf('${row.idSolicitud}')"
                     >
                     Descargar boleta
                     </button>
@@ -170,7 +170,7 @@ const applicationTable = () => {
                     <button
                       type="button"
                       class="btn btn-primary btn-sm"
-                      onclick="PrintPdf()"
+                      onclick="PrintPdf('${row.idSolicitud}')"
                     >
                     Descargar boleta
                     </button>
@@ -214,9 +214,9 @@ const changeColor= async () =>{
   }
 };
 
-const PrintPdf = async () =>{
+const PrintPdf = async (idSolicitud) =>{
   const data = await $.ajax({
-    url : `/admin/habil/send/pdf`,
+    url : `/admin/habil/send/pdf/${idSolicitud}`,
     type: 'GET'
   })
   .done(function(){
