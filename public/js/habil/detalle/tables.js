@@ -215,6 +215,10 @@ const changeColor= async () =>{
 };
 
 const PrintPdf = async (idSolicitud) =>{
+  const dataRegion = await $.ajax({
+    url: `/`,
+    type: 'GET'
+  })
   const data = await $.ajax({
     url : `/admin/habil/send/pdf/${idSolicitud}`,
     type: 'GET'

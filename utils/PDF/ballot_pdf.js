@@ -31,6 +31,56 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3) => {
     const discapacidadBool = data1[0].discapacidadBool;
     const discapacidad = JSON.parse((data1[0].discapacidad).replace(/ /g, ""));
     const textoDiscapacidad = data1[0].textoDiscapacidad;
+
+    const data2 = JSON.parse(JSON.stringify(dataJson2));
+    const sabeleerEscribir = data2[0].sabeleerEscribir;
+    const leerEscribir = data2[0].leerEscribir;
+    const soloFirma = data2[0].soloFirma;
+    const gradoFinalizado = data2[0].gradoFinalizado;
+    const estudiaActualmente = data2[0].estudiaActualmente;
+    const tiempoestudio = data2[0].tiempoestudio;
+    const cursosPasados = data2[0].cursosPasados;
+    const beneficioCursos = data2[0].beneficioCursos;
+    const curso1 = data2[0].curso1;
+    const impartio1 = data2[0].impartio1;
+    const year1 = data2[0].year1;
+    const beneficio1 = data2[0].beneficio1;
+    const curso2 = data2[0].curso2;
+    const impartio2 = data2[0].impartio2;
+    const year2 = data2[0].year2;
+    const beneficio2 = data2[0].beneficio2;
+    const curso3 = data2[0].curso3;
+    const impartio3 = data2[0].impartio3;
+    const year3 = data2[0].year3;
+    const beneficio3 = data2[0].beneficio3;
+    const txtTitleOr = data2[0].txtTitleOr;
+    const txtOtherEduc = data2[0].txtOtherEduc;
+    const txtOtro = data2[0].txtOtro;
+    const cursopositivo = JSON.parse((data2[0].cursopositivo).replace(/ /g, ""));
+    const nobeneficioc = data2[0].nobeneficioc;
+    const actividades = JSON.parse((data2[0].actividades).replace(/ /g, ""));
+    const trabajaantes = data2[0].trabajaantes;
+    const tiempoSinTrabajarselect = data2[0].tiempoSinTrabajarselect;
+    const tipoempleo = data2[0].tipoempleo;
+    const sectorDeTrabajo = data2[0].sectorDeTrabajo;
+    const recibeIngresos = data2[0].recibeIngresos;
+    const txtOtherWork = data2[0].txtOtherWork;
+    const sectortrabajo = data2[0].sectortrabajo;
+    const ingresos = JSON.parse((data2[0].ingresos).replace(/ /g, ""));
+    const espectativaLogro = JSON.parse((data2[0].espectativaLogro).replace(/ /g, ""));
+    const pertinencia = data2[0].pertinencia;        
+
+    const data3 = JSON.parse(JSON.stringify(dataJson3));
+    const nombreContacto = data3[0].nombreContacto;
+    const parentesco = data3[0].parentesco;
+    const direccionContacto = data3[0].direccionContacto;
+    const departcontact = data3[0].departcontact;
+    const municipiocontacto = data3[0].municipiocontacto;
+    const fijoContact = data3[0].fijoContact;
+    const movilContacto = data3[0].movilContacto;
+    const emailContacto = data3[0].emailContacto;
+    console.log(data3);
+    // promise
     return new Promise((resolver, rechazar) => {
     tmpName = "boleta_inscripcion.pdf";
     const options = {
@@ -276,7 +326,7 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3) => {
                         <div class="col-4">
                             <div class="row">
                                 <div class="col-12" style="border-right: solid thin; border-right-style: dotted;">
-                                    ${nombres[1] == 'undefined' ? nombres[1] : " - "}
+                                    ${nombres[1] == undefined ? '-' : nombres[1] }
                                 </div>
                                 <div class="col-12 text-center" style="background-color: #d9d9d9; border-top: solid thin; border-top-style: dotted; border-right: thin; border-right-style: dotted;">
                                         <span style="font-size: 10px;">2°Nombre</span>
@@ -286,7 +336,7 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3) => {
                         <div class="col-4">
                             <div class="row">
                                 <div class="col-12" style="border-right: solid thin;">
-                                    ${nombres[2] == 'undefined' ? nombres[2] : " - "}
+                                    ${nombres[2] == undefined ? '-' : nombres[2]}
                                 </div>
                                 <div class="col-12 text-center" style="background-color: #d9d9d9; border-top: solid thin; border-top-style: dotted; border-right: solid thin;">
                                         <span style="font-size: 10px;">3°Nombre</span>
@@ -308,7 +358,7 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3) => {
                         <div class="col-4">
                             <div class="row">
                                 <div class="col-12" style="border-right: solid thin; border-right-style: dotted;">
-                                    ${apellidos[1] == 'undefined' ? apellidos[1] : " - "}
+                                    ${apellidos[1] == undefined ? '-' : apellidos[1]}
                                 </div>
                                 <div class="col-12 text-center" style="background-color: #d9d9d9; border-bottom: solid thin; border-top: solid thin; border-top-style: dotted; border-right: thin; border-right-style: dotted;">
                                         <span style="font-size: 10px;">2°Apellido</span>
@@ -318,7 +368,7 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3) => {
                         <div class="col-4">
                             <div class="row">
                                 <div class="col-12" style="border-right: solid thin;">
-                                    ${apellidos[2] == 'undefined' ? apellidos[2] : " - "}
+                                    ${apellidos[2] == undefined ? '-' : apellidos[2] }
                                 </div>
                                 <div class="col-12 text-center" style="background-color: #d9d9d9; border-bottom: solid thin; border-top: solid thin; border-top-style: dotted; border-right: solid thin;">
                                         <span style="font-size: 10px;">3°Apellido</span>
@@ -725,7 +775,7 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3) => {
                 <div class="col-3" style="border-bottom: solid thin; border-right: solid thin;">
                     <div class="row mt-3">
                         <div class="col-12">
-                            <b>1 </b><span><input type="checkbox" aria-label="Checkbox for following text input"> Si
+                            <b>1 </b><span><input ${ sabeleerEscribir == 1 ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> Si
                         </div>
                     </div>
                 </div>
@@ -737,10 +787,10 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3) => {
                         <div class="col-12">
                             <div class="row">
                                 <div class="col-6">
-                                    <b>1 </b><span><input type="checkbox" aria-label="Checkbox for following text input"> Si
+                                    <b>1 </b><span><input ${ leerEscribir == 'Leer' ? 'checked' : ''} type="checkbox" aria-label="Checkbox for following text input"> Si
                                 </div>
                                 <div class="col-6">
-                                    <b>2 </b><span><input type="checkbox" aria-label="Checkbox for following text input"> No
+                                    <b>2 </b><span><input ${ leerEscribir != 'Leer' ? 'checked': '' } type="checkbox" aria-label="Checkbox for following text input"> No
                                 </div>
                             </div>
                         </div>
@@ -754,10 +804,10 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3) => {
                         <div class="col-12">
                             <div class="row">
                                 <div class="col-6">
-                                    <b>1 </b><span><input type="checkbox" aria-label="Checkbox for following text input"> Si
+                                    <b>1 </b><span><input ${ leerEscribir == 'Escribir' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> Si
                                 </div>
                                 <div class="col-6">
-                                    <b>2 </b><span><input type="checkbox" aria-label="Checkbox for following text input"> No
+                                    <b>2 </b><span><input ${ leerEscribir != 'Escribir' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> No
                                 </div>
                             </div>
                         </div>
@@ -771,10 +821,10 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3) => {
                         <div class="col-12">
                             <div class="row">
                                 <div class="col-4">
-                                    <b>1 </b><span><input type="checkbox" aria-label="Checkbox for following text input"> Si
+                                    <b>1 </b><span><input ${ (leerEscribir == 'soloFirma' || leerEscribir == 'Ninguno') ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> Si
                                 </div>
                                 <div class="col-4">
-                                    <b>2 </b><span><input type="checkbox" aria-label="Checkbox for following text input"> No
+                                    <b>2 </b><span><input ${ (leerEscribir != 'soloFirma' && leerEscribir != 'Ninguno') ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> No
                                 </div>
                             </div>
                         </div>
@@ -795,50 +845,50 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3) => {
                         <div class="col-2">
                             <div class="row mt-1">
                                 <div class="col-12">
-                                    <b>1 </b><span><input type="checkbox" aria-label="Checkbox for following text input"> Ninguno
+                                    <b>1 </b><span><input ${ gradoFinalizado == 'Ninguno' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> Ninguno
                                 </div>
                                 <div class="col-12">
-                                    <b>6 </b><span><input type="checkbox" aria-label="Checkbox for following text input"> 5° Gdo.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-2">
-                            <div class="row mt-1">
-                                <div class="col-12">
-                                    <b>2 </b><span><input type="checkbox" aria-label="Checkbox for following text input"> 1er. Gdo.
-                                </div>
-                                <div class="col-12">
-                                    <b>7 </b><span><input type="checkbox" aria-label="Checkbox for following text input"> 6° Gdo.
+                                    <b>6 </b><span><input ${ gradoFinalizado == '5' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> 5° Gdo.
                                 </div>
                             </div>
                         </div>
                         <div class="col-2">
                             <div class="row mt-1">
                                 <div class="col-12">
-                                    <b>3 </b><span><input type="checkbox" aria-label="Checkbox for following text input"> 2° Gdo
+                                    <b>2 </b><span><input ${ gradoFinalizado == '1' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> 1er. Gdo.
                                 </div>
                                 <div class="col-12">
-                                    <b>8 </b><span><input type="checkbox" aria-label="Checkbox for following text input"> 7° Gdo.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-2">
-                            <div class="row mt-1">
-                                <div class="col-12">
-                                    <b>4 </b><span><input type="checkbox" aria-label="Checkbox for following text input"> 3er. Gdo.
-                                </div>
-                                <div class="col-12">
-                                    <b>9 </b><span><input type="checkbox" aria-label="Checkbox for following text input"> 8° Gdo.
+                                    <b>7 </b><span><input ${ gradoFinalizado == '6' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> 6° Gdo.
                                 </div>
                             </div>
                         </div>
                         <div class="col-2">
                             <div class="row mt-1">
                                 <div class="col-12">
-                                    <b>5 </b><span><input type="checkbox" aria-label="Checkbox for following text input"> 4° Gdo.
+                                    <b>3 </b><span><input ${ gradoFinalizado == '2' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> 2° Gdo
                                 </div>
                                 <div class="col-12">
-                                    <b>10 </b><span><input type="checkbox" aria-label="Checkbox for following text input"> 9° Gdo.
+                                    <b>8 </b><span><input ${ gradoFinalizado == '7' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> 7° Gdo.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="row mt-1">
+                                <div class="col-12">
+                                    <b>4 </b><span><input ${ gradoFinalizado == '3' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> 3er. Gdo.
+                                </div>
+                                <div class="col-12">
+                                    <b>9 </b><span><input ${ gradoFinalizado == '8' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> 8° Gdo.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="row mt-1">
+                                <div class="col-12">
+                                    <b>5 </b><span><input ${ gradoFinalizado == '4' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> 4° Gdo.
+                                </div>
+                                <div class="col-12">
+                                    <b>10 </b><span><input ${ gradoFinalizado == '9' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> 9° Gdo.
                                 </div>
                             </div>
                         </div>
@@ -851,56 +901,60 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3) => {
                 <div class="col-2" style="border-left: solid thin; border-right: solid thin; border-bottom: solid thin;">
                     <div class="row">
                         <div class="col-12">
-                            <b>2.2.</b> <span><input type="checkbox" aria-label="Checkbox for following text input"> Bachillerato
+                            <b>2.2.</b> <span><input ${ (gradoFinalizado == 'BachInc' || gradoFinalizado == 'BachCom') ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> Bachillerato
                         </div>
                         <div class="col-10 offset-2">
-                            <span style="font-size: 12px;">1</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Incompleto
+                            <span style="font-size: 12px;">1</span> <span><input ${ gradoFinalizado == 'BachInc' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> Incompleto
                         </div>
                         <div class="col-10 offset-2">
-                            <span style="font-size: 12px;">2</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Completo
+                            <span style="font-size: 12px;">2</span> <span><input ${ gradoFinalizado == 'BachCom' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> Completo
                         </div>
                     </div>
                 </div>
                 <div class="col-2" style="border-right: solid thin; border-bottom: solid thin;">
                     <div class="row">
                         <div class="col-12">
-                            <b>2.3.</b> <span><input type="checkbox" aria-label="Checkbox for following text input"> Tecnológica
+                            <b>2.3.</b> <span><input ${ (gradoFinalizado == 'TecCom' || gradoFinalizado == 'TecInc') ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> Tecnológica
                         </div>
                         <div class="col-10 offset-2">
-                            <span style="font-size: 12px;">1</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Incompleta
+                            <span style="font-size: 12px;">1</span> <span><input ${ gradoFinalizado == 'TecInc' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> Incompleta
                         </div>
                         <div class="col-10 offset-2">
-                            <span style="font-size: 12px;">2</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Completa
+                            <span style="font-size: 12px;">2</span> <span><input ${ gradoFinalizado == 'TecInc' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> Completa
                         </div>
                     </div>
                 </div>
                 <div class="col-2" style="border-right: solid thin; border-bottom: solid thin;">
                     <div class="row">
                         <div class="col-12">
-                            <b>2.4.</b> <span><input type="checkbox" aria-label="Checkbox for following text input"> Universitaria
+                            <b>2.4.</b> <span><input ${ (gradoFinalizado == 'UniInc' || gradoFinalizado == 'UniCom') ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> Universitaria
                         </div>
                         <div class="col-10 offset-2">
-                            <span style="font-size: 12px;">1</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Incompleta
+                            <span style="font-size: 12px;">1</span> <span><input ${ gradoFinalizado == 'UniInc' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> Incompleta
                         </div>
                         <div class="col-10 offset-2">
-                            <span style="font-size: 12px;">2</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Completa
+                            <span style="font-size: 12px;">2</span> <span><input ${ gradoFinalizado == 'TecInc' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> Completa
                         </div>
                     </div>
                 </div>
                 <div class="col-2" style="border-bottom: solid thin; border-right: solid thin;">
                     <div class="row">
                         <div class="col-12" style="border-bottom: dashed thin;">
-                            <b>2.5.</b><span><input type="checkbox" aria-label="Checkbox for following text input"> Otra edicación formal:
+                            <b>2.5.</b><span><input ${ txtOtherEduc != ''? 'checked': '' } type="checkbox" aria-label="Checkbox for following text input"> Otra edicación formal:
                         </div>
-                        <div class="col-12"></div>
+                        <div class="col-12" style="font-size: 12px">
+                            ${txtOtherEduc}
+                        </div>
                     </div>
                 </div>
                 <div class="col-4" style="border-bottom: solid thin; border-right: solid thin;">
                     <div class="row mt-2">
                         <div class="col-12" style="border-bottom: dashed thin; height: 38px;">
-                            <b>2.6.</b><span><input type="checkbox" aria-label="Checkbox for following text input">  Título o certificado obtenido: 
+                            <b>2.6.</b><span><input ${ txtTitleOr != ''? 'checked': '' } type="checkbox" aria-label="Checkbox for following text input">  Título o certificado obtenido: 
                         </div>
-                        <div class="col-12"></div>
+                        <div class="col-12" style="font-size: 12px">
+                            ${txtTitleOr}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -915,10 +969,10 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3) => {
                         <div class="col-12 mt-1">
                             <div class="row">
                                 <div class="col-6">
-                                    <b>1 </b><span><input type="checkbox" aria-label="Checkbox for following text input"> Si
+                                    <b>1 </b><span><input ${ estudiaActualmente == '1' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> Si
                                 </div>
                                 <div class="col-6">
-                                    <b>2 </b><span><input type="checkbox" aria-label="Checkbox for following text input"> No
+                                    <b>2 </b><span><input ${ estudiaActualmente == '0' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> No
                                 </div>
                             </div>
                         </div>
@@ -933,17 +987,17 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3) => {
                 <div class="col-5" style="border-bottom: solid thin; border-right: solid thin;">
                     <div class="row mt-3">
                         <div class="col-3">
-                            <b><span style="font-size: 9px;">1 </span></b><span><input type="checkbox" aria-label="Checkbox for following text input"> <span style="font-size: 11px;">1 año</span>
+                            <b><span style="font-size: 9px;">1 </span></b><span><input ${ tiempoestudio == '1y' ? 'checked': '' } type="checkbox" aria-label="Checkbox for following text input"> <span style="font-size: 11px;">1 año</span>
 
                         </div>
                         <div class="col-3">
-                            <b><span style="font-size: 9px;">2 </span></b><span><input type="checkbox" aria-label="Checkbox for following text input"> <span style="font-size: 11px;">2-3 años</span>
+                            <b><span style="font-size: 9px;">2 </span></b><span><input ${ tiempoestudio == '2-3y' ? 'checked': '' } type="checkbox" aria-label="Checkbox for following text input"> <span style="font-size: 11px;">2-3 años</span>
                         </div>
                         <div class="col-4"
-                            <b><span style="font-size: 9px;">3 </span></b><span><input type="checkbox" aria-label="Checkbox for following text input"> <span style="font-size: 11px;">Más de 3 años</span>
+                            <b><span style="font-size: 9px;">3 </span></b><span><input ${ tiempoestudio == '3y' ? 'checked': '' } type="checkbox" aria-label="Checkbox for following text input"> <span style="font-size: 11px;">Más de 3 años</span>
                         </div>
                         <div class="col-2">
-                            <b><span style="font-size: 9px;">4 </span></b><span><input type="checkbox" aria-label="Checkbox for following text input"> <span style="font-size: 9px;">NR</span>
+                            <b><span style="font-size: 9px;">4 </span></b><span><input ${ tiempoestudio == 'No recuerda' ? 'checked': '' } type="checkbox" aria-label="Checkbox for following text input"> <span style="font-size: 9px;">NR</span>
                         </div>
                     </div>
                 </div>
@@ -959,10 +1013,10 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3) => {
                         <div class="col-6">
                             <div class="row">
                                 <div class="col-4">
-                                    <b>1 </b><span><input type="checkbox" aria-label="Checkbox for following text input"> Si
+                                    <b>1 </b><span><input ${cursosPasados == '1' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> Si
                                 </div>
                                 <div class="col-4">
-                                    <b>2 </b><span><input type="checkbox" aria-label="Checkbox for following text input"> No
+                                    <b>2 </b><span><input ${cursosPasados == '0' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> No
                                 </div>
                             </div>
                         </div>
@@ -1048,40 +1102,40 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3) => {
                 <div class="col-5" style="border: solid thin;">
                     <div class="row">
                         <div class="col-12">
-                            <span>1)</span> Administración de redes sociales y Social Manager
+                            <span>1)</span> ${curso1}
                         </div>
                     </div>
                 </div>
                 <div class="col-3" style="border-bottom: solid thin; border-top: solid thin; border-right: solid thin;">
                     <div class="row">
                         <div class="col-3">
-                            <span style="font-size: 10px;">1</span> <span><input type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> Si</span>
+                            <span style="font-size: 10px;">1</span> <span><input ${impartio1 == 'Si' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> Si</span>
                         </div>
                         <div class="col-3">
-                            <span style="font-size: 10px;">2</span> <span><input type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 11px;"> No</span>
+                            <span style="font-size: 10px;">2</span> <span><input ${impartio1 == 'No' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 11px;"> No</span>
                         </div>
                         <div class="col-6">
-                            <span style="font-size: 10px;">3</span> <span><input type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> No sabe</span>
+                            <span style="font-size: 10px;">3</span> <span><input ${impartio1 == 'NoSe' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> No sabe</span>
                         </div>
                     </div>
                 </div>
                 <div class="col-1" style="border-bottom: solid thin; border-top: solid thin; border-right: solid thin;">
                     <div class="row">
                         <div class="col-12">
-                            2021
+                            ${year1}
                         </div>
                     </div>
                 </div>
                 <div class="col-3" style="border-bottom: solid thin; border-top: solid thin; border-right: solid thin;">
                     <div class="row">
                         <div class="col-4">
-                            <span style="font-size: 10px;">1</span> <span><input type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> Si</span>
+                            <span style="font-size: 10px;">1</span> <span><input ${beneficio1 == 'Si' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> Si</span>
                         </div>
                         <div class="col-4">
-                            <span style="font-size: 10px;">2</span> <span><input type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> No</span>
+                            <span style="font-size: 10px;">2</span> <span><input ${beneficio1 == 'No' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> No</span>
                         </div>
                         <div class="col-4">
-                            <span style="font-size: 10px;">3</span> <span><input type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> NR</span>
+                            <span style="font-size: 10px;">3</span> <span><input ${beneficio1 == 'NR' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> NR</span>
                         </div>
                     </div>
                 </div>
@@ -1092,40 +1146,40 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3) => {
                 <div class="col-5" style="border: solid thin;">
                     <div class="row">
                         <div class="col-12">
-                            <span>2)</span> Administración de redes sociales y Social Manager
+                            <span>2)</span> ${curso2}
                         </div>
                     </div>
                 </div>
                 <div class="col-3" style="border-bottom: solid thin; border-top: solid thin; border-right: solid thin;">
                     <div class="row">
                         <div class="col-3">
-                            <span style="font-size: 10px;">1</span> <span><input type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> Si</span>
+                            <span style="font-size: 10px;">1</span> <span><input ${impartio2 == 'Si' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> Si</span>
                         </div>
                         <div class="col-3">
-                            <span style="font-size: 10px;">2</span> <span><input type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 11px;"> No</span>
+                            <span style="font-size: 10px;">2</span> <span><input ${impartio2 == 'No' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 11px;"> No</span>
                         </div>
                         <div class="col-6">
-                            <span style="font-size: 10px;">3</span> <span><input type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> No sabe</span>
+                            <span style="font-size: 10px;">3</span> <span><input ${impartio2 == 'NoSe' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> No sabe</span>
                         </div>
                     </div>
                 </div>
                 <div class="col-1" style="border-bottom: solid thin; border-top: solid thin; border-right: solid thin;">
                     <div class="row">
                         <div class="col-12">
-                            2021
+                            ${year2}
                         </div>
                     </div>
                 </div>
                 <div class="col-3" style="border-bottom: solid thin; border-top: solid thin; border-right: solid thin;">
                     <div class="row">
                         <div class="col-4">
-                            <span style="font-size: 10px;">1</span> <span><input type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> Si</span>
+                            <span style="font-size: 10px;">1</span> <span><input ${beneficio2 == 'Si' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> Si</span>
                         </div>
                         <div class="col-4">
-                            <span style="font-size: 10px;">2</span> <span><input type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> No</span>
+                            <span style="font-size: 10px;">2</span> <span><input ${beneficio2 == 'No' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> No</span>
                         </div>
                         <div class="col-4">
-                            <span style="font-size: 10px;">3</span> <span><input type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> NR</span>
+                            <span style="font-size: 10px;">3</span> <span><input ${beneficio2 == 'NR' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> NR</span>
                         </div>
                     </div>
                 </div>
@@ -1136,40 +1190,40 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3) => {
                 <div class="col-5" style="border: solid thin;">
                     <div class="row">
                         <div class="col-12">
-                            <span>3)</span> Administración de redes sociales y Social Manager
+                            <span>3)</span> ${curso3}
                         </div>
                     </div>
                 </div>
                 <div class="col-3" style="border-bottom: solid thin; border-top: solid thin; border-right: solid thin;">
                     <div class="row">
                         <div class="col-3">
-                            <span style="font-size: 10px;">1</span> <span><input type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> Si</span>
+                            <span style="font-size: 10px;">1</span> <span><input ${impartio3 == 'Si' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> Si</span>
                         </div>
                         <div class="col-3">
-                            <span style="font-size: 10px;">2</span> <span><input type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 11px;"> No</span>
+                            <span style="font-size: 10px;">2</span> <span><input ${impartio3 == 'No' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 11px;"> No</span>
                         </div>
                         <div class="col-6">
-                            <span style="font-size: 10px;">3</span> <span><input type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> No sabe</span>
+                            <span style="font-size: 10px;">3</span> <span><input ${impartio3 == 'NoSe' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> No sabe</span>
                         </div>
                     </div>
                 </div>
                 <div class="col-1" style="border-bottom: solid thin; border-top: solid thin; border-right: solid thin;">
                     <div class="row">
                         <div class="col-12">
-                            2021
+                            ${year3}
                         </div>
                     </div>
                 </div>
                 <div class="col-3" style="border-bottom: solid thin; border-top: solid thin; border-right: solid thin;">
                     <div class="row">
                         <div class="col-4">
-                            <span style="font-size: 10px;">1</span> <span><input type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> Si</span>
+                            <span style="font-size: 10px;">1</span> <span><input ${beneficio3 == 'Si' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> Si</span>
                         </div>
                         <div class="col-4">
-                            <span style="font-size: 10px;">2</span> <span><input type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> No</span>
+                            <span style="font-size: 10px;">2</span> <span><input ${beneficio3 == 'No' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> No</span>
                         </div>
                         <div class="col-4">
-                            <span style="font-size: 10px;">3</span> <span><input type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> NR</span>
+                            <span style="font-size: 10px;">3</span> <span><input ${beneficio3 == 'NR' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> NR</span>
                         </div>
                     </div>
                 </div>
@@ -1202,23 +1256,23 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3) => {
                 <div class="col-6" style="border: solid thin;">
                     <div class="row">
                         <div class="col-12">
-                            <span style="font-size: 12px;">1</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Para obtener un empleo
+                            <span style="font-size: 12px;">1</span> <span><input ${ cursopositivo.obtenerEmpleo == 'true' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> Para obtener un empleo
                         </div>
                         <div class="col-12">
-                            <span style="font-size: 12px;">3</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Para trabajar por cuenta propia 
+                            <span style="font-size: 12px;">3</span> <span><input ${ cursopositivo.trabajarPropio == 'true' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> Para trabajar por cuenta propia 
                         </div>
                         <div class="col-12">
-                            <span style="font-size: 12px;">5</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Obtener oportunidades de promoción en mi empleo actual 
+                            <span style="font-size: 12px;">5</span> <span><input ${ cursopositivo.oportunidadProm == 'true' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> Obtener oportunidades de promoción en mi empleo actual 
                         </div>
                     </div>
                 </div>
                 <div class="col-6" style="border: solid thin;">
                     <div class="row">
                         <div class="col-12">
-                            <span style="font-size: 12px;">2</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Cambiar a un empleo relacionado con la capacitación recibida
+                            <span style="font-size: 12px;">2</span> <span><input ${ cursopositivo.cambiarEmpleo == 'true' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> Cambiar a un empleo relacionado con la capacitación recibida
                         </div>
                         <div class="col-12">
-                            <span style="font-size: 12px;">4</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Obtener otros ingresos por trabajos extras 
+                            <span style="font-size: 12px;">4</span> <span><input ${ cursopositivo.otrosIngresos == 'true' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> Obtener otros ingresos por trabajos extras 
                         </div>
                         <div class="col-12">
                             <span style="font-size: 12px;">6</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Otro:
@@ -1244,7 +1298,7 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3) => {
                     <b>7. ¿Por qué cree que no recibió beneficios como producto de la/las capacitación/es?</b>
                 </div>
                 <div class="col-7" style="border: solid thin;">
-                    <p>Lorem ipsum, dolor sit amet consec</p>
+                    <p>${ nobeneficioc }</p>
                 </div>
             </div>
         </div>
@@ -1275,24 +1329,24 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3) => {
                 <div class="col-7" style="border: solid thin;">
                     <div class="row">
                         <div class="col-12">
-                            <span style="font-size: 12px;">1</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Estudia 
+                            <span style="font-size: 12px;">1</span> <span><input ${ actividades.estudia == 'true' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> Estudia 
 
                         </div>
                         <div class="col-12">
                             <div class="row">
                                 <div class="col-4">
-                                    <span style="font-size: 12px;">2</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Oficios del hogar
+                                    <span style="font-size: 12px;">2</span> <span><input ${ actividades.oficiosHogar == 'true' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> Oficios del hogar
                                 </div>
                                 <div class="col-8">
-                                    <span style="font-size: 12px;">3</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Trabaja
+                                    <span style="font-size: 12px;">3</span> <span><input ${ actividades.trabaja == 'true' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> Trabaja
                                 </div>
                             </div>
                         </div>
                         <div class="col-12">
-                            <span style="font-size: 12px;">4</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Busca trabajo
+                            <span style="font-size: 12px;">4</span> <span><input ${ actividades.buscaTrabajo == 'true' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> Busca trabajo
                         </div>
                         <div class="col-12">
-                            <span style="font-size: 12px;">5</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Otra:
+                            <span style="font-size: 12px;">5</span> <span><input ${ actividades.otro == 'true' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> Otra: ${txtOtro}
                         </div>
                     </div>
                 </div>
@@ -1314,31 +1368,31 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3) => {
                 <div class="col-6" style="border: solid thin;">
                     <div class="row">
                         <div class="col-12">
-                            <span style="font-size: 12px;">1</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Empleo a tiempo completo 
+                            <span style="font-size: 12px;">1</span> <span><input ${ tipoempleo == 'tmpcompleto' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> Empleo a tiempo completo 
                         </div>
                         <div class="col-12">
-                            <span style="font-size: 12px;">2</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Empleo a tiempo parcial 
+                            <span style="font-size: 12px;">2</span> <span><input ${ tipoempleo == 'tmpparcial' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> Empleo a tiempo parcial 
 
                         </div>
                         <div class="col-12">
-                            <span style="font-size: 12px;">3</span> <span><input type="checkbox" aria-label="Checkbox for following text input">  Empleo temporal
+                            <span style="font-size: 12px;">3</span> <span><input ${ tipoempleo == 'temporal' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input">  Empleo temporal
                         </div>
                     </div>
                 </div>
                 <div class="col-6" style="border: solid thin;">
                     <div class="row">
                         <div class="col-12">
-                            <span style="font-size: 12px;">4</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Negocio familiar 
+                            <span style="font-size: 12px;">4</span> <span><input ${ tipoempleo == 'negocio' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> Negocio familiar 
 
                         </div>
                         <div class="col-12">
-                            <span style="font-size: 12px;">5</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Independiente o cuenta propia 
+                            <span style="font-size: 12px;">5</span> <span><input ${ tipoempleo == 'inde' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> Independiente o cuenta propia 
                         </div>
                         <div class="col-12">
-                            <span style="font-size: 12px;">6</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Trabajo informal
+                            <span style="font-size: 12px;">6</span> <span><input ${ tipoempleo == 'informal' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> Trabajo informal
                         </div>
                         <div class="col-12">
-                            <span style="font-size: 12px;">7</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Otro:
+                            <span style="font-size: 12px;">7</span> <span><input ${ tipoempleo == 'otro' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> Otro: ${txtOtherWork}
                         </div>
                     </div>
                 </div>
@@ -1360,10 +1414,10 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3) => {
                 <div class="col-12" style="border: solid thin;">
                     <div class="row">
                         <div class="col-2 mt-1 mb-1">
-                            <span style="font-size: 12px;">1</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Sector Privado 
+                            <span style="font-size: 12px;">1</span> <span><input ${sectortrabajo == 'privado' ? 'checked' : ''} type="checkbox" aria-label="Checkbox for following text input"> Sector Privado 
                         </div>
                         <div class="col-3 mt-1 mb-1">
-                            <span style="font-size: 12px;">2</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Sector Público 
+                            <span style="font-size: 12px;">2</span> <span><input ${sectortrabajo == 'publico' ? 'checked' : ''} type="checkbox" aria-label="Checkbox for following text input"> Sector Público 
                         </div>
                     </div>
                 </div>
@@ -1386,10 +1440,10 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3) => {
                 <div class="col-2" style="border: solid thin; border-right: none;">
                     <div class="row">
                         <div class="col-6 mt-3">
-                            <span style="font-size: 12px;">1</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Si
+                            <span style="font-size: 12px;">1</span> <span><input ${trabajaantes == '1' ? 'checked' : ''} type="checkbox" aria-label="Checkbox for following text input"> Si
                         </div>
                         <div class="col-6 mt-3">
-                            <span style="font-size: 12px;">2</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> No
+                            <span style="font-size: 12px;">2</span> <span><input ${trabajaantes == '0' ? 'checked' : ''} type="checkbox" aria-label="Checkbox for following text input"> No
                         </div>
                     </div>
                 </div>
@@ -1416,16 +1470,16 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3) => {
                     <div class="col-9" style="border: solid thin;">
                         <div class="row">
                             <div class="col-3 mt-2">
-                                <span style="font-size: 12px;">1</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> 1 año o menos
+                                <span style="font-size: 12px;">1</span> <span><input ${tiempoSinTrabajarselect == '1y-' ? 'checked' : ''} type="checkbox" aria-label="Checkbox for following text input"> 1 año o menos
                             </div>
                             <div class="col-3 mt-2">
-                                <span style="font-size: 12px;">2</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> 2 años
+                                <span style="font-size: 12px;">2</span> <span><input ${tiempoSinTrabajarselect == '2y' ? 'checked' : ''} type="checkbox" aria-label="Checkbox for following text input"> 2 años
                             </div>
                             <div class="col-3 mt-2">
-                                <span style="font-size: 12px;">3</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> 3 años
+                                <span style="font-size: 12px;">3</span> <span><input ${tiempoSinTrabajarselect == '3y' ? 'checked' : ''} type="checkbox" aria-label="Checkbox for following text input"> 3 años
                             </div>
                             <div class="col-3 mt-2">
-                                <span style="font-size: 12px;">4</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Más de 3 años
+                                <span style="font-size: 12px;">4</span> <span><input ${tiempoSinTrabajarselect == '3y+' ? 'checked' : ''} type="checkbox" aria-label="Checkbox for following text input"> Más de 3 años
                             </div>
                         </div>
                     </div>
@@ -1449,10 +1503,10 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3) => {
                         <div class="col-4">
                             <div class="row">
                                 <div class="col-4">
-                                    <span style="font-size: 12px;">1</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Si
+                                    <span style="font-size: 12px;">1</span> <span><input ${recibeIngresos == '1' ? 'checked' : ''} type="checkbox" aria-label="Checkbox for following text input"> Si
                                 </div>
                                 <div class="col-6">
-                                    <span style="font-size: 12px;">2</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> No
+                                    <span style="font-size: 12px;">2</span> <span><input ${recibeIngresos == '0' ? 'checked' : ''} type="checkbox" aria-label="Checkbox for following text input"> No
                                 </div>
                             </div>
                         </div>
@@ -1470,23 +1524,23 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3) => {
                         <div class="col-6" style="border: solid thin;">
                             <div class="row">
                                 <div class="col-12">
-                                    <span style="font-size: 12px;">1</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Trabajo
+                                    <span style="font-size: 12px;">1</span> <span><input ${ingresos.trabajo == 'true' ? 'checked': ''} type="checkbox" aria-label="Checkbox for following text input"> Trabajo
                                 </div>
                                 <div class="col-12">
-                                    <span style="font-size: 12px;">2</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Ayuda familiar
+                                    <span style="font-size: 12px;">2</span> <span><input ${ingresos.ayudaFamiliar == 'true' ? 'checked': ''} type="checkbox" aria-label="Checkbox for following text input"> Ayuda familiar
                                 </div>
                                 <div class="col-12">
-                                    <span style="font-size: 12px;">3</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Remesa
+                                    <span style="font-size: 12px;">3</span> <span><input ${ingresos.remesa == 'true' ? 'checked': ''} type="checkbox" aria-label="Checkbox for following text input"> Remesa
                                 </div>
                             </div>
                         </div>
                         <div class="col-6" style="border: solid thin;">
                             <div class="row mt-3">
                                 <div class="col-12">
-                                    <span style="font-size: 12px;">4</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Pensión
+                                    <span style="font-size: 12px;">4</span> <span><input ${ingresos.pension == 'true' ? 'checked': ''} type="checkbox" aria-label="Checkbox for following text input"> Pensión
                                 </div>
                                 <div class="col-12">
-                                    <span style="font-size: 12px;">5</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> Otra:
+                                    <span style="font-size: 12px;">5</span> <span><input ${ingresos.otros == 'true' ? 'checked': ''} type="checkbox" aria-label="Checkbox for following text input"> Otra: ${ingresos.otrosIngresos}
                                 </div>
                             </div>
                         </div>
@@ -1529,29 +1583,29 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3) => {
                 <div class="col-6" style="border: solid thin;">
                     <div class="row">
                         <div class="col-12">
-                            <span style="font-size: 12px;">1</span> <span><input type="checkbox" aria-label="Checkbox for following text input">  Obtener oportunidades de promoción en mi empleo actual 
+                            <span style="font-size: 12px;">1</span> <span><input ${espectativaLogro.oportunidadProm == 'true' ? 'checked': ''} type="checkbox" aria-label="Checkbox for following text input">  Obtener oportunidades de promoción en mi empleo actual 
                         </div>
                         <div class="col-12">
-                            <span style="font-size: 12px;">2</span> <span><input type="checkbox" aria-label="Checkbox for following text input">  Cambiar a un empleo relacionado con la capacitación recibida
+                            <span style="font-size: 12px;">2</span> <span><input ${espectativaLogro.cambEmpleo == 'true' ? 'checked': ''} type="checkbox" aria-label="Checkbox for following text input">  Cambiar a un empleo relacionado con la capacitación recibida
                         </div>
                         <div class="col-12">
-                            <span style="font-size: 12px;">3</span> <span><input type="checkbox" aria-label="Checkbox for following text input">   Obtener un empleo formal
+                            <span style="font-size: 12px;">3</span> <span><input ${espectativaLogro.obtenerEmpleo == 'true' ? 'checked': ''} type="checkbox" aria-label="Checkbox for following text input">   Obtener un empleo formal
                         </div>
                         <div class="col-12">
-                            <span style="font-size: 12px;">4</span> <span><input type="checkbox" aria-label="Checkbox for following text input">  Trabajar por cuenta propia 
+                            <span style="font-size: 12px;">4</span> <span><input ${espectativaLogro.trabajarPropio == 'true' ? 'checked': ''} type="checkbox" aria-label="Checkbox for following text input">  Trabajar por cuenta propia 
                         </div>
                     </div>
                 </div>
                 <div class="col-6" style="border: solid thin;">
                     <div class="row">
                         <div class="col-12">
-                            <span style="font-size: 12px;">5</span> <span><input type="checkbox" aria-label="Checkbox for following text input">  Obtener ingresos extras 
+                            <span style="font-size: 12px;">5</span> <span><input ${espectativaLogro.ingresosExtra == 'true' ? 'checked': ''} type="checkbox" aria-label="Checkbox for following text input">  Obtener ingresos extras 
                         </div>
                         <div class="col-12">
-                            <span style="font-size: 12px;">6</span> <span><input type="checkbox" aria-label="Checkbox for following text input">  Otro:
+                            <span style="font-size: 12px;">6</span> <span><input ${espectativaLogro.otro == 'true' ? 'checked': ''} type="checkbox" aria-label="Checkbox for following text input">  Otro: ${espectativaLogro.otrosexpectativas}
                         </div>
                         <div class="col-12">
-                            <span style="font-size: 12px;">7</span> <span><input type="checkbox" aria-label="Checkbox for following text input">  Ninguno
+                            <span style="font-size: 12px;">7</span> <span><input ${espectativaLogro.ninguno == 'true' ? 'checked': ''} type="checkbox" aria-label="Checkbox for following text input">  Ninguno
                         </div>
                     </div>
                 </div>
@@ -1581,10 +1635,10 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3) => {
                 <div class="col-12" style="border: solid thin;">
                     <div class="row">
                         <div class="col-12">
-                            <span style="font-size: 12px;">1</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> El curso esta relacionado con su trabajo actual
+                            <span style="font-size: 12px;">1</span> <span><input ${pertinencia == 'trabajoactual' ? 'checked': ''} type="checkbox" aria-label="Checkbox for following text input"> El curso esta relacionado con su trabajo actual
                         </div>
                         <div class="col-12">
-                            <span style="font-size: 12px;">2</span> <span><input type="checkbox" aria-label="Checkbox for following text input"> El curso esta relacionado con un nuevo trabajo
+                            <span style="font-size: 12px;">2</span> <span><input ${pertinencia == 'nuevotrabajo' ? 'checked': ''} type="checkbox" aria-label="Checkbox for following text input"> El curso esta relacionado con un nuevo trabajo
                         </div>
                         <div class="col-12">
                             <br>
@@ -1624,7 +1678,7 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3) => {
                 <div class="col-6" style="border: solid thin;">
                     <div class="row">
                         <div class="col-12 mt-4">
-                            Ana Silvia Mestizo de Bonilla
+                            ${nombreContacto}
                         </div>
                     </div>
                 </div>
@@ -1634,7 +1688,7 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3) => {
                             <span style="border: solid; border-style: dotted; background-color: #ffff99;">(Si no hay parentesco escribir: Amigo(a))</span>
                         </div>
                         <div class="col-12">
-                            1.1 Parentesco: Abuela
+                            1.1 Parentesco: ${parentesco}
                         </div>
                     </div>
                 </div>
@@ -1643,7 +1697,7 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3) => {
         <div class="container">
             <div class="row">
                 <div class="col-12" style="border: solid thin;">
-                    <b>1.2. Dirección:</b> Res. La gloria psje Ramos Lit 2A
+                    <b>1.2. Dirección:</b> ${direccionContacto}
                 </div>
             </div>
         </div>
@@ -1660,13 +1714,13 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3) => {
         <div class="container">
             <div class="row">
                 <div class="col-4" style="border: solid thin;">
-                    <b>1.5. Tel. Fijo:</b> 2277-5588
+                    <b>1.5. Tel. Fijo:</b> ${fijoContact}
                 </div>
                 <div class="col-4" style="border: solid thin;">
-                    <b>1.6. Tel. Movil:</b> 7775-2577
+                    <b>1.6. Tel. Movil:</b> ${movilContacto}
                 </div>
                 <div class="col-4" style="border: solid thin;">
-                    <b>1.7. E-mail:</b> <span style="font-size: 12px;">osma204bonillamestizo@hotmail.com</span>
+                    <b>1.7. E-mail:</b> <span style="font-size: 12px;">${emailContacto}</span>
                 </div>
             </div>
         </div>

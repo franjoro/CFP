@@ -717,15 +717,15 @@ $(document).ready(function () {
       email = $("#mail").val(),
       discapacidadBool = $("input[name='discapacidadesc']:checked").val(),
       discapacidad = {
-        moverseCaminar: $("#discapacidad1").is(":checked"),
-        usarBrazosPiernas: $("#discapacidad2").is(":checked"),
-        verLentes: $("#discapacidad3").is(":checked"),
-        oirAparatos: $("#discapacidad4").is(":checked"),
-        hablar: $("#discapacidad5").is(":checked"),
-        retrasoMental: $("#discapacidad6").is(":checked"),
-        vestirseAlimentarse: $("#discapacidad7").is(":checked"),
-        otro: $("#discapacidad8").is(":checked"),
-        otroText: $("#otrosdiscapacidades").val(),
+        moverseCaminar:$("#discapacidad1").is(":checked"),
+        usarBrazosPiernas:$("#discapacidad2").is(":checked"),
+        verLentes:$("#discapacidad3").is(":checked"),
+        oirAparatos:$("#discapacidad4").is(":checked"),
+        hablar:$("#discapacidad5").is(":checked"),
+        retrasoMental:$("#discapacidad6").is(":checked"),
+        vestirseAlimentarse:$("#discapacidad7").is(":checked"),
+        otro:$("#discapacidad8").is(":checked"),
+        otroText:$("#otrosdiscapacidades").val(),
       };
       return{
         dui,
@@ -776,19 +776,19 @@ $(document).ready(function () {
       year3 = $("#year3").val(),
       beneficio3 = $("#beneficio3").val(),
       cursopositivo = {
-        trabajarPropio: $("#b2").is(":checked"),
-        oportunidadProm: $("#b3").is(":checked"),
-        otrosIngresos : $("#b4").is(":checked"),
-        cambiarEmpleo : $("#b5").is(":checked"),
-        obtenerEmpleo : $("#b6").is(":checked"),
+        trabajarPropio:$("#b2").is(":checked"),
+        oportunidadProm:$("#b3").is(":checked"),
+        otrosIngresos:$("#b4").is(":checked"),
+        cambiarEmpleo:$("#b5").is(":checked"),
+        obtenerEmpleo:$("#b6").is(":checked"),
       },
       nobeneficioc = $("#nobeneficioc").val(),
       actividades = {
-        estudia :$("#c1").is(":checked"),
-        oficiosHogar :$("#c2").is(":checked"),
-        buscaTrabajo :$("#c3").is(":checked"),
-        trabaja :$("#c4").is(":checked"),
-        otro :$("#c5").is(":checked")
+        estudia:$("#c1").is(":checked"),
+        oficiosHogar:$("#c2").is(":checked"),
+        buscaTrabajo:$("#c3").is(":checked"),
+        trabaja:$("#c4").is(":checked"),
+        otro:$("#c5").is(":checked")
       },
       txtOtro = $("#txtOtro").val(),
       trabajaantes = $("#trabajaantes").val(),
@@ -800,23 +800,25 @@ $(document).ready(function () {
       sectorDeTrabajo = $("#sectordetrabajo").val(),
       recibeIngresos = $("#recibeingresosselect").val(),
       ingresos = {
-        trabajo :$("#ingresos1").is(":checked"),
-        ayudaFamiliar : $("#ingresos2").is(":checked"),
-        remesa : $("#ingresos3").is(":checked"),
-        pension : $("#ingresos4").is(":checked"),
-        otros : $("#ingresos5").is(":checked"),
-        otrosIngresos : $("#otrosIngresos").val()
+        trabajo:$("#ingresos1").is(":checked"),
+        ayudaFamiliar:$("#ingresos2").is(":checked"),
+        remesa:$("#ingresos3").is(":checked"),
+        pension:$("#ingresos4").is(":checked"),
+        otros:$("#ingresos5").is(":checked"),
+        otrosIngresos:$("#otrosIngresos").val()
       },
+      otrosIngresos = $("#otrosIngresos").val(),
       espectativaLogro = {
-        oportunidadProm : $("#e1").is(":checked"),
-        cambEmpleo : $("#e2").is(":checked"),
-        obtenerEmpleo : $("#e3").is(":checked"),
-        trabajarPropio : $("#e4").is(":checked"),
-        ingresosExtra : $("#e5").is(":checked"),
-        ninguno : $("#e6").is(":checked"),
-        otro : $("#e7").is(":checked"),
-        otrosexpectativas : $("#otrosexpectativas").val(),
+        oportunidadProm:$("#e1").is(":checked"),
+        cambEmpleo:$("#e2").is(":checked"),
+        obtenerEmpleo:$("#e3").is(":checked"),
+        trabajarPropio:$("#e4").is(":checked"),
+        ingresosExtra:$("#e5").is(":checked"),
+        ninguno:$("#e6").is(":checked"),
+        otro:$("#e7").is(":checked"),
+        otrosexpectativas:$("#otrosexpectativas").val(),
       },
+      otrosexpectativas = $("#otrosexpectativas").val(),
       pertinencia = $("#pertinencia").val();
     return{
       sabeleerEscribir,
@@ -854,7 +856,9 @@ $(document).ready(function () {
       recibeIngresos,
       ingresos,
       espectativaLogro,
-      pertinencia
+      pertinencia,
+      otrosIngresos,
+      otrosexpectativas
     };
   };
 
