@@ -4,9 +4,17 @@ const moment = require('moment');
 
 imgSrc = "https://globaleducation.academy/wp-content/uploads/2020/09/Insaforp-Logo.jpg";
 
-const PrintPdf = (dataJson1, dataJson2, dataJson3) => {
+const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
     
     const data1 = JSON.parse(JSON.stringify(dataJson1));
+    const data5 = JSON.parse(JSON.stringify(dataJson5));
+    console.log(data5);
+    const nombreCurso = data5[0].nombre_curso;
+    const nombrePrograma = data5[0].nombre_programa;
+    const horario = data5[0].Horario;
+    var day = moment(data1[0].timestamp).format('DD');
+    var month = moment(data1[0].timestamp).format('MM');
+    var year = moment(data1[0].timestamp).format('YYYY');
     const dui = data1[0].dui;
     const nit = data1[0].nit;
     const nombres = ((data1[0].nombres).toUpperCase()).split(" ",3);
@@ -71,15 +79,18 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3) => {
     const pertinencia = data2[0].pertinencia;        
 
     const data3 = JSON.parse(JSON.stringify(dataJson3));
-    const nombreContacto = data3[0].nombreContacto;
+    const nombreContacto = (data3[0].nombreContacto).toUpperCase();
     const parentesco = data3[0].parentesco;
-    const direccionContacto = data3[0].direccionContacto;
+    const direccionContacto = (data3[0].direccionContacto).toUpperCase();
     const departcontact = data3[0].departcontact;
     const municipiocontacto = data3[0].municipiocontacto;
     const fijoContact = data3[0].fijoContact;
     const movilContacto = data3[0].movilContacto;
     const emailContacto = data3[0].emailContacto;
-    console.log(data3);
+
+    const data4 = dataJson4;
+    console.log(data4);
+
     // promise
     return new Promise((resolver, rechazar) => {
     tmpName = "boleta_inscripcion.pdf";
@@ -214,7 +225,7 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3) => {
             </div>
             <div class="col-5 mb-1" style="border-radius: 8px; height: 50px; border: solid; box-shadow: 5px 5px 0 #ff5e00;">
                 <p class="text-center">
-                    PROGRAMA: FORMACIÓN EN EL IDIOMA INGLÉS
+                    PROGRAMA: ${nombrePrograma}
                 </p>
             </div>
                 <div class="col-3 offset-1">
@@ -246,7 +257,7 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3) => {
                     <div class="row">
                         <div class="col-10">
                             <div class="row">
-                                <div class="col-12" style="border-left: solid thin; border-right: solid thin; border-bottom: solid thin; background-color: #d9d9d9;">
+                                <div class="col-12" style="border: solid thin; background-color: #d9d9d9;">
                                     <span style="font-size: 12px;"><b>N° de Formulario</b></span>
                                 </div>
                                 <div class="col-12">
@@ -266,13 +277,34 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3) => {
                 <div class="col-9" style="border-radius: 10px; border-bottom: solid; border-left: solid; border-right: solid;">
                     <div class="row mt-2">
                         <div class="col-12 mt-2">
-                            <p class="text-left"><b>Nombre del Curso de interés:</b> Inglés Principiante Modulo 4</p>
+                            <div class="row">
+                                <div class="col-12">
+                                    <p class="text-left"><b>Nombre del Curso de interés:</b> ${nombreCurso}</p>
+                                </div>
+                                <div class="col-8" style="border-bottom: solid thin; position: absolute; bottom: 15px; right: 50px;">
+                                    <br>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-6">
-                            <p class="text-left"><b>Horario:</b> 2:00 - 4:00 PM</p>
+                            <div class="row">
+                                <div class="col-12">
+                                    <p class="text-left"><b>Horario:</b> ${horario}</p>
+                                </div>
+                                <div class="col-9" style="border-bottom: solid thin; position: absolute; bottom: 15px; right: 30px;">
+                                    <br>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-6">
-                            <p class="text-left"><b>Lugar:</b> En Linea</p>
+                            <div class="row">
+                                <div class="col-12">
+                                    <p class="text-left"><b>Lugar:</b> En Linea</p>
+                                </div>
+                                <div class="col-9" style="border-bottom: solid thin; position: absolute; bottom: 15px; right: 40px;">
+                                    <br>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -286,9 +318,9 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3) => {
                             </div>
                             <div class="row text-center" style="border-style: solid;">
                                 <div class="col-12" style="border-bottom: solid black; background-color: #d9d9d9;">Fecha de inscripción</div>
-                                <div class="col-4" style="border-right: solid black;">22</div>
-                                <div class="col-4" style="border-right: solid black;">05</div>
-                                <div class="col-4">2021</div>
+                                <div class="col-4" style="border-right: solid black;">${day}</div>
+                                <div class="col-4" style="border-right: solid black;">${month}</div>
+                                <div class="col-4">${year}</div>
                                 <div class="col-4" style="font-size: 10px; border-top: solid black; border-right: solid black; background-color: #FFCC99;">(Día)</div>
                                 <div class="col-4" style="font-size: 10px; border-top: solid black; border-right: solid black; background-color: #FFFF99;">(Mes)</div>
                                 <div class="col-4" style="font-size: 10px; border-top: solid black; background-color: #99CCFF;">(Año)</div>
@@ -448,14 +480,14 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3) => {
                         <div class="col-4" style="border-bottom: solid thin; border-right: solid thin;">
                             <div class="row mt-2 mb-3">
                                 <div class="col-12">
-                                    <b>4.1. Municipio:</b> TONACATEPEQUE
+                                    <b>4.1. Municipio:</b> ${data4.munNacimiento}
                                 </div>
                             </div>
                         </div>
                         <div class="col-4" style="border-bottom: solid thin; border-right: solid thin;">
                             <div class="row mt-2 mb-3">
                                 <div class="col-12">
-                                    <b>4.2. Departamento:</b> SAN SALVADOR
+                                    <b>4.2. Departamento:</b> ${data4.depNacimiento}
                                 </div>
                             </div>
                         </div>
@@ -666,12 +698,12 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3) => {
                 <div class="col-4" style="border-left: solid thin; border-bottom: solid thin; border-right: solid thin;">
                     <div class="row">
                         <div class="col-12">
-                            <b>12.2. Municipio:</b> TONACATEPEQUE
+                            <b>12.2. Municipio:</b> ${data4.munDomicilio}
                         </div>
                     </div>
                 </div>
                 <div class="col-4" style="border-bottom: solid thin; border-right: solid thin;">
-                    <b>12.3. Departamento: </b> SAN SALVADOR
+                    <b>12.3. Departamento: </b> ${data4.depDomicilio}
                 </div>
                 <div class="col-4" style="border-bottom: solid thin; border-right: solid thin;">
                     <b>12.4. Tel. Fijo:</b> ${ telFijo }
@@ -1315,7 +1347,7 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3) => {
                 <div class="col-12" style="border: solid thin; background-color: #ffcc00;">
                     <div class="row">
                         <div class="col-12 mt-1 mb-1">
-                            <b>SECCION 3.1. INFORMACIÓN SOBRE LA OCUPACIÓN ACTUAL </b><span style="border: solid thin; border-style: dotted; background-color: #ffff99;">Si no recibió beneficios como producto de la capacitación, <b>responda 7</b></span>
+                            <b>SECCION 3.1. INFORMACIÓN SOBRE LA OCUPACIÓN ACTUAL </b><span style="border: solid thin; border-style: dotted; background-color: #ffff99;">Puede marcar más de 1 casilla)</span>
                         </div>
                     </div>
                 </div>
@@ -1704,10 +1736,10 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3) => {
         <div class="container">
             <div class="row">
                 <div class="col-6" style="border: solid thin;">
-                    <b>1.3. Municipio:</b> MEJICANOS
+                    <b>1.3. Municipio:</b> ${data4.departcontact}
                 </div>
                 <div class="col-6" style="border: solid thin;">
-                    <b>1.4. Departamento:</b> SAN SALVADOR
+                    <b>1.4. Departamento:</b> ${data4.municipiocontacto}
                 </div>
             </div>
         </div>

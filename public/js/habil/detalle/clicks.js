@@ -4,6 +4,32 @@
   @*/
 //INICIAMOS CON LA FUNCION READY DE JQUERY
 $(document).ready(function () {
+
+  // function cargardepaNac(){
+  //   $("#depa_nac").val(1)
+  // };
+
+  // $("#depa_nac").select2({
+  //   width: "100%",
+  //     ajax: {
+  //       url: "https://api.salud.gob.sv/departamentos",
+  //       dataType: "json",
+  //       delay: 250,
+  //       data:{
+  //         idPais: 68
+  //       },
+  //       processResults: function (data) {
+  //         return {
+  //           results: $.map(data, function (obj, index) {
+  //             return { id: obj.id, text: obj.nombre };
+  //           }),
+  //         };
+  //       },
+  //       cache: true,
+  //     },
+  // })
+
+  // setTimeout(cargardepaNac, 1000);
   $("#modalidad").change(()=>{
     if($("#modalidad").val() == "Precalificacion"){
       $("#blockIDC").css({"display": "none"});

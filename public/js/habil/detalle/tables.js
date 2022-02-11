@@ -214,36 +214,73 @@ const changeColor= async () =>{
   }
 };
 
+
+let address = [];
+
+busquedaDepartamentos = (idDepartamento, i) =>{
+  const url = `https://api.salud.gob.sv/departamentos/${idDepartamento}`;
+  $.ajax({
+    type: "GET",
+    url: url,
+    data: [{
+      idPais: 68,
+      id: idDepartamento
+    }],
+    success: function(data){
+      address[i] = data.nombre;
+    }
+  });
+};
+
+busquedaMunicipio = (idDepartamento,idMunicipio, i) =>{
+  const url = `https://api.salud.gob.sv/municipios/${idMunicipio}`;
+  $.ajax({
+    type: "GET",
+    url: url,
+    data: [{
+      idDepartamento: idDepartamento
+    }],
+    success: function(data){
+      address[i] = data.nombre;
+    }
+  });
+};
 const PrintPdf = async (idSolicitud) =>{
   const dataRegion = await $.ajax({
     url: `/admin/habil/findRegionForId/${idSolicitud}`,
     type: 'GET'
   });
   const json = dataRegion.data[0];
-  let address = [];
-  $.each(json, (key, value)=>{
-    $.ajax({
-      url: `https://api.salud.gob.sv/departamentos`,
-      type: 'GET',
-      dataType: "json",
-      data:{
-        idPais: 68
-      }
-    }).done(function(item, key){
-      console.log(item);
-      console.log(key);
-    });  
+  for (let i = 0; i < Object.keys(json).length; i++) {
+    if(i%2==0){
+      console.log(Object.keys(json));
+      busquedaDepartamentos(json[Object.keys(json)[i]], i);
+    }else{
+      console.log(Object.keys(json));
+      busquedaMunicipio(json[Object.keys(json)[i-1]], json[Object.keys(json)[i]], i);
+    }
+  }
+
+  setTimeout(consulta, 1500, idSolicitud);
+};
+
+const consulta = async (idSolicitud)=>{
+  const data = await $.ajax({
+    url : `/admin/habil/send/pdf/${idSolicitud}/`,
+    type: 'POST',
+    data:{
+      depNacimiento: address[0],
+      munNacimiento: address[1],
+      depDomicilio: address[2],
+      munDomicilio: address[3],
+      departcontact: address[4],
+      municipiocontacto: address[5],
+    }
+  })
+  .done(function(){
+    window.open(`/admin/habil/download/pdf`);
   });
-
-
-  // const data = await $.ajax({
-  //   url : `/admin/habil/send/pdf/${idSolicitud}`,
-  //   type: 'GET'
-  // })
-  // .done(function(){
-  //   window.open(`/admin/habil/download/pdf`);
-  // });
-  // console.log(data);
+  console.log(data);
 };
 
 const changeColorWait = async () =>{

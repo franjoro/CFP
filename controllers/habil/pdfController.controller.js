@@ -11,8 +11,26 @@ const  { PrintPdf } = require('../../utils/PDF/ballot_pdf');
     @param: req, res, req.coockies.token*/
 pdfController.printPDF = async (req, res) => {
     const {idSolicitud} = req.params; 
+    const {
+      depNacimiento, 
+      munNacimiento, 
+      depDomicilio, 
+      munDomicilio, 
+      departcontact, 
+      municipiocontacto
+    } = req.body;
+
+    const data3 = {
+      depNacimiento: depNacimiento,
+      munNacimiento: munNacimiento,
+      depDomicilio: depDomicilio,
+      munDomicilio: munDomicilio,
+      departcontact: departcontact,
+      municipiocontacto: municipiocontacto
+    };
     try {
       const sqlJson1 =`SELECT 
+        timestamp,
         REPLACE(JSON_EXTRACT(json1, '$.dui'), '"','' ) as dui, 
         REPLACE(JSON_EXTRACT(json1, '$.nit'), '"','' ) as nit, 
         REPLACE(JSON_EXTRACT(json1, '$.nombres'), '"','' ) as nombres,
@@ -88,7 +106,14 @@ pdfController.printPDF = async (req, res) => {
         REPLACE(JSON_EXTRACT(json3, '$.emailContacto'), '"','' ) as emailContacto
         FROM tb_habil_solicitudes WHERE id = ?`;
         const dataJson3 = await pool.query(sqlJson3,[idSolicitud]);
-        await PrintPdf(dataJson1, dataJson2, dataJson3);
+
+        const sqljson5 = `
+        SELECT C.Nombre AS nombre_curso , C.Horario, P.Nombre AS nombre_programa FROM tb_habil_solicitudes AS S 
+        INNER JOIN tb_cursos AS C ON S.Codigo_curso = C.Codigo_curso 
+        INNER JOIN tb_programa AS P ON P.id_programa = C.id_programa WHERE id = ?;`;
+        const dataJson5 = await pool.query(sqljson5,[idSolicitud]);
+
+        await PrintPdf(dataJson1, dataJson2, dataJson3, data3, dataJson5);
       return res.status(200).json({ status: true});
     } catch (error) {
         res.send(error);
