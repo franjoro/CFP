@@ -143,7 +143,7 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
           />
           <title>Hello, world!</title>
         </head>
-        <body style="font-size: 15px; font-family: Arial">
+        <body style="font-size: 13px; font-family: Arial">
           <style>
             html { 
                 -webkit-print-color-adjust: exact; 
