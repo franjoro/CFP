@@ -1336,6 +1336,7 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
             </div>
         </div>
         <br>
+        <br>
         <div class="container">
             <div class="row">
                 <div class="col-12" style="border: solid thin; background-color: #ffcc00;">
@@ -1519,6 +1520,7 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
             </div>
         </div>
         <br>
+        <br>
         <div class="container">
             <div class="row">
                 <div class="col-12" style="border: solid thin; background-color: #ffcc00;">
@@ -1583,6 +1585,9 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
         </div>
         <br /><br /><br /><br /><br />
         <br /><br /><br /><br /><br />
+        <br />
+        <br />
+        <br />
         <br />
         <br />
         <br />
