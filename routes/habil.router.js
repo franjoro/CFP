@@ -52,7 +52,7 @@ router.get("/changeColorWait/:idCourse", tablesHabil.changeColorWait);
 router.get('/count-solicitud/:idCourse', habil.countSolicitud);
 router.get("/noInscritosSgafp/:idCourse", tablesHabil.noInscritosSgafp);
 router.get("/inscritosSgafp/:idCourse", tablesHabil.inscritosSgafp);
-router.get("/")
+router.get("/findRegionForId/:idSolicitud", authcheck, readHabil.findRegionForId);
 //#endregion
 
 //#region delete sentences

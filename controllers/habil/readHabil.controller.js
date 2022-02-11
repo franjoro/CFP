@@ -7,6 +7,22 @@ const { getUserDataByToken } = require("../../middlewares/auth");
 const readHabil = {};
 
 
+readHabil.findRegionForId = async (req, res) => {
+    const { idSolicitud } = req.params;
+    const query = `SELECT
+    REPLACE(JSON_EXTRACT(json1, '$.depNacimiento'), '"','' ) as depNacimiento,
+    REPLACE(JSON_EXTRACT(json1, '$.munNacimiento'), '"','' ) as munNacimiento,
+    REPLACE(JSON_EXTRACT(json1, '$.depDomicilio'), '"','' ) as depDomicilio,
+    REPLACE(JSON_EXTRACT(json1, '$.munDomicilio'), '"','' ) as munDomicilio,
+    REPLACE(JSON_EXTRACT(json3, '$.departcontact'), '"','' ) as departcontact,
+    REPLACE(JSON_EXTRACT(json3, '$.municipiocontacto'), '"','' ) as municipiocontacto
+    FROM tb_habil_solicitudes WHERE id = ?`;
+    const data = await pool.query(query,[idSolicitud]);
+    return res.status(200).json({
+        data
+    });
+};
+
 /*@description: Consulta y creación de tabla para solicitudes habil
   @see: Se utiliza en cliente de habil
   @param: req, res, req.coockies.token*/

@@ -216,17 +216,34 @@ const changeColor= async () =>{
 
 const PrintPdf = async (idSolicitud) =>{
   const dataRegion = await $.ajax({
-    url: `/`,
+    url: `/admin/habil/findRegionForId/${idSolicitud}`,
     type: 'GET'
-  })
-  const data = await $.ajax({
-    url : `/admin/habil/send/pdf/${idSolicitud}`,
-    type: 'GET'
-  })
-  .done(function(){
-    window.open(`/admin/habil/download/pdf`);
   });
-  console.log(data);
+  const json = dataRegion.data[0];
+  let address = [];
+  $.each(json, (key, value)=>{
+    $.ajax({
+      url: `https://api.salud.gob.sv/departamentos`,
+      type: 'GET',
+      dataType: "json",
+      data:{
+        idPais: 68
+      }
+    }).done(function(item, key){
+      console.log(item);
+      console.log(key);
+    });  
+  });
+
+
+  // const data = await $.ajax({
+  //   url : `/admin/habil/send/pdf/${idSolicitud}`,
+  //   type: 'GET'
+  // })
+  // .done(function(){
+  //   window.open(`/admin/habil/download/pdf`);
+  // });
+  // console.log(data);
 };
 
 const changeColorWait = async () =>{
