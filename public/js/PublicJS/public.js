@@ -358,7 +358,7 @@ $(document).ready(() => {
     const email = $("#email").val();
     const genero = $("#genero").val();
     const cursoCodigo = $("#curso").children("option:selected").val();
-    const correlativo_planilla = $("#txtCorrelativoPlanilla").val();
+    const correlativo_planilla = $("#txtCorrelativoPlanilla").val().trim();
     curso_text = $("#curso").children("option:selected").text();
     if (
       !dui ||
@@ -368,7 +368,7 @@ $(document).ready(() => {
       !email ||
       !genero || 
       !cursoCodigo ||
-      ! correlativo_planilla
+      !correlativo_planilla
     ) {
       return error(
         "No se pudo realizar la operación, verifica la información o comuniquese con el encargado del programa o soporte "
