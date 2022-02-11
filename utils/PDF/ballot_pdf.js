@@ -289,7 +289,7 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
                         <div class="col-6">
                             <div class="row">
                                 <div class="col-12">
-                                    <p class="text-left"><b>Horario:</b> ${horario}</p>
+                                    <p class="text-left"><b>Horario:</b> <span style="font-size: 12px;">${horario}</span></p>
                                 </div>
                                 <div class="col-9" style="border-bottom: solid thin; position: absolute; bottom: 15px; right: 30px;">
                                     <br>
@@ -358,7 +358,7 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
                         <div class="col-4">
                             <div class="row">
                                 <div class="col-12" style="border-right: solid thin; border-right-style: dotted;">
-                                    ${nombres[1] == undefined ? '-' : nombres[1] }
+                                    ${(nombres[1] == undefined || nombres[1] == '') ? '-' : nombres[1] }
                                 </div>
                                 <div class="col-12 text-center" style="background-color: #d9d9d9; border-top: solid thin; border-top-style: dotted; border-right: thin; border-right-style: dotted;">
                                         <span style="font-size: 10px;">2°Nombre</span>
@@ -368,7 +368,7 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
                         <div class="col-4">
                             <div class="row">
                                 <div class="col-12" style="border-right: solid thin;">
-                                    ${nombres[2] == undefined ? '-' : nombres[2]}
+                                    ${(nombres[2] == undefined || nombres[2] == '') ? '-' : nombres[2]}
                                 </div>
                                 <div class="col-12 text-center" style="background-color: #d9d9d9; border-top: solid thin; border-top-style: dotted; border-right: solid thin;">
                                         <span style="font-size: 10px;">3°Nombre</span>
@@ -390,7 +390,7 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
                         <div class="col-4">
                             <div class="row">
                                 <div class="col-12" style="border-right: solid thin; border-right-style: dotted;">
-                                    ${apellidos[1] == undefined ? '-' : apellidos[1]}
+                                    ${(apellidos[1] == undefined || apellidos[1] == '') ? '-' : apellidos[1]}
                                 </div>
                                 <div class="col-12 text-center" style="background-color: #d9d9d9; border-bottom: solid thin; border-top: solid thin; border-top-style: dotted; border-right: thin; border-right-style: dotted;">
                                         <span style="font-size: 10px;">2°Apellido</span>
@@ -400,7 +400,7 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
                         <div class="col-4">
                             <div class="row">
                                 <div class="col-12" style="border-right: solid thin;">
-                                    ${apellidos[2] == undefined ? '-' : apellidos[2] }
+                                    ${(apellidos[2] == undefined || apellidos[2] == '') ? '-' : apellidos[2] }
                                 </div>
                                 <div class="col-12 text-center" style="background-color: #d9d9d9; border-bottom: solid thin; border-top: solid thin; border-top-style: dotted; border-right: solid thin;">
                                         <span style="font-size: 10px;">3°Apellido</span>
@@ -520,7 +520,7 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
                         </div>
                         <div class="col-6">
                                 <div class="mt-2"></div>
-                                <b>2 </b><input ${ sexo == 'Femenino' ? 'checked' : '' }type="checkbox" aria-label="Checkbox for following text input"> <span style="font-size: 13px;">Femenino</span>
+                                <b>2 </b><input ${ sexo == 'Femenino' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> <span style="font-size: 13px;">Femenino</span>
                         </div>
                     </div>
                 </div>
@@ -781,7 +781,7 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
                                             <b>8 </b><span><input ${ discapacidad.otro == 'true' ? 'checked': '' } type="checkbox" aria-label="Checkbox for following text input">  Otra limitación permanente. Explique:
                                         </div>
                                         <div class="col-7 mb-1">
-                                            <input type="text" class="form-control" value="${ textoDiscapacidad }">
+                                            <input type="text" class="form-control" value="${ (textoDiscapacidad == 'null' || textoDiscapacidad == null) ? '': textoDiscapacidad }">
                                         </div>
                                     </div>
                                 </div>
