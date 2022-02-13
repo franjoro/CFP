@@ -299,7 +299,7 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
                         <div class="col-6">
                             <div class="row">
                                 <div class="col-12">
-                                    <p class="text-left"><b>Lugar:</b> En Linea</p>
+                                    <p class="text-left"><b>Lugar:</b> Herramientas Tecnológicas.</p>
                                 </div>
                                 <div class="col-9" style="border-bottom: solid thin; position: absolute; bottom: 15px; right: 40px;">
                                     <br>
@@ -965,7 +965,7 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
                             <span style="font-size: 12px;">1</span> <span><input ${ gradoFinalizado == 'UniInc' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> Incompleta
                         </div>
                         <div class="col-10 offset-2">
-                            <span style="font-size: 12px;">2</span> <span><input ${ gradoFinalizado == 'TecInc' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> Completa
+                            <span style="font-size: 12px;">2</span> <span><input ${ gradoFinalizado == 'UniCom' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> Completa
                         </div>
                     </div>
                 </div>
