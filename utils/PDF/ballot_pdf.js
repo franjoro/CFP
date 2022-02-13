@@ -421,7 +421,7 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
                         <div class="col-4" style="border-bottom: solid thin; border-right: solid thin;">
                             <b>2.1. DUI:</b> ${dui}
                         </div>
-                        <div class="col-3" style="border-bottom: solid thin; border-right: solid thin;">
+                        <div class="col-3" style="border-bottom: solid thin; border-right: solid thin; font-size: 11px;">
                             <b>2.2. NIT:</b> ${nit}
                         </div>
                         <div class="col-5" style="border-bottom: solid thin;">
@@ -453,7 +453,7 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
                 </div>
                 <div class="col-10" style="border-bottom: solid thin; border-right: solid thin;">
                     <div class="row">
-                        <div class="col-8" style="border-right: solid thin;">
+                        <div class="col-8" style="border-right: solid thin; font-sixe: 11px;">
                             <div class="mt-1"></div>
                             <b>3.1.</b><span><input checked type="checkbox" aria-label="Checkbox for following text input">
                             </span> Salvadoreña <b>3.2.</b><span><input type="checkbox" aria-label="Checkbox for following text input"></span> Extranjera <span style="border: solid; background-color: #ffff99; border-style: dotted;">Si responde <b>"Extranjera" responda 3.3</b></span>
@@ -516,11 +516,11 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
                     <div class="row">
                         <div class="col-6">
                                 <div class="mt-2"></div>
-                                <b>1 </b><input ${ sexo == 'Masculino' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> <span style="font-size: 13px;">Masculino</span>
+                                <b>1 </b><input ${ sexo == 'Masculino' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> <span style="font-size: 11px;">Masculino</span>
                         </div>
                         <div class="col-6">
                                 <div class="mt-2"></div>
-                                <b>2 </b><input ${ sexo == 'Femenino' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> <span style="font-size: 13px;">Femenino</span>
+                                <b>2 </b><input ${ sexo == 'Femenino' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> <span style="font-size: 11px;">Femenino</span>
                         </div>
                     </div>
                 </div>
@@ -575,7 +575,7 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
                             <b>2 </b><input ${ estadoFamiliar == 'Casado(a)' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> <span style="font-size: 11px;">Casado(a)</span>
                         </div>
                         <div class="col-2">
-                            <b>3 </b><input ${ estadoFamiliar == 'Acompanado' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> <span style="font-size: 11px;">Acompañado(a)</span>
+                            <b>3 </b><input ${ estadoFamiliar == 'Acompanado' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> <span style="font-size: 9px;">Acompañado(a)</span>
                         </div>
                         <div class="col-2">
                             <b>4 </b><input ${ estadoFamiliar == 'Divorciado(a)' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> <span style="font-size: 11px;">Divorciado(a)</span>
@@ -608,7 +608,7 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
                             <b><span style="font-size: 10px;">2</spans></b><span><input ${ jefeDeHogar == 'No' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 10px;"> No</span>
                         </div>
                         <div class="col-4">
-                            <b><span style="font-size: 10px;">3</span> </b><span><input ${ jefeDeHogar == 'Compartida' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> <span style="font-size: 10px;">Compartida</span>
+                            <b><span style="font-size: 10px;">3</span> </b><span><input ${ jefeDeHogar == 'Compartida' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> <span style="font-size: 9px;">Compartida</span>
                         </div>
                     </div>
                 </div>
@@ -1142,14 +1142,14 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
                 </div>
                 <div class="col-3" style="border-bottom: solid thin; border-top: solid thin; border-right: solid thin;">
                     <div class="row">
-                        <div class="col-3">
+                        <div class="col-4">
                             <span style="font-size: 10px;">1</span> <span><input ${impartio1 == 'Si' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> Si</span>
                         </div>
-                        <div class="col-3">
+                        <div class="col-4">
                             <span style="font-size: 10px;">2</span> <span><input ${impartio1 == 'No' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 11px;"> No</span>
                         </div>
-                        <div class="col-6">
-                            <span style="font-size: 10px;">3</span> <span><input ${impartio1 == 'NoSe' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> No sabe</span>
+                        <div class="col-4">
+                            <span style="font-size: 8px;">3</span> <span><input ${impartio1 == 'NoSe' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> No sabe</span>
                         </div>
                     </div>
                 </div>
@@ -1340,8 +1340,8 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
         <br>
         <div class="container">
             <div class="row">
-                <div class="col-12" style="border: solid thin; background-color: #ffcc00;">
-                    <b class="text-center">SECCION 3. INFORMACIÓN SOBRE SU SITUACIÓN LABORAL</b>
+                <div class="col-12 text-center" style="border: solid thin; background-color: #ffcc00;">
+                    <p class="text-center"><b class="text-center">SECCION 3. INFORMACIÓN SOBRE SU SITUACIÓN LABORAL</b><p>
                 </div>
             </div>
         </div>
