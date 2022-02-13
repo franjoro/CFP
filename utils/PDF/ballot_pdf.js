@@ -1143,13 +1143,13 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
                 </div>
                 <div class="col-3" style="border-bottom: solid thin; border-top: solid thin; border-right: solid thin;">
                     <div class="row">
-                        <div class="col-4">
+                        <div class="col-3">
                             <span style="font-size: 10px;">1</span> <span><input ${impartio1 == 'Si' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> Si</span>
                         </div>
-                        <div class="col-4">
+                        <div class="col-3">
                             <span style="font-size: 10px;">2</span> <span><input ${impartio1 == 'No' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 11px;"> No</span>
                         </div>
-                        <div class="col-4">
+                        <div class="col-6">
                             <span style="font-size: 8px;">3</span> <span><input ${impartio1 == 'NoSe' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> No sabe</span>
                         </div>
                     </div>
