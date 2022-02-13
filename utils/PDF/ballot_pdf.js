@@ -528,7 +528,7 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
                     <div class="row">
                         <div class="col-12">
                             <div class="mt-2"></div>
-                            <b class="font-size: 10px;">6. Edad:</b>
+                            <b style="font-size: 10px;">6. Edad:</b>
                         </div>
                     </div>
                 </div>
