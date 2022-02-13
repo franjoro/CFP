@@ -1116,14 +1116,14 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
                         </div>
                         <div class="col-12 mt-1">
                             <div class="row">
-                                <div class="col-10 offset-1">
+                                <div class="col-11">
                                     <span style="border: solid; border-style: dotted; background-color: #ffff99; font-size: 10px;">Si responde <b>Si</b>, conteste pregunta <b>6</b></span>
                                 </div>
                             </div>
                         </div>
                         <div class="col-12 mt-1">
                             <div class="row">
-                                <div class="col-10 offset-1">
+                                <div class="col-11">
                                     <span style="border: solid; border-style: dotted; background-color: #ffff99; font-size: 10px;">Si responde <b>No</b>, conteste pregunta <b>7</b></span>
                                 </div>
                             </div>
