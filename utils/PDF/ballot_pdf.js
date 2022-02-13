@@ -313,7 +313,7 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
                         <div class="col-10 offset-2">
                             <div class="row">
                                 <div class="col-12">
-                                    <span class="text-center" style="font-size: 10px;">(EXCLUSIVO USO INTERNO)</span>
+                                    <span class="text-center" style="font-size: 10px; position: relative; left: 30px;">(EXCLUSIVO USO INTERNO)</span>
                                 </div>
                             </div>
                             <div class="row text-center" style="border-style: solid;">
