@@ -224,7 +224,7 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
                 <img src="https://cfp.ricaldone.edu.sv/static/img/logo-ant-insaforp.jpg" class="img-fluid" alt="imagen" style="position: absolute; bottom: -18px; right: 5px;">
             </div>
             <div class="col-5 mb-1" style="border-radius: 8px; height: 50px; border: solid; box-shadow: 5px 5px 0 #ff5e00;">
-                <p class="text-center">
+                <p class="text-center" style="position: absolute; top: 15px; left: 50px;">
                     PROGRAMA: ${nombrePrograma}
                 </p>
             </div>
@@ -456,7 +456,7 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
                         <div class="col-8" style="border-right: solid thin; font-sixe: 11px;">
                             <div class="mt-1"></div>
                             <b>3.1.</b><span><input checked type="checkbox" aria-label="Checkbox for following text input">
-                            </span> Salvadoreña <b>3.2.</b><span><input type="checkbox" aria-label="Checkbox for following text input"></span> Extranjera <span style="border: solid; background-color: #ffff99; border-style: dotted;">Si responde <b>"Extranjera" responda 3.3</b></span>
+                            </span> Salvadoreña <b>3.2.</b><span><input type="checkbox" aria-label="Checkbox for following text input"></span> Extranjera <span style="border: solid; background-color: #ffff99; border-style: dotted;">Si responde <b style="font-size: 11px;">"Extranjera" responda 3.3</b></span>
                         </div>
                         <div class="col-4">
                             <div class="mt-1"></div>
@@ -1116,14 +1116,14 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
                         <div class="col-12 mt-1">
                             <div class="row">
                                 <div class="col-10 offset-1" style="border: solid; border-style: dotted; background-color: #ffff99;">
-                                    <span>Si responde <b>Si</b>, conteste pregunta <b>6</b></span>
+                                    <span style="font-size: 10px;">Si responde <b>Si</b>, conteste pregunta <b>6</b></span>
                                 </div>
                             </div>
                         </div>
                         <div class="col-12 mt-1">
                             <div class="row">
                                 <div class="col-10 offset-1" style="border: solid; border-style: dotted; background-color: #ffff99;">
-                                    <span>Si responde <b>No</b>, conteste pregunta <b>7</b></span>
+                                    <span style="font-size: 10px;">Si responde <b>No</b>, conteste pregunta <b>7</b></span>
                                 </div>
                             </div>
                         </div>
