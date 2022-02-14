@@ -1025,13 +1025,13 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
                             <b><span style="font-size: 9px;">1 </span></b><span><input ${ tiempoestudio == '1y' ? 'checked': '' } type="checkbox" aria-label="Checkbox for following text input"> <span style="font-size: 11px;">1 año</span>
 
                         </div>
-                        <div class="col-3">
+                        <div class="col-4" style="position: relative; top: 0px; left: 0px;">
                             <b><span style="font-size: 9px;">2 </span></b><span><input ${ tiempoestudio == '2-3y' ? 'checked': '' } type="checkbox" aria-label="Checkbox for following text input"> <span style="font-size: 11px;">2-3 años</span>
                         </div>
-                        <div class="col-4"
+                        <div class="col-6" style="position: relative; top: -20px; left: 200px;">
                             <b><span style="font-size: 9px;">3 </span></b><span><input ${ tiempoestudio == '3y' ? 'checked': '' } type="checkbox" aria-label="Checkbox for following text input"> <span style="font-size: 11px;">Más de 3 años</span>
-                        </div>
-                        <div class="col-2">
+                        </div> 
+                        <div class="col-2" style="position: relative; top: -20px; left: 120px;">
                             <b><span style="font-size: 9px;">4 </span></b><span><input ${ tiempoestudio == 'No recuerda' ? 'checked': '' } type="checkbox" aria-label="Checkbox for following text input"> <span style="font-size: 9px;">NR</span>
                         </div>
                     </div>
