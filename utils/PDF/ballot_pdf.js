@@ -806,15 +806,18 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
                 </div>
                 <div class="col-3" style="border-bottom: solid thin; border-right: solid thin;">
                     <div class="row mt-3">
-                        <div class="col-12">
+                        <div class="col-6">
                             <b>1 </b><span><input ${ sabeleerEscribir == 1 ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> Si
+                        </div>
+                        <div class="col-6">
+                            <b>2 </b><span><input ${ sabeleerEscribir != 1 ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> No
                         </div>
                     </div>
                 </div>
                 <div class="col-2" style="border-bottom: solid thin; border-right: solid thin;">
                     <div class="row">
                         <div class="col-12">
-                            <b>1.1. ¿Sólo lee?</b>
+                            <b style="font-size: 11px;">1.1. ¿Sólo lee?</b>
                         </div>
                         <div class="col-12">
                             <div class="row">
@@ -831,7 +834,7 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
                 <div class="col-2" style="border-bottom: solid thin; border-right: solid thin;">
                     <div class="row">
                         <div class="col-12">
-                            <b>1.2. ¿Sólo escribe?</b>
+                            <b style="font-size: 11px;">1.2. ¿Sólo escribe?</b>
                         </div>
                         <div class="col-12">
                             <div class="row">
@@ -1096,21 +1099,21 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
                         </div>
                     </div>
                 </div>
-                <div class="col-3" style="border-bottom: solid thin; border-top: solid thin; border-right: solid thin;">
+                <div class="col-3" style="border-bottom: solid thin; border-top: solid thin; border-right: solid thin; background-color: #d9d9d9;">
                     <div class="row">
                         <div class="col-12 mt-4">
                             <b>¿Lo impartió INSAFORP? </b>
                         </div>
                     </div>
                 </div>
-                <div class="col-1" style="border-bottom: solid thin; border-top: solid thin; border-right: solid thin;">
+                <div class="col-1" style="border-bottom: solid thin; border-top: solid thin; border-right: solid thin; background-color: #d9d9d9;">
                     <div class="row">
                         <div class="col-12 mt-4">
                             <b>Año</b>
                         </div>
                     </div>
                 </div>
-                <div class="col-3" style="border-bottom: solid thin; border-top: solid thin; border-right: solid thin;">
+                <div class="col-3" style="border-bottom: solid thin; border-top: solid thin; border-right: solid thin; background-color: #d9d9d9;">
                     <div class="row">
                         <div class="col-12">
                             <b>¿El curso le dio beneficios?</b>
