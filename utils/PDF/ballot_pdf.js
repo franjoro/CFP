@@ -1653,7 +1653,15 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
                             <span style="font-size: 12px;">5</span> <span><input ${espectativaLogro.ingresosExtra == 'true' ? 'checked': ''} type="checkbox" aria-label="Checkbox for following text input">  Obtener ingresos extras 
                         </div>
                         <div class="col-12">
-                            <span style="font-size: 12px;">6</span> <span><input ${espectativaLogro.otro == 'true' ? 'checked': ''} type="checkbox" aria-label="Checkbox for following text input">  Otro: ${espectativaLogro.otrosexpectativas}
+                            <div class="row">
+                                <div class="col-12">
+                                    <span style="font-size: 12px;">6</span> <span><input ${espectativaLogro.otro == 'true' ? 'checked': ''} type="checkbox" aria-label="Checkbox for following text input">  Otro: ${espectativaLogro.otrosexpectativas}
+                                </div>
+                                <div class="col-6" style="border-bottom: solid thin; position: relative; bottom: 20px; right: -80px;">
+                                    <br />
+                                </div>
+                            </div>    
+
                         </div>
                         <div class="col-12">
                             <span style="font-size: 12px;">7</span> <span><input ${espectativaLogro.ninguno == 'true' ? 'checked': ''} type="checkbox" aria-label="Checkbox for following text input">  Ninguno
