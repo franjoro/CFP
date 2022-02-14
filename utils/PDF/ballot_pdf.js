@@ -258,7 +258,7 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
                         <div class="col-10">
                             <div class="row">
                                 <div class="col-12" style="border: solid thin; background-color: #d9d9d9;">
-                                    <span style="font-size: 12px;"><b>N° de Formulario</b></span>
+                                    <span style="font-size: 10px;"><b>N° de Formulario</b></span>
                                 </div>
                                 <div class="col-12">
                                     <div class="row">
