@@ -1191,10 +1191,10 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
                 </div>
                 <div class="col-3" style="border-bottom: solid thin; border-top: solid thin; border-right: solid thin;">
                     <div class="row">
-                        <div class="col-3">
+                        <div class="col-4">
                             <span style="font-size: 10px;">1</span> <span><input ${impartio2 == 'Si' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> Si</span>
                         </div>
-                        <div class="col-3">
+                        <div class="col-4">
                             <span style="font-size: 10px;">2</span> <span><input ${impartio2 == 'No' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> No</span>
                         </div>
                         <div class="col-6" style="position: relative; top: -19px; left: 150px">
@@ -1235,10 +1235,10 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
                 </div>
                 <div class="col-3" style="border-bottom: solid thin; border-top: solid thin; border-right: solid thin;">
                     <div class="row">
-                        <div class="col-3">
+                        <div class="col-4">
                             <span style="font-size: 10px;">1</span> <span><input ${impartio3 == 'Si' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> Si</span>
                         </div>
-                        <div class="col-3">
+                        <div class="col-4">
                             <span style="font-size: 10px;">2</span> <span><input ${impartio3 == 'No' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> No</span>
                         </div>
                         <div class="col-6" style="position: relative; top: -19px; left: 150px">
