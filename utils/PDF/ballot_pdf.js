@@ -1657,8 +1657,7 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
                                 <div class="col-12">
                                     <span style="font-size: 12px;">6</span> <span><input ${espectativaLogro.otro == 'true' ? 'checked': ''} type="checkbox" aria-label="Checkbox for following text input">  Otro: ${espectativaLogro.otrosexpectativas}
                                 </div>
-                                <div class="col-6" style="border-bottom: solid thin; position: relative; bottom: 20px; right: -80px;">
-                                    <br />
+                                <div class="col-6" style="border-bottom: solid thin; position: relative; bottom: -0px; right: -80px;">
                                 </div>
                             </div>    
 
