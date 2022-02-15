@@ -15,11 +15,18 @@ const GenerarPdf = (data) => {
   const d = new Date();
   const { firmante } = data;
   let fontSize='';
+  let fontSizeBody = '';
+  if(data.alumnos.length<=6){
+    fontSizeBody= 'font-size: 14px;';
+  }
   if(data.alumnos.length > 6 && data.alumnos.length<9){
     fontSize = `font-size: 13px;`;
+    fontSizeBody= 'font-size: 13px;';
+
   }
   if(data.alumnos.length > 8 && data.alumnos.length<11){
     fontSize = `font-size: 12px;`;
+    fontSizeBody= 'font-size: 12px;';
   }
   const { Horario, Nombre, programa, Fechas, horas, CostoAlumno } = data.data[1][0];
   const { NombreContacto, EmailContacto } = data.data[2][0];
@@ -153,7 +160,7 @@ const GenerarPdf = (data) => {
           <title>Hello, world!</title>
         </head>
       
-        <body style="font-size: 14px; font-family: Arial">
+        <body style="${fontSizeBody} font-family: Arial">
           <style>
             .encabezado {
               margin-top: 20px;
