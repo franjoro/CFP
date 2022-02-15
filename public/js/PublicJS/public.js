@@ -350,74 +350,95 @@ $(document).ready(() => {
     bInfo: false,
   });
   $("#botonAdd").on("click", () => {
-    const dui = $("#dui").val();
-    const nombre =  capitalize ($("#nombre").val());
-    const isss = $("#isss").val();
-    const cargo = $("#cargo").val();
-    const tel = $("#tel").val();
-    const email = $("#email").val();
-    const genero = $("#genero").val();
-    const cursoCodigo = $("#curso").children("option:selected").val();
-    const correlativo_planilla = $("#txtCorrelativoPlanilla").val().trim();
-    curso_text = $("#curso").children("option:selected").text();
-    if (
-      !dui ||
-      !nombre ||
-      !isss ||
-      !tel ||
-      !email ||
-      !genero || 
-      !cursoCodigo ||
-      !correlativo_planilla
-    ) {
-      return error(
-        "No se pudo realizar la operación, verifica la información o comuniquese con el encargado del programa o soporte "
-      );
-    }
-    data = [
-      dui,
-      nombre,
-      tel,
-      isss,
-      cargo,
-      email,
-      curso_text.trim(),
-      cursoCodigo.trim(),
-      genero,
-      correlativo_planilla.trim(),
-    ];
-    populateTable(data);
-    CreateOrStorage(data);
-    Toast.fire({
-      icon: "success",
-      title: "Agregado correctamente",
-    });
-    $('input[type="text"]').val("");
-    if (!global_estado_participante) {
-      data = { dui, name: nombre, tel, email, genero,  isss, cargo, correlativo_planilla };
-      $.ajax({
-        url: "/admin/participantes/add",
-        type: "POST",
-        data,
-      });
+    const storage = localStorage.getItem("storage");
+    if(JSON.parse(storage) == null){
+      inscribirParticipantesTabla();
     }else{
-      var duiNew = dui;
-      var nameEdit = nombre;
-      var emailEdit = email;
-      var telEdit = tel;
-      var duiEdit = dui;
-      var isss_edit = isss;
-      var genero_edit = genero;
-      var cargo_edit = cargo;
-      data = { duiNew, nameEdit, emailEdit, telEdit, duiEdit, correlativo_planilla, isss_edit, genero_edit, cargo_edit };
-      console.log(data);
-      $.ajax({
-        url: "/admin/participantes/edit",
-        type: "PUT",
-        data,
-      });
+      if(
+        ($("#id_program").val() == 29 && JSON.parse(storage).length < 10) || 
+        ($("#id_program").val() == 30 && JSON.parse(storage).length < 7)
+        )
+      {
+        inscribirParticipantesTabla();
+      }else{
+        if($("#id_program").val() == 29){
+          return error("Unicamente se permite agregar 10 participantes");
+        }
+        if($("#id_program").val() == 30){
+          return error("Unicamente se permite agregar 7 participantes");
+        }
+      }
     }
   });
+
+  const inscribirParticipantesTabla = ()=>{
+    const dui = $("#dui").val();
+      const nombre =  capitalize ($("#nombre").val());
+      const isss = $("#isss").val();
+      const cargo = $("#cargo").val();
+      const tel = $("#tel").val();
+      const email = $("#email").val();
+      const genero = $("#genero").val();
+      const cursoCodigo = $("#curso").children("option:selected").val();
+      const correlativo_planilla = $("#txtCorrelativoPlanilla").val().trim();
+      curso_text = $("#curso").children("option:selected").text();
+      if (
+        !dui ||
+        !nombre ||
+        !isss ||
+        !tel ||
+        !email ||
+        !genero || 
+        !cursoCodigo ||
+        !correlativo_planilla
+      ) {
+        return error(
+          "No se pudo realizar la operación, verifica la información o comuniquese con el encargado del programa o soporte "
+        );
+      }
+      data = [
+        dui,
+        nombre,
+        tel,
+        isss,
+        cargo,
+        email,
+        curso_text.trim(),
+        cursoCodigo.trim(),
+        genero,
+        correlativo_planilla.trim(),
+      ];
+      populateTable(data);
+      CreateOrStorage(data);
+      Toast.fire({
+        icon: "success",
+        title: "Agregado correctamente",
+      });
+      $('input[type="text"]').val("");
+      if (!global_estado_participante) {
+        data = { dui, name: nombre, tel, email, genero,  isss, cargo, correlativo_planilla };
+        $.ajax({
+          url: "/admin/participantes/add",
+          type: "POST",
+          data,
+        });
+      }else{
+        var duiNew = dui;
+        var nameEdit = nombre;
+        var emailEdit = email;
+        var telEdit = tel;
+        var duiEdit = dui;
+        var isss_edit = isss;
+        var genero_edit = genero;
+        var cargo_edit = cargo;
+        data = { duiNew, nameEdit, emailEdit, telEdit, duiEdit, correlativo_planilla, isss_edit, genero_edit, cargo_edit };
+        $.ajax({
+          url: "/admin/participantes/edit",
+          type: "PUT",
+          data,
+        });
+      }
+  };
   // Llenar tabla
   const populateTable = (data) => {
     $("#tablaParticipantes").DataTable().row.add(data).draw();
