@@ -147,7 +147,7 @@ const GenerarPdf = (data) => {
           <title>Hello, world!</title>
         </head>
       
-        <body style="font-size: 12px; font-family: Arial">
+        <body style="font-size: 15px; font-family: Arial">
           <style>
             .encabezado {
               margin-top: 20px;
