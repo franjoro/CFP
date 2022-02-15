@@ -95,7 +95,6 @@ const AsginarGlobalCursos = () => {
     url: `/configuration-courses/read/${$("#id_program").val()}`,
     type: "GET"
   }).then((data)=>{
-    console.log(data)
     Swal.fire({
       icon: 'warning',
       title: 'IMPORTANTE',
@@ -372,7 +371,8 @@ $(document).ready(() => {
   });
 
   const inscribirParticipantesTabla = ()=>{
-    const dui = $("#dui").val();
+    // localStorage.removeItem('nParticipantes');
+      const dui = $("#dui").val();
       const nombre =  capitalize ($("#nombre").val());
       const isss = $("#isss").val();
       const cargo = $("#cargo").val();
@@ -414,6 +414,20 @@ $(document).ready(() => {
         icon: "success",
         title: "Agregado correctamente",
       });
+
+    // ================ VERIFICAR LONGITUD DE PARTICIPANTES ================================
+      console.log(localStorage.getItem('nParticipantes'));
+      // if(localStorage.getItem('nParticipantes') != undefined){
+      //   console.log(localStorage.getItem('nParticipantes'));
+      //   localStorage.setItem('nParticipantes', (parseInt(localStorage.getItem('nParticipantes'))+1));
+      // }else{
+      //   localStorage.setItem('nParticipantes', 1);
+      //   console.log(localStorage.getItem('nParticipantes'));
+      // }
+    // ================ FIN DE VERIFICAR LONGITUD DE PARTICIPANTES ================================
+
+
+
       $('input[type="text"]').val("");
       if (!global_estado_participante) {
         data = { dui, name: nombre, tel, email, genero,  isss, cargo, correlativo_planilla };
