@@ -539,7 +539,7 @@ cursos.GestorDeDocumentos = async (req, res) => {
   );
   promesas.push(
     pool.query(
-      "SELECT tb_participante.Nombre AS Nombre , tb_participante.DUI AS DUI , tb_participante.Email , tb_participante.ISSS, tb_participante.Cargo FROM tb_participante INNER JOIN union_matricula ON union_matricula.id_participante = tb_participante.DUI WHERE id_curso = ? AND id_empresa = ?",
+      "SELECT tb_participante.Nombre AS Nombre , tb_participante.	correlativo_planilla AS correlativoPlanilla , tb_participante.DUI AS DUI , tb_participante.Email , tb_participante.ISSS, tb_participante.Cargo FROM tb_participante INNER JOIN union_matricula ON union_matricula.id_participante = tb_participante.DUI WHERE id_curso = ? AND id_empresa = ?",
       [curso, empresa]
     )
   );

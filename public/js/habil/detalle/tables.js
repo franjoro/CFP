@@ -87,7 +87,6 @@ const applicationTable = () => {
         },
         { 
           render(data,type,row){
-            console.log(row.nombre)
             const html = `
               <p class="r0"> ${firtWordUppercase(row.nombre)}</p>
               
@@ -214,8 +213,8 @@ const changeColor= async () =>{
   }
 };
 
+var address = [];
 
-let address = [];
 
 busquedaDepartamentos = (idDepartamento, i) =>{
   const url = `https://api.salud.gob.sv/departamentos/${idDepartamento}`;
@@ -253,15 +252,17 @@ const PrintPdf = async (idSolicitud) =>{
   const json = dataRegion.data[0];
   for (let i = 0; i < Object.keys(json).length; i++) {
     if(i%2==0){
-      console.log(Object.keys(json));
       busquedaDepartamentos(json[Object.keys(json)[i]], i);
     }else{
-      console.log(Object.keys(json));
       busquedaMunicipio(json[Object.keys(json)[i-1]], json[Object.keys(json)[i]], i);
     }
   }
+  // promesa.then((address)=>{
+  //   console.log(address);
+  //   consulta(idSolicitud, address);
+  // })
 
-  setTimeout(consulta, 1500, idSolicitud);
+  setTimeout(consulta, 1700, idSolicitud);
 };
 
 const consulta = async (idSolicitud)=>{
