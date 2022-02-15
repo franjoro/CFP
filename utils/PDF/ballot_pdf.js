@@ -93,7 +93,7 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
 
     // promise
     return new Promise((resolver, rechazar) => {
-    tmpName = `${nombres[0]}-${nombres[1]}-${apellidos[0]}-${apellidos[1]}.pdf`;
+    tmpName = `${apellidos[0]} ${apellidos[1]},${nombres[0]} ${nombres[1]}.pdf`;
     console.log(tmpName);
     const options = {
       format: "Letter",
