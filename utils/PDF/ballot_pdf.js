@@ -93,7 +93,8 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
 
     // promise
     return new Promise((resolver, rechazar) => {
-    tmpName = "boleta_inscripcion.pdf";
+    tmpName = `${nombres[0]}-${nombres[1]}-${apellidos[0]}-${apellidos[1]}.pdf`;
+    console.log(tmpName);
     const options = {
       format: "Letter",
       path: `./public/files/tmp/${tmpName}`,

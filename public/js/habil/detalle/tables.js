@@ -279,7 +279,7 @@ const consulta = async (idSolicitud)=>{
     }
   })
   .done(function(){
-    window.open(`/admin/habil/download/pdf`);
+    window.open(`/admin/habil/download/pdf/${idSolicitud}`);
   });
   console.log(data);
 };

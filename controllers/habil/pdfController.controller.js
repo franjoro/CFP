@@ -122,12 +122,19 @@ pdfController.printPDF = async (req, res) => {
     } 
 };
   
-pdfController.downloadFile = (req, res) => {
-    console.log('Intentando descargar');
-    const path = `./public/files/tmp/boleta_inscripcion.pdf`;
-    res.contentType("application/pdf");
-    res.download(path);
-  };
+pdfController.downloadFile = async (req, res) => {
+  const {idSolicitud} = req.params; 
+  const query = `SELECT 
+  REPLACE(JSON_EXTRACT(json1, '$.nombres'), '"','' ) as nombres,
+  REPLACE(JSON_EXTRACT(json1, '$.apellidos'), '"','' ) as apellidos
+  FROM tb_habil_solicitudes WHERE id = ?`;
+  const data = await pool.query(query,[idSolicitud]);
+  const nombres  = ((data[0].nombres).toUpperCase()).split(" ",3);
+  const apellidos  = ((data[0].apellidos).toUpperCase()).split(" ",3);
+  const path = `./public/files/tmp/${nombres[0]}-${nombres[1]}-${apellidos[0]}-${apellidos[1]}.pdf`;
+  res.contentType("application/pdf");
+  res.download(path);
+};
   
   module.exports = pdfController;
   
