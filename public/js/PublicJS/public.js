@@ -384,7 +384,7 @@ $(document).ready(() => {
       curso_text.trim(),
       cursoCodigo.trim(),
       genero,
-      correlativo_planilla,
+      correlativo_planilla.trim(),
     ];
     populateTable(data);
     CreateOrStorage(data);

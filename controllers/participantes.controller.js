@@ -47,7 +47,12 @@ participantes.add = async (req, res) => {
 
 participantes.edit = async (req, res) => {
   try {
-    if (isEmpty(req.body.duiEdit)) throw new Error("Empty");
+    if (
+      isEmpty(req.body.duiEdit) ||
+      isEmpty(req.body.nameEdit) ||
+      isEmpty(req.body.emailEdit) ||
+      isEmpty(req.body.correlativo_planilla)
+    ) {throw new Error("Empty");}
     const data = [
       req.body.duiNew, 
       req.body.nameEdit, 
