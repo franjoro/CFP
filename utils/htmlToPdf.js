@@ -14,7 +14,13 @@ const GenerarPdf = (data) => {
   let sectionImg = "";
   const d = new Date();
   const { firmante } = data;
-
+  let fontSize='';
+  if(data.alumnos.length > 6 && data.alumnos.length<9){
+    fontSize = `font-size: 13px;`;
+  }
+  if(data.alumnos.length > 8 && data.alumnos.length<11){
+    fontSize = `font-size: 12px;`;
+  }
   const { Horario, Nombre, programa, Fechas, horas, CostoAlumno } = data.data[1][0];
   const { NombreContacto, EmailContacto } = data.data[2][0];
   let imgProgram = '';
@@ -380,7 +386,7 @@ const GenerarPdf = (data) => {
             <br />
             <div class="container">
               <p>NOMBRE DE LOS PARTICIPANTES PROPUESTOS:</p>
-              <table class="table-sm">
+              <table class="table-sm" style="${fontSize}">
                 <thead>
                   ${headerTable}
                 </thead>
