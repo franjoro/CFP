@@ -353,9 +353,17 @@ $(document).ready(() => {
     if(JSON.parse(storage) == null){
       inscribirParticipantesTabla();
     }else{
+      const nameCourse = $("#curso").children("option:selected").text().trim().toLowerCase().replace(/ /g, "");
+      let countCourse = 0;
+      for (let i = 0; i < JSON.parse(storage).length; i++) {
+        const element = (JSON.parse(storage)[i][6].trim().toLowerCase().replace(/ /g, ""));
+        if(element == nameCourse){
+          countCourse ++;
+        }
+      }
       if(
-        ($("#id_program").val() == 29 && JSON.parse(storage).length < 40) || 
-        ($("#id_program").val() == 30 && JSON.parse(storage).length < 20)
+        ($("#id_program").val() == 29 && countCourse < 10) || 
+        ($("#id_program").val() == 30 && countCourse < 20)
         )
       {
         inscribirParticipantesTabla();
@@ -416,7 +424,7 @@ $(document).ready(() => {
       });
 
     // ================ VERIFICAR LONGITUD DE PARTICIPANTES ================================
-      console.log(localStorage.getItem('nParticipantes'));
+      // console.log(localStorage.getItem('nParticipantes'));
       // if(localStorage.getItem('nParticipantes') != undefined){
       //   console.log(localStorage.getItem('nParticipantes'));
       //   localStorage.setItem('nParticipantes', (parseInt(localStorage.getItem('nParticipantes'))+1));
