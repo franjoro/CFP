@@ -354,8 +354,8 @@ $(document).ready(() => {
       inscribirParticipantesTabla();
     }else{
       if(
-        ($("#id_program").val() == 29 && JSON.parse(storage).length < 10) || 
-        ($("#id_program").val() == 30 && JSON.parse(storage).length < 7)
+        ($("#id_program").val() == 29 && JSON.parse(storage).length < 40) || 
+        ($("#id_program").val() == 30 && JSON.parse(storage).length < 20)
         )
       {
         inscribirParticipantesTabla();
