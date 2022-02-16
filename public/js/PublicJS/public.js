@@ -363,7 +363,7 @@ $(document).ready(() => {
       }
       if(
         ($("#id_program").val() == 29 && countCourse < 10) || 
-        ($("#id_program").val() == 30 && countCourse < 20)
+        ($("#id_program").val() == 30 && countCourse < 7)
         )
       {
         inscribirParticipantesTabla();
