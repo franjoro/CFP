@@ -556,20 +556,27 @@ const countSolicitud = async () =>{
     const count = data.data[0].count;
     const cupo = data.data[0].cupo;
     const habilitado = data.data[0].habilitado;
-    if($("#view").val() != 'view'){
-      if(habilitado == 0){
-        errorMsg("<b>Mensaje: </b>Se han deshabilitado las inscripciones");
+    if($("#codigoCurso").val() == '1644515345460'){
+        errorMsg("<b>Mensaje: </b>Ya no se pueden realizar más inscripciones.");
         setTimeout(function(){
           window.location.href = "./deshabilitado/habil";
         },2000);
-      }else{
-        const type = $("#type").val();
-        if(type == 0){
-          if((count+1) > cupo){
-            localStorage.setItem('estado', 4);
-            warningMsg("<b>Mensaje:</b> Los cupos de este curso estan llenos pero puedes llenar el formulario y quedar pendiente para confirmación de apertura de algun cupo.")
-          }else{
-            localStorage.setItem('estado', 1);
+    }else{
+      if($("#view").val() != 'view'){
+        if(habilitado == 0){
+          errorMsg("<b>Mensaje: </b>Se han deshabilitado las inscripciones");
+          setTimeout(function(){
+            window.location.href = "./deshabilitado/habil";
+          },2000);
+        }else{
+          const type = $("#type").val();
+          if(type == 0){
+            if((count+1) > cupo){
+              localStorage.setItem('estado', 4);
+              warningMsg("<b>Mensaje:</b> Los cupos de este curso estan llenos pero puedes llenar el formulario y quedar pendiente para confirmación de apertura de algun cupo.")
+            }else{
+              localStorage.setItem('estado', 1);
+            }
           }
         }
       }
