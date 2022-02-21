@@ -36,7 +36,7 @@ cursos.cursos = async (req, res) => {
     queries.push(
       pool.query(
         `SELECT CONCAT(Nombre,' - ',Horario) AS Nombre , Codigo_curso, 
-        (SELECT COUNT(*) FROM tb_habil_solicitudes WHERE Codigo_curso = tb_cursos.Codigo_curso 
+        (SELECT COUNT(DISTINCT REPLACE(JSON_EXTRACT(json1, '$.dui'), '"','' )) FROM tb_habil_solicitudes WHERE Codigo_curso = tb_cursos.Codigo_curso 
         AND (tb_habil_solicitudes.estado =0 OR tb_habil_solicitudes.estado =3 OR tb_habil_solicitudes.estado =4)) AS cantidadAlumnos , 
         ( SELECT count( DISTINCT sol1.id) FROM tb_habil_solicitudes as sol1 INNER JOIN tb_habil_documentos as doc1 ON sol1.id = doc1.id_solicitud 
         WHERE sol1.Codigo_curso = tb_cursos.Codigo_curso ) AS cantidadIncom , 
