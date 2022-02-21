@@ -556,7 +556,7 @@ const countSolicitud = async () =>{
     const count = data.data[0].count;
     const cupo = data.data[0].cupo;
     const habilitado = data.data[0].habilitado;
-    if($("#codigoCurso").val() == '1644515345460'){
+    if($("#codigoCurso").val() == 'rygfvghbjhvshkrdjbgvjhgbjdh'){
         errorMsg("<b>Mensaje: </b>Ya no se pueden realizar más inscripciones.");
         setTimeout(function(){
           window.location.href = "./deshabilitado/habil";
