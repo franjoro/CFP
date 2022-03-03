@@ -1,0 +1,205 @@
+<link rel="stylesheet" href="/static/vendor/datatables/datatables.min.css">
+<link rel="stylesheet" href="/static/vendor/datatables/datatables.min.css" />
+<%- include('../partials/header.admin.ejs'); %>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="h3 mb-2 d-inline text-gray-800">Contratos</h1>
+                <button type="button" class="btn btn-primary float-right d-inline" data-toggle="modal" data-target="#modalContract">
+                    + Agregar contrato
+                </button>
+                <p class="mb-4 ">El módulo contrato sirve para crear, modificar, eliminar y ver todos los contratos con los profesores</a>.</p>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card shadow">
+                    <div class="card-header">
+                        <h6 class="m-0 font-weight-bold text-primary">Tabla de contratos</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="tableContract" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Descripcion</th>
+                                        <th>Fecha de inicio</th>
+                                        <th>Fecha de finalización</th>
+                                        <th>Opciones</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- MODAL SECTIONS -->
+    <div class="modal " id="modalContract" tabindex="-1" role="dialog" aria-labelledby="modalContract"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Agregar nuevo contrato</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formInstructor">
+                        <div class="form-row m-2">
+                            <div class="col">
+                                <label for="name">Nombre *requerido*</label>
+                                <input type="text" id="name" name="name" required class="form-control" placeholder="Ejemlo: CONTRATO-CFP-2022">
+                                <small style="color: gray;">Nombre del codumento Ejemlo: CONTRATO-CFP-2022</small>
+                            </div>
+                            <div class="col">
+                                <label for="date_issue_dui">Fecha de emisión Contrato *requerido*</label>
+                                <input type="date" id="date_issue" name="date_issue" required class="form-control" placeholder="Ejemlo: CONTRATO-CFP-2022">
+                                <small style="color: gray;">Fecha en la que fue emitido el contrato</small>
+                            </div>
+                        </div>  
+                        <div class="form-row m-2">
+                            <div class="col">
+                                <label for="dui">DUI patron *requerido*</label>
+                                <input type="text" id="dui" name="dui" required class="form-control" placeholder="Ejemlo: 05856642-5">
+                                <small style="color: gray;">Nombre del codumento Ejemlo: CONTRATO-CFP-2022</small>
+                            </div>
+                            <div class="col">
+                                <label for="date_issue_dui">Fecha de emisión DUI *requerido*</label>
+                                <input type="date" id="date_issue_dui" name="date_issue_dui" required class="form-control" placeholder="Ejemlo: CONTRATO-CFP-2022">
+                                <small style="color: gray;">Fecha en la que fue emitido el DUI</small>
+                            </div>
+                        </div>  
+                        <div class="form-row m-2">
+                            <div class="col">
+                                <label for="start_date">Fecha inicio *requerido*</label>
+                                <input type="date" id="start_date" name="start_date" required class="form-control">
+                            </div>
+                            <div class="col">
+                                <label for="finish_date">Fecha finalización *requerido*</label>
+                                <input type="date" id="finish_date" name="finish_date" required class="form-control">
+                            </div>
+                        </div>  
+                        <div class="form-row m-2">
+                            <div class="col">
+                                <label for="id_instructor">Instructor *requerido*</label>
+                                <select class="form-control" name="id_instructor" id="id_instructor">
+                                    <option value="">Seleccione un instructor</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <label for="id_course">Curso *requerido*</label>
+                                <select class="form-control" name="id_course" id="id_course">
+                                    <option value="">Seleccione un curso</option>
+                                </select>
+                            </div>
+                        </div>    
+                        <div class="form-row m-2">
+                            <div class="col">
+                                <label for="way_pay">Forma de pago *requerido*</label>
+                                <select class="form-control" name="id_course" id="id_course">
+                                    <option value="">Seleccione una forma de pago</option>
+                                    <option value="MENSUAL">Mensual</option>
+                                    <option value="SEMANAL">Semanal</option>
+                                    <option value="QUNCENAL">Quincenal</option>
+                                    <option value="TRIMESTRAL">Trimestral</option>
+                                    <option value="SEMESTRAL">Semestral</option>
+                                    <option value="ANUAL">Anual</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <label for="place">Lugar *requerido*</label>
+                                <input type="text" id="place" name="place" required class="form-control">
+                            </div>
+                        </div>         
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary">
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal " id="modalContractUpdate" tabindex="-1" role="dialog" aria-labelledby="modalContractUpdate"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modificar Contrato</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formInstructor">
+                        <div class="form-row m-2">
+                            <div class="col">
+                                <label for="DUI">Nombre *requerido*</label>
+                                <input type="text" id="name" name="name" required class="form-control" placeholder="Ejemlo: CONTRATO-CFP-2022">
+                                <small style="color: gray;">Nombre del codumento Ejemlo: CONTRATO-CFP-2022</small>
+                            </div>
+                        </div>  
+                        <div class="form-row m-2">
+                            <div class="col">
+                                <label for="start_date">Fecha inicio *requerido*</label>
+                                <input type="date" id="start_date" name="start_date" required class="form-control">
+                            </div>
+                            <div class="col">
+                                <label for="finish_date">Fecha finalización *requerido*</label>
+                                <input type="date" id="finish_date" name="finish_date" required class="form-control">
+                            </div>
+                        </div>  
+                        <div class="form-row m-2">
+                            <div class="col">
+                                <label for="id_instructor">Instructor *requerido*</label>
+                                <select class="form-control" name="id_instructor" id="id_instructor">
+                                    <option value="">Seleccione un instructor</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <label for="id_course">Curso *requerido*</label>
+                                <select class="form-control" name="id_course" id="id_course">
+                                    <option value="">Seleccione un curso</option>
+                                </select>
+                            </div>
+                        </div>    
+                        <div class="form-row m-2">
+                            <div class="col mt-4">
+                                <div class="">
+                                    <input type="file" class="" id="customFileLangHTML">
+                                </div>
+                            </div>
+                        </div>     
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary">
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+<%- include('../partials/footer'); %>
+
+    <!-- Page level plugins -->
+    <script src="/static/vendor/datatables/datatables.min.js"></script>
+    <script src="/static/js/dataTables.buttons.min.js"></script>
+    <script src="/static/js/pdfmake.min.js"></script>
+    <script src="/static/js/vfs_fonts.js"></script>
+    <script src="/static/js/buttons.html5.min.js"></script>
+    <script src="/static/js/buttons.print.min.js"></script>
+    <script src="/static/js/jszip.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <!-- Page level custom scripts -->
+    <script src="/static/js/contract/table.js"></script>
+    <script src="/static/js/contract/center.js"></script>
+<!-- /.container-fluid -->
+
+    
