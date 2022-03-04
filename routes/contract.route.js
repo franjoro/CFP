@@ -21,6 +21,13 @@ const router = express.Router();
 // router.get('/menu', authcheck, )
 // route '/contratos/read'
 router.get('/read', authcheck, read.read);
-// route 'contratos/add'
+// route 'contratos/read-courses'
+router.post('/read-courses', authcheck, read.readCourses);
+// route 'contratos/read-presbyter'
+router.post('/read-presbyter', authcheck, read.readPresbyter);
+// route 'contratos/menu'
 router.get('/menu', authcheck, read.renderMenu);
+// route 'contratos/add'
+router.post('/add', authcheck, create.add);
+// export module
 module.exports = router;

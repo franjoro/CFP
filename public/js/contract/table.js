@@ -46,7 +46,8 @@ function LoadTablaInstructor(estado = 1) {
       ],
       columns: [
         { data: "name" },
-        { data: "description" },
+        { data: "course" },
+        { data: "teacher" },
         { data: "start_date" },
         {
             render(data, type, row){
@@ -56,9 +57,9 @@ function LoadTablaInstructor(estado = 1) {
         {
             render(data, type, row){
                 return (`
-                <div className="row mp-0">
+                <div className="row">
                     <div className="col-12" >
-                        <div className="btn-group" role="group" aria-label="">
+                        <div class="btn-group" role="group" aria-label="">
                             <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modalContractUpdate"><i class="fas fa-eye"></i></button>
                             <button class="btn btn-sm btn-warning"><i class="fas fa-pen"></i></button>
                             <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
