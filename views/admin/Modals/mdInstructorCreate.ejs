@@ -1,0 +1,114 @@
+<!-- Modal -->
+<div class="modal " id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Agregar nuevo instructor</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formInstructor">
+                    <div class="row m-2">
+                        <p><b>Instrucciónes:</b> Los items que tengan signo asterisco <b>"*"</b> son campos obligatorios.</p>
+                    </div>
+                    <div class="row m-2">
+                        <div class="col">
+                            <label for="DUI">DUI*</label>
+                            <input type="text" id="DUI" name="DUI" required class="form-control"
+                                placeholder="0000000-0">
+                        </div>
+                        <div class="col">
+                            <label for="NIT">NIT</label>
+                            <input type="text" id="NIT" name="NIT"  class="form-control"
+                                placeholder="0000-000000-000-0">
+                        </div>
+                        <div class="col">
+                            <label for="name">Nombre*</label>
+                            <input type="text" id="name" name="name" required class="form-control"
+                                placeholder="Nombre del instructor">
+                        </div>
+                    </div>  
+                    <div class="row m-2">
+                        <div class="col">
+                            <label for="fecha_nacimiento">Fecha de nacimiento*</label>
+                            <input type="date" id="fecha_nacimiento" name="fecha_nacimiento"  class="form-control">
+                        </div>
+                        <div class="col">
+                            <label for="sexo">Sexo*</label>
+                            <select name="sexo" class="form-control" id="sexo">
+                                <option value="">Selecciona una opción</option>
+                                <option value="0">Mujer</option>
+                                <option value="1">Hombre</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label for="estado_civil">Estado Civil*</label>
+                            <input type="text" id="estado_civil" name="estado_civil"  class="form-control">
+                        </div>
+                    </div>
+                    <div class="row m-2">
+                        <div class="col">
+                            <label for="departamento_domicilio">Departamento domicilio*</label>
+                            <select name="departamento_domicilio" class="form-control" id="departamento_domicilio">
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label for="departamento_emision">Departamento Emisión*</label>
+                            <select name="departamento_emision" class="form-control" id="departamento_emision">
+                            </select>
+                            <small style="color: gray;">Departamento adonde fue emitido el DUI</small>
+                        </div>
+                        <div class="col">
+                            <label for="municipio_emision">Municipio Emisión*</label>
+                            <select name="municipio_emision" class="form-control" id="municipio_emision">
+                                <option value="">Selecciona una opción</option>
+                            </select>
+                            <small style="color: gray;">Municipio adonde fue emitido el DUI</small>
+                        </div>
+                    </div>
+                    <div class="row m-2">
+                        <div class="col">
+                            <label for="fecha_emision">Fecha de emisión*</label>
+                            <input type="date" id="fecha_emision" name="fecha_emision"  class="form-control">
+                        </div>
+                        <div class="col">
+                            <label for="name">Profesión*</label>
+                            <input type="text" id="profesion" name="profesion" required class="form-control" placeholder="Profesión">
+                        </div>
+                    </div>
+                    <div class="row m-2">
+                        <div class="col">
+                            <label for="tel">Teléfono</label>
+                            <input type="text" id="tel" name="tel"  class="form-control">
+                        </div>
+                        <div class="col">
+                            <label for="categoria">Categoría</label>
+                            <select name="categoria" id="categoria" class="form-control">
+                                <%  query.forEach(element => { %>
+                                <option value="<%= element.id %>"><%= element.Categoria %>  </option>
+                                <% }); %>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label for="email">Email</label>
+                            <input type="text" id="email" name="email"  class="form-control">
+                        </div>
+                    </div>
+                    <div class="row m-1">
+                        <div class="col">
+                            <label for="direccion">Dirección*</label>
+                            <textarea name="direccion" id="direccion" class="form-control" rows="3"></textarea>
+                        </div>
+                    </div>            
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <input type="submit" class="btn btn-primary">
+            </div>
+        </form>
+        </div>
+    </div>
+</div>

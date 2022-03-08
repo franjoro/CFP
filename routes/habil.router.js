@@ -46,6 +46,7 @@ router.get("/documentacion/habil/:idSolicitud/documento/:documento?/:documento2?
 router.get("/gestor-de-documentos/habil/:idCurso/:idSolicitud/:dui/:programa/:tipo?", habil.gestorDeDocumentacion);
 //#region tables
 router.get('/application-table/:idCourse', tableaHabil.aplicationsTable);
+router.get('/tb-details-participants/:idCourse', tableaHabil.tbDetailsParticipants);
 router.get("/changecolor-table/:idCourse", tablesHabil.changeColor);
 router.get("/notComplete/:idCourse", tablesHabil.notComplete);
 router.get("/changeColorWait/:idCourse", tablesHabil.changeColorWait);

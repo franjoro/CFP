@@ -178,6 +178,24 @@ const RecuestIf = () =>{
   }
 };
 
+
+let tabledetailsenabled = false;
+const tableDetails = () =>{
+  if(tabledetailsenabled){
+    document.getElementById("table1").style.display = 'block';
+    document.getElementById("table2").style.display = 'none';
+    $("#swTableDetail").prop('checked', false);
+    tabledetailsenabled = false;
+  }else{
+    document.getElementById("table1").style.display = 'none';
+    document.getElementById("table2").style.display = 'block';
+    tbDetails();	
+    var api = $("#tbDetailsParticipants").DataTable();
+    console.log(api.cell(1));
+    $("#swTableDetail").prop('checked', true);
+    tabledetailsenabled = true;
+  }
+};
 const updateRequest = async (enabled, idCourse, msg) =>{
   const res = await $.ajax({
     type: "PUT",

@@ -4,7 +4,7 @@
   @*/
 //INICIAMOS CON LA FUNCION READY DE JQUERY
 $(document).ready(function () {
-
+  document.getElementById("table2").style.display = 'none';
   // function cargardepaNac(){
   //   $("#depa_nac").val(1)
   // };
@@ -40,6 +40,9 @@ $(document).ready(function () {
   });
   $("#swRequest").click(function(){
     RecuestIf();
+  });
+  $("#swTableDetail").click(()=>{
+    tableDetails();
   });
   RequestEnabled();
     $("#btnCopy").click(() => {

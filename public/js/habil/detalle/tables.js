@@ -191,6 +191,182 @@ const applicationTable = () => {
     });
 };
 
+var n = 0;
+
+const tbDetails = () => {
+  // DataTable Usuarios
+  const idCourse = $("#idCourse").val();
+  var table = $("#tbDetailsParticipants").DataTable({
+    fixedHeader: true,
+    'iDisplayLength': 500,
+    ajax: {
+      'type': "GET",
+      "url": `/admin/habil/tb-details-participants/${idCourse}`,
+      
+    },
+    destroy: true,
+    dom: 'Bfrtip',
+    buttons: [
+      {
+        extend: 'excelHtml5',
+        text: '<i class="fas fa-file-excel"></i>',
+        titleAttr: 'Excel',
+        className: 'btn btn-success'
+      },
+      {
+        extend: 'csvHtml5',
+        text: '<i class="fas fa-file-csv"></i>',
+        titleAttr: 'Excel',
+        className: 'btn btn-primary'
+      },{
+        extend: 'copy',
+        text: '<i class="fas fa-copy"></i>',
+        exportOptions: {
+            modifier: {
+                page: 'current'
+            }
+        },
+        className: 'btn btn-info'
+      },
+    ],
+    columns: [
+      { render(data, type,row){
+        const html = `
+          <p>${row.DUI}<p>
+        `;
+        return(html)
+        }
+      },
+      { render(data, type,row){
+        const html = `
+          <p>${row.NIT}<p>
+        `;
+        return(html)
+        }
+      },
+      { render(data, type,row){
+        const html = `
+          <p>${row.NOMBRE_COMPLETO}<p>
+        `;
+        return(html)
+        }
+      },
+      { render(data, type,row){
+        const html = `
+          <p>${row.NACIONALIDAD}<p>
+        `;
+        return(html)
+        }
+      },
+      { render(data, type,row){
+        const html = `
+          <p>${row.SEXO}<p>
+        `;
+        return(html)
+        }
+      },
+      { render(data, type,row){
+        const html = `
+          <p>${row.FECHA_NACIMIENTO}<p>
+        `;
+        return(html)
+        }
+      },
+      { render(data, type,row){
+        const html = `
+          <p>${row.ESTADO_FAMILIAR}<p>
+        `;
+        return(html)
+        }
+      },
+      { render(data, type,row){
+          $.ajax({
+            url: `https://api.salud.gob.sv/departamentos/${row.DEPARTAMENTO_RESIDENCIA}`,
+            type: 'GET'
+          }).then((res, key, req)=>{
+            console.log(req);
+            $(`#row${row.DUI}`).text(`${res.nombre}`);
+            console.log(res.nombre);
+            console.log(row.DUI);
+          });   
+          return `<p id="row${row.DUI}">${row.DEPARTAMENTO_RESIDENCIA}<p>`     
+        }
+      },
+      { render(data, type,row){
+        const html = `
+          <p>${row.MUNICIPIO_RESIDENCIA}<p>
+        `;
+        return(html)
+        }
+      },
+      { render(data, type,row){
+        const html = `
+          <p>${row.GRADO_FINALIZADO}<p>
+        `;
+        return(html)
+        }
+      },
+      { render(data, type,row){
+        const html = `
+          <p>${row.CORREO}<p>
+        `;
+        return(html)
+        }
+      },
+      { render(data, type,row){
+        const html = `
+          <p>${row.TELEFONO}<p>
+        `;
+        return(html)
+        }
+      },
+      { render(data, type,row){
+        const html = `
+          <p>${row.DISCAPACIDAD}<p>
+        `;
+        return(html)
+        }
+      },
+      { render(data, type,row){
+        const html = `
+          <p>${row.TIPO_DISCAPACIDAD}<p>
+        `;
+        return(html)
+        }
+      },
+      { render(data, type,row){
+        const html = `
+          <p>${row.OCUPACION_ACTUAL}<p>
+        `;
+        return(html)
+        }
+      },
+      { render(data, type,row){
+        const html = `
+          <p>${row.TRABAJA}<p>
+        `;
+        return(html)
+        }
+      },
+      { render(data, type,row){
+        const html = `
+          <p>${row.TIPO_TRABAJO}<p>
+        `;
+        return(html)
+        }
+      },
+    ],
+    responsive: true,
+    paging: false,
+    columnDefs: [{
+      "defaultContent": "-",
+      "targets": "_all"
+    }]
+  });
+};
+
+
+
 
 const changeColor= async () =>{
   const data =  await $.ajax({

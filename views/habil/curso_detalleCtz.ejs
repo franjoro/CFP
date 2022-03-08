@@ -75,25 +75,38 @@
                   -->
                   
                 <%} else{ %>
-                  <h5> Oferta : <%= curso.Nombre %> - <%= curso.Horario %></h5>
-                  <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="swRequest" checked>
-                    <label class="custom-control-label" for="swRequest"><span>Inscripción Habilitada</span></label>
+                  <div class="container">
+                    <div class="row m-1">
+                      <div class="col-12">
+                        <h5> Oferta : <%= curso.Nombre %> - <%= curso.Horario %></h5>
+                        <div class="custom-control custom-switch">
+                          <input type="checkbox" class="custom-control-input" id="swRequest" checked>
+                          <label class="custom-control-label" for="swRequest"><span>Inscripción Habilitada</span></label>
+                        </div>
+                        <hr>
+                        <button id="enlaceTrue" class="btn btn-success btn-sm d-inline" data-toggle="modal"
+                          data-target="#modal_compartir" onclick="GetLinkToShare('<%=curso.Codigo_curso%>')">Obtener enlace de inscripción
+                        </button>
+                        <button class="btn btn-info btn-sm d-inline" data-toggle="modal"
+                          data-target="#modificar_modal_oferta">Editar oferta
+                        </button>
+                        <button class="btn btn-primary btn-sm  d-inline" data-toggle="modal"
+                          data-target="#insertar_modal">Crear curso de esta oferta
+                        </button>
+                        <button class="btn btn-secondary btn-sm d-inline" onclick="createZipCourse('<%=curso.Codigo_curso%>')">
+                          <i class="fas fa-file-archive"></i> Descargar ZIP de documentos
+                        </button>
+                        <a href="/admin/habil/<%= curso.Codigo_curso%>" class="btn btn-success btn-sm d-inline">Agregar solicitud</a>
+                      </div>
+                    </div>
                   </div>
-                  <hr>
-                  <button id="enlaceTrue" class="btn btn-success btn-sm d-inline" data-toggle="modal"
-                    data-target="#modal_compartir" onclick="GetLinkToShare('<%=curso.Codigo_curso%>')">Obtener enlace de inscripción
-                  </button>
-                  <button class="btn btn-info btn-sm d-inline" data-toggle="modal"
-                    data-target="#modificar_modal_oferta">Editar oferta
-                  </button>
-                  <button class="btn btn-primary btn-sm  d-inline" data-toggle="modal"
-                    data-target="#insertar_modal">Crear curso de esta oferta
-                  </button>
-                  <button class="btn btn-secondary btn-sm d-inline" onclick="createZipCourse('<%=curso.Codigo_curso%>')">
-                    <i class="fas fa-file-archive"></i> Descargar ZIP de documentos
-                  </button>
-                  <a href="/admin/habil/<%= curso.Codigo_curso%>" class="btn btn-success btn-sm d-inline">Agregar solicitud</a>
+                  <div class="container">
+                    <div class="row m-1">
+                      <div class="col-12">
+                        <a href="" class="btn btn-info"><i class="fas fa-table"></i> Ver detalle</a>
+                      </div>
+                    </div>
+                  </div>
                 <% } %>
               </div>
             </div>
@@ -112,22 +125,44 @@
               <div class="col-3">
                 <h6 class="m-0 font-weight-bold text-primary d-inline">Alumnos inscritos</h6>
               </div>
-              <div class="col-9 blockChecked pt-1 pb-1">
-                <span id="blockChecked" class="mt-4 mb-4"></span>
-              </div>
             </div>
             
             <p class="text-secondary">Descripción:</p>
-            <p><span><button class="btn btn-info"></button> Solicitantes que enviaron documentación</span></p>
-            <p><span><button class="btn btn-warning"></button> Solicitantes en lista de espera</span></p>
-            <p><span><button class="btn btn-danger"></button> Solicitantes que no han llenado documentación</span></p>
-            <p><span><button class="btn btn-secondary"></button> Solicitantes rebotados de sgafp</span></p>
-            <p><span><button class="btn btn-success"></button> Solicitantes inscritos en sgafp</span></p>
+            <div class="container-fluid">
+              <div class="row" style="padding: 0;">
+                <div class="col-2" style="padding: 0;">
+                  <p><span  style="font-size: 12px;"><button class="btn btn-info"></button> Solicitantes que enviaron documentación</span></p>
+                </div>
+                <div class="col-2" style="padding: 0;">
+                  <p><span  style="font-size: 12px;"><button class="btn btn-warning"></button> Solicitantes en lista de espera</span></p>
+                </div>
+                <div class="col-3" style="padding: 0;">
+                  <p><span  style="font-size: 12px;"><button class="btn btn-danger"></button> Solicitantes que no han llenado documentación</span></p>
+                </div>
+                <div class="col-2" style="padding: 0;">
+                  <p><span  style="font-size: 12px;"><button class="btn btn-secondary"></button> Solicitantes rebotados de sgafp</span></p>
+                </div>
+                <div class="col-2" style="padding: 0;">
+                  <p><span  style="font-size: 12px;"><button class="btn btn-success"></button> Solicitantes inscritos en sgafp</span></p>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="card-body row table-responsive">
             <!--Tabla detalle alumnos-->
             <div class="container-fluid">
               <div class="row">
+                <div class="col-12 mb-2 mt-2">
+                  <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="swTableDetail">
+                    <label class="custom-control-label" for="swTableDetail"><span>Tabla detallada</span></label>
+                  </div>
+                  <div class="col-12 mb-2 mt-2">
+                    <div class="col-9 blockChecked pt-1 pb-1">
+                      <span id="blockChecked" class="mt-4 mb-4"></span>
+                    </div>
+                  </div>
+                </div>
                 <div class="col-12">
                   <%- include('Boards/tablaAlumnos'); %>
                 </div>

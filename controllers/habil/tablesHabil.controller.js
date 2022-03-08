@@ -36,6 +36,46 @@ tablesHabil.aplicationsTable = async(req,res) =>{
     }
 };
 
+tablesHabil.tbDetailsParticipants = async(req,res)=>{
+    const {idCourse} = req.params;
+    try {
+        const sql = `SELECT DISTINCT 
+        REPLACE(JSON_EXTRACT(json1, '$.dui'), '"','' ) as DUI, 
+        REPLACE(JSON_EXTRACT(json1, '$.nit'), '"','' ) as NIT ,
+        CONCAT(REPLACE(JSON_EXTRACT(json1, '$.nombres'), '"','' ), " ", REPLACE(JSON_EXTRACT(json1, '$.apellidos'), '"','' )) AS NOMBRE_COMPLETO,
+        'SALVADOREÑA'AS NACIONALIDAD,  
+        par.Genero as SEXO,
+        REPLACE(JSON_EXTRACT(json1, '$.fechNacimiento'), '"','') as FECHA_NACIMIENTO, 
+        REPLACE(JSON_EXTRACT(json1, '$.estadoFamiliar'), '"','') as ESTADO_FAMILIAR, 
+        REPLACE(JSON_EXTRACT(json1, '$.depDomicilio'), '"','') as DEPARTAMENTO_RESIDENCIA, 
+        REPLACE(JSON_EXTRACT(json1, '$.munDomicilio'), '"','') as MUNICIPIO_RESIDENCIA, 
+        REPLACE(JSON_EXTRACT(json2, '$.gradoFinalizado'), '"','') as GRADO_FINALIZADO, 
+        par.Email as CORREO,
+        REPLACE(JSON_EXTRACT(json1, '$.telMovil'), '"','') as TELEFONO,
+        REPLACE(JSON_EXTRACT(json1, '$.discapacidadBool'), '"','') as DISCAPACIDAD,
+        REPLACE(JSON_EXTRACT(json1, '$.discapacidad'), '"','') as TIPO_DISCAPACIDAD,
+        REPLACE(JSON_EXTRACT(json2, '$.actividades'), '"','') as OCUPACION_ACTUAL,
+        REPLACE(JSON_EXTRACT(json2, '$.trabaja'), '"','') as TRABAJA,
+        REPLACE(JSON_EXTRACT(json2, '$.tipoempleo'), '"','') as TIPO_TRABAJO,
+        sol.id as idSolicitud 
+        FROM tb_habil_solicitudes 
+        AS sol INNER JOIN tb_participante par on par.DUI = sol.documento INNER JOIN tb_cursos AS C on C.Codigo_curso = sol.Codigo_curso 
+        WHERE sol.Codigo_curso = ? AND (sol.estado = 0 OR sol.estado = 3 OR sol.estado = 4) 
+        GROUP BY REPLACE(JSON_EXTRACT(json1, '$.dui'), '"','' );`;
+        const params = [idCourse];
+        const data = await pool.query(sql, params);
+        console.log(data);
+        // .then((item)=>{
+        //     console.log(item);
+        // });
+        res.json({
+            data,
+        });
+    } catch (error) {
+        res.json({status: false, error: error})
+    }
+};
+
 
 tablesHabil.changeColor = async(req,res) =>{
     try {

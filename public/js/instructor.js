@@ -125,6 +125,21 @@ $("#formInstructor").submit(async function (e) {
       $("#exampleModal").modal("toggle");
       $("#formInstructor")[0].reset();
     }
+    if(!data.status){
+      swal.close();
+      $('#exampleModal').modal('show'); 
+      data.errors.map((item)=>{
+          $.toast({
+              title: '¡Atención!',
+              subtitle: 'Tener en cuenta',
+              content: `${item}`,
+              type: 'error',
+              delay: 3000,
+              dismissible: true,
+              
+          });  
+      });
+    }
   } catch (error) {
     swal.close();
     console.log(error)
@@ -168,4 +183,79 @@ $(document).ready(() => {
     $("#tel_editar").val(data.Telefono);
     $("#email_editar").val(data.Email);
   } );
+
+
+  $("#departamento_emision").select2({
+    width: "100%",
+    ajax: {
+      url: "https://api.salud.gob.sv/departamentos",
+      dataType: "json",
+      delay: 250,
+      data(params) {
+        return {
+          idPais: 68,
+          nombre: params.term,
+        };
+      },
+      processResults: function (data) {
+        return {
+          results: $.map(data, function (obj, index) {
+            return { id: obj.id, text: obj.nombre };
+          }),
+        };
+      },
+      cache: true,
+    },
+  });
+
+  $("#departamento_domicilio").select2({
+    width: "100%",
+    ajax: {
+      url: "https://api.salud.gob.sv/departamentos",
+      dataType: "json",
+      delay: 250,
+      data(params) {
+        return {
+          idPais: 68,
+          nombre: params.term,
+        };
+      },
+      processResults: function (data) {
+        return {
+          results: $.map(data, function (obj, index) {
+            return { id: obj.id, text: obj.nombre };
+          }),
+        };
+      },
+      cache: true,
+    },
+  });
+
+
+
+  $("#departamento_emision").on("select2:select", function (e) {
+    var idDepartamento = e.params.data.id;
+    $("#municipio_emision").select2({
+      width: "100%",
+      ajax: {
+        url: "https://api.salud.gob.sv/municipios",
+        dataType: "json",
+        delay: 250,
+        data(params) {
+          return {
+            idDepartamento,
+            nombre: params.term,
+          };
+        },
+        processResults: function (data) {
+          return {
+            results: $.map(data, function (obj, index) {
+              return { id: obj.id, text: obj.nombre };
+            }),
+          };
+        },
+        cache: true,
+      },
+    });
+  });
 });

@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="/static/vendor/datatables/datatables.min.css">
+<link rel="stylesheet" href="/static/css/toast.css">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" type="text/css" />
 <%- include('../partials/header.admin.ejs'); %>
     <div class="container-fluid">
@@ -59,7 +60,7 @@
                                 <small style="color: gray;">Nombre del codumento Ejemlo: CONTRATO-CFP-2022</small>
                             </div>
                             <div class="col">
-                                <label for="date_issue_dui">Fecha de emisión Contrato *requerido*</label>
+                                <label for="date_issue">Fecha de emisión Contrato *requerido*</label>
                                 <input type="date" id="date_issue" name="date_issue" required class="form-control" placeholder="Ejemlo: CONTRATO-CFP-2022">
                                 <small style="color: gray;">Fecha en la que fue emitido el contrato</small>
                             </div>
@@ -82,7 +83,7 @@
                                 </select>
                             </div>
                             <div class="col">
-                                <label for="place">Duración de contrato *requerido*</label>
+                                <label for="days">Duración de contrato *requerido*</label>
                                 <input type="number" max="1000" min="1" id="days" name="days" required class="form-control">
                                 <small style="color: gray;">
                                     El plazo del contrato tendrá una duración de <span id="daysValue">7</span> DÍAS contados a partir de la vigencia de este contrato...
@@ -103,7 +104,7 @@
                                 </select>
                             </div>
                             <div class="col">
-                                <label for="way_pay">Presbitero *requerido*</label>
+                                <label for="id_presbyters">Presbitero *requerido*</label>
                                 <select class="form-control" name="id_presbyters" id="id_presbyters">
                                     <option value="">Seleccione un presbitero</option>
                                 </select>
@@ -112,7 +113,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <input type="submit" class="btn btn-primary">
+                    <button type="button" id="btnAddContract" class="btn btn-primary" data-dismiss="modal">Enviar</button>
                 </div>
             </form>
             </div>
@@ -123,6 +124,7 @@
 
     <!-- Page level plugins -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <script src="/static/js/toast.js"></script>
     <script src="/static/vendor/datatables/datatables.min.js"></script>
     <script src="/static/js/dataTables.buttons.min.js"></script>
     <script src="/static/js/pdfmake.min.js"></script>
@@ -132,7 +134,9 @@
     <script src="/static/js/jszip.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <!-- Page level custom scripts -->
+    <script src="/static/js/global/alerts.js"></script>
     <script src="/static/js/contract/table.js"></script>
+    <script src="/static/js/contract/create.js"></script>
     <script src="/static/js/contract/center.js"></script>
     <script src="/static/js/contract/select.js"></script>
 <!-- /.container-fluid -->
