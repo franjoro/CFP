@@ -102,7 +102,18 @@ instructor.add = async (req, res) => {
       req.body.name_editar,
       req.body.email_editar,
       req.body.tel_editar,
-      req.body.DUI_editar
+      req.body.DUI_editar,
+
+      req.body.categoria_editar,
+      req.body.fecha_nacimiento_editar,
+      req.body.sexo_editar,
+      req.body.estado_civil_editar,
+      req.body.departamento_domicilio_editar	,
+      req.body.profesion_editar,
+      req.body.direccion_editar,
+      req.body.departamento_emision_editar,
+      req.body.municipio_emision_editar,
+      req.body.fecha_emision_editar,
     ];
     try {
       await pool.query(

@@ -16,7 +16,6 @@ const readHabil = require('../controllers/habil/readHabil.controller');
 const tableaHabil = require('../controllers/habil/tablesHabil.controller');
 const zipCourse  = require('../controllers/habil/zip.controller');
 const updateStatusRequest = require('../controllers/habil/updateStatusRequest');
-// Llamamos al router
 const router = express.Router();
 const fileUpload = require("express-fileupload");// proteccion para fileUpload
 const tablesHabil = require('../controllers/habil/tablesHabil.controller');

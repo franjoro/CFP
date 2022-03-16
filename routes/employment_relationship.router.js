@@ -29,17 +29,15 @@ router.get("/documentacion/:idStudent", authcheck, renderController.documentatio
 
 // route: "/admin/vinculacion-laboral/tb-students/"
 router.get("/tb-students",authcheck, readController.tbStudents);
-// PUT SECTION
+
 // route: "/admin/vinculacion-laboral/update-name-document"
-router.put("/update-name-document", authcheck, updateController.updateNameDocument)
-// POST SECTION
+router.put("/update-name-document", authcheck, updateController.updateNameDocument);
+
 // "admin/vinculacion-laboral/send-files/"
 router.post("/send-files", fileUpload(), filesController.sendFile);
-
 // route: "/admin/vinculacion-laboral/add-workshop"
 router.post("/add-workshop", authcheck, createRelationShipController.addWorkShop);
 
-// DELETE SECTIONS
 // "/admin/vinculacion-laboral/delete-file"
 router.delete("/delete-file", authcheck, filesController.deleteFile);
 

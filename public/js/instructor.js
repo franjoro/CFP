@@ -147,7 +147,6 @@ $("#formInstructor").submit(async function (e) {
   }
 });
 
-
 // Editar empresa
 $("#formInstructor_editar").submit(async function (e) {
   e.preventDefault();
@@ -175,6 +174,7 @@ $("#formInstructor_editar").submit(async function (e) {
 // Call the dataTables jQuery plugin
 $(document).ready(() => {
   LoadTablaInstructor();
+  
   $('#tablaInstructor tbody').on( 'click', '#btn_editar', function () {
     const data = $("#tablaInstructor").DataTable().row( $(this).parents('tr') ).data();
     console.log(data);
@@ -183,7 +183,6 @@ $(document).ready(() => {
     $("#tel_editar").val(data.Telefono);
     $("#email_editar").val(data.Email);
   } );
-
 
   $("#departamento_emision").select2({
     width: "100%",
@@ -230,8 +229,6 @@ $(document).ready(() => {
       cache: true,
     },
   });
-
-
 
   $("#departamento_emision").on("select2:select", function (e) {
     var idDepartamento = e.params.data.id;

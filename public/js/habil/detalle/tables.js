@@ -246,21 +246,21 @@ const tbDetails = () => {
       },
       { render(data, type,row){
         const html = `
-          <p>${row.NOMBRE_COMPLETO}<p>
+          <p>${(row.NOMBRE_COMPLETO).toUpperCase()}<p>
         `;
         return(html)
         }
       },
       { render(data, type,row){
         const html = `
-          <p>${row.NACIONALIDAD}<p>
+          <p>${(row.NACIONALIDAD).toUpperCase()}<p>
         `;
         return(html)
         }
       },
       { render(data, type,row){
         const html = `
-          <p>${row.SEXO}<p>
+          <p>${(row.SEXO).toUpperCase()}<p>
         `;
         return(html)
         }
@@ -274,34 +274,38 @@ const tbDetails = () => {
       },
       { render(data, type,row){
         const html = `
-          <p>${row.ESTADO_FAMILIAR}<p>
+          <p>${(row.ESTADO_FAMILIAR).toUpperCase()}<p>
         `;
         return(html)
         }
       },
       { render(data, type,row){
-          $.ajax({
-            url: `https://api.salud.gob.sv/departamentos/${row.DEPARTAMENTO_RESIDENCIA}`,
-            type: 'GET'
-          }).then((res, key, req)=>{
-            console.log(req);
-            $(`#row${row.DUI}`).text(`${res.nombre}`);
-            console.log(res.nombre);
-            console.log(row.DUI);
-          });   
-          return `<p id="row${row.DUI}">${row.DEPARTAMENTO_RESIDENCIA}<p>`     
+          var departamentval;
+          departaments.map((item)=>{
+            if(item.id == row.DEPARTAMENTO_RESIDENCIA){
+              departamentval = item.nombre;
+            }
+          });
+          return departamentval.toUpperCase();
         }
       },
       { render(data, type,row){
-        const html = `
-          <p>${row.MUNICIPIO_RESIDENCIA}<p>
-        `;
-        return(html)
+
+
+        var municipalityVal;
+        municipalitys.map((item)=>{
+          item.map((data)=>{
+            if(data.id == row.MUNICIPIO_RESIDENCIA)
+              municipalityVal = data.nombre;
+          });
+        });
+        return municipalityVal.toUpperCase();
         }
       },
       { render(data, type,row){
+        var grade = finishGrade(row.GRADO_FINALIZADO);
         const html = `
-          <p>${row.GRADO_FINALIZADO}<p>
+          <p>${grade}<p>
         `;
         return(html)
         }
@@ -322,41 +326,100 @@ const tbDetails = () => {
       },
       { render(data, type,row){
         const html = `
-          <p>${row.DISCAPACIDAD}<p>
+          <p>${(row.DISCAPACIDAD).toUpperCase()}<p>
         `;
-        return(html)
+        return (html)
         }
       },
       { render(data, type,row){
-        const html = `
-          <p>${row.TIPO_DISCAPACIDAD}<p>
-        `;
-        return(html)
+        var array = row.TIPO_DISCAPACIDAD;
+        var json = JSON.parse(JSON.stringify(array.replace(/\s+/g, '')));
+        var jsonpartido = json.split(",", 9);
+        var text = '';
+        jsonpartido.map((item)=>{ 
+          if(item.split(":", 2)[1] == 'true'){
+            switch (item.split(":", 2)[0]) {
+              case '{moverseCaminar':
+                text = 'FISICA';
+                break;
+              case 'usarBrazosPiernas':
+                text = 'FISICA';
+                break;
+              case 'verLentes':
+                text = 'VISUAL';
+                break;
+              case 'oirAparatos':
+                text = 'AUDITIVA';
+                break;
+              case 'hablar':
+                text = 'VERBAL';
+                break;
+              case 'retrasoMental':
+                text = 'MENTAL';
+                break;
+              case 'vestirseAlimentarse':
+                text = 'FISICA Y MENTAL';
+                break;
+            }
+          }
+        });
+        return text;
         }
       },
       { render(data, type,row){
-        const html = `
-          <p>${row.OCUPACION_ACTUAL}<p>
-        `;
-        return(html)
+          var array = row.OCUPACION_ACTUAL;
+          var json = JSON.parse(JSON.stringify(array.replace(/\s+/g, '')));
+          var jsonpartido = json.split(",", 9);
+          var ocupation = [];
+          jsonpartido.map((item)=>{ 
+            if(item.split(":", 2)[1] == 'true'){
+              switch (item.split(":", 2)[0]) {
+                case '{estudia':
+                  ocupation.push('ESTUDIA');
+                  break;
+                case 'oficiosHogar':
+                  ocupation.push('OFICIOS DEL HOGAR');
+                  break;
+                case 'buscaTrabajo':
+                  ocupation.push('BUSCA TRABAJO');
+                  break;
+                case 'trabaja':
+                  ocupation.push('TRABAJA');
+                  work = true;
+                  break;
+                case 'otro':
+                ocupation.push('OTRO');
+                  break;
+              }
+            }
+          });
+          return `${ocupation}`
         }
       },
       { render(data, type,row){
-        const html = `
-          <p>${row.TRABAJA}<p>
-        `;
-        return(html)
+        var array = row.OCUPACION_ACTUAL;
+          var json = JSON.parse(JSON.stringify(array.replace(/\s+/g, '')));
+          var jsonpartido = json.split(",", 9);
+          var work = 'NO';
+          jsonpartido.map((item)=>{ 
+            if(item.split(":", 2)[1] == 'true'){
+              switch (item.split(":", 2)[0]) {
+                case 'trabaja':
+                  work = 'SI';
+                  break;
+              }
+            }
+          });
+          return `${work}`
         }
       },
       { render(data, type,row){
-        const html = `
-          <p>${row.TIPO_TRABAJO}<p>
-        `;
-        return(html)
+        var typeWork = typeOfWork(row.TIPO_TRABAJO);
+        return(typeWork)
         }
       },
     ],
-    responsive: true,
+    responsive: false,
     paging: false,
     columnDefs: [{
       "defaultContent": "-",
@@ -365,8 +428,162 @@ const tbDetails = () => {
   });
 };
 
+const typeOfWork = (typeWork) =>{
+  let type = '';
+  switch (typeWork) {
+    case 'tmpcompleto':
+      type = 'A TIEMPO COMPLETO';
+      break;
+    case 'tmpparcial':
+      type = 'A TIEMPO PARCIAL';
+      break;
+    case 'temporal':
+      type = 'TEMPORAL';
+      break;
+    case 'negocio':
+      type = 'NEGOCIO FAMILIAR';
+      break;
+    case 'inde':
+      type = 'INDEPENDIENTE/CUENTA PROPIA';
+      break;
+    case 'informal':
+      type = 'TRABAJO INFORMAL';
+      break;
+    case 'informal':
+      type = 'TRABAJO INFORMAL';
+      break;
+  }
+  return type;
+};
+
+const loopDisability = () =>{
+  $(".disability_array").each((item, res)=>{
+    var id = $(res).attr('id');
+    var array = $(`#${id}`).val();
+    var json = JSON.parse(JSON.stringify(array.replace(/\s+/g, '')));
+    var jsonpartido = json.split(",", 9);
+    jsonpartido.map((item)=>{ 
+      if(item.split(":", 2)[1] == 'true'){
+        switch (item.split(":", 2)[0]) {
+          case '{moverseCaminar':
+            $(`#val_${id}`).append('FISICA <br>');
+            break;
+          case 'usarBrazosPiernas':
+            $(`#val_${id}`).append('FISICA <br>');
+            break;
+          case 'verLentes':
+            $(`#val_${id}`).append('VISUAL <br>');
+            break;
+          case 'oirAparatos':
+            $(`#val_${id}`).append('AUDITIVA <br>');
+            break;
+          case 'hablar':
+            $(`#val_${id}`).append('VERBAL <br>');
+            break;
+          case 'retrasoMental':
+            $(`#val_${id}`).append('MENTAL <br>');
+            break;
+          case 'vestirseAlimentarse':
+            $(`#val_${id}`).append('FISICA Y MENTAR (No puede vestirse ni alimentarse) <br>');
+            break;
+          default:
+            break;
+        }
+      }
+    });
+  });
+};
+
+const loopOcupation = () =>{
+  $(".ocupation_array").each((item, res)=>{
+    var id = $(res).attr('id');
+    var array = $(`#${id}`).val();
+    var json = JSON.parse(JSON.stringify(array.replace(/\s+/g, '')));
+    var jsonpartido = json.split(",", 9);
+    var work;
+    jsonpartido.map((item)=>{ 
+      if(item.split(":", 2)[1] == 'true'){
+        switch (item.split(":", 2)[0]) {
+          case '{estudia':
+            $(`#val_${id}`).append('ESTUDIA <br>');
+            break;
+          case 'oficiosHogar':
+            $(`#val_${id}`).append('OFICIO EN EL HOGAR <br>');
+            break;
+          case 'buscaTrabajo':
+            $(`#val_${id}`).append('BUSCA TRABAJO <br>');
+            break;
+          case 'trabaja':
+            $(`#val_${id}`).append('TRABAJA <br>');
+            work = true;
+            break;
+          case 'otro':
+            $(`#val_${id}`).append('OTRO <br>');
+            break;
+        }
+      }
+    });
+    if(work){
+      $(`#tra_${id}`).append('SI');
+    }else{
+      $(`#tra_${id}`).append('NO');
+    }
+  });
+};
 
 
+var departaments;
+var municipalitys = [];
+const departament = () =>{
+  $.ajax({
+    url: `https://api.salud.gob.sv/departamentos`,
+    type: 'GET'
+  }).then((res, key, req)=>{
+    departaments = res;
+    municipality();
+  });
+};
+
+const municipality = ()=> {
+  departaments.map((item)=>{
+    $.ajax({
+      url: `https://api.salud.gob.sv/municipios?idDepartamento=${item.id}`,
+      dataType:'json'
+    }).then((res, key, req)=>{
+      municipalitys.push(res);
+    });
+  });
+};
+
+
+
+const finishGrade = (grade) =>{
+  let gradeReturn = '';
+  //
+  if(grade <9)
+    gradeReturn = 'NOVENO GRADO O MENOS';
+  switch (grade) {
+    case 'BachInc':
+      gradeReturn = 'BACHILLERATO INCOMPLETO'
+      break;
+    case 'BachCom':
+      gradeReturn = 'BACHILLERATO COMPLETO'
+      break;
+    case 'UniInc':
+      gradeReturn = 'UNIVERSIDAD INCOMPLETA'
+      break;
+    case 'UniCom':
+      gradeReturn = 'UNIVERSIDAD COMPLETA'
+      break;
+    case 'TecInc':
+      gradeReturn = 'TECNOLÓGICA INCOMPLETA'
+      break;
+    case 'TecCom':
+      gradeReturn = 'TECNOLÓGICA COMPLETA'
+      break;
+  }
+  return gradeReturn
+};
 
 const changeColor= async () =>{
   const data =  await $.ajax({
@@ -381,7 +598,7 @@ const changeColor= async () =>{
         // $(`#row${item.idSolicitud}`).addClass('bg-info text-white');
         $(`#row${item.idSolicitud}`).append(`<span><button class= 'btn btn-info'></button><span>`);
         $(`#d${item.idSolicitud}`).remove();
-
+        
       } catch (error) {
         
       }
@@ -433,11 +650,6 @@ const PrintPdf = async (idSolicitud) =>{
       busquedaMunicipio(json[Object.keys(json)[i-1]], json[Object.keys(json)[i]], i);
     }
   }
-  // promesa.then((address)=>{
-  //   console.log(address);
-  //   consulta(idSolicitud, address);
-  // })
-
   setTimeout(consulta, 1700, idSolicitud);
 };
 
@@ -654,9 +866,6 @@ const clickCkAll = ()=>{
 const blockChecked = () =>{
   setTimeout(function(){
     $(".btnBlock").remove();
-    // $(".blockChecked").css({'background-color': '#F4F4F4'})
-    // $('#blockChecked').tooltip(options)
-    // $('#blockChecked').tooltip('enable');
     $("#blockChecked").append(`
     <button 
       class="btn btn-success btnBlock btn-sm"
@@ -689,6 +898,7 @@ const blockChecked = () =>{
 };
 
 $(document).ready( ()  => {
+  departament();
   $("#btnEnrollParticipants").click(() =>{
     enrollParticipants();
   });
@@ -704,11 +914,3 @@ $(document).ready( ()  => {
   classClick();
   clickCkAll();
 });
-
-
-// function asignar (){
-//   for (let i = 0; i < constante.length; i++) {
-//     alert("Hoekj");
-//   }
-// }
-// asignar();

@@ -190,8 +190,10 @@ const tableDetails = () =>{
     document.getElementById("table1").style.display = 'none';
     document.getElementById("table2").style.display = 'block';
     tbDetails();	
-    var api = $("#tbDetailsParticipants").DataTable();
-    console.log(api.cell(1));
+    // setTimeout(loopDepartament, 600);
+    // setTimeout(loopMunicipality, 600);
+    // setTimeout(loopDisability, 600);
+    // setTimeout(loopOcupation, 600);
     $("#swTableDetail").prop('checked', true);
     tabledetailsenabled = true;
   }
