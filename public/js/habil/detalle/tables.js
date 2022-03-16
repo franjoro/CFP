@@ -560,7 +560,7 @@ const municipality = ()=> {
 const finishGrade = (grade) =>{
   let gradeReturn = '';
   //
-  if(grade <9)
+  if(grade <=9)
     gradeReturn = 'NOVENO GRADO O MENOS';
   switch (grade) {
     case 'BachInc':
