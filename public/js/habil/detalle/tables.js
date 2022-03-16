@@ -373,7 +373,7 @@ const tbDetails = () => {
           var ocupation = [];
           jsonpartido.map((item)=>{ 
             console.log(item.split(":", 2)[0])
-            if(item.split(":", 2)[1] == 'true'){
+            if(item.split(":", 2)[1] == 'true' || item.split(":", 2)[1] == 'true}'){
               switch (item.split(":", 2)[0]) {
                 case '{estudia':
                   ocupation.push('ESTUDIA');
