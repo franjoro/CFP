@@ -372,6 +372,7 @@ const tbDetails = () => {
           var jsonpartido = json.split(",", 9);
           var ocupation = [];
           jsonpartido.map((item)=>{ 
+            console.log(item.split(":", 2)[0])
             if(item.split(":", 2)[1] == 'true'){
               switch (item.split(":", 2)[0]) {
                 case '{estudia':
@@ -388,7 +389,10 @@ const tbDetails = () => {
                   work = true;
                   break;
                 case 'otro':
-                ocupation.push('OTRO');
+                  ocupation.push('OTRO');
+                  break;
+                default:
+                  ocupation.push('OTRO');
                   break;
               }
             }
