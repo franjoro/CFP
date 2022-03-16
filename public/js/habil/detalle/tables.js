@@ -456,6 +456,9 @@ const typeOfWork = (typeWork) =>{
     case 'informal':
       type = 'TRABAJO INFORMAL';
       break;
+    case 'otro':
+      type = 'TRABAJO INFORMAL';
+      break;
   }
   return type;
 };
