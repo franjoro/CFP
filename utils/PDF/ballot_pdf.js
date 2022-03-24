@@ -1099,27 +1099,27 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
             <div class="row">
                 <div class="col-5" style="border: solid thin; background-color: #d9d9d9;">
                     <div class="row">
-                        <div class="col-12 mt-4">
+                        <div class="col-12 mt-2 mb-2">
                             <b>5. Si, ¿Cuál(es)? Mencione solamente las recibida los últimos 3 años</b>
                         </div>
                     </div>
                 </div>
                 <div class="col-3" style="border-bottom: solid thin; border-top: solid thin; border-right: solid thin; background-color: #d9d9d9;">
                     <div class="row">
-                        <div class="col-12 mt-4">
+                        <div class="col-12 mt-2 mb-2">
                             <b>¿Lo impartió INSAFORP? </b>
                         </div>
                     </div>
                 </div>
                 <div class="col-1" style="border-bottom: solid thin; border-top: solid thin; border-right: solid thin; background-color: #d9d9d9;">
                     <div class="row">
-                        <div class="col-12 mt-4">
+                        <div class="col-12 mt-2 mb-2">
                             <b>Año</b>
                         </div>
                     </div>
                 </div>
                 <div class="col-3" style="border-bottom: solid thin; border-top: solid thin; border-right: solid thin; background-color: #d9d9d9;">
-                    <div class="row">
+                    <div class="row mb-2 mt-2">
                         <div class="col-12">
                             <b>¿El curso le dio beneficios?</b>
                         </div>
@@ -1144,14 +1144,14 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
         <div class="container">
             <div class="row">
                 <div class="col-5" style="border: solid thin;">
-                    <div class="row">
+                    <div class="row mb-2 mt-2">
                         <div class="col-12">
                             <span>1)</span> ${curso1}
                         </div>
                     </div>
                 </div>
                 <div class="col-3" style="border-bottom: solid thin; border-top: solid thin; border-right: solid thin;">
-                    <div class="row">
+                    <div class="row mt-2 mb-2">
                         <div class="col-4">
                             <span style="font-size: 10px;">1</span> <span><input ${impartio1 == 'Si' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> Si</span>
                         </div>
@@ -1164,14 +1164,14 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
                     </div>
                 </div>
                 <div class="col-1" style="border-bottom: solid thin; border-top: solid thin; border-right: solid thin;">
-                    <div class="row">
+                    <div class="row mt-2 mb-2">
                         <div class="col-12">
                             ${year1}
                         </div>
                     </div>
                 </div>
                 <div class="col-3" style="border-bottom: solid thin; border-top: solid thin; border-right: solid thin;">
-                    <div class="row">
+                    <div class="row mt-2 mb-2">
                         <div class="col-4">
                             <span style="font-size: 10px;">1</span> <span><input ${beneficio1 == 'Si' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> Si</span>
                         </div>
@@ -1188,14 +1188,14 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
         <div class="container">
             <div class="row">
                 <div class="col-5" style="border: solid thin;">
-                    <div class="row">
+                    <div class="row mt-2 mb-2">
                         <div class="col-12">
                             <span>2)</span> ${curso2}
                         </div>
                     </div>
                 </div>
                 <div class="col-3" style="border-bottom: solid thin; border-top: solid thin; border-right: solid thin;">
-                    <div class="row">
+                    <div class="row mt-2 mb-2">
                         <div class="col-4">
                             <span style="font-size: 10px;">1</span> <span><input ${impartio2 == 'Si' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> Si</span>
                         </div>
@@ -1208,14 +1208,14 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
                     </div>
                 </div>
                 <div class="col-1" style="border-bottom: solid thin; border-top: solid thin; border-right: solid thin;">
-                    <div class="row">
+                    <div class="row mt-2 mb-2">
                         <div class="col-12">
                             ${year2}
                         </div>
                     </div>
                 </div>
                 <div class="col-3" style="border-bottom: solid thin; border-top: solid thin; border-right: solid thin;">
-                    <div class="row">
+                    <div class="row mt-2 mb-2">
                         <div class="col-4">
                             <span style="font-size: 10px;">1</span> <span><input ${beneficio2 == 'Si' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> Si</span>
                         </div>
@@ -1232,14 +1232,14 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
         <div class="container">
             <div class="row">
                 <div class="col-5" style="border: solid thin;">
-                    <div class="row">
+                    <div class="row mt-2 mb-2">
                         <div class="col-12">
                             <span>3)</span> ${curso3}
                         </div>
                     </div>
                 </div>
                 <div class="col-3" style="border-bottom: solid thin; border-top: solid thin; border-right: solid thin;">
-                    <div class="row">
+                    <div class="row mt-2 mb-2">
                         <div class="col-4">
                             <span style="font-size: 10px;">1</span> <span><input ${impartio3 == 'Si' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> Si</span>
                         </div>
@@ -1252,14 +1252,14 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
                     </div>
                 </div>
                 <div class="col-1" style="border-bottom: solid thin; border-top: solid thin; border-right: solid thin;">
-                    <div class="row">
+                    <div class="row mt-2 mb-2">
                         <div class="col-12">
                             ${year3}
                         </div>
                     </div>
                 </div>
                 <div class="col-3" style="border-bottom: solid thin; border-top: solid thin; border-right: solid thin;">
-                    <div class="row">
+                    <div class="row mt-2 mb-2">
                         <div class="col-4">
                             <span style="font-size: 10px;">1</span> <span><input ${beneficio3 == 'Si' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"><span style="font-size: 12px;"> Si</span>
                         </div>
@@ -1287,7 +1287,7 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
         <div class="container">
             <div class="row">
                 <div class="col-12" style="border: solid thin; background-color: #d9d9d9;">
-                    <div class="row">
+                    <div class="row mt-3 mb-3">
                         <div class="col-12 mt-1 mb-1">
                             <b>6. ¿Para que sirvió(eron) la(s) capacitacion(es) que recibió?</b> <span style="border: solid thin; border-style: dotted; background-color: #ffff99;">(Puede marcar más de 1)</span>
                         </div>
@@ -1356,7 +1356,6 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
                 </div>
             </div>
         </div>
-        <br>
         <br>
         <div class="container">
             <div class="row">
@@ -1483,7 +1482,6 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
             </div>
         </div>
         <br>
-        <br>
         <div class="container">
             <div class="row">
                 <div class="col-12" style="border: solid thin; background-color: #ffcc00;">
@@ -1503,10 +1501,10 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
                 </div>
                 <div class="col-2" style="border: solid thin; border-right: none;">
                     <div class="row">
-                        <div class="col-6 mt-3">
+                        <div class="col-6 mt-4">
                             <span style="font-size: 12px;">1</span> <span><input ${trabajaantes == '1' ? 'checked' : ''} type="checkbox" aria-label="Checkbox for following text input"> Si
                         </div>
-                        <div class="col-6 mt-3">
+                        <div class="col-6 mt-4">
                             <span style="font-size: 12px;">2</span> <span><input ${trabajaantes == '0' ? 'checked' : ''} type="checkbox" aria-label="Checkbox for following text input"> No
                         </div>
                     </div>
@@ -1525,14 +1523,14 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
         <div class="container">
             <div class="row">
                     <div class="col-3" style="border: solid thin; background-color: #d9d9d9;">
-                        <div class="row">
+                        <div class="row mt-3 mb-3">
                             <div class="col-12">
                                 <b>2. ¿Cuánto tiempo hace que no trabaja? </b>
                             </div>
                         </div>
                     </div>
                     <div class="col-9" style="border: solid thin;">
-                        <div class="row">
+                        <div class="row mt-3 mb-3">
                             <div class="col-3 mt-2">
                                 <span style="font-size: 12px;">1</span> <span><input ${tiempoSinTrabajarselect == '1y-' ? 'checked' : ''} type="checkbox" aria-label="Checkbox for following text input"> 1 año o menos
                             </div>
@@ -1550,9 +1548,6 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
             </div>
         </div>
         <br>
-        <br>
-        <br>
-        <br>
         <div class="container">
             <div class="row">
                 <div class="col-12" style="border: solid thin; background-color: #ffcc00;">
@@ -1563,10 +1558,14 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
         <div class="container">
             <div class="row">
                 <div class="col-3" style="border: solid thin; background-color: #d9d9d9;">
-                    <b>1. ¿Usted recibe ingresos? </b>
+                    <div class="row mb-2 mt-2">
+                        <div class="col-12">
+                            <b>1. ¿Usted recibe ingresos? </b>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-9" style="border: solid thin;">
-                    <div class="row">
+                    <div class="row mt-2 mb-2">
                         <div class="col-4">
                             <div class="row">
                                 <div class="col-4">
@@ -1584,12 +1583,16 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
         <div class="container">
             <div class="row">
                 <div class="col-3" style="border: solid thin; background-color: #d9d9d9;">
-                    <b>2. ¿Cuánto tiempo hace que no trabaja? </b>
+                    <div class="row mb-2 mt-2">
+                        <div class="col-12">
+                            <b>2. ¿Cuánto tiempo hace que no trabaja? </b>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-9">
                     <div class="row">
                         <div class="col-6" style="border: solid thin;">
-                            <div class="row">
+                            <div class="row mt-2 mb-2">
                                 <div class="col-12">
                                     <span style="font-size: 12px;">1</span> <span><input ${ingresos.trabajo == 'true' ? 'checked': ''} type="checkbox" aria-label="Checkbox for following text input"> Trabajo
                                 </div>
@@ -1602,7 +1605,7 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
                             </div>
                         </div>
                         <div class="col-6" style="border: solid thin;">
-                            <div class="row mt-3">
+                            <div class="row mt-2 mb-3">
                                 <div class="col-12">
                                     <span style="font-size: 12px;">4</span> <span><input ${ingresos.pension == 'true' ? 'checked': ''} type="checkbox" aria-label="Checkbox for following text input"> Pensión
                                 </div>
@@ -1617,8 +1620,6 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
         </div>
         <br /><br /><br /><br /><br />
         <br /><br /><br /><br /><br />
-        <br />
-        <br />
         <br />
         <br />
         <div class="container">
