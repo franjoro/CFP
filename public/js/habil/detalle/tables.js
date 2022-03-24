@@ -7,7 +7,6 @@ const applicationTable = () => {
       ajax: {
         'type': "GET",
         "url": `/admin/habil/application-table/${idCourse}`,
-        
       },
       destroy: true,
       dom: 'Bfrtip',
@@ -54,17 +53,15 @@ const applicationTable = () => {
         {
           render(data,type,row){
             html = `
-           
             <span>
               <div class="form-check">
                 <input class="form-check-input ck" type="checkbox" value="${row.idSolicitud}" id="ck${row.idSolicitud}">
                 <label class="form-check-label" for="ck${row.idSolicitud}">
-                 <p>N°<span class="negrita"></span></p>       
+                <p>N°<span class="negrita"></span></p>       
                 </label>
               </div>
             </span>`;
             return(html);
-
           }
         },
         {render(data,type,row){
@@ -87,12 +84,8 @@ const applicationTable = () => {
         },
         { 
           render(data,type,row){
-            const html = `
-              <p class="r0"> ${firtWordUppercase(row.nombre)}</p>
-              
-            `
+            const html = `<p class="r0"> ${firtWordUppercase(row.nombre)}</p>`
             return(html);
-
           } },
         {
           render(data,type,row){
@@ -192,7 +185,6 @@ const applicationTable = () => {
 };
 
 var n = 0;
-
 const tbDetails = () => {
   // DataTable Usuarios
   const idCourse = $("#idCourse").val();
@@ -202,7 +194,6 @@ const tbDetails = () => {
     ajax: {
       'type': "GET",
       "url": `/admin/habil/tb-details-participants/${idCourse}`,
-      
     },
     destroy: true,
     dom: 'Bfrtip',
@@ -290,8 +281,6 @@ const tbDetails = () => {
         }
       },
       { render(data, type,row){
-
-
         var municipalityVal;
         municipalitys.map((item)=>{
           item.map((data)=>{
@@ -501,6 +490,7 @@ const loopDisability = () =>{
   });
 };
 
+
 const loopOcupation = () =>{
   $(".ocupation_array").each((item, res)=>{
     var id = $(res).attr('id');
@@ -538,7 +528,6 @@ const loopOcupation = () =>{
   });
 };
 
-
 var departaments;
 var municipalitys = [];
 const departament = () =>{
@@ -562,8 +551,6 @@ const municipality = ()=> {
   });
 };
 
-
-
 const finishGrade = (grade) =>{
   let gradeReturn = '';
   //
@@ -572,7 +559,7 @@ const finishGrade = (grade) =>{
   switch (grade) {
     case 'BachInc':
       gradeReturn = 'BACHILLERATO INCOMPLETO'
-      break;
+      break;  
     case 'BachCom':
       gradeReturn = 'BACHILLERATO COMPLETO'
       break;
@@ -605,17 +592,13 @@ const changeColor= async () =>{
         // $(`#row${item.idSolicitud}`).addClass('bg-info text-white');
         $(`#row${item.idSolicitud}`).append(`<span><button class= 'btn btn-info'></button><span>`);
         $(`#d${item.idSolicitud}`).remove();
-        
       } catch (error) {
-        
       }
     })
   }
 };
 
 var address = [];
-
-
 busquedaDepartamentos = (idDepartamento, i) =>{
   const url = `https://api.salud.gob.sv/departamentos/${idDepartamento}`;
   $.ajax({
@@ -644,6 +627,7 @@ busquedaMunicipio = (idDepartamento,idMunicipio, i) =>{
     }
   });
 };
+
 const PrintPdf = async (idSolicitud) =>{
   const dataRegion = await $.ajax({
     url: `/admin/habil/findRegionForId/${idSolicitud}`,
@@ -680,7 +664,6 @@ const consulta = async (idSolicitud)=>{
 };
 
 const changeColorWait = async () =>{
-  
   const data = await $.ajax({
     url: `/admin/habil/changeColorWait/${$("#idCourse").val()}`,
     type: 'GET',
@@ -697,7 +680,6 @@ const changeColorWait = async () =>{
     })
   }
 };
-
 
 const inscritosSgap = async () =>{
   const data = await $.ajax({
@@ -716,6 +698,7 @@ const inscritosSgap = async () =>{
     })
   }
 };
+
 const noInscritosSgap = async () =>{
   const data = await $.ajax({
     url: `/admin/habil/noInscritosSgafp/${$("#idCourse").val()}`,
@@ -782,6 +765,7 @@ const removeForWaitingList =  () =>{
     }
   });
 };
+
 const enrollParticipants = () =>{
   $(JSON.parse(sessionStorage.getItem('participants'))).each(async(index, element) =>{
     try {
@@ -837,14 +821,6 @@ const sgafp = async ()=>{
   }
 };
 
-const printBallot = async () =>{
-  try {
-    
-  } catch (error) {
-    
-  }
-}
-
 const classClick = () =>{
   $(document).on('click','.ck',() =>{
     event.stopPropagation();
@@ -862,7 +838,6 @@ const clickCkAll = ()=>{
   $(document).on('click','#ckAll',() =>{
     event.stopPropagation();
     event.stopImmediatePropagation();
-
     $(".ck").each((index,element)=>{
       $(element).prop("checked", true);
     });
@@ -870,6 +845,7 @@ const clickCkAll = ()=>{
     selectParticipants();
   });
 };
+
 const blockChecked = () =>{
   setTimeout(function(){
     $(".btnBlock").remove();
@@ -886,7 +862,6 @@ const blockChecked = () =>{
       onclick = "removeForWaitingList()"
       >
       <i class="fas fa-exclamation"></i> Quitar de lista de espera
-     
     </button>
     <button class="btn btn-primary btn-sm btnBlock">
       <i class="fas fa-file-alt"></i> Descargar boletas
@@ -898,10 +873,8 @@ const blockChecked = () =>{
     >
       <i class="fas fa-trash-alt"></i> Eliminar
     </button>
-    
   `);
   },100)
-  
 };
 
 $(document).ready( ()  => {

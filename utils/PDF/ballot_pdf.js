@@ -218,8 +218,9 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
               padding-top:20px
             }
           </style>
-          
+        <br>
         <div class="container">
+        <br>
             <div class="row mt-5">
             <div class="col-3">
                 <img src="https://cfp.ricaldone.edu.sv/static/img/logo-ant-insaforp.jpg" class="img-fluid" alt="imagen" style="position: absolute; bottom: -18px; right: 5px;">
@@ -331,6 +332,8 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
                 </div>
             </div>
         </div>
+        <br>
+        <br>
         <div class="container">
             <div class="row mt-1" 
                 style="background-color: #ffcc00; border: solid; border-width: thin;">
@@ -1091,6 +1094,8 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
         <br /><br />
         <br /><br />
         <br /><br />
+        <br /><br />
+        <br /><br />
         <div class="container">
             <div class="row">
                 <div class="col-5" style="border: solid thin; background-color: #d9d9d9;">
@@ -1344,6 +1349,8 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
         </div>
         <br>
         <br>
+        <br>
+        <br>
         <div class="container">
             <div class="row">
                 <div class="col-12 text-center" style="border: solid thin; background-color: #ffcc00;">
@@ -1466,6 +1473,8 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
         </div>
         <br>
         <br>
+        <br>
+        <br>
         <div class="container">
             <div class="row">
                 <div class="col-12" style="border: solid thin; background-color: #ffcc00;">
@@ -1526,6 +1535,8 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
                     </div>
             </div>
         </div>
+        <br>
+        <br>
         <br>
         <br>
         <div class="container">
