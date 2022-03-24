@@ -1095,8 +1095,6 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
         <br /><br />
         <br /><br />
         <br /><br />
-        <br /><br />
-        <br /><br />
         <div class="container">
             <div class="row">
                 <div class="col-5" style="border: solid thin; background-color: #d9d9d9;">
@@ -1300,7 +1298,7 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
         <div class="container">
             <div class="row">
                 <div class="col-6" style="border: solid thin;">
-                    <div class="row">
+                    <div class="row mt-3 mb-3">
                         <div class="col-12">
                             <span style="font-size: 12px;">1</span> <span><input ${ cursopositivo.obtenerEmpleo == 'true' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> Para obtener un empleo
                         </div>
@@ -1313,7 +1311,7 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
                     </div>
                 </div>
                 <div class="col-6" style="border: solid thin;">
-                    <div class="row">
+                    <div class="row mt-3 mb-3">
                         <div class="col-12">
                             <span style="font-size: 12px;">2</span> <span><input ${ cursopositivo.cambiarEmpleo == 'true' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> Cambiar a un empleo relacionado con la capacitación recibida
                         </div>
@@ -1341,15 +1339,23 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
         <div class="container">
             <div class="row">
                 <div class="col-5" style="border: solid thin; background-color: #d9d9d9;">
-                    <b>7. ¿Por qué cree que no recibió beneficios como producto de la/las capacitación/es?</b>
+                    <div class="row mt-3 mb-3">
+                        <div class="col-12">
+                            <b>7. ¿Por qué cree que no recibió beneficios como producto de la/las capacitación/es?</b>
+                        </div>
+                    </div>
+                    
                 </div>
                 <div class="col-7" style="border: solid thin;">
-                    <p>${ nobeneficioc }</p>
+                    <div class="row mt-3 mb-3">
+                        <div class="col-12">
+                            <p>${ nobeneficioc }</p>
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
         </div>
-        <br>
-        <br>
         <br>
         <br>
         <div class="container">
@@ -1373,10 +1379,15 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
         <div class="container">
             <div class="row">
                 <div class="col-5" style="border: solid thin; background-color: #d9d9d9;">
-                    <b>1. ¿A qué actividad se dedica usted actualmente? </b>
+                    <div class="row mt-3 mb-3">
+                        <div class="col-12">
+                            <b>1. ¿A qué actividad se dedica usted actualmente? </b>
+                        </div>
+                    </div>
+                   
                 </div>
                 <div class="col-7" style="border: solid thin;">
-                    <div class="row">
+                    <div class="row mb-3 mt-3">
                         <div class="col-12">
                             <span style="font-size: 12px;">1</span> <span><input ${ actividades.estudia == 'true' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> Estudia 
 
@@ -1415,13 +1426,12 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
         <div class="container">
             <div class="row">
                 <div class="col-6" style="border: solid thin;">
-                    <div class="row">
+                    <div class="row mt-3 mb-3">
                         <div class="col-12">
                             <span style="font-size: 12px;">1</span> <span><input ${ tipoempleo == 'tmpcompleto' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> Empleo a tiempo completo 
                         </div>
                         <div class="col-12">
                             <span style="font-size: 12px;">2</span> <span><input ${ tipoempleo == 'tmpparcial' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> Empleo a tiempo parcial 
-
                         </div>
                         <div class="col-12">
                             <span style="font-size: 12px;">3</span> <span><input ${ tipoempleo == 'temporal' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input">  Empleo temporal
@@ -1429,7 +1439,7 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
                     </div>
                 </div>
                 <div class="col-6" style="border: solid thin;">
-                    <div class="row">
+                    <div class="row mb-3 mt-3">
                         <div class="col-12">
                             <span style="font-size: 12px;">4</span> <span><input ${ tipoempleo == 'negocio' ? 'checked' : '' } type="checkbox" aria-label="Checkbox for following text input"> Negocio familiar 
 
@@ -1461,7 +1471,7 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
         <div class="container">
             <div class="row">
                 <div class="col-12" style="border: solid thin;">
-                    <div class="row">
+                    <div class="row mt-3 mb-3">
                         <div class="col-2 mt-1 mb-1">
                             <span style="font-size: 12px;">1</span> <span><input ${sectortrabajo == 'privado' ? 'checked' : ''} type="checkbox" aria-label="Checkbox for following text input"> Sector Privado 
                         </div>
@@ -1474,8 +1484,6 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
         </div>
         <br>
         <br>
-        <br>
-        <br>
         <div class="container">
             <div class="row">
                 <div class="col-12" style="border: solid thin; background-color: #ffcc00;">
@@ -1486,7 +1494,12 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
         <div class="container">
             <div class="row">
                 <div class="col-2" style="border: solid thin; background-color: #d9d9d9;">
-                    <b>1. ¿Ha trabajado antes?</b> 
+                    <div class="row mt-3 mb-3">
+                        <div class="col-12">
+                        <b>1. ¿Ha trabajado antes?</b> 
+                        </div>
+                    </div>
+                    
                 </div>
                 <div class="col-2" style="border: solid thin; border-right: none;">
                     <div class="row">
@@ -1604,11 +1617,6 @@ const PrintPdf = (dataJson1, dataJson2, dataJson3, dataJson4, dataJson5) => {
         </div>
         <br /><br /><br /><br /><br />
         <br /><br /><br /><br /><br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
         <br />
         <br />
         <br />
