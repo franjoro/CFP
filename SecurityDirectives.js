@@ -17,7 +17,7 @@ const Directivas = {
         connectSrc: [
             "'self'", 
             "http://localhost:3000",
-            "https://api.salud.gob.sv", 
+            "https://admision.ricaldone.edu.sv", 
             "https://www.google-analytics.com",
             "https://api.github.com"
         ],
