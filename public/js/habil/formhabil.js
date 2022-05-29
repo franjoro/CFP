@@ -514,7 +514,7 @@ $(document).ready(function () {
   $("#depa_nac").focus({
     width: "100%",
     ajax: {
-      url: "https://api.salud.gob.sv/departamentos",
+      url: "https://admision.ricaldone.edu.sv/app/controllers/php/departamentos",
       dataType: "json",
       delay: 250,
       data:[{
@@ -534,7 +534,7 @@ $(document).ready(function () {
   $("#depa_nac").select2({
     width: "100%",
     ajax: {
-      url: "https://api.salud.gob.sv/departamentos",
+      url: "https://admision.ricaldone.edu.sv/app/controllers/php/departamentos",
       dataType: "json",
       delay: 250,
       data(params) {
@@ -564,7 +564,7 @@ $(document).ready(function () {
     $("#municipioNac").select2({
       width: "100%",
       ajax: {
-        url: "https://api.salud.gob.sv/municipios",
+        url: "https://admision.ricaldone.edu.sv/app/controllers/php/municipios",
         dataType: "json",
         delay: 250,
         data(params) {
@@ -588,7 +588,7 @@ $(document).ready(function () {
   $("#depdomicilio").select2({
     width: "100%",
     ajax: {
-      url: "https://api.salud.gob.sv/departamentos",
+      url: "https://admision.ricaldone.edu.sv/app/controllers/php/departamentos",
       dataType: "json",
       delay: 250,
       data(params) {
@@ -613,7 +613,7 @@ $(document).ready(function () {
     $("#municipioDomicilio").select2({
       width: "100%",
       ajax: {
-        url: "https://api.salud.gob.sv/municipios",
+        url: "https://admision.ricaldone.edu.sv/app/controllers/php/municipios",
         dataType: "json",
         delay: 250,
         data(params) {
@@ -637,7 +637,7 @@ $(document).ready(function () {
   $("#departcontact").select2({
     width: "100%",
     ajax: {
-      url: "https://api.salud.gob.sv/departamentos",
+      url: "https://admision.ricaldone.edu.sv/app/controllers/php/departamentos",
       dataType: "json",
       delay: 250,
       data(params) {
@@ -662,7 +662,7 @@ $(document).ready(function () {
     $("#municipiocontacto").select2({
       width: "100%",
       ajax: {
-        url: "https://api.salud.gob.sv/municipios",
+        url: "https://admision.ricaldone.edu.sv/app/controllers/php/municipios",
         dataType: "json",
         delay: 250,
         data(params) {
