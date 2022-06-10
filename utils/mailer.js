@@ -8,15 +8,15 @@ mailer = {};
 const transporter = nodemailer.createTransport({
   service: "Gmail",
   auth: {
-    user: `${process.env.EMAIL}`,
-    pass: `${process.env.PASSEMAIL}`,
+    user: process.env.EMAIL,
+    pass: process.env.PASSEMAIL,
   },
 });
 mailer.sendEmail = (to, sub, html = "", text) => {
   // Definimos el email
   const mailOptions = {
-    from: `${process.env.EMAIL}`,
-    to: to || `${process.env.SECONDEMAIL}`,
+    from: process.env.EMAIL,
+    to: to || process.env.SECONDEMAIL,
     subject: sub || "",
     text: text || "",
     html
