@@ -187,7 +187,7 @@ $(document).ready(() => {
   $("#departamento_emision").select2({
     width: "100%",
     ajax: {
-      url: "https://api.salud.gob.sv/departamentos",
+      url: "https://admision.ricaldone.edu.sv/app/controllers/php/departamentos",
       dataType: "json",
       delay: 250,
       data(params) {
@@ -210,7 +210,7 @@ $(document).ready(() => {
   $("#departamento_domicilio").select2({
     width: "100%",
     ajax: {
-      url: "https://api.salud.gob.sv/departamentos",
+      url: "https://admision.ricaldone.edu.sv/app/controllers/php/departamentos",
       dataType: "json",
       delay: 250,
       data(params) {

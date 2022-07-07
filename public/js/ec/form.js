@@ -258,7 +258,7 @@ $(document).ready(function () {
   $("#depa_nac").select2({
     width: "100%",
     ajax: {
-      url: "https://api.salud.gob.sv/departamentos",
+      url: "https://admision.ricaldone.edu.sv/app/controllers/php/departamentos",
       dataType: "json",
       delay: 250,
       data(params) {
@@ -307,7 +307,7 @@ $(document).ready(function () {
   $("#depdomicilio").select2({
     width: "100%",
     ajax: {
-      url: "https://api.salud.gob.sv/departamentos",
+      url: "https://admision.ricaldone.edu.sv/app/controllers/php/departamentos",
       dataType: "json",
       delay: 250,
       data(params) {
@@ -356,7 +356,7 @@ $(document).ready(function () {
   $("#departcontact").select2({
     width: "100%",
     ajax: {
-      url: "https://api.salud.gob.sv/departamentos",
+      url: "https://admision.ricaldone.edu.sv/app/controllers/php/departamentos",
       dataType: "json",
       delay: 250,
       data(params) {

@@ -1,5 +1,5 @@
 busquedaDepartamentos = (idDepartamento, select) =>{
-    const url = `https://api.salud.gob.sv/departamentos/${idDepartamento}`;
+    const url = `https://admision.ricaldone.edu.sv/app/controllers/php/departamentos.php?id=${idDepartamento}`;
     $.ajax({
       type: "GET",
       url: url,

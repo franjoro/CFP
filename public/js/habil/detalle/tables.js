@@ -532,7 +532,7 @@ var departaments;
 var municipalitys = [];
 const departament = () =>{
   $.ajax({
-    url: `https://api.salud.gob.sv/departamentos`,
+    url: `https://admision.ricaldone.edu.sv/app/controllers/php/departamentos`,
     type: 'GET'
   }).then((res, key, req)=>{
     departaments = res;
@@ -600,7 +600,7 @@ const changeColor= async () =>{
 
 var address = [];
 busquedaDepartamentos = (idDepartamento, i) =>{
-  const url = `https://api.salud.gob.sv/departamentos/${idDepartamento}`;
+  const url = `https://admision.ricaldone.edu.sv/app/controllers/php/departamentos.php?id=${idDepartamento}`;
   $.ajax({
     type: "GET",
     url: url,
