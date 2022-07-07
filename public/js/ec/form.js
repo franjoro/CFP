@@ -283,7 +283,7 @@ $(document).ready(function () {
     $("#municipioNac").select2({
       width: "100%",
       ajax: {
-        url: "https://api.salud.gob.sv/municipios",
+        url: "https://admision.ricaldone.edu.sv/app/controllers/php/municipios",
         dataType: "json",
         delay: 250,
         data(params) {
@@ -332,7 +332,7 @@ $(document).ready(function () {
     $("#municipioDomicilio").select2({
       width: "100%",
       ajax: {
-        url: "https://api.salud.gob.sv/municipios",
+        url: "https://admision.ricaldone.edu.sv/app/controllers/php/municipios",
         dataType: "json",
         delay: 250,
         data(params) {
@@ -381,7 +381,7 @@ $(document).ready(function () {
     $("#municipiocontacto").select2({
       width: "100%",
       ajax: {
-        url: "https://api.salud.gob.sv/municipios",
+        url: "https://admision.ricaldone.edu.sv/app/controllers/php/municipiosmunicipios",
         dataType: "json",
         delay: 250,
         data(params) {

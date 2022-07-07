@@ -235,7 +235,7 @@ $(document).ready(() => {
     $("#municipio_emision").select2({
       width: "100%",
       ajax: {
-        url: "https://api.salud.gob.sv/municipios",
+        url: "https://admision.ricaldone.edu.sv/app/controllers/php/municipios",
         dataType: "json",
         delay: 250,
         data(params) {

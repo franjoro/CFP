@@ -615,7 +615,7 @@ busquedaDepartamentos = (idDepartamento, i) =>{
 };
 
 busquedaMunicipio = (idDepartamento,idMunicipio, i) =>{
-  const url = `https://api.salud.gob.sv/municipios/${idMunicipio}`;
+  const url = `https://admision.ricaldone.edu.sv/app/controllers/php/municipios.php?id=${idMunicipio}`;
   $.ajax({
     type: "GET",
     url: url,
